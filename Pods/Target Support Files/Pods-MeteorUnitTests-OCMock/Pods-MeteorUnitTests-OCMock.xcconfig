@@ -1,0 +1,2 @@
+PODS_METEORUNITTESTS_OCMOCK_FRAMEWORK_SEARCH_PATHS = $(inherited) "$(SDKROOT)/Developer/Library/Frameworks" "$(PLATFORM_DIR)/Developer/Library/Frameworks"
+PODS_METEORUNITTESTS_OCMOCK_OTHER_LDFLAGS = -framework "XCTest"

@@ -1,0 +1,192 @@
+# Meteor for iOS
+
+Meteor for iOS is work in progress, but aims to be a complete DDP client that includes full support for latency compensation and offers Core Data integration. It keeps as close as possible to the semantics of the original JavaScript code, but its design is more in line with Objective-C and Cocoa conventions (so expect many classes and really long method names 😀). It has been implemented with concurrent execution in mind and keeps all processing off the main thread, posting batched and consolidated change notifications that can be observed to update the UI. It includes over 200 unit tests and also has some server integration tests that run using a local Meteor test server.
+
+It is in dire need of better documentation and more comprehensive examples, but is already fairly feature complete and seems to work pretty well (although I expect bugs to surface once other people start using it).
+
+## Features
+- Full support for latency compensation, faithfully (I hope) reproducing the semantics of the original JavaScript code. Modifications to documents are reflected immediately in the local cache and will be ammended by server changes only when the server completes sending data updates for the method (multiple methods concurrently modifying the same documents are handled correctly).
+- Posting batched and consolidated change notifications at appropriate times, instead of relying on fine grained updates. This helps keep UI work on the main thread to a minimum without sacrificing responsiveness.
+- Core Data integration using an `NSIncrementalStore` subclass. Mapping between documents and `NSManagedObject`s is performed automatically (but can be customized). All types of relationships are supported, both for fetching and saving. Modifications made to documents (possibly from other clients) will lead to the posting of an object change notification that can be used to update `NSManagedObjectContext`s.
+- Correct handling of reconnection. Data updates on the new connection will be buffered until all subscriptions that were ready before have become ready again. Only then are updates applied and is a change notification posted (if anything actually changed).
+
+### Swift
+
+I had already started work on this project when Swift was announced. Although I'm impressed by Swift and now use it on other projects, I decided it was too soon to consider a rewrite. The language was and is evolving, and some features are still missing. Performance can be unpredictable (especially when dealing with arrays and dictionaries) and tool support (Xcode) is not as stable as it is for Objective-C.
+
+Especially with a new version of CocoaPods on the way (see below), using Meteor for iOS from Swift should be convenient enough for now however. Once Swift stabilizes and language idioms become established either Swift extensions or a rewrite may be needed.
+
+## Getting Started
+
+The easiest way to use Meteor for iOS is through CocoaPods. Until recently, there was no convenient way to use CocoaPods with Swift. The release of CocoaPods 0.36 promises to change this however, by supporting frameworks (see http://blog.cocoapods.org/Pod-Authors-Guide-to-CocoaPods-Frameworks/). As frameworks are only supported on iOS 8 or higher, this means iOS 7 users are out of luck for now. It should be possible to support both building as a framework and as a static library, but I don't know enough about CocoaPods to get this to work. Input is very welcome!
+
+Because CocoaPods 0.36 has not been officially released, a prerelease version has to be installed using `gem install cocoapods --pre`.
+
+You can then write a `Podfile` referencing the project on GitHub (I will add it to the CocoaPods repo once it is more stable):
+```
+platform :ios, '8.0'
+use_frameworks!
+pod 'Meteor', git: 'https://github.com/martijnwalraven/meteor-ios.git' 
+```
+(note the `use_frameworks!` line)
+
+Meteor for iOS will be built as a framework and is made available as a Clang module that can easily be imported without further configuration (you may need to build the project first before the module is recognized however):
+
+In Objective-C:
+``` objective-c
+@import Meteor;
+```
+
+In Swift:
+``` swift
+import Meteor
+```
+
+Alternatively, you should be able to open the Meteor workspace and run the tests and the Leaderboard example without installing CocoaPods.
+
+## Usage
+
+Connecting to a Meteor server is done through a WebSocket URL that needs to be specified when creating an `METDDPClient`:
+
+``` objective-c
+METDDPClient *client = [[METDDPClient alloc] initWithServerURL:[NSURL URLWithString:@"ws://localhost:3000/websocket"]];
+[client connect];
+```
+
+A client can then be used to subscribe to sets of documents:
+``` objective-c
+METSubscription *subscription = [client addSubscriptionWithName:@"playersWithMinimumScore" parameters:@[@20] completionHandler:^(NSError *error) {
+}];
+```
+
+The client keeps a local cache of documents sent by the server. These can be accessed through the `METDatabase` and `METCollection` classes. Documents are represented by `METDocument`s and identified by a `METDocumentKey`. (Keys encapsulate a `collectionName` and `documentID`). 
+
+A document stored in the local cache can be accessed using `METDatabase#documentWithKey:`. Alternatively, documents can be accessed by documentID through the collection:
+``` objective-c
+METCollection *players = [database collectionWithName:@"players"];
+METDocument *lovelace = [players documentWithID:@"lovelace"];
+````
+
+All documents in a collection can be accessed as an NSArray:
+``` objective-c
+METCollection *players = [database collectionWithName:@"players"];
+NSArray *allPlayers = [players allDocuments];
+````
+
+(More complex fetches will be supported by passing a `METFetchRequest` to `METDatabase#executeFetchRequest:`, but this has not been implemented yet.)
+
+`METDocument`s are immutable and data can only be modified through method invocations. Collections are used to encapsulate modification method invocations:
+
+``` objective-c
+METCollection *players = [database collectionWithName:@"players"];
+id documentID = [players insertDocumentWithFields:@{@"name": @"Ada Lovelace", @"score": @25}];
+[players updateDocumentWithID:documentID changedFields:@{@"score": @30, @"color": [NSNull null]}];
+[players removeDocumentWithID:@"gauss"];
+````
+
+Under the hood, the above code calls three methods on the server, modifying the local cache through a predefined stub in the process.
+
+Unless specified explicitly, document IDs are randomly generated on the client and a shared `randomSeed` is included with the `method` DDP message to keep generated IDs synchronized between client and server even in complex scenarios (such as method stubs recursively calling other stubs).
+
+Data access and modification should be thread safe. The local cache supports concurrent reads and blocking writes. (Note that using Core Data will not allow you to take advantage of concurrent reads however, because `NSPersistentStoreCoordinator` serializes access.)
+
+### Change Notifications
+
+``` objective-c
+- (void)databaseDidChange:(NSNotification *)notification {
+  METDatabaseChanges *databaseChanges = notification.userInfo[METDatabaseChangesKey];
+  [databaseChanges enumerateDocumentChangeDetailsUsingBlock:^(METDocumentChangeDetails *documentChangeDetails, BOOL *stop) {
+    ...
+  }];
+}
+```
+
+A `METDatabaseDidChangeNotification` contains a `METDatabaseChanges` object that can be asked for information about the changes that occurred. Information about changes to an individual document is encapsulated in a `METDocumentChangeDetails`. (This mechanism is modeled somewhat after the `PHChange` and `PHObjectChangeDetails` classes used by the iOS 8 Photos framework.)
+
+A `METDocumentChangeDetails` knows its `fieldsBeforeChanges` and `fieldsAfterChanges`, and can also be asked for the `changedFields`. It reflects the changes to a document since the last notification. Changes are consolidated and a `METDocumentChangeDetails` is only included if the fields before and after are actually different. If a document is first added and then removed, or if a field is changed back to its original value, before the notification is posted, no `METDocumentChangeDetails` is created and a `METDatabaseDidChangeNotification` may not be posted.
+
+Data updates from the server are buffered and applied in batches. Buffering uses a GCD dispatch source to coalesce events, meaning data updates that arrive before the buffer has had a chance to be flushed will be applied together.
+
+Method invocations that change documents will also post a `METDatabaseDidChangeNotification`. If a stub has been defined, changes to the local cache are posted first and another notification will only be posted when server updates have been flushed (and if the effects are different from that of the stub).
+
+`METDatabase#performUpdates:` can be used to group batches of updates to only post a single `METDatabaseDidChangeNotification` (or none if no net changes have occured, like below):
+``` objective-c
+[database performUpdates:^{
+  id documentID = [collection insertDocumentWithFields:@{@"name": @"Ada Lovelace", @"score": @25}];
+  [collection updateDocumentWithID:documentID changedFields:@{@"score": @30, @"color": [NSNull null]}];
+  [collection removeDocumentWithID:documentID];
+}];
+```
+
+### Custom methods
+
+Methods are called on `METDDPClient` and an optional `completionHandler` can be specified to receive a result:
+``` objective-c
+[client callMethodWithName:@"doSomething" parameters:@[@"someParameter"] completionHandler:^(id result, NSError *error) {
+  ...
+}];
+```
+
+If a stub has been defined, it will be executed first and could call more methods in the process (and so on). If at any point a data modification method is called, it will make changes to the local cache and participate in latency compensation:
+``` objective-c
+[client defineStubForMethodWithName:@"doSomething" usingBlock:^id(NSArray *parameters) {
+  [[client.database collectionWithName:@"players"] updateDocumentWithID:@"lovelace" changedFields:@{@"score": @20}];
+  return nil;
+}];
+```
+
+### Core Data
+
+`METIncrementalStore` is an `NSIncrementalStore` subclass that handles Core Data fetch and save requests by delegating these to Meteor. A managed object model is mapped automatically to a document model (although a different `fieldName` can be specified in the `userInfo` of a property in Xcode). All types of relationships – one-to-one, one-to-many and many-to-many – are supported.
+
+Currently, all relationships are expected to be defined on both sides, and documents on both sides should contain relationship details and be kept in sync.
+
+In `players` collection:
+``` json
+{ "_id": "lovelace", "name": "Ada Lovelace", "sentMessageIds": ["message1", "message2"], "receivedMessageIds": ["message3", "message4"]}
+{ "_id": "gauss", "name": "Carl Friedrich Gauss", "sentMessageIds": ["message3"], "receivedMessageIds": ["message1", "message2"]}
+```
+
+In `messages` collection:
+``` json
+{ "_id": "message1", "body": "Hello!", "senderId": "lovelace", "receiverIds": ["gauss", "shannon"] }
+{ "_id": "message2", "body": "Hello!", "senderId": "lovelace", "receiverIds": ["gauss", "turing"] }
+{ "_id": "message3", "body": "Hello!", "senderId": "gauss", "receiverIds": ["lovelace", "crick"] }
+```
+
+Using Core Data to save objects will take care of this automatically. If you change one side of a many-to-many relationship for instance, changes will also be made to all other documents participating in the relationship. This probably has to be revisited based on practical usage scenarios, but seems to work well as a default at the moment.
+
+`METIncrementalStore` observes `METDatabaseDidChangeNotification` and will post `METIncrementalStoreObjectsDidChangeNotification` if a database change leads to changes to objects. The `userInfo` of the notification contains values for `NSInsertedObjectsKey`, `NSUpdatedObjectsKey` and `NSDeletedObjectsKey`. Although these contain `NSManagedObjectID`s instead of the `NSManagedObject`s `NSManagedObjectContextObjectsDidChangeNotification` contains, a little trick allows us to still use `mergeChangesFromContextDidSaveNotification` on a context. The trick is to translate the notification to `NSPersistentStoreDidImportUbiquitousContentChangesNotification`, which is used by iCloud for the same purpose:
+
+``` objective-c
+- (void)objectsDidChange:(NSNotification *)notification {
+  [_mainQueueManagedObjectContext performBlock:^{
+    // Use NSPersistentStoreDidImportUbiquitousContentChangesNotification to allow object IDs in the userInfo for mergeChangesFromContextDidSaveNotification
+    [_mainQueueManagedObjectContext mergeChangesFromContextDidSaveNotification:[[NSNotification alloc] initWithName:NSPersistentStoreDidImportUbiquitousContentChangesNotification object:notification.object userInfo:notification.userInfo]];
+  }];
+}
+```
+
+`METModelController` can be used to encapsulate intialization of the Core Data stack and also includes the above code.
+
+The way Core Data fetching has been implemented is fairly naive and really inefficient. All documents in a given collection are instantiated as `NSManagedObject`s before a `predicate` and `sortDescriptors` are applied. At least some of this work should be offloaded to the local cache, so we only have to perform further processing on a subset of documents.
+
+### Accounts
+
+Support for accounts is very basic at the moment and will be improved soon. Only logging with email/password has been implemented so far:
+
+``` objective-c
+[client loginWithEmail:@"martijn@martijnwalraven.com" password:@"correct" completionHandler:^(NSError *error) {
+  ...
+}];
+```
+
+This calls the login method (which acts as a barrier so no other methods can execute concurrently) and sets the `account` property on `METDDPClient`. A `METAccount` encapsulates a `userID`, `resumeToken` and `expiryDate`. This information is used to log in automatically on reconnection (the login method is sent before other in-progress methods). In the future, accounts should survive app restarts and will be stored in the Keychain. Services like Facebook and Twitter should also be supported and preferrably integrate with iOS `ACAccount`s so users don't have to supply login credentials but only have to give permission to link the account.
+
+## Author
+
+- [Martijn Walraven](http://github.com/martijnwalraven) ([@martijnwalraven](https://twitter.com/martijnwalraven))
+
+## License
+
+Meteor for iOS is available under the MIT license. See the LICENSE file for more info.

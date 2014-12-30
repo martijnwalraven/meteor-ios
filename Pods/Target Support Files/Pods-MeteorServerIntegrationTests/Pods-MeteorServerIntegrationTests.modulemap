@@ -1,0 +1,6 @@
+framework module Pods_MeteorServerIntegrationTests {
+  umbrella header "Pods-MeteorServerIntegrationTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,1 @@
+../../../InflectorKit/InflectorKit/TTTStringInflector.h

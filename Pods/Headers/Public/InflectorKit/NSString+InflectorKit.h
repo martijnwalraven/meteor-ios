@@ -1,0 +1,1 @@
+../../../InflectorKit/InflectorKit/NSString+InflectorKit.h
