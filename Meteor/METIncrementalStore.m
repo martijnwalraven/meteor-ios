@@ -61,9 +61,6 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
     if (URL) {
       _client = [[METDDPClient alloc] initWithServerURL:URL];
       _client.delegate = self;
-      METSubscription *subscription = [_client addSubscriptionWithName:@"playersWithMinimumScore" parameters:@[@20] completionHandler:^(NSError *error) {
-        NSLog(@"Encountered error: %@", error);
-      }];
       [_client connect];
     }
     _registeredObjectIDs = [[NSCountedSet alloc] init];
