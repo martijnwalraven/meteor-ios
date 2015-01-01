@@ -37,6 +37,7 @@
 @implementation METMethodInvocation {
   BOOL _executing;
   BOOL _finished;
+  BOOL _completionHandlerInvoked;
 }
 
 - (BOOL)isAsynchronous {
@@ -110,14 +111,19 @@
 }
 
 - (void)maybeInvokeCompletionHandler {
-  if (!(_resultReceived && _updatesFlushed)) return;
-  
-  if (_completionHandler) {
-    _completionHandler(_result, _error);
-  }
-  
-  if (_executing) {
-    [self finishOperation];
+  // Could be called from different threads
+  @synchronized(self) {
+    if (_completionHandlerInvoked) return;
+    if (!(_resultReceived && _updatesFlushed)) return;
+    
+    if (_completionHandler) {
+      _completionHandlerInvoked = YES;
+      _completionHandler(_result, _error);
+    }
+    
+    if (_executing) {
+      [self finishOperation];
+    }
   }
 }
 
