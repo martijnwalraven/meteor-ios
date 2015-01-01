@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		26477ED129ABDE9763037C17 /* Pods_MeteorServerIntegrationTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26863D8CE1BD60A052267031 /* Pods_MeteorServerIntegrationTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		4307FAAD056D0791BC285254 /* Pods_MeteorUnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68299C19F8D72A45B8DC7B0C /* Pods_MeteorUnitTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		4E6642A5E02221093E2A284C /* Pods_MeteorUnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7BE8E3F53B80FCB7C1DA4E /* Pods_MeteorUnitTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		9F08C79F1A2C85BB002961F3 /* METAccountsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F08C79D1A2C85BB002961F3 /* METAccountsTests.m */; };
 		9F12BACD19DD67CB008437DC /* XCTestCase+Meteor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F12BACC19DD67CB008437DC /* XCTestCase+Meteor.m */; };
 		9F160CF41A2DDFEF000B6ABC /* METMethodInvocationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F160CF31A2DDFEF000B6ABC /* METMethodInvocationTests.m */; };
@@ -16,6 +15,7 @@
 		9F30533D19457769006F1E64 /* MockMETDDPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F30533619457769006F1E64 /* MockMETDDPConnection.m */; };
 		9F30533F19457769006F1E64 /* XCTAsyncTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F30533A19457769006F1E64 /* XCTAsyncTestCase.m */; };
 		9F30534019457769006F1E64 /* XCTFailure.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F30533C19457769006F1E64 /* XCTFailure.m */; };
+		9F32E1CB1A557E0200AAC258 /* METCoreDataDDPClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F32E1CA1A557E0200AAC258 /* METCoreDataDDPClientTests.m */; };
 		9F38F34019447AE500027BB5 /* METDocumentIDGenerationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC511F19445360002EA8AF /* METDocumentIDGenerationTests.m */; };
 		9F38F34819447C9300027BB5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FFC516F19445D05002EA8AF /* libz.dylib */; };
 		9F38F34919447CB200027BB5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FFC517419445F7F002EA8AF /* UIKit.framework */; };
@@ -53,14 +53,14 @@
 		9FFC514119445360002EA8AF /* METRandomStreamTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC512219445360002EA8AF /* METRandomStreamTests.m */; };
 		9FFC514219445360002EA8AF /* METRetryStrategyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC512319445360002EA8AF /* METRetryStrategyTests.m */; };
 		9FFC514319445360002EA8AF /* METTimerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFC512419445360002EA8AF /* METTimerTests.m */; };
+		A8E5E569248FFB7B5978FA6D /* Pods_MeteorServerIntegrationTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08AFDD1F30F0E484B66C7C05 /* Pods_MeteorServerIntegrationTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1E07D88B68D50CA2375B9B27 /* Pods-MeteorServerIntegrationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeteorServerIntegrationTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-MeteorServerIntegrationTests/Pods-MeteorServerIntegrationTests.release.xcconfig"; sourceTree = "<group>"; };
-		26863D8CE1BD60A052267031 /* Pods_MeteorServerIntegrationTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeteorServerIntegrationTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3AB5DAC32388F8722EEFE356 /* Pods-MeteorUnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeteorUnitTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-MeteorUnitTests/Pods-MeteorUnitTests.release.xcconfig"; sourceTree = "<group>"; };
-		68299C19F8D72A45B8DC7B0C /* Pods_MeteorUnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeteorUnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7A05779AEF7AB02686B73859 /* Pods-MeteorServerIntegrationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeteorServerIntegrationTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-MeteorServerIntegrationTests/Pods-MeteorServerIntegrationTests.debug.xcconfig"; sourceTree = "<group>"; };
+		08AFDD1F30F0E484B66C7C05 /* Pods_MeteorServerIntegrationTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeteorServerIntegrationTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		29DE7CB75362569679BD3592 /* Pods-MeteorServerIntegrationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeteorServerIntegrationTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-MeteorServerIntegrationTests/Pods-MeteorServerIntegrationTests.debug.xcconfig"; sourceTree = "<group>"; };
+		8F7BE8E3F53B80FCB7C1DA4E /* Pods_MeteorUnitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeteorUnitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9582E9987D5E41B683095D3A /* Pods-MeteorServerIntegrationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeteorServerIntegrationTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-MeteorServerIntegrationTests/Pods-MeteorServerIntegrationTests.release.xcconfig"; sourceTree = "<group>"; };
 		9F08C79D1A2C85BB002961F3 /* METAccountsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METAccountsTests.m; sourceTree = "<group>"; };
 		9F12BACC19DD67CB008437DC /* XCTestCase+Meteor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+Meteor.m"; sourceTree = "<group>"; };
 		9F12BACE19DD67F7008437DC /* XCTestCase+Meteor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+Meteor.h"; sourceTree = "<group>"; };
@@ -72,6 +72,7 @@
 		9F30533A19457769006F1E64 /* XCTAsyncTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCTAsyncTestCase.m; sourceTree = "<group>"; };
 		9F30533B19457769006F1E64 /* XCTFailure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCTFailure.h; sourceTree = "<group>"; };
 		9F30533C19457769006F1E64 /* XCTFailure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCTFailure.m; sourceTree = "<group>"; };
+		9F32E1CA1A557E0200AAC258 /* METCoreDataDDPClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METCoreDataDDPClientTests.m; sourceTree = "<group>"; };
 		9F38F33419447ABE00027BB5 /* MeteorServerIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeteorServerIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F38F33719447ABE00027BB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9F774CD71A2EC5E000D49296 /* METSubscriptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METSubscriptionsTests.m; sourceTree = "<group>"; };
@@ -108,7 +109,8 @@
 		9FFC512419445360002EA8AF /* METTimerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METTimerTests.m; sourceTree = "<group>"; };
 		9FFC516F19445D05002EA8AF /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		9FFC517419445F7F002EA8AF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		A0D12B3F761718385AC31075 /* Pods-MeteorUnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeteorUnitTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-MeteorUnitTests/Pods-MeteorUnitTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A1188675E2545636C83FD540 /* Pods-MeteorUnitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeteorUnitTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-MeteorUnitTests/Pods-MeteorUnitTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F5E94671479BFBB5174E432F /* Pods-MeteorUnitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeteorUnitTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-MeteorUnitTests/Pods-MeteorUnitTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,7 +121,7 @@
 				9F38F34919447CB200027BB5 /* UIKit.framework in Frameworks */,
 				9FFAC40B19458EAA0021B357 /* CoreData.framework in Frameworks */,
 				9F38F34819447C9300027BB5 /* libz.dylib in Frameworks */,
-				26477ED129ABDE9763037C17 /* Pods_MeteorServerIntegrationTests.framework in Frameworks */,
+				A8E5E569248FFB7B5978FA6D /* Pods_MeteorServerIntegrationTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,24 +132,13 @@
 				9FC9D5461944604300695561 /* UIKit.framework in Frameworks */,
 				9FFAC40A19458EA00021B357 /* CoreData.framework in Frameworks */,
 				9FC9D5411944603B00695561 /* libz.dylib in Frameworks */,
-				4307FAAD056D0791BC285254 /* Pods_MeteorUnitTests.framework in Frameworks */,
+				4E6642A5E02221093E2A284C /* Pods_MeteorUnitTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		05F97A1EABE33E3DC22CD509 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				7A05779AEF7AB02686B73859 /* Pods-MeteorServerIntegrationTests.debug.xcconfig */,
-				1E07D88B68D50CA2375B9B27 /* Pods-MeteorServerIntegrationTests.release.xcconfig */,
-				A0D12B3F761718385AC31075 /* Pods-MeteorUnitTests.debug.xcconfig */,
-				3AB5DAC32388F8722EEFE356 /* Pods-MeteorUnitTests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		9F30533419457769006F1E64 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,6 +191,7 @@
 		9F38F34C1944AF0000027BB5 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				9F32E1CA1A557E0200AAC258 /* METCoreDataDDPClientTests.m */,
 				9FF4712D1A45E84600A8AAFD /* METIncrementalStoreTests.m */,
 			);
 			name = "Core Data";
@@ -255,7 +247,7 @@
 				9FE144BE1945E7B7001D9EBD /* Fixtures */,
 				9FFC509D1944508E002EA8AF /* Products */,
 				9FFC517119445D31002EA8AF /* Frameworks */,
-				05F97A1EABE33E3DC22CD509 /* Pods */,
+				C9D84B7BE93D07C382EC6D8E /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -294,10 +286,21 @@
 				9FFAC40919458EA00021B357 /* CoreData.framework */,
 				9FFC517419445F7F002EA8AF /* UIKit.framework */,
 				9FFC516F19445D05002EA8AF /* libz.dylib */,
-				26863D8CE1BD60A052267031 /* Pods_MeteorServerIntegrationTests.framework */,
-				68299C19F8D72A45B8DC7B0C /* Pods_MeteorUnitTests.framework */,
+				08AFDD1F30F0E484B66C7C05 /* Pods_MeteorServerIntegrationTests.framework */,
+				8F7BE8E3F53B80FCB7C1DA4E /* Pods_MeteorUnitTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C9D84B7BE93D07C382EC6D8E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				29DE7CB75362569679BD3592 /* Pods-MeteorServerIntegrationTests.debug.xcconfig */,
+				9582E9987D5E41B683095D3A /* Pods-MeteorServerIntegrationTests.release.xcconfig */,
+				A1188675E2545636C83FD540 /* Pods-MeteorUnitTests.debug.xcconfig */,
+				F5E94671479BFBB5174E432F /* Pods-MeteorUnitTests.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -514,6 +517,7 @@
 				9FFC513919445360002EA8AF /* METDDPMessageTests.m in Sources */,
 				9FF471201A4583F500A8AAFD /* METDDPClientCallingMethods.m in Sources */,
 				9F94F8A01A442B3D0010440E /* METDatabaseTests.m in Sources */,
+				9F32E1CB1A557E0200AAC258 /* METCoreDataDDPClientTests.m in Sources */,
 				9FE4D6F01A4856F000434C89 /* METDDPClientReconnectingTests.m in Sources */,
 				9FE144C11945E7B7001D9EBD /* Model.xcdatamodeld in Sources */,
 				9F1764F81A41978F008EE74F /* METDatabaseChangesTests.m in Sources */,
@@ -546,7 +550,7 @@
 /* Begin XCBuildConfiguration section */
 		9F38F33E19447ABF00027BB5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7A05779AEF7AB02686B73859 /* Pods-MeteorServerIntegrationTests.debug.xcconfig */;
+			baseConfigurationReference = 29DE7CB75362569679BD3592 /* Pods-MeteorServerIntegrationTests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -562,7 +566,7 @@
 		};
 		9F38F33F19447ABF00027BB5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1E07D88B68D50CA2375B9B27 /* Pods-MeteorServerIntegrationTests.release.xcconfig */;
+			baseConfigurationReference = 9582E9987D5E41B683095D3A /* Pods-MeteorServerIntegrationTests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -652,7 +656,7 @@
 		};
 		9FFC50B41944508E002EA8AF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A0D12B3F761718385AC31075 /* Pods-MeteorUnitTests.debug.xcconfig */;
+			baseConfigurationReference = A1188675E2545636C83FD540 /* Pods-MeteorUnitTests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -674,7 +678,7 @@
 		};
 		9FFC50B51944508E002EA8AF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3AB5DAC32388F8722EEFE356 /* Pods-MeteorUnitTests.release.xcconfig */;
+			baseConfigurationReference = F5E94671479BFBB5174E432F /* Pods-MeteorUnitTests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (

@@ -23,12 +23,6 @@
             location = "group:METDDPConnection.m">
          </FileRef>
          <FileRef
-            location = "group:METRetryStrategy.h">
-         </FileRef>
-         <FileRef
-            location = "group:METRetryStrategy.m">
-         </FileRef>
-         <FileRef
             location = "group:METDDPHeartbeat.h">
          </FileRef>
          <FileRef
@@ -91,22 +85,6 @@
       </Group>
       <Group
          location = "group:"
-         name = "Accounts">
-         <FileRef
-            location = "group:METDDPClient+AccountsPassword.h">
-         </FileRef>
-         <FileRef
-            location = "group:METDDPClient+AccountsPassword.m">
-         </FileRef>
-         <FileRef
-            location = "group:METAccount.h">
-         </FileRef>
-         <FileRef
-            location = "group:METAccount.m">
-         </FileRef>
-      </Group>
-      <Group
-         location = "group:"
          name = "Database">
          <FileRef
             location = "group:METDatabase.h">
@@ -115,19 +93,13 @@
             location = "group:METDatabase.m">
          </FileRef>
          <FileRef
+            location = "group:METFetchRequest.h">
+         </FileRef>
+         <FileRef
+            location = "group:METFetchRequest.m">
+         </FileRef>
+         <FileRef
             location = "group:METDatabase_Internal.h">
-         </FileRef>
-         <FileRef
-            location = "group:METDocumentKey.h">
-         </FileRef>
-         <FileRef
-            location = "group:METDocumentKey.m">
-         </FileRef>
-         <FileRef
-            location = "group:METDocument.h">
-         </FileRef>
-         <FileRef
-            location = "group:METDocument.m">
          </FileRef>
          <FileRef
             location = "group:METCollection.h">
@@ -137,6 +109,24 @@
          </FileRef>
          <FileRef
             location = "group:METCollection_Internal.h">
+         </FileRef>
+         <FileRef
+            location = "group:METDocument.h">
+         </FileRef>
+         <FileRef
+            location = "group:METDocument.m">
+         </FileRef>
+         <FileRef
+            location = "group:METDocumentKey.h">
+         </FileRef>
+         <FileRef
+            location = "group:METDocumentKey.m">
+         </FileRef>
+         <FileRef
+            location = "group:METDocumentCache.h">
+         </FileRef>
+         <FileRef
+            location = "group:METDocumentCache.m">
          </FileRef>
          <FileRef
             location = "group:METDatabaseChanges.h">
@@ -153,22 +143,16 @@
          <FileRef
             location = "group:METDocumentChangeDetails.m">
          </FileRef>
-         <FileRef
-            location = "group:METDocumentCache.h">
-         </FileRef>
-         <FileRef
-            location = "group:METDocumentCache.m">
-         </FileRef>
-         <FileRef
-            location = "group:METFetchRequest.h">
-         </FileRef>
-         <FileRef
-            location = "group:METFetchRequest.m">
-         </FileRef>
       </Group>
       <Group
          location = "group:"
          name = "Core Data">
+         <FileRef
+            location = "group:METCoreDataDDPClient.h">
+         </FileRef>
+         <FileRef
+            location = "group:METCoreDataDDPClient.m">
+         </FileRef>
          <FileRef
             location = "group:METIncrementalStore.h">
          </FileRef>
@@ -178,16 +162,26 @@
          <FileRef
             location = "group:METIncrementalStore_Testing.h">
          </FileRef>
+      </Group>
+      <Group
+         location = "group:"
+         name = "Accounts">
          <FileRef
-            location = "group:METModelController.h">
+            location = "group:METDDPClient+AccountsPassword.h">
          </FileRef>
          <FileRef
-            location = "group:METModelController.m">
+            location = "group:METDDPClient+AccountsPassword.m">
+         </FileRef>
+         <FileRef
+            location = "group:METAccount.h">
+         </FileRef>
+         <FileRef
+            location = "group:METAccount.m">
          </FileRef>
       </Group>
       <Group
          location = "group:"
-         name = "Utility">
+         name = "Utils">
          <FileRef
             location = "group:METDynamicVariable.h">
          </FileRef>
@@ -199,6 +193,12 @@
          </FileRef>
          <FileRef
             location = "group:METTimer.m">
+         </FileRef>
+         <FileRef
+            location = "group:METRetryStrategy.h">
+         </FileRef>
+         <FileRef
+            location = "group:METRetryStrategy.m">
          </FileRef>
          <Group
             location = "group:"
@@ -246,16 +246,19 @@
          </Group>
       </Group>
    </Group>
-   <FileRef
-      location = "group:Tests/Meteor Tests.xcodeproj">
-   </FileRef>
    <Group
       location = "container:"
       name = "Examples">
       <FileRef
+         location = "group:Examples/Todos/Todos.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:Examples/Leaderboard/Leaderboard.xcodeproj">
       </FileRef>
    </Group>
+   <FileRef
+      location = "group:Tests/Meteor Tests.xcodeproj">
+   </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>

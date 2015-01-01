@@ -19,7 +19,7 @@
   },
   "requires_arc": true,
   "source_files": "Meteor/**/*.{h,m}",
-  "public_header_files": "Meteor/{METDDPClient,METAccount,METSubscription,METDatabase,METCollection,METDocument,METDocumentKey,METDatabaseChanges,METDocumentChangeDetails,METIncrementalStore,METModelController}.h",
+  "public_header_files": "Meteor/{METDDPClient,METAccount,METSubscription,METDatabase,METCollection,METDocument,METDocumentKey,METDatabaseChanges,METDocumentChangeDetails,METCoreDataDDPClient,METIncrementalStore}.h",
   "frameworks": "CoreData",
   "dependencies": {
     "PocketSocket": [

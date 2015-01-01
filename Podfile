@@ -5,7 +5,7 @@ use_frameworks!
 
 workspace 'Meteor'
 xcodeproj 'Tests/Meteor Tests'
-
+  
 target 'MeteorUnitTests' do
   pod 'Meteor', path: '.'
   pod 'OCMock'
@@ -17,5 +17,10 @@ end
 
 target 'Leaderboard' do
   xcodeproj 'Examples/Leaderboard/Leaderboard'
+  pod 'Meteor', path: '.'
+end
+
+target 'Todos' do
+  xcodeproj 'Examples/Todos/Todos'
   pod 'Meteor', path: '.'
 end
