@@ -18,24 +18,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-@class METDDPClient;
 
-@interface METModelController : NSObject
+#import "METDDPClient.h"
+@class METIncrementalStore;
 
-+ (instancetype)sharedModelController;
-+ (void)setSharedModelController:(METModelController *)modelController;
+@interface METCoreDataDDPClient : METDDPClient
 
-- (instancetype)initWithServerURL:(NSURL *)serverURL NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithConnection:(METDDPConnection *)connection managedObjectModel:(NSManagedObjectModel *)managedObjectModel NS_DESIGNATED_INITIALIZER;
 
-@property (copy, nonatomic, readonly) NSURL *serverURL;
-
+@property (strong, nonatomic, readonly) METIncrementalStore *persistentStore;
 @property (strong, nonatomic, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (strong, nonatomic, readonly) NSManagedObjectModel *managedObjectModel;
 @property (strong, nonatomic, readonly) NSManagedObjectContext *mainQueueManagedObjectContext;
-
-@property (copy, nonatomic, readonly) METDDPClient *client;
-
-- (id)documentIDForObjectID:(NSManagedObjectID *)objectID;
 
 @end

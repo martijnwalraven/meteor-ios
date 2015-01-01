@@ -21,19 +21,18 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-#import "METDDPClient.h"
-
+@class METDDPClient;
 @class METDocumentKey;
 
 extern NSString * const METIncrementalStoreErrorDomain;
 
 extern NSString * const METIncrementalStoreObjectsDidChangeNotification;
 
-@interface METIncrementalStore : NSIncrementalStore <METDDPClientDelegate>
+@interface METIncrementalStore : NSIncrementalStore
 
 + (NSString *)type;
 
-@property (strong, nonatomic) METDDPClient *client;
+@property (weak, nonatomic) METDDPClient *client;
 
 - (NSManagedObjectID *)objectIDForDocumentKey:(METDocumentKey *)documentKey;
 - (METDocumentKey *)documentKeyForObjectID:(NSManagedObjectID *)objectID;

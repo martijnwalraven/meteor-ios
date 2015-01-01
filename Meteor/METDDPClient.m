@@ -434,6 +434,10 @@ static METDDPClient *sharedClient;
   return [self addSubscriptionWithName:name parameters:nil completionHandler:nil];
 }
 
+- (METSubscription *)addSubscriptionWithName:(NSString *)name completionHandler:(METSubscriptionCompletionHandler)completionHandler {
+  return [self addSubscriptionWithName:name parameters:nil completionHandler:completionHandler];
+}
+
 - (METSubscription *)addSubscriptionWithName:(NSString *)name parameters:(NSArray *)parameters {
   return [self addSubscriptionWithName:name parameters:parameters completionHandler:nil];
 }
@@ -441,7 +445,7 @@ static METDDPClient *sharedClient;
 - (METSubscription *)addSubscriptionWithName:(NSString *)name parameters:(NSArray *)parameters completionHandler:(METSubscriptionCompletionHandler)completionHandler {
   NSString *identifier = [[METRandomValueGenerator defaultRandomValueGenerator] randomIdentifier];
   METSubscription *subscription = [[METSubscription alloc] initWithIdentifier:identifier name:name];
-  subscription.parameters = parameters;
+  subscription.parameters = [self convertParameters:parameters];
   subscription.completionHandler = completionHandler;
   _subscriptionsByIdentifier[identifier] = subscription;
   if (self.connected) {
@@ -546,6 +550,8 @@ static METDDPClient *sharedClient;
 }
 
 - (id)callMethodWithName:(NSString *)methodName parameters:(NSArray *)parameters options:(METMethodCallOptions)options receivedResultHandler:(METMethodCompletionHandler)receivedResultHandler completionHandler:(METMethodCompletionHandler)completionHandler {
+  parameters = [self convertParameters:parameters];
+  
   METMethodInvocationContext *enclosingMethodInvocationContext = [_methodInvocationContextDynamicVariable currentValue];
   BOOL alreadyInSimulation = enclosingMethodInvocationContext != nil;
   
@@ -678,6 +684,10 @@ static METDDPClient *sharedClient;
 }
 
 #pragma mark - Helper Methods
+
+- (NSArray *)convertParameters:(NSArray *)parameters {
+  return parameters;
+}
 
 - (NSError *)errorWithCode:(NSInteger)code description:(NSString *)description {
   NSDictionary *userInfo = @{NSLocalizedDescriptionKey: description};

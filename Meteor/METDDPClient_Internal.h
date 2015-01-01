@@ -57,4 +57,6 @@ typedef NS_OPTIONS(NSInteger, METMethodCallOptions) {
 
 - (void)loginWithParameters:(NSArray *)parameters completionHandler:(METLogInCompletionHandler)completionHandler;
 
+- (NSArray *)convertParameters:(NSArray *)parameters;
+
 @end

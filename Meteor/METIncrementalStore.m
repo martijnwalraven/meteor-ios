@@ -58,18 +58,13 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
 - (instancetype)initWithPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)persistentStoreCoordinator configurationName:(NSString *)configurationName URL:(NSURL *)URL options:(NSDictionary *)options {
   self = [super initWithPersistentStoreCoordinator:persistentStoreCoordinator configurationName:configurationName URL:URL options:options];
   if (self) {
-    if (URL) {
-      _client = [[METDDPClient alloc] initWithServerURL:URL];
-      _client.delegate = self;
-      [_client connect];
-    }
     _registeredObjectIDs = [[NSCountedSet alloc] init];
     _nodesByObjectID = [[NSMutableDictionary alloc] init];
     
     _notificationQueue = dispatch_queue_create("com.meteor.IncrementalStore.notificationQueue", DISPATCH_QUEUE_SERIAL);
     // dispatch_set_target_queue(_notificationQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(databaseDidChange:) name:METDatabaseDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(databaseDidChange:) name:METDatabaseDidChangeNotification object:_client.database];
   }
   
   return self;
@@ -77,12 +72,6 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-#pragma mark - METDDPClientDelegate
-
-- (void)client:(METDDPClient *)client didFailWithError:(NSError *)error {
-  NSLog(@"Encountered DDP client error: %@", error);
 }
 
 #pragma mark - NSIncrementalStore

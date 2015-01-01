@@ -18,49 +18,41 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "METModelController.h"
+#import "METCoreDataDDPClient.h"
 
+#import "METDDPClient_Internal.h"
 #import "METIncrementalStore.h"
 #import "METDocumentKey.h"
+#import "NSArray+METAdditions.h"
 
-static METModelController *_sharedModelController;
-
-@implementation METModelController {
-  METIncrementalStore *_incrementalStore;
-}
-
-#pragma mark - Singleton
-
-+ (instancetype)sharedModelController {
-	return _sharedModelController;
-}
-
-+ (void)setSharedModelController:(METModelController *)modelController {
-  _sharedModelController = modelController;
+@implementation METCoreDataDDPClient {
 }
 
 #pragma mark - Lifecycle
 
-- (instancetype)initWithServerURL:(NSURL *)serverURL {
-  self = [super init];
+- (instancetype)initWithConnection:(METDDPConnection *)connection {
+  return [self initWithConnection:connection managedObjectModel:[NSManagedObjectModel mergedModelFromBundles:nil]];
+}
+
+- (instancetype)initWithConnection:(METDDPConnection *)connection managedObjectModel:(NSManagedObjectModel *)managedObjectModel {
+  self = [super initWithConnection:connection];
   if (self) {
-    _serverURL = [serverURL copy];
-    
     NSError *error = nil;
     
-    _managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
+    _managedObjectModel = managedObjectModel;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_managedObjectModel];
     
-    _incrementalStore = (METIncrementalStore *)[_persistentStoreCoordinator addPersistentStoreWithType:[METIncrementalStore type] configuration:nil URL:serverURL options:nil error:&error];
-    if (!_incrementalStore) {
+    _persistentStore = (METIncrementalStore *)[_persistentStoreCoordinator addPersistentStoreWithType:[METIncrementalStore type] configuration:nil URL:nil options:nil error:&error];
+    if (!_persistentStore) {
       NSLog(@"Failed adding persistent store: %@", error);
       abort();
     }
+    _persistentStore.client = self;
     
     _mainQueueManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     _mainQueueManagedObjectContext.persistentStoreCoordinator = _persistentStoreCoordinator;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(objectsDidChange:) name:METIncrementalStoreObjectsDidChangeNotification object:_incrementalStore];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(objectsDidChange:) name:METIncrementalStoreObjectsDidChangeNotification object:_persistentStore];
   }
   return self;
 }
@@ -69,12 +61,17 @@ static METModelController *_sharedModelController;
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (METDDPClient *)client {
-  return _incrementalStore.client;
-}
-
-- (id)documentIDForObjectID:(NSManagedObjectID *)objectID {
-  return [_incrementalStore documentKeyForObjectID:objectID].documentID;
+- (NSArray *)convertParameters:(NSArray *)parameters {
+  return [parameters mappedArrayUsingBlock:^id(id parameter) {
+    if ([parameter isKindOfClass:[NSManagedObject class]]) {
+      NSManagedObject *managedObject = (NSManagedObject *)parameter;
+      parameter = [_persistentStore documentKeyForObjectID:managedObject.objectID].documentID;
+    } else if ([parameter isKindOfClass:[NSManagedObjectID class]]) {
+      NSManagedObjectID *managedObjectID = (NSManagedObjectID *)parameter;
+      parameter = [_persistentStore documentKeyForObjectID:managedObjectID].documentID;
+    }
+    return parameter;
+  }];
 }
 
 #pragma mark - Notifications

@@ -62,6 +62,7 @@ typedef void (^METLogInCompletionHandler)(NSError *error);
 @property (strong, nonatomic, readonly) METDatabase *database;
 
 - (METSubscription *)addSubscriptionWithName:(NSString *)name;
+- (METSubscription *)addSubscriptionWithName:(NSString *)name completionHandler:(METSubscriptionCompletionHandler)completionHandler;
 - (METSubscription *)addSubscriptionWithName:(NSString *)name parameters:(NSArray *)parameters;
 - (METSubscription *)addSubscriptionWithName:(NSString *)name parameters:(NSArray *)parameters completionHandler:(METSubscriptionCompletionHandler)completionHandler;
 - (void)removeSubscription:(METSubscription *)subscription;
