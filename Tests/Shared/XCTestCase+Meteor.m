@@ -45,7 +45,15 @@
 - (XCTestExpectation *)expectationForDatabaseDidChangeNotificationWithHandler:(BOOL (^)(METDatabaseChanges *databaseChanges))handler {
   return [self expectationForNotification:METDatabaseDidChangeNotification object:nil handler:^BOOL(NSNotification *notification) {
     METDatabaseChanges *databaseChanges = notification.userInfo[METDatabaseChangesKey];
-    return databaseChanges ? handler(databaseChanges) : NO;
+    if (databaseChanges) {
+      if (handler) {
+        return handler(databaseChanges);
+      } else {
+        return YES;
+      }
+    } else {
+      return NO;
+    }
   }];
 }
 

@@ -451,6 +451,8 @@ static METDDPClient *sharedClient;
 }
 
 - (void)sendSubMessageForSubscription:(METSubscription *)subscription {
+  NSParameterAssert(subscription);
+  
   NSMutableDictionary *message = [[NSMutableDictionary alloc] init];
   message[@"msg"] = @"sub";
   message[@"id"] = subscription.identifier;
@@ -465,15 +467,15 @@ static METDDPClient *sharedClient;
 }
 
 - (void)removeSubscription:(METSubscription *)subscription {
+  NSParameterAssert(subscription);
+  
+  [_subscriptionsByIdentifier removeObjectForKey:subscription.identifier];
+  [_subscriptionsToBeRevivedAfterReconnect removeObject:subscription];
   [self sendUnsubMessageForSubscription:subscription];
 }
 
 - (void)sendUnsubMessageForSubscription:(METSubscription *)subscription {
-  NSMutableDictionary *message = [[NSMutableDictionary alloc] init];
-  message[@"msg"] = @"unsub";
-  message[@"id"] = subscription.identifier;
-  
-  [self sendMessage:message];
+  [self sendMessage:@{@"msg": @"unsub", @"id": subscription.identifier}];
 }
 
 - (void)didReceiveNoSubMessage:(NSDictionary *)message {
@@ -482,9 +484,10 @@ static METDDPClient *sharedClient;
   
   METSubscription *subscription = _subscriptionsByIdentifier[identifier];
   if (!subscription) {
-    NSLog(@"Received nosub message for unknown subscription ID: %@", identifier);
     return;
   }
+  
+  [self removeSubscriptionToBeRevivedAfterConnect:subscription];
   
   METSubscriptionCompletionHandler completionHandler = subscription.completionHandler;
   if (completionHandler) {
@@ -505,18 +508,22 @@ static METDDPClient *sharedClient;
       continue;
     }
     
+    [self removeSubscriptionToBeRevivedAfterConnect:subscription];
+    
     [_database performAfterBufferedUpdatesAreFlushed:^{
       METSubscriptionCompletionHandler completionHandler = subscription.completionHandler;
+      subscription.ready = YES;
       if (completionHandler) {
         completionHandler(nil);
       }
-      subscription.ready = YES;
     }];
-    
-    [_subscriptionsToBeRevivedAfterReconnect removeObject:subscription];
-    if (_subscriptionsToBeRevivedAfterReconnect.count < 1) {
-      _database.waitingForQuiescence = NO;
-    }
+  }
+}
+
+- (void)removeSubscriptionToBeRevivedAfterConnect:(METSubscription *)subscription {
+  [_subscriptionsToBeRevivedAfterReconnect removeObject:subscription];
+  if (_subscriptionsToBeRevivedAfterReconnect.count < 1) {
+    _database.waitingForQuiescence = NO;
   }
 }
 

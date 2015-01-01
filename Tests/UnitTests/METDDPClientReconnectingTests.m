@@ -60,7 +60,7 @@
 
 #pragma mark - Subscriptions
 
-- (void)testReconnectingWithSubscriptionsResendsSubMessages {
+- (void)testReconnectingResendsSubMessagesForSubscriptions {
   METSubscription *allPlayers = [_client addSubscriptionWithName:@"allPlayers" parameters:nil];
   METSubscription *playersWithMinimumScore = [_client addSubscriptionWithName:@"playersWithMinimumScore" parameters:@[@20]];
   
@@ -74,7 +74,26 @@
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
 }
 
-- (void)testReconnectingWithReadySubscriptionsWaitsUntilTheyAreAllReadyAgain {
+- (void)testReconnectingDoesNotResendSubMessageForRemovedSubscription {
+  [_database performUpdatesInLocalCacheWithoutTrackingChanges:^(METDocumentCache *localCache) {
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] fields:@{@"name": @"Ada Lovelace", @"score": @25}];
+  }];
+  
+  METSubscription *allPlayers = [_client addSubscriptionWithName:@"allPlayers" parameters:nil];
+  allPlayers.ready = YES;
+  
+  [_client disconnect];
+  
+  [_client removeSubscription:allPlayers];
+  
+  [self expectationForDatabaseDidChangeNotificationWithHandler:nil];
+  
+  [_client connect];
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+}
+
+- (void)testReconnectingWaitsUntilReadySubscriptionsTheyAreAllReadyAgain {
   [_database performUpdatesInLocalCacheWithoutTrackingChanges:^(METDocumentCache *localCache) {
     [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] fields:@{@"name": @"Ada Lovelace", @"score": @25}];
     [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"gauss"] fields:@{@"name": @"Carl Friedrich Gauss", @"score": @15}];
