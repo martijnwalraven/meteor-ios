@@ -100,8 +100,9 @@
     [expectation fulfill];
   }];
   
-  [_connection receiveMessage:@{@"msg": @"result", @"id": [self lastMethodID], @"error": @{@"error": @403, @"reason": @"bla", @"details": @"morebla"}}];
-  [_connection receiveMessage:@{@"msg": @"updated", @"methods": @[[self lastMethodID]]}];
+  NSString *lastMethodID = [self lastMethodID];
+  [_connection receiveMessage:@{@"msg": @"result", @"id": lastMethodID, @"error": @{@"error": @403, @"reason": @"bla", @"details": @"morebla"}}];
+  [_connection receiveMessage:@{@"msg": @"updated", @"methods": @[lastMethodID]}];
   
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
 }
