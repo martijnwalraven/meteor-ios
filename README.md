@@ -14,11 +14,15 @@ It is in dire need of better documentation and more comprehensive examples, but 
 
 I had already started work on this project when Swift was announced. Although I'm impressed by Swift and now use it on other projects, I decided it was too soon to consider a rewrite. The language was and is evolving, and some features are still missing. Performance can be unpredictable (especially when dealing with arrays and dictionaries) and tool support (Xcode) is not as stable as it is for Objective-C.
 
-Especially with a new version of CocoaPods on the way (see below), using Meteor for iOS from Swift should be convenient enough for now however. Once Swift stabilizes and language idioms become established either Swift extensions or a rewrite may be needed.
+Especially with a new version of CocoaPods on the way (see below), using Meteor for iOS from Swift should be convenient enough for now however (see the 'Todos' example). Once Swift stabilizes and language idioms become established either Swift extensions or a rewrite may be needed.
 
 ## Getting Started
 
-The easiest way to use Meteor for iOS is through CocoaPods. Until recently, there was no convenient way to use CocoaPods with Swift. The release of CocoaPods 0.36 promises to change this however, by supporting frameworks (see http://blog.cocoapods.org/Pod-Authors-Guide-to-CocoaPods-Frameworks/). As frameworks are only supported on iOS 8 or higher, this means iOS 7 users are out of luck for now. It should be possible to support both building as a framework and as a static library, but I don't know enough about CocoaPods to get this to work. Input is very welcome!
+###Examples
+If you just want to have a look at the project, you should be able to open the Meteor workspace and run the examples. Both 'Leaderboard' and 'Todos' are based on existing Meteor sample apps. You'll have to install a local version of the Meteor app using `meteor create --example todos` or `meteor create --example leaderboard` before you can run the iOS app. You may alsio have to change the address of the server in the AppDelegate to refer to your machine.
+
+###CocoaPods
+The easiest way to use Meteor for iOS in your own project is through CocoaPods. Until recently, there was no convenient way to use CocoaPods with Swift. The release of CocoaPods 0.36 promises to change this however, by supporting frameworks (see http://blog.cocoapods.org/Pod-Authors-Guide-to-CocoaPods-Frameworks/). As frameworks are only supported on iOS 8 or higher, this means iOS 7 users are out of luck for now. It should be possible to support both building as a framework and as a static library, but I don't know enough about CocoaPods to get this to work. Input is very welcome!
 
 Because CocoaPods 0.36 has not been officially released, a prerelease version has to be installed using `gem install cocoapods --pre`.
 
@@ -41,8 +45,6 @@ In Swift:
 ``` swift
 import Meteor
 ```
-
-Alternatively, you should be able to open the Meteor workspace and run the tests and the Leaderboard example without installing CocoaPods.
 
 ## Usage
 
@@ -137,6 +139,8 @@ If a stub has been defined, it will be executed first and could call more method
 
 ### Core Data
 
+The easiest way to use Core Data is through `METCoreDataDDPClient`, a `METDDPClient` subclass that encapsulates the Core Data stack and adds some additional functionality. It allows you to pass parameters of type `NSManagedObject` or `NSManagedObjectID` to `addSubscriptionWithName:parameters:` or `callMethodWithName:parameters:`, and will convert them to a document ID.
+
 `METIncrementalStore` is an `NSIncrementalStore` subclass that handles Core Data fetch and save requests by delegating these to Meteor. A managed object model is mapped automatically to a document model (although a different `fieldName` can be specified in the `userInfo` of a property in Xcode). All types of relationships – one-to-one, one-to-many and many-to-many – are supported.
 
 Currently, all relationships are expected to be defined on both sides, and documents on both sides should contain relationship details and be kept in sync.
@@ -166,8 +170,6 @@ Using Core Data to save objects will take care of this automatically. If you cha
   }];
 }
 ```
-
-`METModelController` can be used to encapsulate intialization of the Core Data stack and also includes the above code.
 
 The way Core Data fetching has been implemented is fairly naive and really inefficient. All documents in a given collection are instantiated as `NSManagedObject`s before a `predicate` and `sortDescriptors` are applied. At least some of this work should be offloaded to the local cache, so we only have to perform further processing on a subset of documents.
 
