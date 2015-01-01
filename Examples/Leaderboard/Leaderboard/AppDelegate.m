@@ -23,7 +23,9 @@
 @import Meteor;
 #import "PlayersTableViewController.h"
 
-@implementation AppDelegate
+@implementation AppDelegate {
+  METCoreDataDDPClient *_client;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 #if TARGET_IPHONE_SIMULATOR
@@ -31,12 +33,12 @@
 #else
   NSString *serverURLString = @"ws://cultivate.ngrok.com/websocket";
 #endif
-  METModelController *modelController = [[METModelController alloc] initWithServerURL:[NSURL URLWithString:serverURLString]];
-  [METModelController setSharedModelController:modelController];
+  _client = [[METCoreDataDDPClient alloc] initWithServerURL:[NSURL URLWithString:serverURLString]];
+  [_client connect];
 
   UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
   PlayersTableViewController *playersTableViewController = (PlayersTableViewController *)navigationController.topViewController;
-  playersTableViewController.managedObjectContext = modelController.mainQueueManagedObjectContext;
+  playersTableViewController.managedObjectContext = _client.mainQueueManagedObjectContext;
 
   return YES;
 }
