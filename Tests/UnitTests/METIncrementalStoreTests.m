@@ -312,10 +312,10 @@
 
 - (void)testUpdatingObjectPostsDatabaseDidChangeNotification {
   NSManagedObject *lovelace = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"]];
-
+  [lovelace setValue:@30 forKey:@"score"];
+  
   [self expectationForChangeToDocumentWithKey:[_store documentKeyForObjectID:lovelace.objectID] changeType:METDocumentChangeTypeUpdate changedFields:@{@"score": @30}];
   
-  [lovelace setValue:@30 forKey:@"score"];
   [self saveManagedObjectContext];
   
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
@@ -323,10 +323,10 @@
 
 - (void)testUpdatingObjectPostsObjectsDidChangeNotification {
   NSManagedObject *lovelace = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"]];
+  [lovelace setValue:@30 forKey:@"score"];
   
   [self expectationForChangeToObjectWithID:lovelace.objectID userInfoKey:NSUpdatedObjectsKey];
   
-  [lovelace setValue:@30 forKey:@"score"];
   [self saveManagedObjectContext];
   
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
@@ -343,10 +343,10 @@
 
 - (void)testDeletingObjectPostsDatabaseDidChangeNotification {
   NSManagedObject *lovelace = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"]];
+  [_managedObjectContext deleteObject:lovelace];
   
   [self expectationForChangeToDocumentWithKey:[_store documentKeyForObjectID:lovelace.objectID] changeType:METDocumentChangeTypeRemove changedFields:nil];
   
-  [_managedObjectContext deleteObject:lovelace];
   [self saveManagedObjectContext];
   
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
@@ -354,10 +354,31 @@
 
 - (void)testDeletingObjectPostsObjectsDidChangeNotification {
   NSManagedObject *lovelace = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"]];
+  [_managedObjectContext deleteObject:lovelace];
   
   [self expectationForChangeToObjectWithID:lovelace.objectID userInfoKey:NSDeletedObjectsKey];
   
-  [_managedObjectContext deleteObject:lovelace];
+  [self saveManagedObjectContext];
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+}
+
+- (void)testSavingMultipleObjectsPostsSingleNotification {
+  NSManagedObject *crick = [NSEntityDescription insertNewObjectForEntityForName:@"Player" inManagedObjectContext:_managedObjectContext];
+  [crick setValue:@"Francis Crick" forKey:@"name"];
+  [_managedObjectContext obtainPermanentIDsForObjects:@[crick] error:nil];
+  
+  NSManagedObject *lovelace = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"]];
+  [lovelace setValue:@30 forKey:@"score"];
+  
+  NSManagedObject *gauss = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"gauss"]];
+  
+  [_managedObjectContext deleteObject:gauss];
+  
+  [self expectationForDatabaseDidChangeNotificationWithHandler:^BOOL(METDatabaseChanges *databaseChanges) {
+    return [databaseChanges changeDetailsForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:[self documentIDForObject:crick]]] && [databaseChanges changeDetailsForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"]] && [databaseChanges changeDetailsForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"gauss"]];
+  }];
+  
   [self saveManagedObjectContext];
   
   [self waitForExpectationsWithTimeout:1.0 handler:nil];

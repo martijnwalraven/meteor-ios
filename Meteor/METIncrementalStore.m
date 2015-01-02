@@ -263,27 +263,30 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
 #pragma mark - Saving
 
 - (id)executeSaveChangesRequest:(NSSaveChangesRequest *)request withContext:(NSManagedObjectContext *)context error:(NSError *__autoreleasing *)error {
-  for (NSManagedObject *object in request.insertedObjects) {
-    METCollection *collection = [self collectionForEntity:object.entity];
-    id documentID = [self documentKeyForObjectID:object.objectID].documentID;
-    NSDictionary *fields = [self changedFieldsForObject:object];
-    [collection insertDocumentWithID:documentID fields:fields];
-  }
-
-  for (NSManagedObject *object in request.updatedObjects) {
-    METCollection *collection = [self collectionForEntity:object.entity];
-    id documentID = [self documentKeyForObjectID:object.objectID].documentID;
-    NSDictionary *changedFields = [self changedFieldsForObject:object];
-    if (changedFields.count > 0) {
-      [collection updateDocumentWithID:documentID changedFields:changedFields];
-    }
-  }
   
-  for (NSManagedObject *object in request.deletedObjects) {
-    METCollection *collection = [self collectionForEntity:object.entity];
-    id documentID = [self documentKeyForObjectID:object.objectID].documentID;
-    [collection removeDocumentWithID:documentID];
-  }
+  [_client.database performUpdates:^{
+    for (NSManagedObject *object in request.insertedObjects) {
+      METCollection *collection = [self collectionForEntity:object.entity];
+      id documentID = [self documentKeyForObjectID:object.objectID].documentID;
+      NSDictionary *fields = [self changedFieldsForObject:object];
+      [collection insertDocumentWithID:documentID fields:fields];
+    }
+    
+    for (NSManagedObject *object in request.updatedObjects) {
+      METCollection *collection = [self collectionForEntity:object.entity];
+      id documentID = [self documentKeyForObjectID:object.objectID].documentID;
+      NSDictionary *changedFields = [self changedFieldsForObject:object];
+      if (changedFields.count > 0) {
+        [collection updateDocumentWithID:documentID changedFields:changedFields];
+      }
+    }
+    
+    for (NSManagedObject *object in request.deletedObjects) {
+      METCollection *collection = [self collectionForEntity:object.entity];
+      id documentID = [self documentKeyForObjectID:object.objectID].documentID;
+      [collection removeDocumentWithID:documentID];
+    }
+  }];
   
   return @[];
 }
