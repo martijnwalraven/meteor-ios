@@ -16,6 +16,12 @@ Meteor.database.performUpdates {
   let listID: AnyObject = lists.insertDocumentWithFields(["name": "Favorite Scientists"])
   todos.insertDocumentWithFields(["text": "Ada Lovelace", "listId": listID])
   lists.updateDocumentWithID(listID, changedFields:["incompleteCount": 1])
+  
+  Meteor.addSubscriptionWithName("todos", parameters: [listID]) { (error) -> () in
+    if error != nil {
+      println("Encountered error subscribing to 'todos': \(error)")
+    }
+  }
 }
 ```
 
@@ -27,11 +33,19 @@ let list = NSEntityDescription.insertNewObjectForEntityForName("List", inManaged
 list.name = "Favorite Scientists"
 let lovelace = NSEntityDescription.insertNewObjectForEntityForName("Todo", inManagedObjectContext:managedObjectContext) as Todo
 lovelace.text = "Ada Lovelace"
+lovelace.list = list
 list.incompleteCount++
 
 var error: NSError?
 if !managedObjectContext.save(&error) {
   println("Encountered error saving objects: \(error)")
+}
+
+// Parameter 'list' is an NSManagedObject that is automatically converted to a documentID
+Meteor.addSubscriptionWithName("todos", parameters: [list]) { (error) -> () in
+  if error != nil {
+    println("Encountered error subscribing to 'todos': \(error)")
+  }
 }
 ```
 
