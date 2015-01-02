@@ -21,8 +21,8 @@
 import CoreData
 
 class Todo: NSManagedObject {
-  @NSManaged var creationDate: NSDate
-  @NSManaged var text: String
+  @NSManaged var creationDate: NSDate!
+  @NSManaged var text: String!
   @NSManaged var checked: Bool
-  @NSManaged var list: List
+  @NSManaged var list: List!
 }

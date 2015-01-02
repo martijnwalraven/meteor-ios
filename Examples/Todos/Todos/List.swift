@@ -21,7 +21,7 @@
 import CoreData
 
 class List: NSManagedObject {
-  @NSManaged var name: String
+  @NSManaged var name: String!
   @NSManaged var incompleteCount: Int
-  @NSManaged var todos: NSSet
+  @NSManaged var todos: NSSet!
 }

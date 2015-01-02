@@ -90,6 +90,9 @@
             location = "group:METDatabase.h">
          </FileRef>
          <FileRef
+            location = "group:METDatabase_Internal.h">
+         </FileRef>
+         <FileRef
             location = "group:METDatabase.m">
          </FileRef>
          <FileRef
@@ -97,9 +100,6 @@
          </FileRef>
          <FileRef
             location = "group:METFetchRequest.m">
-         </FileRef>
-         <FileRef
-            location = "group:METDatabase_Internal.h">
          </FileRef>
          <FileRef
             location = "group:METCollection.h">
