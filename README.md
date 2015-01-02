@@ -4,6 +4,37 @@ Meteor for iOS is work in progress, but aims to be a complete DDP client that in
 
 It is in dire need of better documentation and more comprehensive examples, but is already fairly feature complete and seems to work pretty well (although I expect bugs to surface once other people start using it).
 
+I'm still figuring out usage patterns and I'm actively improving the API. I'm mostly using it through Core Data in my own project, so I haven't gotten around implementing many convenience methods to manually deal with documents. Don't expect anything to be stable yet, but please do let me know what you think of it and what improvements you would like to see.
+
+To give a quick taste of the current API (in Swift):
+``` swift
+let lists = Meteor.database.collectionWithName("lists")
+let todos = Meteor.database.collectionWithName("todos")
+
+// Makes sure only a single change notification is posted
+Meteor.database.performUpdates {
+  let listID: AnyObject = lists.insertDocumentWithFields(["name": "Favorite Scientists"])
+  todos.insertDocumentWithFields(["text": "Ada Lovelace", "listId": listID])
+  lists.updateDocumentWithID(listID, changedFields:["incompleteCount": 1])
+}
+```
+
+With Core Data:
+``` swift
+let managedObjectContext = Meteor.mainQueueManagedObjectContext
+
+let list = NSEntityDescription.insertNewObjectForEntityForName("List", inManagedObjectContext:managedObjectContext) as List
+list.name = "Favorite Scientists"
+let lovelace = NSEntityDescription.insertNewObjectForEntityForName("Todo", inManagedObjectContext:managedObjectContext) as Todo
+lovelace.text = "Ada Lovelace"
+list.incompleteCount++
+
+var error: NSError?
+if !managedObjectContext.save(&error) {
+  println("Encountered error saving objects: \(error)")
+}
+```
+
 ## Features
 - Full support for latency compensation, faithfully (I hope) reproducing the semantics of the original JavaScript code. Modifications to documents are reflected immediately in the local cache and will be ammended by server changes only when the server completes sending data updates for the method (multiple methods concurrently modifying the same documents are handled correctly).
 - Posting batched and consolidated change notifications at appropriate times, instead of relying on fine grained updates. This helps keep UI work on the main thread to a minimum without sacrificing responsiveness.
@@ -19,12 +50,12 @@ Especially with a new version of CocoaPods on the way (see below), using Meteor 
 ## Getting Started
 
 ###Examples
-If you just want to have a look at the project, you should be able to open the Meteor workspace and run the examples. Both 'Leaderboard' and 'Todos' are based on existing Meteor sample apps. You'll have to install a local version of the Meteor app using `meteor create --example todos` or `meteor create --example leaderboard` before you can run the iOS app. You may alsio have to change the address of the server in the AppDelegate to refer to your machine.
+If you just want to have a look at the project, you should be able to open the Meteor workspace and run the examples. Both 'Todo' (written in Swift) and 'Leaderboard' (written in Objective-C) are based on existing Meteor example apps. You'll have to install a local version of the Meteor app using `meteor create --example todos` or `meteor create --example leaderboard` before you can run the iOS app. You also have to change the address of the server in the AppDelegate to refer to your machine.
 
-###CocoaPods
-The easiest way to use Meteor for iOS in your own project is through CocoaPods. Until recently, there was no convenient way to use CocoaPods with Swift. The release of CocoaPods 0.36 promises to change this however, by supporting frameworks (see http://blog.cocoapods.org/Pod-Authors-Guide-to-CocoaPods-Frameworks/). As frameworks are only supported on iOS 8 or higher, this means iOS 7 users are out of luck for now. It should be possible to support both building as a framework and as a static library, but I don't know enough about CocoaPods to get this to work. Input is very welcome!
+###Installation with CocoaPods
+The easiest way to use Meteor for iOS in your own project is through CocoaPods. Until recently, there was no convenient way to use CocoaPods with Swift. The release of CocoaPods 0.36 promises to change this however, by supporting frameworks (see http://blog.cocoapods.org/Pod-Authors-Guide-to-CocoaPods-Frameworks/). As frameworks are only supported on iOS 8 or higher, this means iOS 7 users are out of luck for now. It should be possible to support both building as a framework and as a static library, but I don't know enough about CocoaPods to get this to work reliably. Input is very welcome!
 
-Because CocoaPods 0.36 has not been officially released, a prerelease version has to be installed using `gem install cocoapods --pre`.
+Because CocoaPods 0.36 has not been officially released, you'll have to install a prerelease version using `gem install cocoapods --pre`.
 
 You can then write a `Podfile` referencing the project on GitHub (I will add it to the CocoaPods repo once it is more stable):
 ```
@@ -32,9 +63,8 @@ platform :ios, '8.0'
 use_frameworks!
 pod 'Meteor', git: 'https://github.com/martijnwalraven/meteor-ios.git' 
 ```
-(note the `use_frameworks!` line)
 
-Meteor for iOS will be built as a framework and is made available as a Clang module that can easily be imported without further configuration (you may need to build the project first before the module is recognized however):
+Meteor for iOS will then be built as a framework and is made available as a Clang module that can easily be imported without further configuration (you may need to build the project first before the module is recognized):
 
 In Objective-C:
 ``` objective-c
