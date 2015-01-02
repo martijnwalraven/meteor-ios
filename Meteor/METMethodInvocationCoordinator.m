@@ -75,9 +75,15 @@
     methodID = [[METRandomValueGenerator defaultRandomValueGenerator] randomIdentifier];
     methodInvocation.methodID = methodID;
   }
+  
   _methodInvocationsByMethodID[methodID] = methodInvocation;
+  
+  NSOperationQueue *operationQueue = _operationQueue;
   methodInvocation.completionBlock = ^{
-    [_methodInvocationsByMethodID removeObjectForKey:methodID];
+    // Make sure there hasn't been a reset
+    if (_operationQueue == operationQueue) {
+      [_methodInvocationsByMethodID removeObjectForKey:methodID];
+    }
   };
   
   for (METMethodInvocation *otherMethodInvocation in _operationQueue.operations.reverseObjectEnumerator) {
@@ -171,10 +177,13 @@
   });
 }
 
-- (void)resetWhileAddingMethodInvocationsToTheFrontOfTheQueueUsingBlock:(void (^)())block {
+- (void)resetWhileAddingMethodInvocationsToTheFrontOfTheQueueUsingBlock:(void (^)())block {  
   NSArray *methodInvocations = [_operationQueue.operations copy];
   [_operationQueue cancelAllOperations];
   [_bufferedDocumentsByKey removeAllObjects];
+  
+  _operationQueue = [[NSOperationQueue alloc] init];
+  _operationQueue.suspended = YES;
   
   if (block) {
     block();

@@ -173,6 +173,8 @@
     [_coordinator addMethodInvocation:barrierMethodInvocation];
   }];
   
+  _coordinator.suspended = NO;
+  
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
   
   XCTAssertFalse([_coordinator methodInvocationWithName:@"methodInvocation1"].isExecuting);

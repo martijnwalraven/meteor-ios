@@ -77,6 +77,7 @@
   }
   
   [self beginOperation];
+  
   [_client sendMethodMessageForMethodInvocation:self];
   self.messageSent = YES;
 }
