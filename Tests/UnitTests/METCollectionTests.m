@@ -221,7 +221,7 @@
   }];
   
   XCTestExpectation *expectation = [self expectationWithDescription:@"completion handler invoked"];
-  [_collection updateDocumentWithID:@"lovelace" fields:@{@"score": @30, @"color": [NSNull null]} completionHandler:^(id result, NSError *error) {
+  [_collection updateDocumentWithID:@"lovelace" changedFields:@{@"score": @30, @"color": [NSNull null]} completionHandler:^(id result, NSError *error) {
     XCTAssertEqualObjects(result, @1);
     XCTAssertNil(error);
     [expectation fulfill];
@@ -240,7 +240,7 @@
   NSError *expectedError = [NSError errorWithDomain:@"" code:1 userInfo:@{}];
   
   XCTestExpectation *expectation = [self expectationWithDescription:@"completion handler invoked"];
-  [_collection updateDocumentWithID:@"lovelace" fields:@{@"score": @30, @"color": [NSNull null]} completionHandler:^(id result, NSError *error) {
+  [_collection updateDocumentWithID:@"lovelace" changedFields:@{@"score": @30, @"color": [NSNull null]} completionHandler:^(id result, NSError *error) {
     XCTAssertNil(result);
     XCTAssertEqualObjects(error, expectedError);
     [expectation fulfill];

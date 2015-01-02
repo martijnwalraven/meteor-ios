@@ -177,17 +177,17 @@
   return newDocumentID;
 }
 
-- (id)updateDocumentWithID:(id)documentID changedFields:(NSDictionary *)fields {
-  return [self updateDocumentWithID:documentID fields:fields completionHandler:nil];
+- (id)updateDocumentWithID:(id)documentID changedFields:(NSDictionary *)changedFields {
+  return [self updateDocumentWithID:documentID changedFields:changedFields completionHandler:nil];
 }
 
-- (id)updateDocumentWithID:(id)documentID fields:(NSDictionary *)fields completionHandler:(METMethodCompletionHandler)completionHandler {
+- (id)updateDocumentWithID:(id)documentID changedFields:(NSDictionary *)changedFields completionHandler:(METMethodCompletionHandler)completionHandler {
   NSParameterAssert(documentID);
   
-  NSArray *clearedFields = [fields allKeysForObject:[NSNull null]];
+  NSArray *clearedFields = [changedFields allKeysForObject:[NSNull null]];
   
   NSMutableDictionary *modifiers = [[NSMutableDictionary alloc] init];
-  modifiers[@"$set"] = [fields dictionaryByRemovingObjectsForKeys:clearedFields];
+  modifiers[@"$set"] = [changedFields dictionaryByRemovingObjectsForKeys:clearedFields];
   if (clearedFields.count != 0) {
     modifiers[@"$unset"] = [NSDictionary dictionaryWithObject:@"" forKeys:clearedFields];
   }

@@ -42,7 +42,7 @@
 - (id)insertDocumentWithFields:(NSDictionary *)fields completionHandler:(METMethodCompletionHandler)completionHandler;
 
 - (id)updateDocumentWithID:(id)documentID changedFields:(NSDictionary *)fields;
-- (id)updateDocumentWithID:(id)documentID fields:(NSDictionary *)fields completionHandler:(METMethodCompletionHandler)completionHandler;
+- (id)updateDocumentWithID:(id)documentID changedFields:(NSDictionary *)fields completionHandler:(METMethodCompletionHandler)completionHandler;
 
 - (id)removeDocumentWithID:(id)documentID;
 - (id)removeDocumentWithID:(id)documentID completionHandler:(METMethodCompletionHandler)completionHandler;
