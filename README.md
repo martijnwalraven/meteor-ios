@@ -57,14 +57,14 @@ Meteor.addSubscriptionWithName("todos", parameters: [list]) { (error) -> () in
 
 ### Swift
 
-I had already started work on this project when Swift was announced. Although I'm impressed by Swift and now use it on other projects, I decided it was too soon to consider a rewrite. The language was and is evolving, and some features are still missing. Performance can be unpredictable (especially when dealing with arrays and dictionaries) and tool support (Xcode) is not as stable as it is for Objective-C.
+Meteor for iOS works well with Swift; I use it myself on a project. Especially with a new version of CocoaPods on the way (see below), it is as useable from Swift as any other Objective-C framework is. In the future however, I plan on updating the API to take better advantage of Swift language features (perhaps by adding extensions).
 
-Especially with a new version of CocoaPods on the way (see below), using Meteor for iOS from Swift should be convenient enough for now however (see the 'Todos' example). Once Swift stabilizes and language idioms become established either Swift extensions or a rewrite may be needed.
+I had already started work on this project when Swift was announced. Although I'm impressed by Swift, I decided it was too soon to consider a rewrite. The language was and is evolving, and some potentially useful language features are still missing (in particular around generics and protocols). Performance can be unpredictable (especially when dealing with arrays and dictionaries) and tool support (Xcode) is not as stable as it is for Objective-C. Once the Swift language and implementation stabilize and language idioms become established, a complete or partial rewrite might be a viable option.
 
 ## Getting Started
 
 ###Examples
-If you just want to have a look at the project, you should be able to open the Meteor workspace and run the examples. Both 'Todo' (written in Swift) and 'Leaderboard' (written in Objective-C) are based on existing Meteor example apps. You'll have to install a local version of the Meteor app using `meteor create --example todos` or `meteor create --example leaderboard` before you can run the iOS app. You also have to change the address of the server in the AppDelegate to refer to your machine.
+If you just want to have a look at the project, you should be able to open the Meteor workspace and run the examples. For now, I'll be focusing on improving the Todos example (written in Swift). It is rather barebones at the moment, but I plan on adding the ability to create lists and tasks and to login soon. It connects to a Meteor app running at http://meteor-ios-todos.meteor.com.
 
 ###Installation with CocoaPods
 The easiest way to use Meteor for iOS in your own project is through CocoaPods. Until recently, there was no convenient way to use CocoaPods with Swift. The release of CocoaPods 0.36 promises to change this however, by supporting frameworks (see http://blog.cocoapods.org/Pod-Authors-Guide-to-CocoaPods-Frameworks/). As frameworks are only supported on iOS 8 or higher, this means iOS 7 users are out of luck for now. It should be possible to support both building as a framework and as a static library, but I don't know enough about CocoaPods to get this to work reliably. Input is very welcome!
