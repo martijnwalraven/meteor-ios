@@ -76,7 +76,13 @@
                             <outlet property="delegate" destination="7bK-jq-Zjz" id="RA6-mI-bju"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Lists" id="Zdf-7t-Un8"/>
+                    <navigationItem key="navigationItem" title="Lists" id="Zdf-7t-Un8">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Ssu-7A-TQl">
+                            <connections>
+                                <action selector="addList" destination="7bK-jq-Zjz" id="NTo-36-v9g"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
             </objects>

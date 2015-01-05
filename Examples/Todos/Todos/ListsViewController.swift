@@ -51,6 +51,34 @@ class ListsViewController: FetchedResultsTableViewController {
     cell.detailTextLabel!.text = "\(list.incompleteCount)"
   }
   
+  // MARK: - IBActions
+  
+  @IBAction func addList() {
+    let list = NSEntityDescription.insertNewObjectForEntityForName("List", inManagedObjectContext: managedObjectContext) as List
+    list.name = nextAvailableDefaultListName
+    saveManagedObjectContext()
+  }
+  
+  var nextAvailableDefaultListName: String {
+    return nextAvailableListNameWithBase("List ", alphabet.startIndex)
+  }
+  
+  func nextAvailableListNameWithBase(base: String, _ nextLetter: CUnsignedChar) -> String {
+    for letter in alphabet {
+      let nextName = base + String(UnicodeScalar(letter))
+      if !listNameExists(nextName) {
+        return nextName
+      }
+    }
+    return nextAvailableListNameWithBase(base + String(UnicodeScalar(nextLetter)), nextLetter+1)
+  }
+  
+  let alphabet = CUnsignedChar("A")...CUnsignedChar("Z")
+  
+  func listNameExists(name: String) -> Bool {
+    return (fetchedResults.objects as [List]).filter({$0.name == name}).count > 0
+  }
+  
   // MARK: - Segues
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

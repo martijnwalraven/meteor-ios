@@ -117,6 +117,10 @@ public class FetchedResults: NSObject, NSFetchedResultsControllerDelegate {
     return fetchedResultsController.objectAtIndexPath(indexPath) as T
   }
   
+  public var objects: [T] {
+    return fetchedResultsController.fetchedObjects as [T]
+  }
+  
   // MARK: - NSFetchedResultsControllerDelegate
 
   public func controllerWillChangeContent(controller: NSFetchedResultsController!) {
