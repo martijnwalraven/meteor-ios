@@ -36,6 +36,13 @@ class ListsViewController: FetchedResultsTableViewController {
     fetchedResults = FetchedResults(managedObjectContext: managedObjectContext, fetchRequest: fetchRequest)
     fetchedResults.registerChangeObserver(self)
     fetchedResults.performFetch()
+    
+    if tableView.indexPathForSelectedRow() == nil && !splitViewController!.collapsed {
+      if fetchedResults.numberOfSections > 0 && fetchedResults.numberOfItemsInSection(0) > 0 {
+        tableView.selectRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), animated: false, scrollPosition: .Top)
+        performSegueWithIdentifier("showDetail", sender: nil)
+      }
+    }
   }
   
   override func configureCell(cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {

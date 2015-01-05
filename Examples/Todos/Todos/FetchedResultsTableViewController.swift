@@ -129,6 +129,13 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
     subscription = nil
   }
   
+  func saveManagedObjectContext() {
+    var error: NSError?
+    if !managedObjectContext!.save(&error) {
+      println("Encountered error saving todo: \(error)")
+    }
+  }
+  
   // MARK: - UITableViewDataSource
   
   override func numberOfSectionsInTableView(tableView: UITableView) -> Int {

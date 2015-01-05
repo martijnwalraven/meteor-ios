@@ -105,12 +105,12 @@ public class FetchedResults: NSObject, NSFetchedResultsControllerDelegate {
   }
   
   public var numberOfSections: Int {
-    return fetchedResultsController.sections!.count
+    return fetchedResultsController.sections?.count ?? 0
   }
   
   public func numberOfItemsInSection(section: Int) -> Int {
-    let sectionInfo = fetchedResultsController.sections![section] as NSFetchedResultsSectionInfo
-    return sectionInfo.numberOfObjects
+    let sectionInfo = fetchedResultsController.sections?[section] as NSFetchedResultsSectionInfo
+    return sectionInfo.numberOfObjects ?? 0
   }
   
   public func objectAtIndexPath(indexPath: NSIndexPath) -> T {

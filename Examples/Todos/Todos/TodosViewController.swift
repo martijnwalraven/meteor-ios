@@ -22,7 +22,7 @@ import UIKit
 import CoreData
 import Meteor
 
-class TodosViewController: FetchedResultsTableViewController {
+class TodosViewController: FetchedResultsTableViewController, UITextFieldDelegate {
   var listID: NSManagedObjectID? {
     didSet {
       assert(managedObjectContext != nil)
@@ -68,11 +68,47 @@ class TodosViewController: FetchedResultsTableViewController {
       } else {
         todo.list.incompleteCount++
       }
-      var error: NSError?
-      if !managedObjectContext!.save(&error) {
-        println("Encountered error saving todo: \(error)")
-      }
+      saveManagedObjectContext()
     }
     return nil
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    addTaskContainerView.preservesSuperviewLayoutMargins = true
+  }
+  
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    if list == nil {
+      tableView.tableHeaderView = nil
+    } else {
+      tableView.tableHeaderView = addTaskContainerView
+    }
+  }
+  
+  // MARK: - UITextFieldDelegate
+
+  @IBOutlet var addTaskContainerView: UIView!
+  @IBOutlet weak var addTaskTextField: UITextField!
+  
+  func textFieldShouldReturn(textField: UITextField) -> Bool {
+    let text = addTaskTextField.text
+    addTaskTextField.text = nil
+    
+    if text.isEmpty {
+      addTaskTextField.resignFirstResponder()
+      return false
+    }
+    
+    let todo = NSEntityDescription.insertNewObjectForEntityForName("Todo", inManagedObjectContext: managedObjectContext) as Todo
+    todo.creationDate = NSDate()
+    todo.text = text
+    todo.list = list
+    saveManagedObjectContext()
+    
+    return true
   }
 }

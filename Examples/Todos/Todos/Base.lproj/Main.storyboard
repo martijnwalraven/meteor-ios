@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="H1p-Uh-vWS">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6246"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -85,10 +86,30 @@
         <scene sceneID="par-WR-AIO">
             <objects>
                 <tableViewController title="Todos" id="SbQ-eC-Wor" customClass="TodosViewController" customModule="Todos" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="57x-Oc-aFN">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="57x-Oc-aFN">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="Uvg-YO-prV">
+                            <rect key="frame" x="0.0" y="64" width="600" height="66"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add Task" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N1y-vo-qM2">
+                                    <rect key="frame" x="3" y="18" width="594" height="30"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="SbQ-eC-Wor" id="V9s-fW-TU4"/>
+                                    </connections>
+                                </textField>
+                            </subviews>
+                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="centerY" secondItem="N1y-vo-qM2" secondAttribute="centerY" id="6zh-0S-xpi"/>
+                                <constraint firstItem="N1y-vo-qM2" firstAttribute="leading" secondItem="Uvg-YO-prV" secondAttribute="leadingMargin" constant="-5" id="AW6-KF-sJJ"/>
+                                <constraint firstAttribute="trailingMargin" secondItem="N1y-vo-qM2" secondAttribute="trailing" constant="-5" id="NX5-U0-bXd"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="Cell" textLabel="gRI-q7-gVN" style="IBUITableViewCellStyleDefault" id="9DN-EH-u8y">
                                 <autoresizingMask key="autoresizingMask"/>
@@ -111,6 +132,10 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="Pcx-6h-OYa"/>
+                    <connections>
+                        <outlet property="addTaskContainerView" destination="Uvg-YO-prV" id="Dt8-S6-Of4"/>
+                        <outlet property="addTaskTextField" destination="N1y-vo-qM2" id="H4d-6T-2g7"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nJ0-hh-5Mn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
