@@ -71,7 +71,7 @@ NSString * const METDatabaseChangesKey = @"METDatabaseChangesKey";
     _changes = [[METDatabaseChanges alloc] init];
 
     _dataUpdatesQueue = dispatch_queue_create("com.meteor.Database.dataUpdatesQueue", DISPATCH_QUEUE_SERIAL);
-    // dispatch_set_target_queue(_updateQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
+    dispatch_set_target_queue(_dataUpdatesQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0));
     _pendingAfterFlushBlocks = [[NSMutableArray alloc] init];
     _bufferedDataUpdates = [[NSMutableArray alloc] init];
     
