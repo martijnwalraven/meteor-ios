@@ -23,37 +23,25 @@ import CoreData
 import Meteor
 
 class ListsViewController: FetchedResultsTableViewController {
-  var subscription: METSubscription?
-  
-  var managedObjectContext: NSManagedObjectContext! {
-    didSet {
-      subscription = Meteor.addSubscriptionWithName("publicLists") { (error) -> () in
-        if error == nil {
-          self.setUpFetchedResultsController()
-        } else {
-          println("Encountered error subscribing to 'publicLists': \(error)")
-        }
-      }
-    }
+  override func loadContent() {
+    super.loadContent()
+    
+    subscription = Meteor.addSubscriptionWithName("publicLists")
   }
   
-  deinit {
-    if subscription != nil {
-      Meteor.removeSubscription(subscription)
-    }
-  }
-  
-  func setUpFetchedResultsController() {
+  override func subscriptionDidBecomeReady() {
     let fetchRequest = NSFetchRequest(entityName: "List")
     fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-    fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+    
+    fetchedResults = FetchedResults(managedObjectContext: managedObjectContext, fetchRequest: fetchRequest)
+    fetchedResults.registerChangeObserver(self)
+    fetchedResults.performFetch()
   }
   
-  override func configureCell(cell: UITableViewCell, withObject object: NSManagedObject) {
-    if let list = object as? List {
-      cell.textLabel!.text = list.name
-      cell.detailTextLabel!.text = "\(list.incompleteCount)"
-    }
+  override func configureCell(cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    let list = fetchedResults.objectAtIndexPath(indexPath) as List
+    cell.textLabel!.text = list.name
+    cell.detailTextLabel!.text = "\(list.incompleteCount)"
   }
   
   // MARK: - Segues
@@ -61,9 +49,10 @@ class ListsViewController: FetchedResultsTableViewController {
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     if segue.identifier == "showDetail" {
       if let indexPath = tableView.indexPathForSelectedRow() {
-        let selectedList = objectAtIndexPath(indexPath) as List
+        let selectedList = fetchedResults.objectAtIndexPath(indexPath) as List
         if let todosViewcontroller = (segue.destinationViewController as? UINavigationController)?.topViewController as? TodosViewController {
-          todosViewcontroller.list = selectedList
+          todosViewcontroller.managedObjectContext = managedObjectContext
+          todosViewcontroller.listID = selectedList.objectID
         }
       }
     }

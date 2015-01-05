@@ -20,87 +20,177 @@
 
 import UIKit
 import CoreData
+import Meteor
 
-class FetchedResultsTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
-  var fetchedResultsController: NSFetchedResultsController? {
+enum ContentLoadingState {
+  case Initial
+  case Loading
+  case Loaded
+  case Error(NSError)
+}
+
+class FetchedResultsTableViewController: UITableViewController, FetchedResultsChangeObserver {
+  var managedObjectContext: NSManagedObjectContext!
+  var fetchedResults: FetchedResults!
+  
+  var contentLoadingState: ContentLoadingState = .Initial  {
     didSet {
-      fetchedResultsController?.delegate = self
-      performFetch()
+      if isViewLoaded() {
+        updatePlaceholderView()
+      }
+    }
+  }
+
+  var isContentLoaded: Bool {
+    switch contentLoadingState {
+    case .Loaded:
+      return true
+    default:
+      return false
     }
   }
   
-  func performFetch() {
-    var error: NSError?
-    if fetchedResultsController!.performFetch(&error) {
-      tableView.reloadData()
-    } else if error != nil {
-      println("Error performing fetch: \(error!)")
-      abort()
+  private var placeholderView: PlaceholderView?
+  private var savedCellSeparatorStyle: UITableViewCellSeparatorStyle = .None
+
+  func updatePlaceholderView() {
+    if isContentLoaded {
+      if placeholderView != nil {
+        placeholderView?.removeFromSuperview()
+        placeholderView = nil
+        swap(&savedCellSeparatorStyle, &tableView.separatorStyle)
+      }
+    } else {
+      if placeholderView == nil {
+        placeholderView = PlaceholderView()
+        tableView.addSubview(placeholderView!)
+        swap(&savedCellSeparatorStyle, &tableView.separatorStyle)
+      }
+    }
+    
+    switch contentLoadingState {
+    case .Loading:
+      placeholderView?.showLoadingIndicator()
+    case .Error(let error):
+      placeholderView?.showTitle(error.localizedDescription, message: error.localizedFailureReason)
+    default:
+      break
     }
   }
   
-  func objectAtIndexPath(indexPath: NSIndexPath) -> NSManagedObject {
-    return fetchedResultsController?.objectAtIndexPath(indexPath) as NSManagedObject
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    updatePlaceholderView()
   }
   
-  func configureCell(cell: UITableViewCell, withObject object: NSManagedObject) {
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    if !isContentLoaded {
+      loadContent()
+    }
+  }
+  
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    
+    placeholderView?.frame = tableView.bounds
+  }
+  
+  func loadContent() {
+  }
+
+  var subscription: METSubscription? {
+    willSet {
+      if subscription != nil {
+        Meteor.removeSubscription(subscription)
+      }
+    }
+    didSet {
+      contentLoadingState = .Loading
+      subscription?.completionHandler = { (error) -> () in
+        dispatch_async(dispatch_get_main_queue()) {
+          if error == nil {
+            self.subscriptionDidBecomeReady()
+            self.contentLoadingState = .Loaded
+          } else {
+            self.contentLoadingState = .Error(error)
+          }
+        }
+      }
+    }
+  }
+  
+  func subscriptionDidBecomeReady() {
+  }
+  
+  deinit {
+    subscription = nil
   }
   
   // MARK: - UITableViewDataSource
   
   override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    return fetchedResultsController?.sections?.count ?? 0
+    return fetchedResults?.numberOfSections ?? 0
   }
   
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    let sectionInfo = fetchedResultsController?.sections?[section] as NSFetchedResultsSectionInfo
-    return sectionInfo.numberOfObjects
+    return fetchedResults?.numberOfItemsInSection(section) ?? 0
   }
   
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
-    configureCell(cell, withObject: objectAtIndexPath(indexPath))
+    let reuseIdentifier = cellReuseIdentifierForRowAtIndexPath(indexPath)
+    let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath) as UITableViewCell
+    configureCell(cell, forRowAtIndexPath: indexPath)
     return cell
   }
   
-  // MARK: - NSFetchedResultsControllerDelegate
+  func cellReuseIdentifierForRowAtIndexPath(indexPath: NSIndexPath) -> String {
+    return "Cell"
+  }
   
-  func controllerWillChangeContent(controller: NSFetchedResultsController) {
+  func configureCell(cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+  }
+  
+  // MARK: - FetchedResultsChangeObserver
+  
+  func fetchedResultsDidLoad(fetchedResult: FetchedResults) {
+    tableView.reloadData()
+  }
+  
+  func fetchedResults(fetchedResult: FetchedResults, didFailWithError error: NSError) {
+  }
+  
+  func fetchedResults(fetchedResult: FetchedResults, didChange changes: FetchedResultsChanges) {
+    // Don't perform incremental updates when the table view is not currently visible
+    if tableView.window == nil {
+      tableView.reloadData()
+      return;
+    }
+    
     tableView.beginUpdates()
-  }
-  
-  func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo!, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
     
-    switch(type) {
-    case .Insert:
-      tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
-    case .Delete:
-      tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
-    default:
-      break
-    }
-  }
-  
-  func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject!, atIndexPath indexPath: NSIndexPath!, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath!) {
-    
-    switch(type) {
-    case .Insert:
-      tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
-    case .Delete:
-      tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-    case .Update:
-      if let cell = tableView.cellForRowAtIndexPath(indexPath) {
-        configureCell(cell, withObject: objectAtIndexPath(indexPath))
+    for change in changes.changeDetails {
+      switch(change) {
+      case .SectionInserted(let sectionIndex):
+        tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
+      case .SectionDeleted(let sectionIndex):
+        tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
+      case .ObjectInserted(let newIndexPath):
+        tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
+      case .ObjectDeleted(let indexPath):
+        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+      case .ObjectUpdated(let indexPath):
+        if let cell = tableView.cellForRowAtIndexPath(indexPath) {
+          configureCell(cell, forRowAtIndexPath: indexPath)
+        }
+      case .ObjectMoved(let indexPath, let newIndexPath):
+        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
       }
-    case .Move:
-      tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-      tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
-    default:
-      break
     }
-  }
-  
-  func controllerDidChangeContent(controller: NSFetchedResultsController) {
+    
     tableView.endUpdates()
   }
 }

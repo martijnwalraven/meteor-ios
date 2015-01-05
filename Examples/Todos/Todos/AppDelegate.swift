@@ -22,14 +22,7 @@ import UIKit
 import CoreData
 import Meteor
 
-let Meteor: METCoreDataDDPClient = {
-  #if arch(i386) || arch(x86_64) // Running on iOS simulator
-    let serverURLString = "ws://localhost:3000/websocket"
-  #else
-    let serverURLString = "ws://10.0.1.2:3000/websocket"
-  #endif
-  return METCoreDataDDPClient(serverURL: NSURL(string: serverURLString))
-}()
+let Meteor = METCoreDataDDPClient(serverURL: NSURL(string: "wss://meteor-ios-todos.meteor.com/websocket"))
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
@@ -54,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
   
   func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController:UIViewController!, ontoPrimaryViewController primaryViewController:UIViewController!) -> Bool {
     if let todosViewController = (secondaryViewController as? UINavigationController)?.topViewController as? TodosViewController {
-      if todosViewController.list == nil {
+      if todosViewController.listID == nil {
         return true
       }
     }

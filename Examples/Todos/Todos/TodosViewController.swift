@@ -23,54 +23,45 @@ import CoreData
 import Meteor
 
 class TodosViewController: FetchedResultsTableViewController {
-  var list: List? {
+  var listID: NSManagedObjectID? {
     didSet {
-      if oldValue != list {
-        if subscription != nil {
-          Meteor.removeSubscription(subscription!)
-        }
-        
-        if list != nil {
-          subscription = Meteor.addSubscriptionWithName("todos", parameters: [list!]) { (error) -> () in
-            if error == nil {
-              self.setUpFetchedResultsController()
-            } else {
-              println("Encountered error subscribing to 'todos': \(error)")
-            }
-          }
-        }
-        
-        title = list!.name
-      }
+      assert(managedObjectContext != nil)
+      list = (listID != nil) ? managedObjectContext.objectWithID(listID!) as? List : nil
     }
   }
   
-  var subscription: METSubscription?
-  
-  deinit {
-    if subscription != nil {
-      Meteor.removeSubscription(subscription!)
+  private var list: List? {
+    didSet {
+      title = list?.name
     }
   }
   
-  func setUpFetchedResultsController() {
+  override func loadContent() {
+    if list != nil {
+      subscription = Meteor.addSubscriptionWithName("todos", parameters: [list!])
+    }
+  }
+  
+  override func subscriptionDidBecomeReady() {
     let fetchRequest = NSFetchRequest(entityName: "Todo")
     fetchRequest.predicate = NSPredicate(format: "list == %@", list!)
     fetchRequest.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-    fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: list!.managedObjectContext!, sectionNameKeyPath: nil, cacheName: nil)
+    
+    fetchedResults = FetchedResults(managedObjectContext: managedObjectContext, fetchRequest: fetchRequest)
+    fetchedResults.registerChangeObserver(self)
+    fetchedResults.performFetch()
   }
   
-  override func configureCell(cell: UITableViewCell, withObject object: NSManagedObject) {
-    if let todo = object as? Todo {
-      cell.textLabel!.text = todo.text
-      cell.accessoryType = todo.checked ? .Checkmark : .None
-    }
+  override func configureCell(cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    let todo = fetchedResults.objectAtIndexPath(indexPath) as Todo
+    cell.textLabel!.text = todo.text
+    cell.accessoryType = todo.checked ? .Checkmark : .None
   }
   
   // MARK: - UITableViewDelegate
   
   override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-    if let todo = objectAtIndexPath(indexPath) as? Todo {
+    if let todo = fetchedResults.objectAtIndexPath(indexPath) as? Todo {
       todo.checked = !todo.checked
       if (todo.checked) {
         todo.list.incompleteCount--
@@ -78,7 +69,7 @@ class TodosViewController: FetchedResultsTableViewController {
         todo.list.incompleteCount++
       }
       var error: NSError?
-      if !todo.managedObjectContext!.save(&error) {
+      if !managedObjectContext!.save(&error) {
         println("Encountered error saving todo: \(error)")
       }
     }
