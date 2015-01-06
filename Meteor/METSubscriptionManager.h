@@ -6,10 +6,10 @@
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,23 +18,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#import <Foundation/Foundation.h>
+
 #import "METSubscription.h"
+@class METDDPClient;
 
-@implementation METSubscription
+@interface METSubscriptionManager : NSObject
 
-- (instancetype)initWithIdentifier:(NSString *)identifier name:(NSString *)name {
-  self = [super init];
-  if (self) {
-    _identifier = [identifier copy];
-    _name = [name copy];
-  }
-  return self;
-}
+- (instancetype)initWithClient:(METDDPClient *)client NS_DESIGNATED_INITIALIZER;
+@property (weak, nonatomic, readonly) METDDPClient *client;
 
-#pragma mark - NSObject
+- (METSubscription *)addSubscriptionWithName:(NSString *)name parameters:(NSArray *)parameters completionHandler:(METSubscriptionCompletionHandler)completionHandler;
+- (void)removeSubscription:(METSubscription *)subscription;
 
-- (NSString *)description {
-  return [NSString stringWithFormat:@"<METSubscription, identifier: %@, name: %@, parameters: %@>", _identifier, _name, _parameters];
-}
+- (void)didReceiveReadyForSubscriptionWithID:(NSString *)subscriptionID;
+- (void)didReceiveNosubForSubscriptionWithID:(NSString *)subscriptionID error:(NSError *)error;
+
+- (void)sendSubMessagesForSubscriptionsToBeRevivedAfterReconnect;
+@property (assign, nonatomic, readonly, getter=isWaitingForSubscriptionsToBeRevivedAfterReconnect) BOOL waitingForSubscriptionsToBeRevivedAfterReconnect;
 
 @end

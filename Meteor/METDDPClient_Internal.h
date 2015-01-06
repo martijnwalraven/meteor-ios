@@ -48,6 +48,10 @@ typedef NS_OPTIONS(NSInteger, METMethodCallOptions) {
 
 - (void)processDataUpdate:(METDataUpdate *)update;
 
+- (void)sendSubMessageForSubscription:(METSubscription *)subscription;
+- (void)sendUnsubMessageForSubscription:(METSubscription *)subscription;
+- (void)allSubscriptionsToBeRevivedAfterReconnectAreDone;
+
 - (id)callMethodWithName:(NSString *)methodName parameters:(NSArray *)parameters options:(METMethodCallOptions)options completionHandler:(METMethodCompletionHandler)completionHandler;
 - (id)callMethodWithName:(NSString *)methodName parameters:(NSArray *)parameters options:(METMethodCallOptions)options receivedResultHandler:(METMethodCompletionHandler)receivedResultHandler completionHandler:(METMethodCompletionHandler)completionHandler;
 

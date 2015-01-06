@@ -11,22 +11,16 @@
             location = "group:METDDPClient.h">
          </FileRef>
          <FileRef
-            location = "group:METDDPClient.m">
+            location = "group:METDDPClient_Internal.h">
          </FileRef>
          <FileRef
-            location = "group:METDDPClient_Internal.h">
+            location = "group:METDDPClient.m">
          </FileRef>
          <FileRef
             location = "group:METDDPConnection.h">
          </FileRef>
          <FileRef
             location = "group:METDDPConnection.m">
-         </FileRef>
-         <FileRef
-            location = "group:METDDPHeartbeat.h">
-         </FileRef>
-         <FileRef
-            location = "group:METDDPHeartbeat.m">
          </FileRef>
          <FileRef
             location = "group:METDDPMessage.h">
@@ -41,6 +35,18 @@
             location = "group:METEJSONSerialization.m">
          </FileRef>
          <FileRef
+            location = "group:METDDPHeartbeat.h">
+         </FileRef>
+         <FileRef
+            location = "group:METDDPHeartbeat.m">
+         </FileRef>
+         <FileRef
+            location = "group:METSubscriptionManager.h">
+         </FileRef>
+         <FileRef
+            location = "group:METSubscriptionManager.m">
+         </FileRef>
+         <FileRef
             location = "group:METSubscription.h">
          </FileRef>
          <FileRef
@@ -52,36 +58,40 @@
          <FileRef
             location = "group:METDataUpdate.m">
          </FileRef>
-         <FileRef
-            location = "group:METMethodInvocation.h">
-         </FileRef>
-         <FileRef
-            location = "group:METMethodInvocation.m">
-         </FileRef>
-         <FileRef
-            location = "group:METMethodInvocation_Internal.h">
-         </FileRef>
-         <FileRef
-            location = "group:METMethodInvocationContext.h">
-         </FileRef>
-         <FileRef
-            location = "group:METMethodInvocationContext.m">
-         </FileRef>
-         <FileRef
-            location = "group:METMethodInvocationCoordinator.h">
-         </FileRef>
-         <FileRef
-            location = "group:METMethodInvocationCoordinator.m">
-         </FileRef>
-         <FileRef
-            location = "group:METMethodInvocationCoordinator_Testing.h">
-         </FileRef>
-         <FileRef
-            location = "group:METBufferedDocument.h">
-         </FileRef>
-         <FileRef
-            location = "group:METBufferedDocument.m">
-         </FileRef>
+         <Group
+            location = "group:"
+            name = "Method Invocations">
+            <FileRef
+               location = "group:METMethodInvocationCoordinator.h">
+            </FileRef>
+            <FileRef
+               location = "group:METMethodInvocationCoordinator.m">
+            </FileRef>
+            <FileRef
+               location = "group:METMethodInvocationCoordinator_Testing.h">
+            </FileRef>
+            <FileRef
+               location = "group:METMethodInvocation.h">
+            </FileRef>
+            <FileRef
+               location = "group:METMethodInvocation.m">
+            </FileRef>
+            <FileRef
+               location = "group:METMethodInvocation_Internal.h">
+            </FileRef>
+            <FileRef
+               location = "group:METMethodInvocationContext.h">
+            </FileRef>
+            <FileRef
+               location = "group:METMethodInvocationContext.m">
+            </FileRef>
+            <FileRef
+               location = "group:METBufferedDocument.h">
+            </FileRef>
+            <FileRef
+               location = "group:METBufferedDocument.m">
+            </FileRef>
+         </Group>
       </Group>
       <Group
          location = "group:"
@@ -90,10 +100,10 @@
             location = "group:METDatabase.h">
          </FileRef>
          <FileRef
-            location = "group:METDatabase_Internal.h">
+            location = "group:METDatabase.m">
          </FileRef>
          <FileRef
-            location = "group:METDatabase.m">
+            location = "group:METDatabase_Internal.h">
          </FileRef>
          <FileRef
             location = "group:METFetchRequest.h">
@@ -111,16 +121,16 @@
             location = "group:METCollection_Internal.h">
          </FileRef>
          <FileRef
-            location = "group:METDocument.h">
-         </FileRef>
-         <FileRef
-            location = "group:METDocument.m">
-         </FileRef>
-         <FileRef
             location = "group:METDocumentKey.h">
          </FileRef>
          <FileRef
             location = "group:METDocumentKey.m">
+         </FileRef>
+         <FileRef
+            location = "group:METDocument.h">
+         </FileRef>
+         <FileRef
+            location = "group:METDocument.m">
          </FileRef>
          <FileRef
             location = "group:METDocumentCache.h">
@@ -146,6 +156,22 @@
       </Group>
       <Group
          location = "group:"
+         name = "Accounts">
+         <FileRef
+            location = "group:METAccount.h">
+         </FileRef>
+         <FileRef
+            location = "group:METAccount.m">
+         </FileRef>
+         <FileRef
+            location = "group:METDDPClient+AccountsPassword.h">
+         </FileRef>
+         <FileRef
+            location = "group:METDDPClient+AccountsPassword.m">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:"
          name = "Core Data">
          <FileRef
             location = "group:METCoreDataDDPClient.h">
@@ -165,28 +191,12 @@
       </Group>
       <Group
          location = "group:"
-         name = "Accounts">
-         <FileRef
-            location = "group:METDDPClient+AccountsPassword.h">
-         </FileRef>
-         <FileRef
-            location = "group:METDDPClient+AccountsPassword.m">
-         </FileRef>
-         <FileRef
-            location = "group:METAccount.h">
-         </FileRef>
-         <FileRef
-            location = "group:METAccount.m">
-         </FileRef>
-      </Group>
-      <Group
-         location = "group:"
          name = "Utils">
          <FileRef
-            location = "group:METDynamicVariable.h">
+            location = "group:METRetryStrategy.h">
          </FileRef>
          <FileRef
-            location = "group:METDynamicVariable.m">
+            location = "group:METRetryStrategy.m">
          </FileRef>
          <FileRef
             location = "group:METTimer.h">
@@ -195,10 +205,10 @@
             location = "group:METTimer.m">
          </FileRef>
          <FileRef
-            location = "group:METRetryStrategy.h">
+            location = "group:METDynamicVariable.h">
          </FileRef>
          <FileRef
-            location = "group:METRetryStrategy.m">
+            location = "group:METDynamicVariable.m">
          </FileRef>
          <Group
             location = "group:"
@@ -246,19 +256,19 @@
          </Group>
       </Group>
    </Group>
+   <FileRef
+      location = "group:Tests/Meteor Tests.xcodeproj">
+   </FileRef>
    <Group
       location = "container:"
       name = "Examples">
       <FileRef
-         location = "group:Examples/Todos/Todos.xcodeproj">
-      </FileRef>
-      <FileRef
          location = "group:Examples/Leaderboard/Leaderboard.xcodeproj">
       </FileRef>
+      <FileRef
+         location = "group:Examples/Todos/Todos.xcodeproj">
+      </FileRef>
    </Group>
-   <FileRef
-      location = "group:Tests/Meteor Tests.xcodeproj">
-   </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>

@@ -32,6 +32,7 @@
 #import "METDatabase_Internal.h"
 #import "METDocument.h"
 #import "METSubscription.h"
+#import "METSubscriptionManager.h"
 #import "METMethodInvocation.h"
 #import "METMethodInvocationContext.h"
 #import "METMethodInvocationCoordinator.h"
@@ -67,8 +68,7 @@ static METDDPClient *sharedClient;
   
   METDDPHeartbeat *_heartbeat;
   
-  NSMutableDictionary *_subscriptionsByIdentifier;
-  NSMutableSet *_subscriptionsToBeRevivedAfterReconnect;
+  METSubscriptionManager *_subscriptionManager;
   
   NSMutableDictionary *_methodStubsByName;
   METDynamicVariable *_methodInvocationContextDynamicVariable;
@@ -101,7 +101,7 @@ static METDDPClient *sharedClient;
     
     _database = [[METDatabase alloc] initWithClient:self];
     
-    _subscriptionsByIdentifier = [[NSMutableDictionary alloc] init];
+    _subscriptionManager = [[METSubscriptionManager alloc] initWithClient:self];
     
     _methodStubsByName = [[NSMutableDictionary alloc] init];
     _methodInvocationContextDynamicVariable = [[METDynamicVariable alloc] init];
@@ -279,21 +279,18 @@ static METDDPClient *sharedClient;
   
   [_database reset];
   
-  _subscriptionsToBeRevivedAfterReconnect = [[NSMutableSet alloc] init];
-  [_subscriptionsByIdentifier enumerateKeysAndObjectsUsingBlock:^(NSString *identifier, METSubscription *subscription, BOOL *stop) {
-    if (subscription.ready) {
-      [_subscriptionsToBeRevivedAfterReconnect addObject:subscription];
-    }
-    [self sendSubMessageForSubscription:subscription];
-  }];
-  
-  if (_subscriptionsToBeRevivedAfterReconnect.count < 1) {
+  [_subscriptionManager sendSubMessagesForSubscriptionsToBeRevivedAfterReconnect];
+  if (!_subscriptionManager.waitingForSubscriptionsToBeRevivedAfterReconnect) {
     // If there are no subscriptions to be revived, there is no need to wait for quiescence
     _database.waitingForQuiescence = NO;
     [_database flushDataUpdates];
   } else {
     _database.waitingForQuiescence = YES;
   }
+}
+
+- (void)allSubscriptionsToBeRevivedAfterReconnectAreDone {
+  _database.waitingForQuiescence = NO;
 }
 
 - (void)didReceiveConnectedMessage:(NSDictionary *)message {
@@ -443,15 +440,7 @@ static METDDPClient *sharedClient;
 }
 
 - (METSubscription *)addSubscriptionWithName:(NSString *)name parameters:(NSArray *)parameters completionHandler:(METSubscriptionCompletionHandler)completionHandler {
-  NSString *identifier = [[METRandomValueGenerator defaultRandomValueGenerator] randomIdentifier];
-  METSubscription *subscription = [[METSubscription alloc] initWithIdentifier:identifier name:name];
-  subscription.parameters = [self convertParameters:parameters];
-  subscription.completionHandler = completionHandler;
-  _subscriptionsByIdentifier[identifier] = subscription;
-  if (self.connected) {
-    [self sendSubMessageForSubscription:subscription];
-  }
-  return subscription;
+  return [_subscriptionManager addSubscriptionWithName:name parameters:[self convertParameters:parameters] completionHandler:completionHandler];
 }
 
 - (void)sendSubMessageForSubscription:(METSubscription *)subscription {
@@ -471,63 +460,31 @@ static METDDPClient *sharedClient;
 }
 
 - (void)removeSubscription:(METSubscription *)subscription {
-  NSParameterAssert(subscription);
-  
-  [_subscriptionsByIdentifier removeObjectForKey:subscription.identifier];
-  [_subscriptionsToBeRevivedAfterReconnect removeObject:subscription];
-  [self sendUnsubMessageForSubscription:subscription];
+  [_subscriptionManager removeSubscription:subscription];
 }
 
 - (void)sendUnsubMessageForSubscription:(METSubscription *)subscription {
+  NSParameterAssert(subscription);
+  
   [self sendMessage:@{@"msg": @"unsub", @"id": subscription.identifier}];
 }
 
 - (void)didReceiveNoSubMessage:(NSDictionary *)message {
-  NSString *identifier = message[@"id"];
-  if (!identifier) return;
+  NSString *subscriptionID = message[@"id"];
+  if (!subscriptionID) return;
   
-  METSubscription *subscription = _subscriptionsByIdentifier[identifier];
-  if (!subscription) {
-    return;
-  }
+  NSDictionary *errorResponse = message[@"error"];
+  NSError *error = errorResponse ? [self errorWithErrorResponse:errorResponse] : nil;
   
-  [self removeSubscriptionToBeRevivedAfterConnect:subscription];
-  
-  METSubscriptionCompletionHandler completionHandler = subscription.completionHandler;
-  if (completionHandler) {
-    NSDictionary *errorResponse = message[@"error"];
-    NSError *error = errorResponse ? [self errorWithErrorResponse:errorResponse] : nil;
-    completionHandler(error);
-  }
+  [_subscriptionManager didReceiveNosubForSubscriptionWithID:subscriptionID error:error];
 }
 
 - (void)didReceiveReadyMessage:(NSDictionary *)message {
-  NSArray *identifiers = message[@"subs"];
-  if (!identifiers) return;
+  NSArray *subscriptionIDs = message[@"subs"];
+  if (!subscriptionIDs) return;
   
-  for (NSString *identifier in identifiers) {
-    METSubscription *subscription = _subscriptionsByIdentifier[identifier];
-    if (!subscription) {
-      NSLog(@"Received ready message for unknown subscription ID: %@", identifier);
-      continue;
-    }
-    
-    [self removeSubscriptionToBeRevivedAfterConnect:subscription];
-    
-    [_methodInvocationCoordinator performAfterAllCurrentlyBufferedDocumentsAreFlushed:^{
-      METSubscriptionCompletionHandler completionHandler = subscription.completionHandler;
-      subscription.ready = YES;
-      if (completionHandler) {
-        completionHandler(nil);
-      }
-    }];
-  }
-}
-
-- (void)removeSubscriptionToBeRevivedAfterConnect:(METSubscription *)subscription {
-  [_subscriptionsToBeRevivedAfterReconnect removeObject:subscription];
-  if (_subscriptionsToBeRevivedAfterReconnect.count < 1) {
-    _database.waitingForQuiescence = NO;
+  for (NSString *subscriptionID in subscriptionIDs) {
+    [_subscriptionManager didReceiveReadyForSubscriptionWithID:subscriptionID];
   }
 }
 
@@ -551,7 +508,7 @@ static METDDPClient *sharedClient;
 
 - (id)callMethodWithName:(NSString *)methodName parameters:(NSArray *)parameters options:(METMethodCallOptions)options receivedResultHandler:(METMethodCompletionHandler)receivedResultHandler completionHandler:(METMethodCompletionHandler)completionHandler {
   parameters = [self convertParameters:parameters];
-  
+
   METMethodInvocationContext *enclosingMethodInvocationContext = [_methodInvocationContextDynamicVariable currentValue];
   BOOL alreadyInSimulation = enclosingMethodInvocationContext != nil;
   
