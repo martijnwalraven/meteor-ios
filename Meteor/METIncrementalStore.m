@@ -293,8 +293,8 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
 
 - (NSDictionary *)changedFieldsForObject:(NSManagedObject *)object {
   NSEntityDescription *entity = object.entity;
-  NSMutableDictionary *fields = [[NSMutableDictionary alloc] initWithCapacity:entity.properties.count];
   NSDictionary *changedValues = object.changedValues;
+  NSMutableDictionary *changedFields = [[NSMutableDictionary alloc] initWithCapacity:changedValues.count];
   
   [changedValues enumerateKeysAndObjectsUsingBlock:^(NSString *name, id value, BOOL *stop) {
     NSPropertyDescription *property = entity.propertiesByName[name];
@@ -302,7 +302,7 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
     if ([property isKindOfClass:[NSAttributeDescription class]]) {
       NSAttributeDescription *attribute = (NSAttributeDescription *)property;
       NSString *fieldName = [self fieldNameForAttribute:attribute];
-      fields[fieldName] = value;
+      changedFields[fieldName] = value;
     } else if ([property isKindOfClass:[NSRelationshipDescription class]]) {
       NSRelationshipDescription *relationship = (NSRelationshipDescription *)property;
       NSString *fieldName = [self fieldNameForRelationship:relationship];
@@ -313,16 +313,16 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
           id destinationDocumentID = [self documentKeyForObjectID:destinationObject.objectID].documentID;
           [destinationDocumentIDs addObject:destinationDocumentID];
         }
-        fields[fieldName] = destinationDocumentIDs;
+        changedFields[fieldName] = destinationDocumentIDs;
       } else {
         NSManagedObject *destinationObject = (NSManagedObject *)value;
         id destinationDocumentID = [self documentKeyForObjectID:destinationObject.objectID].documentID;
-        fields[fieldName] = destinationDocumentID;
+        changedFields[fieldName] = destinationDocumentID;
       }
     }
   }];
   
-  return fields;
+  return changedFields;
 }
 
 #pragma mark - Mapping Objects To and From Documents
