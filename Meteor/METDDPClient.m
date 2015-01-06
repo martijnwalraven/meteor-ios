@@ -279,14 +279,7 @@ static METDDPClient *sharedClient;
   
   [_database reset];
   
-  [_subscriptionManager sendSubMessagesForSubscriptionsToBeRevivedAfterReconnect];
-  if (!_subscriptionManager.waitingForSubscriptionsToBeRevivedAfterReconnect) {
-    // If there are no subscriptions to be revived, there is no need to wait for quiescence
-    _database.waitingForQuiescence = NO;
-    [_database flushDataUpdates];
-  } else {
-    _database.waitingForQuiescence = YES;
-  }
+  [_subscriptionManager reviveReadySubscriptionsAfterReconnect];
 }
 
 - (void)allSubscriptionsToBeRevivedAfterReconnectAreDone {

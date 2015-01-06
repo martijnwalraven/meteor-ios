@@ -98,12 +98,12 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
     didSet {
       if subscription != nil {
         contentLoadingState = .Loading
-        subscription!.completionHandler = { [unowned self] (error) -> () in
+        subscription!.completionHandler = { [weak self] (error) -> () in
           dispatch_async(dispatch_get_main_queue()) {
             if error == nil {
-              self.subscriptionDidBecomeReady()
+              self?.subscriptionDidBecomeReady()
             } else {
-              self.contentLoadingState = .Error(error)
+              self?.contentLoadingState = .Error(error)
             }
           }
         }

@@ -23,9 +23,18 @@
 #import "METDDPClient.h"
 #import "METDDPClient_Internal.h"
 #import "METRandomValueGenerator.h"
+#import "METDatabase.h"
+#import "METDatabase_Internal.h"
 #import "METMethodInvocationCoordinator.h"
 
+@interface METSubscriptionManager ()
+
+@property (assign, nonatomic, readonly, getter=isWaitingForSubscriptionsToBeRevivedAfterReconnect) BOOL waitingForSubscriptionsToBeRevivedAfterReconnect;
+
+@end
+
 @implementation METSubscriptionManager {
+  dispatch_queue_t _queue;
   NSMutableDictionary *_subscriptionsByID;
   NSMutableSet *_subscriptionsToBeRevivedAfterReconnect;
 }
@@ -34,7 +43,7 @@
   self = [super init];
   if (self) {
     _client = client;
-    
+    _queue = dispatch_queue_create("com.meteor.SubscriptionManager", DISPATCH_QUEUE_SERIAL);
     _subscriptionsByID = [[NSMutableDictionary alloc] init];
   }
   return self;
@@ -43,15 +52,19 @@
 - (METSubscription *)addSubscriptionWithName:(NSString *)name parameters:(NSArray *)parameters completionHandler:(METSubscriptionCompletionHandler)completionHandler {
   NSParameterAssert(name);
   
-  NSString *subscriptionID = [[METRandomValueGenerator defaultRandomValueGenerator] randomIdentifier];
-  METSubscription *subscription = [[METSubscription alloc] initWithIdentifier:subscriptionID name:name];
-  subscription.parameters = parameters;
-  subscription.completionHandler = completionHandler;
+  __block METSubscription *subscription;
   
-  _subscriptionsByID[subscriptionID] = subscription;
-  if (_client.connected) {
-    [_client sendSubMessageForSubscription:subscription];
-  }
+  dispatch_sync(_queue, ^{
+    NSString *subscriptionID = [[METRandomValueGenerator defaultRandomValueGenerator] randomIdentifier];
+    subscription = [[METSubscription alloc] initWithIdentifier:subscriptionID name:name];
+    subscription.parameters = parameters;
+    subscription.completionHandler = completionHandler;
+    
+    _subscriptionsByID[subscriptionID] = subscription;
+    if (_client.connected) {
+      [_client sendSubMessageForSubscription:subscription];
+    }
+  });
   
   return subscription;
 }
@@ -59,56 +72,74 @@
 - (void)removeSubscription:(METSubscription *)subscription {
   NSParameterAssert(subscription);
   
-  [_subscriptionsByID removeObjectForKey:subscription.identifier];
-  [self removeSubscriptionToBeRevivedAfterConnect:subscription];
-  
-  if (_client.connected) {
-    [_client sendUnsubMessageForSubscription:subscription];
-  }
+  dispatch_async(_queue, ^{
+    [_subscriptionsByID removeObjectForKey:subscription.identifier];
+    [self removeSubscriptionToBeRevivedAfterConnect:subscription];
+    
+    if (_client.connected) {
+      [_client sendUnsubMessageForSubscription:subscription];
+    }
+  });
 }
 
 - (void)didReceiveReadyForSubscriptionWithID:(NSString *)subscriptionID {
   NSParameterAssert(subscriptionID);
   
-  METSubscription *subscription = _subscriptionsByID[subscriptionID];
-  if (!subscription) {
-    NSLog(@"Received ready message for unknown subscription ID: %@", subscriptionID);
-    return;
-  }
-  
-  [self removeSubscriptionToBeRevivedAfterConnect:subscription];
-  
-  [_client.methodInvocationCoordinator performAfterAllCurrentlyBufferedDocumentsAreFlushed:^{
-    METSubscriptionCompletionHandler completionHandler = subscription.completionHandler;
-    subscription.ready = YES;
-    if (completionHandler) {
-      completionHandler(nil);
+  dispatch_async(_queue, ^{
+    METSubscription *subscription = _subscriptionsByID[subscriptionID];
+    if (!subscription) {
+      NSLog(@"Received ready message for unknown subscription ID: %@", subscriptionID);
+      return;
     }
-  }];
+    
+    [self removeSubscriptionToBeRevivedAfterConnect:subscription];
+    
+    [_client.methodInvocationCoordinator performAfterAllCurrentlyBufferedDocumentsAreFlushed:^{
+      METSubscriptionCompletionHandler completionHandler = subscription.completionHandler;
+      subscription.ready = YES;
+      if (completionHandler) {
+        completionHandler(nil);
+      }
+    }];
+  });
 }
 
 - (void)didReceiveNosubForSubscriptionWithID:(NSString *)subscriptionID error:(NSError *)error {
-  METSubscription *subscription = _subscriptionsByID[subscriptionID];
-  if (!subscription) {
-    return;
-  }
-  
-  [self removeSubscriptionToBeRevivedAfterConnect:subscription];
-  
-  METSubscriptionCompletionHandler completionHandler = subscription.completionHandler;
-  if (completionHandler) {
-    completionHandler(error);
-  }
+  NSParameterAssert(subscriptionID);
+
+  dispatch_async(_queue, ^{
+    METSubscription *subscription = _subscriptionsByID[subscriptionID];
+    if (!subscription) {
+      return;
+    }
+    
+    [self removeSubscriptionToBeRevivedAfterConnect:subscription];
+    
+    METSubscriptionCompletionHandler completionHandler = subscription.completionHandler;
+    if (completionHandler) {
+      completionHandler(error);
+    }
+  });
 }
 
-- (void)sendSubMessagesForSubscriptionsToBeRevivedAfterReconnect {
-  _subscriptionsToBeRevivedAfterReconnect = [[NSMutableSet alloc] init];
-  [_subscriptionsByID enumerateKeysAndObjectsUsingBlock:^(NSString *identifier, METSubscription *subscription, BOOL *stop) {
-    if (subscription.ready) {
-      [_subscriptionsToBeRevivedAfterReconnect addObject:subscription];
+- (void)reviveReadySubscriptionsAfterReconnect {
+  dispatch_sync(_queue, ^{
+    _subscriptionsToBeRevivedAfterReconnect = [[NSMutableSet alloc] init];
+    [_subscriptionsByID enumerateKeysAndObjectsUsingBlock:^(NSString *identifier, METSubscription *subscription, BOOL *stop) {
+      if (subscription.ready) {
+        [_subscriptionsToBeRevivedAfterReconnect addObject:subscription];
+      }
+      [_client sendSubMessageForSubscription:subscription];
+    }];
+    
+    if (!self.waitingForSubscriptionsToBeRevivedAfterReconnect) {
+      // If there are no subscriptions to be revived, there is no need to wait for quiescence
+      _client.database.waitingForQuiescence = NO;
+      [_client.database flushDataUpdates];
+    } else {
+      _client.database.waitingForQuiescence = YES;
     }
-    [_client sendSubMessageForSubscription:subscription];
-  }];
+  });
 }
 
 - (BOOL)isWaitingForSubscriptionsToBeRevivedAfterReconnect {

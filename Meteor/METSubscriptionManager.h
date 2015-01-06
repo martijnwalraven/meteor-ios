@@ -34,7 +34,6 @@
 - (void)didReceiveReadyForSubscriptionWithID:(NSString *)subscriptionID;
 - (void)didReceiveNosubForSubscriptionWithID:(NSString *)subscriptionID error:(NSError *)error;
 
-- (void)sendSubMessagesForSubscriptionsToBeRevivedAfterReconnect;
-@property (assign, nonatomic, readonly, getter=isWaitingForSubscriptionsToBeRevivedAfterReconnect) BOOL waitingForSubscriptionsToBeRevivedAfterReconnect;
+- (void)reviveReadySubscriptionsAfterReconnect;
 
 @end
