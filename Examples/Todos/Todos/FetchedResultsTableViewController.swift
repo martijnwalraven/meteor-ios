@@ -22,11 +22,24 @@ import UIKit
 import CoreData
 import Meteor
 
-enum ContentLoadingState {
+enum ContentLoadingState : Printable{
   case Initial
   case Loading
   case Loaded
   case Error(NSError)
+  
+  var description: String {
+    switch self {
+    case Initial:
+      return "Initial"
+    case Loading:
+      return "Loading"
+    case Loaded:
+      return "Loaded"
+    case Error(let error):
+      return "Error(\(error))"
+    }
+  }
 }
 
 class FetchedResultsTableViewController: UITableViewController, FetchedResultsChangeObserver {
@@ -89,7 +102,6 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
           dispatch_async(dispatch_get_main_queue()) {
             if error == nil {
               self.subscriptionDidBecomeReady()
-              self.contentLoadingState = .Loaded
             } else {
               self.contentLoadingState = .Error(error)
             }
@@ -184,9 +196,11 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
   
   func fetchedResultsDidLoad(fetchedResult: FetchedResults) {
     tableView.reloadData()
+    self.contentLoadingState = .Loaded
   }
   
   func fetchedResults(fetchedResult: FetchedResults, didFailWithError error: NSError) {
+    contentLoadingState = .Error(error)
   }
   
   func fetchedResults(fetchedResult: FetchedResults, didChange changes: FetchedResultsChanges) {
