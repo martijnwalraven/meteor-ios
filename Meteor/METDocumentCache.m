@@ -163,35 +163,6 @@
   }
 }
 
-- (void)createSnapshot {
-  dispatch_barrier_sync(_queue, ^{
-    NSAssert(_snapshot == nil, @"Previous snapshot has to be restored before calling createSnapshot again");
-    // We have to create a new NSMutableDictionary and set its keys to a mutableCopy of the objects because initWithDictionary:copyItems: makes the nested NSDictionaries immutable
-    _snapshot = [[NSMutableDictionary alloc] initWithCapacity:_documentsByCollectionNameByDocumentID.count];
-    [_documentsByCollectionNameByDocumentID enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
-      _snapshot[key] = [object mutableCopy];
-    }];
-  });
-}
-
-- (BOOL)hasSnapshot {
-  return _snapshot != nil;
-}
-
-- (void)restoreSnapshot {
-  NSAssert(_snapshot != nil, @"restoreSnapshot needs a previously created snapshot to restore");
-  dispatch_barrier_sync(_queue, ^{
-    [self enumerateDocumentsUsingBlock:^(METDocument *document, BOOL *stop) {
-      [_delegate documentCache:self willChangeDocumentWithKey:document.key fieldsBeforeChanges:document.fields];
-    }];
-    _documentsByCollectionNameByDocumentID = _snapshot;
-    _snapshot = nil;
-    [self enumerateDocumentsUsingBlock:^(METDocument *document, BOOL *stop) {
-      [_delegate documentCache:self didChangeDocumentWithKey:document.key fieldsAfterChanges:document.fields];
-    }];
-  });
-}
-
 #pragma mark - Helper Methods
 
 - (METDocument *)loadDocumentWithKey:(METDocumentKey *)documentKey {

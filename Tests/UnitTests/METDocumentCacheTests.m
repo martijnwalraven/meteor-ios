@@ -192,22 +192,6 @@
   OCMVerifyAll(delegate);
 }
 
-#pragma mark - Snapshotting
-
-- (void)testCreatingAndRestoringSnapshot {
-  [_documentCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] fields:@{@"name": @"Ada Lovelace", @"score": @25, @"color": @"blue"}];
-  
-  [_documentCache createSnapshot];
-  
-  [_documentCache updateDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changedFields:@{@"score": @30, @"color": [NSNull null]}];
-  
-  [self verifyDocumentCacheContainsDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] fields:@{@"name": @"Ada Lovelace", @"score": @30}];
-  
-  [_documentCache restoreSnapshot];
-  
-  [self verifyDocumentCacheContainsDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] fields:@{@"name": @"Ada Lovelace", @"score": @25, @"color": @"blue"}];
-}
-
 #pragma mark - Helper Methods
 
 - (void)verifyDocumentCacheContainsDocumentWithKey:(METDocumentKey *)documentKey fields:(NSDictionary *)fields {

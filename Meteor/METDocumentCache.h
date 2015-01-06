@@ -41,10 +41,6 @@
 
 - (void)applyDataUpdate:(METDataUpdate *)update;
 
-- (void)createSnapshot;
-- (void)restoreSnapshot;
-- (BOOL)hasSnapshot;
-
 @end
 
 @protocol METDocumentCacheDelegate <NSObject>
