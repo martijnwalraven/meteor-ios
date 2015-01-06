@@ -93,7 +93,7 @@
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
 }
 
-- (void)testReconnectingWaitsUntilReadySubscriptionsTheyAreAllReadyAgain {
+- (void)testReconnectingWaitsUntilReadySubscriptionsAreAllReadyAgain {
   [_database performUpdatesInLocalCacheWithoutTrackingChanges:^(METDocumentCache *localCache) {
     [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] fields:@{@"name": @"Ada Lovelace", @"score": @25}];
     [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"gauss"] fields:@{@"name": @"Carl Friedrich Gauss", @"score": @15}];
