@@ -163,6 +163,11 @@
 }
 
 - (void)performAfterAllCurrentlyBufferedDocumentsAreFlushed:(void (^)())block {
+  if (_bufferedDocumentsByKey.count < 1) {
+    block();
+    return;
+  }
+  
   dispatch_group_t group = dispatch_group_create();
   [_bufferedDocumentsByKey enumerateKeysAndObjectsUsingBlock:^(METDocumentKey *documentKey, METBufferedDocument *bufferedDocument, BOOL *stop) {
     [bufferedDocument waitUntilFlushedWithGroup:group];

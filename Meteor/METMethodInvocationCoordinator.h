@@ -43,4 +43,6 @@
 documentKey;
 - (void)applyDataUpdate:(METDataUpdate *)update;
 
+- (void)performAfterAllCurrentlyBufferedDocumentsAreFlushed:(void (^)())block;
+
 @end

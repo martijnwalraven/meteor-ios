@@ -185,7 +185,7 @@
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
 }
 
-- (void)testReceivingReadyMessageSetsReadyStatusAndInvokesCompletionHandlersAfterUpdatesAreFlushed {
+- (void)testReceivingReadyMessageSetsReadyStatusAndInvokesCompletionHandlers {
   XCTestExpectation *expectation1 = [self expectationWithDescription:@"completion handler invoked"];
   METSubscription *subscription1 = [_client addSubscriptionWithName:@"allPlayers" parameters:nil completionHandler:^(NSError *error) {
 #pragma clang diagnostic push
@@ -204,11 +204,7 @@
     [expectation2 fulfill];
   }];
   
-  OCMExpect([_database performAfterBufferedUpdatesAreFlushed:[OCMArg any]]).andForwardToRealObject();
-  
   [_connection receiveMessage:@{@"msg": @"ready", @"subs": @[subscription1.identifier, subscription2.identifier]}];
-  
-  OCMVerifyAll(_database);
   
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
   

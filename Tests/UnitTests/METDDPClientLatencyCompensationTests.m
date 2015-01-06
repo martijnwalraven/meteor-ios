@@ -202,4 +202,36 @@
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
 }
 
+#pragma mark - Receiving Ready Message
+
+- (void)testReceivingReadyMessageWaitsUntilAllCurrentlyBufferedDocumentsAreFlushed {
+  [_database performUpdatesInLocalCacheWithoutTrackingChanges:^(METDocumentCache *localCache) {
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID: @"lovelace"] fields:@{@"name": @"Ada Lovelace", @"score": @25}];
+  }];
+  
+  [_client defineStubForMethodWithName:@"doSomething" usingBlock:^id(NSArray *parameters) {
+    [[_database collectionWithName:@"players"] updateDocumentWithID:@"lovelace" changedFields:@{@"score": @20}];
+    return nil;
+  }];
+  
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completion handler invoked"];
+  METSubscription *subscription = [_client addSubscriptionWithName:@"allPlayers" parameters:nil completionHandler:^(NSError *error) {
+    [expectation fulfill];
+  }];
+
+  [_client callMethodWithName:@"doSomething" parameters:nil];
+  METMethodInvocation *methodInvocation = [self lastMethodInvocation];
+  
+  [_connection receiveMessage:@{@"msg": @"ready", @"subs": @[subscription.identifier]}];
+  
+  [self waitForTimeInterval:0.1];
+  XCTAssertFalse(subscription.ready);
+  
+  [self keyValueObservingExpectationForObject:methodInvocation keyPath:@"updatesFlushed" expectedValue:[NSNumber numberWithBool:YES]];
+  
+  [_connection receiveMessage:@{@"msg": @"updated", @"methods": @[methodInvocation.methodID]}];
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+}
+
 @end

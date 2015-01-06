@@ -514,7 +514,7 @@ static METDDPClient *sharedClient;
     
     [self removeSubscriptionToBeRevivedAfterConnect:subscription];
     
-    [_database performAfterBufferedUpdatesAreFlushed:^{
+    [_methodInvocationCoordinator performAfterAllCurrentlyBufferedDocumentsAreFlushed:^{
       METSubscriptionCompletionHandler completionHandler = subscription.completionHandler;
       subscription.ready = YES;
       if (completionHandler) {
