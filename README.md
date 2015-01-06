@@ -64,7 +64,7 @@ I had already started work on this project when Swift was announced. Although I'
 ## Getting Started
 
 ###Examples
-If you just want to have a look at the project, you should be able to open the Meteor workspace and run the examples. For now, I'll be focusing on improving the Todos example (written in Swift). It is rather barebones at the moment, but I plan on adding the ability to create lists and tasks and to login soon. It connects to a Meteor app running at http://meteor-ios-todos.meteor.com.
+If you just want to have a look at the project, you should be able to open the Meteor workspace and run the examples. For now, I'll be focusing on improving the Todos example (written in Swift). It is rather barebones at the moment, but I plan on adding more functionality soon. It connects to a Meteor example app running at http://meteor-ios-todos.meteor.com.
 
 ###Installation with CocoaPods
 The easiest way to use Meteor for iOS in your own project is through CocoaPods. Until recently, there was no convenient way to use CocoaPods with Swift. The release of CocoaPods 0.36 promises to change this however, by supporting frameworks (see http://blog.cocoapods.org/Pod-Authors-Guide-to-CocoaPods-Frameworks/). As frameworks are only supported on iOS 8 or higher, this means iOS 7 users are out of luck for now. It should be possible to support both building as a framework and as a static library, but I don't know enough about CocoaPods to get this to work reliably. Input is very welcome!

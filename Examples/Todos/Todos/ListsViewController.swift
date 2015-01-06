@@ -23,6 +23,8 @@ import CoreData
 import Meteor
 
 class ListsViewController: FetchedResultsTableViewController {
+  // MARK: - Content Loading
+  
   override func loadContent() {
     super.loadContent()
     
@@ -45,6 +47,8 @@ class ListsViewController: FetchedResultsTableViewController {
     }
   }
   
+  // MARK: - Table Cell Configuration
+  
   override func configureCell(cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
     let list = fetchedResults.objectAtIndexPath(indexPath) as List
     cell.textLabel!.text = list.name
@@ -56,6 +60,7 @@ class ListsViewController: FetchedResultsTableViewController {
   @IBAction func addList() {
     let list = NSEntityDescription.insertNewObjectForEntityForName("List", inManagedObjectContext: managedObjectContext) as List
     list.name = nextAvailableDefaultListName
+    list.incompleteCount = 0
     saveManagedObjectContext()
   }
   
@@ -77,6 +82,17 @@ class ListsViewController: FetchedResultsTableViewController {
   
   func listNameExists(name: String) -> Bool {
     return (fetchedResults.objects as [List]).filter({$0.name == name}).count > 0
+  }
+  
+  // MARK: - UITableViewDelegate
+  
+  override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    if editingStyle == .Delete {
+      if let list = fetchedResults.objectAtIndexPath(indexPath) as? List {
+        managedObjectContext.deleteObject(list)
+        saveManagedObjectContext()
+      }
+    }
   }
   
   // MARK: - Segues

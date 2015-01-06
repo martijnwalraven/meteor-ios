@@ -23,6 +23,27 @@ import CoreData
 import Meteor
 
 class TodosViewController: FetchedResultsTableViewController, UITextFieldDelegate {
+  // MARK: - Lifecycle
+
+  deinit {
+    NSNotificationCenter.defaultCenter().removeObserver(self)
+  }
+  
+  // MARK: - Model Management
+  
+  override var managedObjectContext: NSManagedObjectContext! {
+    willSet {
+      if managedObjectContext != nil {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NSManagedObjectContextObjectsDidChangeNotification, object: managedObjectContext)
+      }
+    }
+    didSet {
+      if managedObjectContext != nil {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "objectsDidChange:", name: NSManagedObjectContextObjectsDidChangeNotification, object: managedObjectContext)
+      }
+    }
+  }
+  
   var listID: NSManagedObjectID? {
     didSet {
       assert(managedObjectContext != nil)
@@ -33,8 +54,31 @@ class TodosViewController: FetchedResultsTableViewController, UITextFieldDelegat
   private var list: List? {
     didSet {
       title = list?.name
+      
+      if list == nil {
+        subscription = nil
+        fetchedResults = nil
+        contentLoadingState = .Initial
+      }
+      
+      updateTableHeaderView()
     }
   }
+  
+  func objectsDidChange(notification: NSNotification) {
+    if list == nil {
+      return
+    }
+    
+    // Check whether list has been deleted
+    if let deletedObjects = notification.userInfo![NSDeletedObjectsKey]? as? NSSet {
+      if deletedObjects.containsObject(list!) {
+        list = nil
+      }
+    }
+  }
+  
+  // MARK: - Content Loading
   
   override func loadContent() {
     if list != nil {
@@ -51,6 +95,30 @@ class TodosViewController: FetchedResultsTableViewController, UITextFieldDelegat
     fetchedResults.registerChangeObserver(self)
     fetchedResults.performFetch()
   }
+  
+  // MARK: - View Management
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    addTaskContainerView.preservesSuperviewLayoutMargins = true
+  }
+  
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    updateTableHeaderView()
+  }
+  
+  func updateTableHeaderView() {
+    if list == nil {
+      tableView.tableHeaderView = nil
+    } else {
+      tableView.tableHeaderView = addTaskContainerView
+    }
+  }
+  
+  // MARK: - Table Cell Configuration
   
   override func configureCell(cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
     let todo = fetchedResults.objectAtIndexPath(indexPath) as Todo
@@ -73,19 +141,12 @@ class TodosViewController: FetchedResultsTableViewController, UITextFieldDelegat
     return nil
   }
   
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    
-    addTaskContainerView.preservesSuperviewLayoutMargins = true
-  }
-  
-  override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(animated)
-    
-    if list == nil {
-      tableView.tableHeaderView = nil
-    } else {
-      tableView.tableHeaderView = addTaskContainerView
+  override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    if editingStyle == .Delete {
+      if let todo = fetchedResults.objectAtIndexPath(indexPath) as? Todo {
+        managedObjectContext.deleteObject(todo)
+        saveManagedObjectContext()
+      }
     }
   }
   
@@ -107,6 +168,7 @@ class TodosViewController: FetchedResultsTableViewController, UITextFieldDelegat
     todo.creationDate = NSDate()
     todo.text = text
     todo.list = list
+    list?.incompleteCount++
     saveManagedObjectContext()
     
     return true

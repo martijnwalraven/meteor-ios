@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14B25" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="List" representedClassName="Todos.List">
-        <attribute name="incompleteCount" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="incompleteCount" attributeType="Integer 64" syncable="YES"/>
         <attribute name="name" attributeType="String">
             <userInfo/>
         </attribute>
-        <relationship name="todos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Todo" inverseName="list" inverseEntity="Todo" syncable="YES"/>
+        <relationship name="todos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Todo" inverseName="list" inverseEntity="Todo" syncable="YES"/>
         <userInfo/>
     </entity>
     <entity name="Todo" representedClassName="Todos.Todo" syncable="YES">
@@ -19,7 +19,7 @@
         <relationship name="list" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="List" inverseName="todos" inverseEntity="List" syncable="YES"/>
     </entity>
     <elements>
-        <element name="List" positionX="261" positionY="189" width="128" height="90"/>
+        <element name="List" positionX="261" positionY="189" width="128" height="88"/>
         <element name="Todo" positionX="261" positionY="198" width="128" height="103"/>
     </elements>
 </model>

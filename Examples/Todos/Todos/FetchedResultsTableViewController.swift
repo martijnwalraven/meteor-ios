@@ -30,8 +30,29 @@ enum ContentLoadingState {
 }
 
 class FetchedResultsTableViewController: UITableViewController, FetchedResultsChangeObserver {
+  // MARK: - Lifecycle
+  
+  deinit {
+    subscription = nil
+  }
+  
+  // MARK: - Model Management
+  
   var managedObjectContext: NSManagedObjectContext!
-  var fetchedResults: FetchedResults!
+  var fetchedResults: FetchedResults! {
+    didSet {
+      tableView?.reloadData()
+    }
+  }
+  
+  func saveManagedObjectContext() {
+    var error: NSError?
+    if !managedObjectContext!.save(&error) {
+      println("Encountered error saving todo: \(error)")
+    }
+  }
+  
+  // MARK: - Content Loading
   
   var contentLoadingState: ContentLoadingState = .Initial  {
     didSet {
@@ -50,9 +71,62 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
     }
   }
   
+  func loadContent() {
+  }
+
+  var subscription: METSubscription? {
+    willSet {
+      if subscription != nil {
+        Meteor.removeSubscription(subscription)
+      }
+    }
+    didSet {
+      if subscription != nil {
+        contentLoadingState = .Loading
+        subscription!.completionHandler = { (error) -> () in
+          dispatch_async(dispatch_get_main_queue()) {
+            if error == nil {
+              self.subscriptionDidBecomeReady()
+              self.contentLoadingState = .Loaded
+            } else {
+              self.contentLoadingState = .Error(error)
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  func subscriptionDidBecomeReady() {
+  }
+  
+  // MARK: - View Management
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    updatePlaceholderView()
+  }
+  
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    if !isContentLoaded {
+      loadContent()
+    }
+  }
+  
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    
+    placeholderView?.frame = tableView.bounds
+  }
+  
+  // MARK: Placeholder View
+  
   private var placeholderView: PlaceholderView?
   private var savedCellSeparatorStyle: UITableViewCellSeparatorStyle = .None
-
+  
   func updatePlaceholderView() {
     if isContentLoaded {
       if placeholderView != nil {
@@ -78,64 +152,6 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
     }
   }
   
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    
-    updatePlaceholderView()
-  }
-  
-  override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(animated)
-    
-    if !isContentLoaded {
-      loadContent()
-    }
-  }
-  
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-    
-    placeholderView?.frame = tableView.bounds
-  }
-  
-  func loadContent() {
-  }
-
-  var subscription: METSubscription? {
-    willSet {
-      if subscription != nil {
-        Meteor.removeSubscription(subscription)
-      }
-    }
-    didSet {
-      contentLoadingState = .Loading
-      subscription?.completionHandler = { (error) -> () in
-        dispatch_async(dispatch_get_main_queue()) {
-          if error == nil {
-            self.subscriptionDidBecomeReady()
-            self.contentLoadingState = .Loaded
-          } else {
-            self.contentLoadingState = .Error(error)
-          }
-        }
-      }
-    }
-  }
-  
-  func subscriptionDidBecomeReady() {
-  }
-  
-  deinit {
-    subscription = nil
-  }
-  
-  func saveManagedObjectContext() {
-    var error: NSError?
-    if !managedObjectContext!.save(&error) {
-      println("Encountered error saving todo: \(error)")
-    }
-  }
-  
   // MARK: - UITableViewDataSource
   
   override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -152,6 +168,8 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
     configureCell(cell, forRowAtIndexPath: indexPath)
     return cell
   }
+  
+  // MARK: - Table Cell Configuration
   
   func cellReuseIdentifierForRowAtIndexPath(indexPath: NSIndexPath) -> String {
     return "Cell"
