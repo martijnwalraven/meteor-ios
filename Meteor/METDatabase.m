@@ -139,12 +139,12 @@ NSString * const METDatabaseChangesKey = @"METDatabaseChangesKey";
       [localCache applyDataUpdate:update];
     }
     [_bufferedDataUpdates removeAllObjects];
-    
-    for (dispatch_block_t block in _pendingAfterFlushBlocks) {
-      block();
-    }
-    [_pendingAfterFlushBlocks removeAllObjects];
   }];
+  
+  for (dispatch_block_t block in _pendingAfterFlushBlocks) {
+    block();
+  }
+  [_pendingAfterFlushBlocks removeAllObjects];
 }
 
 - (void)performAfterBufferedUpdatesAreFlushed:(void (^)())block {

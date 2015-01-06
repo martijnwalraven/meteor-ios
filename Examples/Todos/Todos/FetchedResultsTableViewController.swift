@@ -99,11 +99,19 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
       if subscription != nil {
         contentLoadingState = .Loading
         subscription!.completionHandler = { [weak self] (error) -> () in
-          dispatch_async(dispatch_get_main_queue()) {
-            if error == nil {
-              self?.subscriptionDidBecomeReady()
-            } else {
+          if error == nil {
+            // Make sure changes are merged with the managed object context
+            self?.managedObjectContext.performBlock() {
+              // Context may be on a private queue, so make sure subscriptionDidBecomeRead is called on the main thread
+              dispatch_async(dispatch_get_main_queue()) {
+                self?.subscriptionDidBecomeReady()
+                return
+              }
+            }
+          } else {
+            dispatch_async(dispatch_get_main_queue()) {
               self?.contentLoadingState = .Error(error)
+              return
             }
           }
         }
@@ -195,8 +203,8 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
   // MARK: - FetchedResultsChangeObserver
   
   func fetchedResultsDidLoad(fetchedResult: FetchedResults) {
-    tableView.reloadData()
     self.contentLoadingState = .Loaded
+    tableView.reloadData()
   }
   
   func fetchedResults(fetchedResult: FetchedResults, didFailWithError error: NSError) {

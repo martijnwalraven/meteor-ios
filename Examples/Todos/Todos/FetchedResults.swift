@@ -27,20 +27,41 @@ extension NSHashTable: SequenceType {
   }
 }
 
-public enum FetchedResultsChangeDetail {
+public enum FetchedResultsChangeDetail: Printable {
   case SectionInserted(Int)
   case SectionDeleted(Int)
   case ObjectInserted(NSIndexPath)
   case ObjectDeleted(NSIndexPath)
   case ObjectUpdated(NSIndexPath)
   case ObjectMoved(indexPath: NSIndexPath, newIndexPath: NSIndexPath)
+  
+  public var description: String {
+    switch self {
+    case SectionInserted(let sectionIndex):
+      return "SectionInserted(\(sectionIndex))"
+    case SectionDeleted(let sectionIndex):
+      return "SectionDeleted(\(sectionIndex))"
+    case ObjectInserted(let indexPath):
+      return "ObjectInserted(\(indexPath))"
+    case ObjectDeleted(let indexPath):
+      return "ObjectDeleted(\(indexPath))"
+    case ObjectUpdated(let indexPath):
+      return "ObjectUpdated(\(indexPath))"
+    case let ObjectMoved(indexPath, newIndexPath):
+      return "ObjectMoved(\(indexPath) -> \(newIndexPath))"
+    }
+  }
 }
 
-public class FetchedResultsChanges: NSObject {
+public class FetchedResultsChanges: NSObject, Printable {
   private(set) var changeDetails = [FetchedResultsChangeDetail]()
   
   func addChangeDetail(changeDetail: FetchedResultsChangeDetail) {
     changeDetails.append(changeDetail)
+  }
+  
+  override public var description: String {
+    return changeDetails.description
   }
 }
 

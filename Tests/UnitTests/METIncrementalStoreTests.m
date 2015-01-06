@@ -270,7 +270,8 @@
   NSManagedObject *crick = [NSEntityDescription insertNewObjectForEntityForName:@"Player" inManagedObjectContext:_managedObjectContext];
   [crick setValue:@"Francis Crick" forKey:@"name"];
   [crick setValue:@35 forKey:@"score"];
-  [self saveManagedObjectContext];
+  
+  [_managedObjectContext obtainPermanentIDsForObjects:@[crick] error:NULL];
   
   [self expectationForChangeToObjectWithID:crick.objectID userInfoKey:NSInsertedObjectsKey];
   

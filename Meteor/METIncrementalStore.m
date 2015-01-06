@@ -389,7 +389,7 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
 - (void)databaseDidChange:(NSNotification *)notification {
   METDatabaseChanges *databaseChanges = notification.userInfo[METDatabaseChangesKey];
   
-  dispatch_async(_notificationQueue, ^{
+  dispatch_sync(_notificationQueue, ^{
     NSMutableSet *insertedObjects = [[NSMutableSet alloc] init];
     NSMutableSet *updatedObjects = [[NSMutableSet alloc] init];
     NSMutableSet *deletedObjects = [[NSMutableSet alloc] init];

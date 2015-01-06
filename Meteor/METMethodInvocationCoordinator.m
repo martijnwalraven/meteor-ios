@@ -164,7 +164,7 @@
 
 - (void)performAfterAllCurrentlyBufferedDocumentsAreFlushed:(void (^)())block {
   if (_bufferedDocumentsByKey.count < 1) {
-    block();
+    [_client.database performAfterBufferedUpdatesAreFlushed:block];
     return;
   }
   
