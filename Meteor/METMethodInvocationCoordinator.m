@@ -150,12 +150,7 @@
     [bufferedDocument removeMethodInvocationWaitingUntilUpdatesAreDone:methodInvocation];
     
     if (bufferedDocument.numberOfSentMethodInvocationsWaitingUntilUpdatesAreDone < 1) {
-      METDataUpdate *update;
-      if (bufferedDocument.fields) {
-        update = [[METDataUpdate alloc] initWithUpdateType:METDataUpdateTypeReplace documentKey:documentKey fields:bufferedDocument.fields];
-      } else {
-        update = [[METDataUpdate alloc] initWithUpdateType:METDataUpdateTypeRemove documentKey:documentKey fields:nil];
-      }
+      METDataUpdate *update = [[METDataUpdate alloc] initWithUpdateType:METDataUpdateTypeReplace documentKey:documentKey fields:bufferedDocument.fields];
       [_client.database applyDataUpdate:update];
       [_bufferedDocumentsByKey removeObjectForKey:documentKey];
       [bufferedDocument didFlush];

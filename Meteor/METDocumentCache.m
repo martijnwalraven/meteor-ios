@@ -103,14 +103,18 @@
 
 - (void)replaceDocumentWithKey:(METDocumentKey *)documentKey fields:(NSDictionary *)fields {
   NSParameterAssert(documentKey);
-  NSParameterAssert(fields);
   
   dispatch_barrier_sync(_queue, ^{
     METDocument *existingDocument = [self loadDocumentWithKey:documentKey];
     [_delegate documentCache:self willChangeDocumentWithKey:documentKey fieldsBeforeChanges:existingDocument.fields];
-    METDocument *document = [[METDocument alloc] initWithKey:documentKey fields:fields];
-    [self storeDocument:document forKey:documentKey];
-    [_delegate documentCache:self didChangeDocumentWithKey:documentKey fieldsAfterChanges:fields];
+    if (fields) {
+      METDocument *document = [[METDocument alloc] initWithKey:documentKey fields:fields];
+      [self storeDocument:document forKey:documentKey];
+      [_delegate documentCache:self didChangeDocumentWithKey:documentKey fieldsAfterChanges:fields];
+    } else {
+      [_documentsByCollectionNameByDocumentID[documentKey.collectionName] removeObjectForKey:documentKey.documentID];
+      [_delegate documentCache:self didChangeDocumentWithKey:documentKey fieldsAfterChanges:nil];
+    }
   });
 }
 
