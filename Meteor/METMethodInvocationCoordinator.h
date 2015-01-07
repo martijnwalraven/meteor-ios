@@ -20,7 +20,8 @@
 
 #import <Foundation/Foundation.h>
 
-@class METDDPClient;
+#import "METDDPClient.h"
+#import "METDDPClient_Internal.h"
 @class METMethodInvocation;
 @class METDocumentKey;
 @class METDataUpdate;
@@ -29,6 +30,12 @@
 
 - (instancetype)initWithClient:(METDDPClient *)client NS_DESIGNATED_INITIALIZER;
 @property (weak, nonatomic, readonly) METDDPClient *client;
+
+- (void)defineStubForMethodWithName:(NSString *)methodName usingBlock:(METMethodStub)stub;
+
+- (id)callMethodWithName:(NSString *)methodName parameters:(NSArray *)parameters options:(METMethodCallOptions)options receivedResultHandler:(METMethodCompletionHandler)receivedResultHandler completionHandler:(METMethodCompletionHandler)completionHandler;
+
+@property(strong, nonatomic, readonly) METMethodInvocationContext *currentMethodInvocationContext;
 
 @property (getter=isSuspended) BOOL suspended;
 
@@ -39,9 +46,7 @@
 
 - (void)resetWhileAddingMethodInvocationsToTheFrontOfTheQueueUsingBlock:(void (^)())block;
 
-- (BOOL)isBufferingDocumentWithKey:(METDocumentKey *)
-documentKey;
-- (void)applyDataUpdate:(METDataUpdate *)update;
+- (BOOL)applyDataUpdate:(METDataUpdate *)update;
 
 - (void)performAfterAllCurrentlyBufferedDocumentsAreFlushed:(void (^)())block;
 

@@ -112,7 +112,7 @@
 }
 
 - (void)maybeInvokeCompletionHandler {
-  // Could be called from different threads
+  // Could be called from different threads because didFlushUpdates is called from a background queue
   @synchronized(self) {
     if (_completionHandlerInvoked) return;
     if (!(_resultReceived && _updatesFlushed)) return;

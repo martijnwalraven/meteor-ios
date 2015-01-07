@@ -34,9 +34,7 @@
 #import "METSubscription.h"
 #import "METSubscriptionManager.h"
 #import "METMethodInvocation.h"
-#import "METMethodInvocationContext.h"
 #import "METMethodInvocationCoordinator.h"
-#import "METDynamicVariable.h"
 #import "METRandomStream.h"
 #import "METRandomValueGenerator.h"
 #import "METAccount.h"
@@ -69,9 +67,6 @@ static METDDPClient *sharedClient;
   METDDPHeartbeat *_heartbeat;
   
   METSubscriptionManager *_subscriptionManager;
-  
-  NSMutableDictionary *_methodStubsByName;
-  METDynamicVariable *_methodInvocationContextDynamicVariable;
   METMethodInvocationCoordinator *_methodInvocationCoordinator;
 }
 
@@ -104,8 +99,6 @@ static METDDPClient *sharedClient;
     _subscriptionManager = [[METSubscriptionManager alloc] initWithClient:self];
     _subscriptionManager.defaultNotInUseTimeout = 15;
     
-    _methodStubsByName = [[NSMutableDictionary alloc] init];
-    _methodInvocationContextDynamicVariable = [[METDynamicVariable alloc] init];
     _methodInvocationCoordinator = [[METMethodInvocationCoordinator alloc] initWithClient:self];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -412,9 +405,7 @@ static METDDPClient *sharedClient;
 }
 
 - (void)processDataUpdate:(METDataUpdate *)update {
-  if ([_methodInvocationCoordinator isBufferingDocumentWithKey:update.documentKey]) {
-    [_methodInvocationCoordinator applyDataUpdate:update];
-  } else {
+  if (![_methodInvocationCoordinator applyDataUpdate:update]) {
     [_database applyDataUpdate:update];
   }
 }
@@ -485,7 +476,7 @@ static METDDPClient *sharedClient;
 #pragma mark - RPC Methods
 
 - (void)defineStubForMethodWithName:(NSString *)methodName usingBlock:(METMethodStub)stub {
-  _methodStubsByName[methodName] = [stub copy];
+  [_methodInvocationCoordinator defineStubForMethodWithName:methodName usingBlock:stub];
 }
 
 - (id)callMethodWithName:(NSString *)methodName parameters:(NSArray *)parameters {
@@ -501,57 +492,11 @@ static METDDPClient *sharedClient;
 }
 
 - (id)callMethodWithName:(NSString *)methodName parameters:(NSArray *)parameters options:(METMethodCallOptions)options receivedResultHandler:(METMethodCompletionHandler)receivedResultHandler completionHandler:(METMethodCompletionHandler)completionHandler {
-  parameters = [self convertParameters:parameters];
-
-  METMethodInvocationContext *enclosingMethodInvocationContext = [_methodInvocationContextDynamicVariable currentValue];
-  BOOL alreadyInSimulation = enclosingMethodInvocationContext != nil;
-  
-  METMethodStub stub = _methodStubsByName[methodName];
-  __block id resultFromStub;
-
-  if (!alreadyInSimulation) {
-    METMethodInvocation *methodInvocation = [[METMethodInvocation alloc] init];
-    methodInvocation.client = self;
-    methodInvocation.methodName = methodName;
-    methodInvocation.parameters = parameters;
-    // Setting NSOperation name can be useful for debug purposes
-    methodInvocation.name = parameters ? [NSString stringWithFormat:@"%@(%@)", methodName, parameters] : methodName;
-    methodInvocation.barrier = options & METMethodCallOptionsBarrier;
-    methodInvocation.receivedResultHandler = receivedResultHandler;
-    methodInvocation.completionHandler = completionHandler;
-    
-    if (stub) {
-      METMethodInvocationContext *methodInvocationContext = [[METMethodInvocationContext alloc] initWithMethodName:methodName enclosingMethodInvocationContext:nil];
-      
-      [_methodInvocationContextDynamicVariable performBlock:^{
-        METDatabaseChanges *changesPerformedByStub = [_database performUpdatesAndReturnChanges:^{
-          NSArray *deepCopyOfParameters = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:parameters]];
-          resultFromStub = stub(deepCopyOfParameters);
-        }];
-        methodInvocation.changesPerformedByStub = changesPerformedByStub;
-      } withValue:methodInvocationContext];
-      
-      methodInvocation.randomSeed = methodInvocationContext.randomSeed;
-    }
-    
-    [_methodInvocationCoordinator addMethodInvocation:methodInvocation];
-  } else if (stub) {
-    METMethodInvocationContext *methodInvocationContext = [[METMethodInvocationContext alloc] initWithMethodName:methodName enclosingMethodInvocationContext:enclosingMethodInvocationContext];
-    
-    [_methodInvocationContextDynamicVariable performBlock:^{
-      resultFromStub = stub(parameters);
-    } withValue:methodInvocationContext];
-  }
-  
-  if (alreadyInSimulation || (options & METMethodCallOptionsReturnStubValue)) {
-    return resultFromStub;
-  } else {
-    return nil;
-  }
+  return [_methodInvocationCoordinator callMethodWithName:methodName parameters:[self convertParameters:parameters] options:options receivedResultHandler:receivedResultHandler completionHandler:completionHandler];
 }
 
 - (METMethodInvocationContext *)currentMethodInvocationContext {
-  return _methodInvocationContextDynamicVariable.currentValue;
+  return _methodInvocationCoordinator.currentMethodInvocationContext;
 }
 
 - (void)sendMethodMessageForMethodInvocation:(METMethodInvocation *)methodInvocation {

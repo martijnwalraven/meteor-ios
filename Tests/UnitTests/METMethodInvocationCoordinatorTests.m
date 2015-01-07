@@ -201,15 +201,15 @@
   
   XCTAssertEqualObjects((@{@"name": @"Ada Lovelace", @"score": @25}), [_coordinator bufferedDocumentForKey:[METDocumentKey keyWithCollectionName:@"players" documentID: @"lovelace"]].fields);
   
-  XCTAssertTrue([_coordinator isBufferingDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID: @"lovelace"]]);
+  XCTAssertNotNil([_coordinator bufferedDocumentForKey:[METDocumentKey keyWithCollectionName:@"players" documentID: @"lovelace"]]);
   
   [_coordinator didReceiveUpdatesDoneForMethodID:methodInvocation1.methodID];
   
-  XCTAssertTrue([_coordinator isBufferingDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID: @"lovelace"]]);
+  XCTAssertNotNil([_coordinator bufferedDocumentForKey:[METDocumentKey keyWithCollectionName:@"players" documentID: @"lovelace"]]);
   
   [_coordinator didReceiveUpdatesDoneForMethodID:methodInvocation2.methodID];
   
-  XCTAssertFalse([_coordinator isBufferingDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID: @"lovelace"]]);
+  XCTAssertNil([_coordinator bufferedDocumentForKey:[METDocumentKey keyWithCollectionName:@"players" documentID: @"lovelace"]]);
 }
 
 - (void)testApplyingDataUpdatesChangesFieldsOfBufferedDocuments {
