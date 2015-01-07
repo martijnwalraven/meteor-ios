@@ -180,7 +180,9 @@
 - (void)reviveReadySubscriptionsAfterReconnect {
   dispatch_sync(_queue, ^{
     _subscriptionsToBeRevivedAfterReconnect = [[NSMutableSet alloc] init];
-    [_subscriptionsByID enumerateKeysAndObjectsUsingBlock:^(NSString *identifier, METSubscription *subscription, BOOL *stop) {
+    NSDictionary *existingSubscriptionsByID = _subscriptionsByID;
+    _subscriptionsByID = [existingSubscriptionsByID mutableCopy];
+    [existingSubscriptionsByID enumerateKeysAndObjectsUsingBlock:^(NSString *identifier, METSubscription *subscription, BOOL *stop) {
       subscription.reuseTimer = nil;
       
       if (subscription.inUse) {
@@ -188,6 +190,8 @@
           [_subscriptionsToBeRevivedAfterReconnect addObject:subscription];
         }
         [_client sendSubMessageForSubscription:subscription];
+      } else {
+        [_subscriptionsByID removeObjectForKey:subscription.identifier];
       }
     }];
     
