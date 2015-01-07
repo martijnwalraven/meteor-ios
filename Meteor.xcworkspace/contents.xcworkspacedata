@@ -5,256 +5,262 @@
       location = "group:Meteor"
       name = "Meteor">
       <Group
-         location = "group:"
+         location = "group:Meteor"
          name = "DDP">
          <FileRef
-            location = "group:METDDPClient.h">
+            location = "group:Meteor/METDDPClient.h">
          </FileRef>
          <FileRef
-            location = "group:METDDPClient_Internal.h">
+            location = "group:Meteor/METDDPClient_Internal.h">
          </FileRef>
          <FileRef
-            location = "group:METDDPClient.m">
+            location = "group:Meteor/METDDPClient.m">
          </FileRef>
          <FileRef
-            location = "group:METDDPConnection.h">
+            location = "group:/Users/martijnwalraven/Projects/Cultivate/Source/meteor-ios/Meteor/METNetworkReachabilityManager.h">
          </FileRef>
          <FileRef
-            location = "group:METDDPConnection.m">
+            location = "group:/Users/martijnwalraven/Projects/Cultivate/Source/meteor-ios/Meteor/METNetworkReachabilityManager.m">
          </FileRef>
          <FileRef
-            location = "group:METDDPMessage.h">
+            location = "group:Meteor/METDDPConnection.h">
          </FileRef>
          <FileRef
-            location = "group:METDDPMessage.m">
+            location = "group:Meteor/METDDPConnection.m">
          </FileRef>
          <FileRef
-            location = "group:METEJSONSerialization.h">
+            location = "group:Meteor/METDDPMessage.h">
          </FileRef>
          <FileRef
-            location = "group:METEJSONSerialization.m">
+            location = "group:Meteor/METDDPMessage.m">
          </FileRef>
          <FileRef
-            location = "group:METDDPHeartbeat.h">
+            location = "group:Meteor/METEJSONSerialization.h">
          </FileRef>
          <FileRef
-            location = "group:METDDPHeartbeat.m">
+            location = "group:Meteor/METEJSONSerialization.m">
          </FileRef>
          <FileRef
-            location = "group:METSubscriptionManager.h">
+            location = "group:Meteor/METDDPHeartbeat.h">
          </FileRef>
          <FileRef
-            location = "group:METSubscriptionManager.m">
+            location = "group:Meteor/METDDPHeartbeat.m">
          </FileRef>
          <FileRef
-            location = "group:METSubscription.h">
+            location = "group:Meteor/METSubscriptionManager.h">
          </FileRef>
          <FileRef
-            location = "group:METSubscription_Internal.h">
+            location = "group:Meteor/METSubscriptionManager.m">
          </FileRef>
          <FileRef
-            location = "group:METSubscription.m">
+            location = "group:Meteor/METSubscription.h">
          </FileRef>
          <FileRef
-            location = "group:METDataUpdate.h">
+            location = "group:Meteor/METSubscription_Internal.h">
          </FileRef>
          <FileRef
-            location = "group:METDataUpdate.m">
+            location = "group:Meteor/METSubscription.m">
+         </FileRef>
+         <FileRef
+            location = "group:Meteor/METDataUpdate.h">
+         </FileRef>
+         <FileRef
+            location = "group:Meteor/METDataUpdate.m">
          </FileRef>
          <Group
-            location = "group:"
+            location = "group:Meteor"
             name = "Method Invocations">
             <FileRef
-               location = "group:METMethodInvocationCoordinator.h">
+               location = "group:Meteor/METMethodInvocationCoordinator.h">
             </FileRef>
             <FileRef
-               location = "group:METMethodInvocationCoordinator.m">
+               location = "group:Meteor/METMethodInvocationCoordinator.m">
             </FileRef>
             <FileRef
-               location = "group:METMethodInvocationCoordinator_Testing.h">
+               location = "group:Meteor/METMethodInvocationCoordinator_Testing.h">
             </FileRef>
             <FileRef
-               location = "group:METMethodInvocation.h">
+               location = "group:Meteor/METMethodInvocation.h">
             </FileRef>
             <FileRef
-               location = "group:METMethodInvocation.m">
+               location = "group:Meteor/METMethodInvocation.m">
             </FileRef>
             <FileRef
-               location = "group:METMethodInvocation_Internal.h">
+               location = "group:Meteor/METMethodInvocation_Internal.h">
             </FileRef>
             <FileRef
-               location = "group:METMethodInvocationContext.h">
+               location = "group:Meteor/METMethodInvocationContext.h">
             </FileRef>
             <FileRef
-               location = "group:METMethodInvocationContext.m">
+               location = "group:Meteor/METMethodInvocationContext.m">
             </FileRef>
             <FileRef
-               location = "group:METBufferedDocument.h">
+               location = "group:Meteor/METBufferedDocument.h">
             </FileRef>
             <FileRef
-               location = "group:METBufferedDocument.m">
+               location = "group:Meteor/METBufferedDocument.m">
             </FileRef>
          </Group>
       </Group>
       <Group
-         location = "group:"
+         location = "group:Meteor"
          name = "Database">
          <FileRef
-            location = "group:METDatabase.h">
+            location = "group:Meteor/METDatabase.h">
          </FileRef>
          <FileRef
-            location = "group:METDatabase.m">
+            location = "group:Meteor/METDatabase.m">
          </FileRef>
          <FileRef
-            location = "group:METDatabase_Internal.h">
+            location = "group:Meteor/METDatabase_Internal.h">
          </FileRef>
          <FileRef
-            location = "group:METFetchRequest.h">
+            location = "group:Meteor/METFetchRequest.h">
          </FileRef>
          <FileRef
-            location = "group:METFetchRequest.m">
+            location = "group:Meteor/METFetchRequest.m">
          </FileRef>
          <FileRef
-            location = "group:METCollection.h">
+            location = "group:Meteor/METCollection.h">
          </FileRef>
          <FileRef
-            location = "group:METCollection.m">
+            location = "group:Meteor/METCollection.m">
          </FileRef>
          <FileRef
-            location = "group:METCollection_Internal.h">
+            location = "group:Meteor/METCollection_Internal.h">
          </FileRef>
          <FileRef
-            location = "group:METDocumentKey.h">
+            location = "group:Meteor/METDocumentKey.h">
          </FileRef>
          <FileRef
-            location = "group:METDocumentKey.m">
+            location = "group:Meteor/METDocumentKey.m">
          </FileRef>
          <FileRef
-            location = "group:METDocument.h">
+            location = "group:Meteor/METDocument.h">
          </FileRef>
          <FileRef
-            location = "group:METDocument.m">
+            location = "group:Meteor/METDocument.m">
          </FileRef>
          <FileRef
-            location = "group:METDocumentCache.h">
+            location = "group:Meteor/METDocumentCache.h">
          </FileRef>
          <FileRef
-            location = "group:METDocumentCache.m">
+            location = "group:Meteor/METDocumentCache.m">
          </FileRef>
          <FileRef
-            location = "group:METDatabaseChanges.h">
+            location = "group:Meteor/METDatabaseChanges.h">
          </FileRef>
          <FileRef
-            location = "group:METDatabaseChanges.m">
+            location = "group:Meteor/METDatabaseChanges.m">
          </FileRef>
          <FileRef
-            location = "group:METDatabaseChanges_Internal.h">
+            location = "group:Meteor/METDatabaseChanges_Internal.h">
          </FileRef>
          <FileRef
-            location = "group:METDocumentChangeDetails.h">
+            location = "group:Meteor/METDocumentChangeDetails.h">
          </FileRef>
          <FileRef
-            location = "group:METDocumentChangeDetails.m">
+            location = "group:Meteor/METDocumentChangeDetails.m">
          </FileRef>
       </Group>
       <Group
-         location = "group:"
+         location = "group:Meteor"
          name = "Accounts">
          <FileRef
-            location = "group:METAccount.h">
+            location = "group:Meteor/METAccount.h">
          </FileRef>
          <FileRef
-            location = "group:METAccount.m">
+            location = "group:Meteor/METAccount.m">
          </FileRef>
          <FileRef
-            location = "group:METDDPClient+AccountsPassword.h">
+            location = "group:Meteor/METDDPClient+AccountsPassword.h">
          </FileRef>
          <FileRef
-            location = "group:METDDPClient+AccountsPassword.m">
+            location = "group:Meteor/METDDPClient+AccountsPassword.m">
          </FileRef>
       </Group>
       <Group
-         location = "group:"
+         location = "group:Meteor"
          name = "Core Data">
          <FileRef
-            location = "group:METCoreDataDDPClient.h">
+            location = "group:Meteor/METCoreDataDDPClient.h">
          </FileRef>
          <FileRef
-            location = "group:METCoreDataDDPClient.m">
+            location = "group:Meteor/METCoreDataDDPClient.m">
          </FileRef>
          <FileRef
-            location = "group:METIncrementalStore.h">
+            location = "group:Meteor/METIncrementalStore.h">
          </FileRef>
          <FileRef
-            location = "group:METIncrementalStore.m">
+            location = "group:Meteor/METIncrementalStore.m">
          </FileRef>
          <FileRef
-            location = "group:METIncrementalStore_Testing.h">
+            location = "group:Meteor/METIncrementalStore_Testing.h">
          </FileRef>
       </Group>
       <Group
-         location = "group:"
+         location = "group:Meteor"
          name = "Utils">
          <FileRef
-            location = "group:METRetryStrategy.h">
+            location = "group:Meteor/METRetryStrategy.h">
          </FileRef>
          <FileRef
-            location = "group:METRetryStrategy.m">
+            location = "group:Meteor/METRetryStrategy.m">
          </FileRef>
          <FileRef
-            location = "group:METTimer.h">
+            location = "group:Meteor/METTimer.h">
          </FileRef>
          <FileRef
-            location = "group:METTimer.m">
+            location = "group:Meteor/METTimer.m">
          </FileRef>
          <FileRef
-            location = "group:METDynamicVariable.h">
+            location = "group:Meteor/METDynamicVariable.h">
          </FileRef>
          <FileRef
-            location = "group:METDynamicVariable.m">
+            location = "group:Meteor/METDynamicVariable.m">
          </FileRef>
          <Group
-            location = "group:"
+            location = "group:Meteor"
             name = "Random">
             <FileRef
-               location = "group:METRandomStream.h">
+               location = "group:Meteor/METRandomStream.h">
             </FileRef>
             <FileRef
-               location = "group:METRandomStream.m">
+               location = "group:Meteor/METRandomStream.m">
             </FileRef>
             <FileRef
-               location = "group:METRandomValueGenerator.h">
+               location = "group:Meteor/METRandomValueGenerator.h">
             </FileRef>
             <FileRef
-               location = "group:METRandomValueGenerator.m">
+               location = "group:Meteor/METRandomValueGenerator.m">
             </FileRef>
             <FileRef
-               location = "group:METAleaRandomValueGenerator.h">
+               location = "group:Meteor/METAleaRandomValueGenerator.h">
             </FileRef>
             <FileRef
-               location = "group:METAleaRandomValueGenerator.m">
+               location = "group:Meteor/METAleaRandomValueGenerator.m">
             </FileRef>
          </Group>
          <Group
-            location = "group:"
+            location = "group:Meteor"
             name = "Categories">
             <FileRef
-               location = "group:NSArray+METAdditions.h">
+               location = "group:Meteor/NSArray+METAdditions.h">
             </FileRef>
             <FileRef
-               location = "group:NSArray+METAdditions.m">
+               location = "group:Meteor/NSArray+METAdditions.m">
             </FileRef>
             <FileRef
-               location = "group:NSDictionary+METAdditions.h">
+               location = "group:Meteor/NSDictionary+METAdditions.h">
             </FileRef>
             <FileRef
-               location = "group:NSDictionary+METAdditions.m">
+               location = "group:Meteor/NSDictionary+METAdditions.m">
             </FileRef>
             <FileRef
-               location = "group:NSString+METAdditions.h">
+               location = "group:Meteor/NSString+METAdditions.h">
             </FileRef>
             <FileRef
-               location = "group:NSString+METAdditions.m">
+               location = "group:Meteor/NSString+METAdditions.m">
             </FileRef>
          </Group>
       </Group>

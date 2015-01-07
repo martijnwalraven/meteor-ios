@@ -22,6 +22,7 @@
 
 #import "METDDPConnection.h"
 #import "METDDPHeartbeat.h"
+#import "METNetworkReachabilityManager.h"
 
 @class METDataUpdate;
 @class METMethodInvocation;
@@ -36,7 +37,9 @@ typedef NS_OPTIONS(NSInteger, METMethodCallOptions) {
 
 @class METDocumentCache;
 
-@interface METDDPClient () <METDDPConnectionDelegate, METDDPHeartbeatDelegate>
+@interface METDDPClient () <METDDPConnectionDelegate, METDDPHeartbeatDelegate, METNetworkReachabilityManagerDelegate>
+
+@property(strong, nonatomic) METNetworkReachabilityManager *networkReachabilityManager;
 
 @property (copy, nonatomic, readonly) NSString *protocolVersion;
 @property (copy, nonatomic, readonly) NSString *sessionID;

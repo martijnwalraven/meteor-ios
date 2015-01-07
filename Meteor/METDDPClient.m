@@ -61,6 +61,7 @@ static METDDPClient *sharedClient;
   METRetryStrategy *_connectionRetryStrategy;
   METTimer *_connectionRetryTimer;
   NSUInteger _numberOfConnectionRetryAttempts;
+  METNetworkReachabilityManager *_networkReachabilityManager;
   
   NSString *_sessionID;
   
@@ -90,6 +91,11 @@ static METDDPClient *sharedClient;
     _connectionRetryTimer = [[METTimer alloc] initWithQueue:_queue block:^{
       [self retryConnecting];
     }];
+    
+    _networkReachabilityManager = [[METNetworkReachabilityManager alloc] initWithHostName:connection.serverURL.host];
+    _networkReachabilityManager.delegate = self;
+    _networkReachabilityManager.delegateQueue = _queue;
+    [_networkReachabilityManager startMonitoring];
     
     _supportedProtocolVersions = @[@"1", @"pre2", @"pre1"];
     _suggestedProtocolVersion = @"1";
@@ -132,11 +138,23 @@ static METDDPClient *sharedClient;
 }
 
 - (void)connect {
-  if (_connectionStatus == METDDPConnectionStatusOffline) {
-    self.connectionStatus = METDDPConnectionStatusConnecting;
-    _numberOfConnectionRetryAttempts = 0;
-    [_connection open];
-  }
+  dispatch_sync(_queue, ^{
+    if (_connectionStatus == METDDPConnectionStatusOffline) {
+      self.connectionStatus = METDDPConnectionStatusConnecting;
+      _numberOfConnectionRetryAttempts = 0;
+      [_connection open];
+    }
+  });
+}
+
+- (void)disconnect {
+  dispatch_sync(_queue, ^{
+    _methodInvocationCoordinator.suspended = YES;
+    [_heartbeat stop];
+    _heartbeat = nil;
+    self.connectionStatus = METDDPConnectionStatusOffline;
+    [_connection close];
+  });
 }
 
 - (void)retryConnecting {
@@ -162,19 +180,15 @@ static METDDPClient *sharedClient;
       [self retryConnectingLater];
       break;
     case METDDPConnectionStatusConnecting:
-      [self retryConnectingLater];
+      if (_networkReachabilityManager.reachabilityStatus == METNetworkReachabilityStateNotReachable) {
+        [self disconnect];
+      } else {
+        [self retryConnectingLater];
+      }
       break;
     default:
       break;
   }
-}
-
-- (void)disconnect {
-  _methodInvocationCoordinator.suspended = YES;
-  [_heartbeat stop];
-  _heartbeat = nil;
-  self.connectionStatus = METDDPConnectionStatusOffline;
-  [_connection close];
 }
 
 #pragma mark - METDDPConnectionDelegate
@@ -193,6 +207,16 @@ static METDDPClient *sharedClient;
 
 - (void)connectionDidClose:(METDDPConnection *)connection {
   [self possiblyReconnect];
+}
+
+#pragma mark - METNetworkReachabilityManagerDelegate
+
+- (void)networkReachabilityManager:(METNetworkReachabilityManager *)reachabilityManager didDetectReachabilityStatusChange:(METNetworkReachabilityStatus)reachabilityStatus {
+  NSLog(@"didDetectReachabilityStatusChange: %ld", reachabilityStatus);
+  
+  if (reachabilityStatus == METNetworkReachabilityStateReachable) {
+    [self connect];
+  }
 }
 
 #pragma mark - Message Handling
