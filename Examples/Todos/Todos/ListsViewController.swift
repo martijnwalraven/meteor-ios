@@ -28,7 +28,7 @@ class ListsViewController: FetchedResultsTableViewController {
   override func loadContent() {
     super.loadContent()
     
-    subscription = Meteor.addSubscriptionWithName("publicLists")
+    addSubscriptionWithName("publicLists")
   }
   
   override func subscriptionDidBecomeReady() {

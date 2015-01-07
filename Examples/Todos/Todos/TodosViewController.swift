@@ -56,7 +56,6 @@ class TodosViewController: FetchedResultsTableViewController, UITextFieldDelegat
       title = list?.name
       
       if list == nil {
-        subscription = nil
         fetchedResults = nil
         contentLoadingState = .Initial
       }
@@ -82,7 +81,7 @@ class TodosViewController: FetchedResultsTableViewController, UITextFieldDelegat
   
   override func loadContent() {
     if list != nil {
-      subscription = Meteor.addSubscriptionWithName("todos", parameters: [list!])
+      addSubscriptionWithName("todos", parameters: [list!])
     }
   }
   

@@ -88,33 +88,32 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
   
   func loadContent() {
   }
+  
+  func addSubscriptionWithName(name: String, parameters: [AnyObject]? = nil) {
+    contentLoadingState = .Loading
+    subscription = Meteor.addSubscriptionWithName(name, parameters: parameters) { [weak self] (error) -> () in
+      if error == nil {
+        // Make sure changes are merged with the managed object context
+        self?.managedObjectContext.performBlock() {
+          // Context may be on a private queue, so make sure subscriptionDidBecomeRead is called on the main thread
+          dispatch_async(dispatch_get_main_queue()) {
+            self?.subscriptionDidBecomeReady()
+            return
+          }
+        }
+      } else {
+        dispatch_async(dispatch_get_main_queue()) {
+          self?.contentLoadingState = .Error(error)
+          return
+        }
+      }
+    }
+  }
 
-  var subscription: METSubscription? {
+  private var subscription: METSubscription? {
     willSet {
       if subscription != nil {
         Meteor.removeSubscription(subscription)
-      }
-    }
-    didSet {
-      if subscription != nil {
-        contentLoadingState = .Loading
-        subscription!.completionHandler = { [weak self] (error) -> () in
-          if error == nil {
-            // Make sure changes are merged with the managed object context
-            self?.managedObjectContext.performBlock() {
-              // Context may be on a private queue, so make sure subscriptionDidBecomeRead is called on the main thread
-              dispatch_async(dispatch_get_main_queue()) {
-                self?.subscriptionDidBecomeReady()
-                return
-              }
-            }
-          } else {
-            dispatch_async(dispatch_get_main_queue()) {
-              self?.contentLoadingState = .Error(error)
-              return
-            }
-          }
-        }
       }
     }
   }

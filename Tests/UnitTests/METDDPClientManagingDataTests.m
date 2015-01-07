@@ -173,8 +173,9 @@
   XCTAssertFalse(subscription.ready);
 }
 
-- (void)testUnsubscribingSendsUnsubMessage {
+- (void)testRemovingSubscriptionSendsUnsubMessage {
   METSubscription *subscription = [_client addSubscriptionWithName:@"allPlayers"];
+  subscription.notInUseTimeout = 0.1;
   
   [self expectationForSentMessageWithHandler:^BOOL(NSDictionary *message) {
     return [message[@"msg"] isEqualToString:@"unsub"] && [message[@"id"] isEqualToString:subscription.identifier];

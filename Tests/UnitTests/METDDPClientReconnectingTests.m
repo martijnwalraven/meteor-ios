@@ -33,6 +33,7 @@
 #import "METDocument.h"
 #import "METDocumentKey.h"
 #import "METDocumentCache.h"
+#import "METSubscription_Internal.h"
 #import "METMethodInvocationCoordinator.h"
 #import "METMethodInvocationCoordinator_Testing.h"
 #import "METMethodInvocation.h"

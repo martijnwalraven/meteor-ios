@@ -28,6 +28,8 @@
 - (instancetype)initWithClient:(METDDPClient *)client NS_DESIGNATED_INITIALIZER;
 @property (weak, nonatomic, readonly) METDDPClient *client;
 
+@property (assign, nonatomic) NSTimeInterval defaultNotInUseTimeout;
+
 - (METSubscription *)addSubscriptionWithName:(NSString *)name parameters:(NSArray *)parameters completionHandler:(METSubscriptionCompletionHandler)completionHandler;
 - (void)removeSubscription:(METSubscription *)subscription;
 

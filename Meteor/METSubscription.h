@@ -24,13 +24,15 @@ typedef void (^METSubscriptionCompletionHandler)(NSError *error);
 
 @interface METSubscription : NSObject
 
-- (instancetype)initWithIdentifier:(NSString *)identifier name:(NSString *)name;
+- (instancetype)initWithIdentifier:(NSString *)identifier name:(NSString *)name parameters:(id)parameters;
 @property (copy, nonatomic, readonly) NSString *identifier;
 @property (copy, nonatomic, readonly) NSString *name;
+@property (strong, nonatomic, readonly) id parameters;
 
-@property (strong, nonatomic) id parameters;
-@property (copy, nonatomic) METSubscriptionCompletionHandler completionHandler;
+@property (copy, nonatomic, readonly) METSubscriptionCompletionHandler completionHandler;
 
-@property (assign, nonatomic, getter=isReady) BOOL ready;
+@property (assign, nonatomic, readonly, getter=isReady) BOOL ready;
+
+@property (assign, nonatomic) NSTimeInterval notInUseTimeout;
 
 @end

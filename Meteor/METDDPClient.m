@@ -102,6 +102,7 @@ static METDDPClient *sharedClient;
     _database = [[METDatabase alloc] initWithClient:self];
     
     _subscriptionManager = [[METSubscriptionManager alloc] initWithClient:self];
+    _subscriptionManager.defaultNotInUseTimeout = 15;
     
     _methodStubsByName = [[NSMutableDictionary alloc] init];
     _methodInvocationContextDynamicVariable = [[METDynamicVariable alloc] init];

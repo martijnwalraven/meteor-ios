@@ -20,12 +20,14 @@
 
 #import "METSubscriptionManager.h"
 
+#import "METSubscription_Internal.h"
 #import "METDDPClient.h"
 #import "METDDPClient_Internal.h"
 #import "METRandomValueGenerator.h"
 #import "METDatabase.h"
 #import "METDatabase_Internal.h"
 #import "METMethodInvocationCoordinator.h"
+#import "METTimer.h"
 
 @interface METSubscriptionManager ()
 
@@ -55,10 +57,34 @@
   __block METSubscription *subscription;
   
   dispatch_sync(_queue, ^{
+    subscription = [self existingSubscriptionWithName:name parameters:parameters];
+    if (subscription) {
+      [subscription beginUse];
+      [subscription.reuseTimer stop];
+      
+      // Invoke completion handler immediately when subscription is ready
+      if (subscription.ready) {
+        completionHandler(nil);
+      } else {
+        // Append completion handler to existing completion handler if needed
+        METSubscriptionCompletionHandler existingCompletionHandler = subscription.completionHandler;
+        if (!existingCompletionHandler) {
+          subscription.completionHandler = completionHandler;
+        } else {
+          subscription.completionHandler = ^(NSError *error) {
+            existingCompletionHandler(error);
+            completionHandler(error);
+          };
+        }
+      }
+      return;
+    };
+    
     NSString *subscriptionID = [[METRandomValueGenerator defaultRandomValueGenerator] randomIdentifier];
-    subscription = [[METSubscription alloc] initWithIdentifier:subscriptionID name:name];
-    subscription.parameters = parameters;
+    subscription = [[METSubscription alloc] initWithIdentifier:subscriptionID name:name parameters:parameters];
     subscription.completionHandler = completionHandler;
+    subscription.notInUseTimeout = _defaultNotInUseTimeout;
+    [subscription beginUse];
     
     _subscriptionsByID[subscriptionID] = subscription;
     if (_client.connected) {
@@ -69,15 +95,44 @@
   return subscription;
 }
 
+- (METSubscription *)existingSubscriptionWithName:(NSString *)name parameters:(NSArray *)parameters {
+  __block METSubscription *existingSubscription;
+  
+  [_subscriptionsByID enumerateKeysAndObjectsUsingBlock:^(NSString *subscriptionID, METSubscription *subscription, BOOL *stop) {
+    if ([subscription.name isEqualToString:name] && (subscription.parameters == parameters || [subscription.parameters isEqualToArray:parameters])) {
+      existingSubscription = subscription;
+      *stop = YES;
+    }
+  }];
+        
+  return existingSubscription;
+}
+
 - (void)removeSubscription:(METSubscription *)subscription {
   NSParameterAssert(subscription);
   
   dispatch_async(_queue, ^{
-    [_subscriptionsByID removeObjectForKey:subscription.identifier];
-    [self removeSubscriptionToBeRevivedAfterConnect:subscription];
+    [subscription endUse];
     
-    if (_client.connected) {
-      [_client sendUnsubMessageForSubscription:subscription];
+    if (!subscription.inUse) {
+      subscription.completionHandler = nil;
+      [self removeSubscriptionToBeRevivedAfterConnect:subscription];
+      
+      if (subscription.reuseTimer == nil) {
+        subscription.reuseTimer = [[METTimer alloc] initWithQueue:_queue block:^{
+          // Subscription was reused before timeout
+          if (subscription.inUse) {
+            return;
+          }
+          
+          [_subscriptionsByID removeObjectForKey:subscription.identifier];
+          
+          if (_client.connected) {
+            [_client sendUnsubMessageForSubscription:subscription];
+          }
+        }];
+      }
+      [subscription.reuseTimer startWithTimeInterval:subscription.notInUseTimeout];
     }
   });
 }
@@ -126,10 +181,14 @@
   dispatch_sync(_queue, ^{
     _subscriptionsToBeRevivedAfterReconnect = [[NSMutableSet alloc] init];
     [_subscriptionsByID enumerateKeysAndObjectsUsingBlock:^(NSString *identifier, METSubscription *subscription, BOOL *stop) {
-      if (subscription.ready) {
-        [_subscriptionsToBeRevivedAfterReconnect addObject:subscription];
+      subscription.reuseTimer = nil;
+      
+      if (subscription.inUse) {
+        if (subscription.ready) {
+          [_subscriptionsToBeRevivedAfterReconnect addObject:subscription];
+        }
+        [_client sendSubMessageForSubscription:subscription];
       }
-      [_client sendSubMessageForSubscription:subscription];
     }];
     
     if (!self.waitingForSubscriptionsToBeRevivedAfterReconnect) {

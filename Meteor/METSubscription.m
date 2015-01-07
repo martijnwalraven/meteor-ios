@@ -19,16 +19,34 @@
 // THE SOFTWARE.
 
 #import "METSubscription.h"
+#import "METSubscription_Internal.h"
 
-@implementation METSubscription
+@implementation METSubscription {
+  NSUInteger *_usageCount;
+}
 
-- (instancetype)initWithIdentifier:(NSString *)identifier name:(NSString *)name {
+- (instancetype)initWithIdentifier:(NSString *)identifier name:(NSString *)name parameters:(id)parameters {
   self = [super init];
   if (self) {
     _identifier = [identifier copy];
     _name = [name copy];
+    _parameters = [parameters copy];
   }
   return self;
+}
+
+#pragma mark - Usage Count
+
+- (BOOL)isInUse {
+  return _usageCount > 0;
+}
+
+- (void)beginUse {
+  _usageCount++;
+}
+
+- (void)endUse {
+  _usageCount--;
 }
 
 #pragma mark - NSObject

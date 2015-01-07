@@ -27,6 +27,7 @@
 		9F98ADE8194615810024F542 /* METServerIntegrationTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F98ADE7194615810024F542 /* METServerIntegrationTestCase.m */; };
 		9F98ADF21946188E0024F542 /* METCallingMutationMethodsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F98ADF11946188E0024F542 /* METCallingMutationMethodsTests.m */; };
 		9FB1E97B1A5165DE006E6AAA /* METDDPClientLatencyCompensationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB1E97A1A5165DE006E6AAA /* METDDPClientLatencyCompensationTests.m */; };
+		9FB361FA1A5D253000408F61 /* METSubscriptionManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB361F91A5D253000408F61 /* METSubscriptionManagerTests.m */; };
 		9FC12A681A43DB1A0002CFBD /* METCollectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FC12A671A43DB1A0002CFBD /* METCollectionTests.m */; };
 		9FC12A6A1A43DB8E0002CFBD /* METDocumentCacheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FC12A691A43DB8E0002CFBD /* METDocumentCacheTests.m */; };
 		9FC9D5411944603B00695561 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FFC516F19445D05002EA8AF /* libz.dylib */; };
@@ -85,6 +86,7 @@
 		9F98ADE9194616B60024F542 /* METServerIntegrationTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = METServerIntegrationTestCase.h; sourceTree = "<group>"; };
 		9F98ADF11946188E0024F542 /* METCallingMutationMethodsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METCallingMutationMethodsTests.m; sourceTree = "<group>"; };
 		9FB1E97A1A5165DE006E6AAA /* METDDPClientLatencyCompensationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METDDPClientLatencyCompensationTests.m; sourceTree = "<group>"; };
+		9FB361F91A5D253000408F61 /* METSubscriptionManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METSubscriptionManagerTests.m; sourceTree = "<group>"; };
 		9FC12A671A43DB1A0002CFBD /* METCollectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METCollectionTests.m; sourceTree = "<group>"; };
 		9FC12A691A43DB8E0002CFBD /* METDocumentCacheTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METDocumentCacheTests.m; sourceTree = "<group>"; };
 		9FE144C01945E7B7001D9EBD /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 				9FFC511819445360002EA8AF /* METDDPHeartbeatTests.m */,
 				9FFC511919445360002EA8AF /* METDDPMessageTests.m */,
 				9FFC511B19445360002EA8AF /* METEJSONSerializationTests.m */,
+				9FB361F91A5D253000408F61 /* METSubscriptionManagerTests.m */,
 				9F160CF31A2DDFEF000B6ABC /* METMethodInvocationTests.m */,
 				9FF471211A45884700A8AAFD /* METMethodInvocationContextTests.m */,
 				9FFC512119445360002EA8AF /* METMethodInvocationCoordinatorTests.m */,
@@ -532,6 +535,7 @@
 				9F30533F19457769006F1E64 /* XCTAsyncTestCase.m in Sources */,
 				9F8B61C1194471870046712F /* METDDPClientConnectingTests.m in Sources */,
 				9FF4712E1A45E84600A8AAFD /* METIncrementalStoreTests.m in Sources */,
+				9FB361FA1A5D253000408F61 /* METSubscriptionManagerTests.m in Sources */,
 				9F12BACD19DD67CB008437DC /* XCTestCase+Meteor.m in Sources */,
 				9F30533D19457769006F1E64 /* MockMETDDPConnection.m in Sources */,
 				9FFC514019445360002EA8AF /* METMethodInvocationCoordinatorTests.m in Sources */,
