@@ -90,7 +90,6 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
   }
   
   func addSubscriptionWithName(name: String, parameters: [AnyObject]? = nil) {
-    contentLoadingState = .Loading
     subscription = Meteor.addSubscriptionWithName(name, parameters: parameters) { [weak self] (error) -> () in
       if error == nil {
         // Make sure changes are merged with the managed object context
@@ -107,6 +106,9 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
           return
         }
       }
+    }
+    if !subscription!.ready {
+      contentLoadingState = .Loading
     }
   }
 
