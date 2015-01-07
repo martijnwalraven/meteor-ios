@@ -144,6 +144,7 @@ class TodosViewController: FetchedResultsTableViewController, UITextFieldDelegat
     if editingStyle == .Delete {
       if let todo = fetchedResults.objectAtIndexPath(indexPath) as? Todo {
         managedObjectContext.deleteObject(todo)
+        todo.list.incompleteCount--
         saveManagedObjectContext()
       }
     }
