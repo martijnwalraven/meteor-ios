@@ -336,6 +336,8 @@ static METDDPClient *sharedClient;
   if ([_supportedProtocolVersions containsObject:suggestedProtocolVersion]) {
     _suggestedProtocolVersion = suggestedProtocolVersion;
     NSLog(@"Connection attempt failed, server suggested other supported DDP protocol version: %@", _suggestedProtocolVersion);
+    [self disconnect];
+    [self connect];
   } else {
     self.connectionStatus = METDDPConnectionStatusFailed;
     
