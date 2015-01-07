@@ -54,6 +54,7 @@ Meteor.addSubscriptionWithName("todos", parameters: [list]) { (error) -> () in
 - Posting batched and consolidated change notifications at appropriate times, instead of relying on fine grained updates. This helps keep UI work on the main thread to a minimum without sacrificing responsiveness.
 - Core Data integration using an `NSIncrementalStore` subclass. Mapping between documents and `NSManagedObject`s is performed automatically (but can be customized). All types of relationships are supported, both for fetching and saving. Modifications made to documents (possibly from other clients) will lead to the posting of an object change notification that can be used to update `NSManagedObjectContext`s.
 - Correct handling of reconnection. Data updates on the new connection will be buffered until all subscriptions that were ready before have become ready again. Only then are updates applied and is a change notification posted (if anything actually changed).
+- Subscriptions are shared and reused whenever possible. If a subscription is no longer in use, we don't actually unsubscribe until after a configurable timeout. This means data won't have to be removed and added again if it is needed again later.
 
 ### Swift
 
