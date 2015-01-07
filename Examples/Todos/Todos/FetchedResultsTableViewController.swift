@@ -54,11 +54,7 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
   // MARK: - Model Management
   
   var managedObjectContext: NSManagedObjectContext!
-  var fetchedResults: FetchedResults! {
-    didSet {
-      tableView?.reloadData()
-    }
-  }
+  var fetchedResults: FetchedResults!
   
   func saveManagedObjectContext() {
     var error: NSError?
@@ -201,11 +197,24 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
   func configureCell(cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
   }
   
+  // MARK: - Table View Selection
+  
+  var selectedObject: NSManagedObject?
+  
+  func reloadDataWhileKeepingSelection() {
+    tableView.reloadData()
+    if selectedObject != nil {
+      if let indexPath = fetchedResults.indexPathForObject(selectedObject!) {
+        tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
+      }
+    }
+  }
+  
   // MARK: - FetchedResultsChangeObserver
   
   func fetchedResultsDidLoad(fetchedResult: FetchedResults) {
     self.contentLoadingState = .Loaded
-    tableView.reloadData()
+    reloadDataWhileKeepingSelection()
   }
   
   func fetchedResults(fetchedResult: FetchedResults, didFailWithError error: NSError) {
@@ -215,7 +224,7 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
   func fetchedResults(fetchedResult: FetchedResults, didChange changes: FetchedResultsChanges) {
     // Don't perform incremental updates when the table view is not currently visible
     if tableView.window == nil {
-      tableView.reloadData()
+      reloadDataWhileKeepingSelection()
       return;
     }
     

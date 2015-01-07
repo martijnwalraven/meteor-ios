@@ -134,12 +134,16 @@ public class FetchedResults: NSObject, NSFetchedResultsControllerDelegate {
     return sectionInfo.numberOfObjects ?? 0
   }
   
+  public var objects: [T] {
+    return fetchedResultsController.fetchedObjects as [T]
+  }
+  
   public func objectAtIndexPath(indexPath: NSIndexPath) -> T {
     return fetchedResultsController.objectAtIndexPath(indexPath) as T
   }
   
-  public var objects: [T] {
-    return fetchedResultsController.fetchedObjects as [T]
+  public func indexPathForObject(object: T) -> NSIndexPath? {
+    return fetchedResultsController.indexPathForObject(object)
   }
   
   // MARK: - NSFetchedResultsControllerDelegate

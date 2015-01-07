@@ -32,13 +32,31 @@ class ListsViewController: FetchedResultsTableViewController {
   }
   
   override func subscriptionDidBecomeReady() {
-    let fetchRequest = NSFetchRequest(entityName: "List")
-    fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+    if fetchedResults == nil {
+      let fetchRequest = NSFetchRequest(entityName: "List")
+      fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+      
+      fetchedResults = FetchedResults(managedObjectContext: managedObjectContext, fetchRequest: fetchRequest)
+      fetchedResults.registerChangeObserver(self)
+      fetchedResults.performFetch()
+    }
     
-    fetchedResults = FetchedResults(managedObjectContext: managedObjectContext, fetchRequest: fetchRequest)
-    fetchedResults.registerChangeObserver(self)
-    fetchedResults.performFetch()
+    if isViewLoaded() {
+      selectFirstTableViewRowIfNoRowIsCurrentlySelected()
+    }
+  }
+  
+  // MARK: - View Management
+  
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
     
+    if isContentLoaded {
+      selectFirstTableViewRowIfNoRowIsCurrentlySelected()
+    }
+  }
+  
+  func selectFirstTableViewRowIfNoRowIsCurrentlySelected() {
     if tableView.indexPathForSelectedRow() == nil && !splitViewController!.collapsed {
       if fetchedResults.numberOfSections > 0 && fetchedResults.numberOfItemsInSection(0) > 0 {
         tableView.selectRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), animated: false, scrollPosition: .Top)
@@ -101,6 +119,7 @@ class ListsViewController: FetchedResultsTableViewController {
     if segue.identifier == "showDetail" {
       if let indexPath = tableView.indexPathForSelectedRow() {
         let selectedList = fetchedResults.objectAtIndexPath(indexPath) as List
+        selectedObject = selectedList
         if let todosViewcontroller = (segue.destinationViewController as? UINavigationController)?.topViewController as? TodosViewController {
           todosViewcontroller.managedObjectContext = managedObjectContext
           todosViewcontroller.listID = selectedList.objectID

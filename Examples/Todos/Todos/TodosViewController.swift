@@ -86,13 +86,15 @@ class TodosViewController: FetchedResultsTableViewController, UITextFieldDelegat
   }
   
   override func subscriptionDidBecomeReady() {
-    let fetchRequest = NSFetchRequest(entityName: "Todo")
-    fetchRequest.predicate = NSPredicate(format: "list == %@", list!)
-    fetchRequest.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-    
-    fetchedResults = FetchedResults(managedObjectContext: managedObjectContext, fetchRequest: fetchRequest)
-    fetchedResults.registerChangeObserver(self)
-    fetchedResults.performFetch()
+    if fetchedResults == nil {
+      let fetchRequest = NSFetchRequest(entityName: "Todo")
+      fetchRequest.predicate = NSPredicate(format: "list == %@", list!)
+      fetchRequest.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+      
+      fetchedResults = FetchedResults(managedObjectContext: managedObjectContext, fetchRequest: fetchRequest)
+      fetchedResults.registerChangeObserver(self)
+      fetchedResults.performFetch()
+    }
   }
   
   // MARK: - View Management
