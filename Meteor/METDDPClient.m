@@ -222,7 +222,11 @@ NSString * const METDDPClientDidChangeConnectionStatusNotification = @"METDDPCli
         [self retryConnectingLater];
         break;
       case METDDPConnectionStatusConnecting:
-        [self retryConnectingLater];
+        if (_networkReachabilityManager.reachabilityStatus == METNetworkReachabilityStatusNotReachable) {
+          [self disconnect];
+        } else {
+          [self retryConnectingLater];
+        }
         break;
       default:
         break;
