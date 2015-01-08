@@ -86,8 +86,13 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
   }
   
   func addSubscriptionWithName(name: String, parameters: [AnyObject]? = nil) {
+    var calledImmediately = true
     subscription = Meteor.addSubscriptionWithName(name, parameters: parameters) { [weak self] (error) -> () in
       if error == nil {
+        if calledImmediately {
+          self?.subscriptionDidBecomeReady()
+          return
+        }
         // Make sure changes are merged with the managed object context
         self?.managedObjectContext.performBlock() {
           // Context may be on a private queue, so make sure subscriptionDidBecomeRead is called on the main thread
@@ -104,6 +109,7 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
       }
     }
     if !subscription!.ready {
+      calledImmediately = false
       contentLoadingState = .Loading
     }
   }
