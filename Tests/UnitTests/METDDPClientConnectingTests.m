@@ -141,6 +141,14 @@
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
 }
 
+- (void)testChangingConnectionStatusPostsNotification {
+  [self expectationForNotification:METDDPClientDidChangeConnectionStatusNotification object:_client handler:nil];
+  
+  _client.connectionStatus = METDDPConnectionStatusConnected;
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+}
+
 - (void)testRespondWithPongMessageAfterReceivingPingMessage {
   [self expectationForSentMessage:@{@"msg": @"pong", @"id": @1}];
 

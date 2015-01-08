@@ -41,6 +41,8 @@ typedef NS_ENUM(NSInteger, METDDPConnectionStatus) {
   METDDPConnectionStatusConnected
 };
 
+extern NSString * const METDDPClientDidChangeConnectionStatusNotification;
+
 typedef id (^METMethodStub)(NSArray *parameters);
 typedef void (^METMethodCompletionHandler)(id result, NSError *error);
 

@@ -41,7 +41,7 @@
 
 NSString * const METDDPErrorDomain = @"com.meteor.DDPClient.ErrorDomain";
 
-static METDDPClient *sharedClient;
+NSString * const METDDPClientDidChangeConnectionStatusNotification = @"METDDPClientDidChangeConnectionStatusNotification";
 
 @interface METDDPClient ()
 
@@ -52,6 +52,7 @@ static METDDPClient *sharedClient;
 @implementation METDDPClient {
   dispatch_queue_t _queue;
   METDDPConnection *_connection;
+  METDDPConnectionStatus _connectionStatus;
   
   NSArray *_supportedProtocolVersions;
   NSString *_suggestedProtocolVersion;
@@ -156,6 +157,15 @@ static METDDPClient *sharedClient;
 - (METDDPConnectionStatus)connectionStatus {
   @synchronized(self) {
     return _connectionStatus;
+  }
+}
+
+- (void)setConnectionStatus:(METDDPConnectionStatus)connectionStatus {
+  @synchronized(self) {
+    if (_connectionStatus != connectionStatus) {
+      _connectionStatus = connectionStatus;
+      [[NSNotificationCenter defaultCenter] postNotificationName:METDDPClientDidChangeConnectionStatusNotification object:self userInfo:nil];
+    }
   }
 }
 
