@@ -62,6 +62,7 @@ static METDDPClient *sharedClient;
   METTimer *_connectionRetryTimer;
   NSUInteger _numberOfConnectionRetryAttempts;
   METNetworkReachabilityManager *_networkReachabilityManager;
+  UIBackgroundTaskIdentifier _keepAliveBackgroundTask;
   
   NSString *_sessionID;
   
@@ -97,6 +98,8 @@ static METDDPClient *sharedClient;
     _networkReachabilityManager.delegateQueue = _queue;
     [_networkReachabilityManager startMonitoring];
     
+    _keepAliveBackgroundTask = UIBackgroundTaskInvalid;
+    
     _supportedProtocolVersions = @[@"1", @"pre2", @"pre1"];
     _suggestedProtocolVersion = @"1";
     
@@ -124,10 +127,18 @@ static METDDPClient *sharedClient;
 #pragma mark - Application State Notifications
 
 - (void)applicationDidEnterBackground:(NSNotification *)notification {
-  [self disconnect];
+  _keepAliveBackgroundTask = [[UIApplication sharedApplication] beginBackgroundTaskWithName:@"com.meteor.keep-alive" expirationHandler:^{
+    _keepAliveBackgroundTask = UIBackgroundTaskInvalid;
+    [self disconnect];
+  }];
 }
 
 - (void)applicationWillEnterForeground:(NSNotification *)notification {
+  if (_keepAliveBackgroundTask != UIBackgroundTaskInvalid) {
+    [[UIApplication sharedApplication] endBackgroundTask:_keepAliveBackgroundTask];
+    _keepAliveBackgroundTask = UIBackgroundTaskInvalid;
+  }
+  
   [self connect];
 }
 
