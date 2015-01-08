@@ -45,7 +45,6 @@ static METDDPClient *sharedClient;
 
 @interface METDDPClient ()
 
-@property (assign, nonatomic, readwrite) METDDPConnectionStatus connectionStatus;
 @property (nonatomic, copy) void (^pendingLoginResumeHandler)();
 
 @end
@@ -72,6 +71,16 @@ static METDDPClient *sharedClient;
   METMethodInvocationCoordinator *_methodInvocationCoordinator;
 }
 
+#pragma mark - NSKeyValueObserving
+
++ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
+  if ([key isEqualToString:@"connected"]) {
+    return [NSSet setWithObject:@"connectionStatus"];
+  }
+  
+  return [super keyPathsForValuesAffectingValueForKey:key];
+}
+
 #pragma mark - Lifecycle
 
 - (instancetype)initWithConnection:(METDDPConnection *)connection {
@@ -90,7 +99,7 @@ static METDDPClient *sharedClient;
     _connectionRetryStrategy.randomizationFactor = 0.5;
     
     _connectionRetryTimer = [[METTimer alloc] initWithQueue:_queue block:^{
-      [self retryConnecting];
+      [self tryConnecting];
     }];
     
     _networkReachabilityManager = [[METNetworkReachabilityManager alloc] initWithHostName:connection.serverURL.host];
@@ -144,6 +153,12 @@ static METDDPClient *sharedClient;
 
 #pragma mark - Connecting
 
+- (METDDPConnectionStatus)connectionStatus {
+  @synchronized(self) {
+    return _connectionStatus;
+  }
+}
+
 - (BOOL)isConnected {
   @synchronized(self) {
     return _connectionStatus == METDDPConnectionStatusConnected;
@@ -152,10 +167,9 @@ static METDDPClient *sharedClient;
 
 - (void)connect {
   @synchronized(self) {
-    if (_connectionStatus == METDDPConnectionStatusOffline) {
-      self.connectionStatus = METDDPConnectionStatusConnecting;
-      _numberOfConnectionRetryAttempts = 0;
-      [_connection open];
+    if (_connectionStatus == METDDPConnectionStatusOffline || _connectionStatus == METDDPConnectionStatusWaiting) {
+        _numberOfConnectionRetryAttempts = 0;
+      [self tryConnecting];
     }
   }
 }
@@ -170,14 +184,13 @@ static METDDPClient *sharedClient;
   }
 }
 
-- (void)retryConnecting {
+- (void)tryConnecting {
   @synchronized(self) {
     if (_connectionStatus == METDDPConnectionStatusWaiting) {
       [_connectionRetryTimer stop];
     }
-    _numberOfConnectionRetryAttempts++;
-    [_connection open];
     self.connectionStatus = METDDPConnectionStatusConnecting;
+    [_connection open];
   }
 }
 
@@ -186,6 +199,7 @@ static METDDPClient *sharedClient;
     NSTimeInterval retryInterval = [_connectionRetryStrategy retryIntervalForNumberOfAttempts:_numberOfConnectionRetryAttempts];
     NSLog(@"Will retry opening connection after %f seconds", retryInterval);
     [_connectionRetryTimer startWithTimeInterval:retryInterval];
+    _numberOfConnectionRetryAttempts++;
     self.connectionStatus = METDDPConnectionStatusWaiting;
   }
 }
@@ -198,11 +212,7 @@ static METDDPClient *sharedClient;
         [self retryConnectingLater];
         break;
       case METDDPConnectionStatusConnecting:
-        if (_networkReachabilityManager.reachabilityStatus == METNetworkReachabilityStateNotReachable) {
-          [self disconnect];
-        } else {
-          [self retryConnectingLater];
-        }
+        [self retryConnectingLater];
         break;
       default:
         break;
@@ -232,7 +242,7 @@ static METDDPClient *sharedClient;
 
 - (void)networkReachabilityManager:(METNetworkReachabilityManager *)reachabilityManager didDetectReachabilityStatusChange:(METNetworkReachabilityStatus)reachabilityStatus {
   
-  if (reachabilityStatus == METNetworkReachabilityStateReachable) {
+  if (reachabilityStatus == METNetworkReachabilityStatusReachable && [UIApplication sharedApplication].applicationState != UIApplicationStateBackground) {
     [self connect];
   }
 }

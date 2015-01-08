@@ -39,6 +39,7 @@ typedef NS_OPTIONS(NSInteger, METMethodCallOptions) {
 
 @interface METDDPClient () <METDDPConnectionDelegate, METDDPHeartbeatDelegate, METNetworkReachabilityManagerDelegate>
 
+@property (assign, nonatomic, readwrite) METDDPConnectionStatus connectionStatus;
 @property(strong, nonatomic) METNetworkReachabilityManager *networkReachabilityManager;
 
 @property (copy, nonatomic, readonly) NSString *protocolVersion;

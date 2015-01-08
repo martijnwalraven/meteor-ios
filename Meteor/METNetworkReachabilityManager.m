@@ -78,10 +78,16 @@ static void METNetworkReachabilityCallback(SCNetworkReachabilityRef target, SCNe
 }
 
 - (void)didReceiveCallbackWithFlags:(SCNetworkReachabilityFlags)flags {
-  if (flags & kSCNetworkReachabilityFlagsReachable) {
-    self.reachabilityStatus = METNetworkReachabilityStateReachable;
+  BOOL isReachable = ((flags & kSCNetworkReachabilityFlagsReachable) != 0);
+  BOOL needsConnection = ((flags & kSCNetworkReachabilityFlagsConnectionRequired) != 0);
+  BOOL canConnectAutomatically = (((flags & kSCNetworkReachabilityFlagsConnectionOnDemand ) != 0) || ((flags & kSCNetworkReachabilityFlagsConnectionOnTraffic) != 0));
+  BOOL canConnectWithoutUserInteraction = (canConnectAutomatically && (flags & kSCNetworkReachabilityFlagsInterventionRequired) == 0);
+  BOOL isNetworkReachable = (isReachable && (!needsConnection || canConnectWithoutUserInteraction));
+  
+  if (isNetworkReachable) {
+    self.reachabilityStatus = METNetworkReachabilityStatusReachable;
   } else {
-    self.reachabilityStatus = METNetworkReachabilityStateNotReachable;
+    self.reachabilityStatus = METNetworkReachabilityStatusNotReachable;
   }
   
   [_delegate networkReachabilityManager:self didDetectReachabilityStatusChange:_reachabilityStatus];

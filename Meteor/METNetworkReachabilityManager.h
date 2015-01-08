@@ -21,9 +21,9 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, METNetworkReachabilityStatus) {
-  METNetworkReachabilityStateUnknown = 0,
-  METNetworkReachabilityStateNotReachable,
-  METNetworkReachabilityStateReachable
+  METNetworkReachabilityStatusUnknown = 0,
+  METNetworkReachabilityStatusNotReachable,
+  METNetworkReachabilityStatusReachable
 };
 
 @protocol METNetworkReachabilityManagerDelegate;

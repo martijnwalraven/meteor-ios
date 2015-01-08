@@ -93,36 +93,6 @@
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
 }
 
-- (void)testEncounteringErrorWhileConnectingDoesNotRetryIfNetworkIsNotReachable {
-  id networkReachabilityManager = OCMClassMock([METNetworkReachabilityManager class]);
-  _client.networkReachabilityManager = networkReachabilityManager;
-  
-  OCMStub([networkReachabilityManager reachabilityStatus]).andReturn(METNetworkReachabilityStateNotReachable);
-  
-  [_client connect];
-  
-  [self keyValueObservingExpectationForObject:_client keyPath:@"connectionStatus" expectedValue:[NSNumber numberWithInteger:METDDPConnectionStatusOffline]];
-  
-  [_client connection:_connection didFailWithError:nil];
-  
-  [self waitForExpectationsWithTimeout:1.0 handler:nil];
-}
-
-- (void)testEncounteringConnectionCloseWhileConnectingDoesNotRetryIfNetworkIsNotReachable {
-  id networkReachabilityManager = OCMClassMock([METNetworkReachabilityManager class]);
-  _client.networkReachabilityManager = networkReachabilityManager;
-  
-  OCMStub([networkReachabilityManager reachabilityStatus]).andReturn(METNetworkReachabilityStateNotReachable);
-  
-  [_client connect];
-  
-  [self keyValueObservingExpectationForObject:_client keyPath:@"connectionStatus" expectedValue:[NSNumber numberWithInteger:METDDPConnectionStatusOffline]];
-  
-  [_client connection:_connection didFailWithError:nil];
-  
-  [self waitForExpectationsWithTimeout:1.0 handler:nil];
-}
-
 - (void)testEncounteringErrorWhileConnectedRetriesLater {
   [self establishConnection];
   
@@ -147,11 +117,26 @@
   id networkReachabilityManager = OCMClassMock([METNetworkReachabilityManager class]);
   _client.networkReachabilityManager = networkReachabilityManager;
   
-  OCMStub([networkReachabilityManager reachabilityStatus]).andReturn(METNetworkReachabilityStateReachable);
+  OCMStub([networkReachabilityManager reachabilityStatus]).andReturn(METNetworkReachabilityStatusReachable);
   
   [self keyValueObservingExpectationForObject:_client keyPath:@"connectionStatus" expectedValue:[NSNumber numberWithInteger:METDDPConnectionStatusConnecting]];
   
-  [_client networkReachabilityManager:networkReachabilityManager didDetectReachabilityStatusChange:METNetworkReachabilityStateReachable];
+  [_client networkReachabilityManager:networkReachabilityManager didDetectReachabilityStatusChange:METNetworkReachabilityStatusReachable];
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+}
+
+- (void)testConnectIfNetworkBecomesReachableWhileWaiting {
+  id networkReachabilityManager = OCMClassMock([METNetworkReachabilityManager class]);
+  _client.networkReachabilityManager = networkReachabilityManager;
+  
+  OCMStub([networkReachabilityManager reachabilityStatus]).andReturn(METNetworkReachabilityStatusReachable);
+  
+  _client.connectionStatus = METDDPConnectionStatusWaiting;
+  
+  [self keyValueObservingExpectationForObject:_client keyPath:@"connectionStatus" expectedValue:[NSNumber numberWithInteger:METDDPConnectionStatusConnecting]];
+  
+  [_client networkReachabilityManager:networkReachabilityManager didDetectReachabilityStatusChange:METNetworkReachabilityStatusReachable];
   
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
 }
