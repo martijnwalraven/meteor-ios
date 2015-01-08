@@ -20,6 +20,7 @@
 		9F0C5EB11A542E510077E466 /* FetchedResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0C5EB01A542E510077E466 /* FetchedResultsTableViewController.swift */; };
 		9F49219B1A57FEDF00151F48 /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F49219A1A57FEDF00151F48 /* PlaceholderView.swift */; };
 		9F4921A51A590D8F00151F48 /* FetchedResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4921A41A590D8F00151F48 /* FetchedResults.swift */; };
+		9FEA8E411A5E741200D7DE32 /* MeteorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA8E401A5E741200D7DE32 /* MeteorExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		9F0C5EB01A542E510077E466 /* FetchedResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsTableViewController.swift; sourceTree = "<group>"; };
 		9F49219A1A57FEDF00151F48 /* PlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
 		9F4921A41A590D8F00151F48 /* FetchedResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResults.swift; sourceTree = "<group>"; };
+		9FEA8E401A5E741200D7DE32 /* MeteorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeteorExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				9F4921A41A590D8F00151F48 /* FetchedResults.swift */,
+				9FEA8E401A5E741200D7DE32 /* MeteorExtensions.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -275,6 +278,7 @@
 				9F0C5EB11A542E510077E466 /* FetchedResultsTableViewController.swift in Sources */,
 				9F0C5E511A53C4E10077E466 /* AppDelegate.swift in Sources */,
 				9F0C5E541A53C4E10077E466 /* Todos.xcdatamodeld in Sources */,
+				9FEA8E411A5E741200D7DE32 /* MeteorExtensions.swift in Sources */,
 				9F0C5E561A53C4E10077E466 /* ListsViewController.swift in Sources */,
 				9F0C5E581A53C4E10077E466 /* TodosViewController.swift in Sources */,
 				9F49219B1A57FEDF00151F48 /* PlaceholderView.swift in Sources */,

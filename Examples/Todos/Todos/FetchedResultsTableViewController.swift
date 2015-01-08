@@ -25,6 +25,7 @@ import Meteor
 enum ContentLoadingState : Printable{
   case Initial
   case Loading
+  case Offline
   case Loaded
   case Error(NSError)
   
@@ -34,6 +35,8 @@ enum ContentLoadingState : Printable{
       return "Initial"
     case Loading:
       return "Loading"
+    case Offline:
+      return "Offline"
     case Loaded:
       return "Loaded"
     case Error(let error):
@@ -49,6 +52,7 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
     if subscription != nil {
       Meteor.removeSubscription(subscription)
     }
+    NSNotificationCenter.defaultCenter().removeObserver(self)
   }
   
   // MARK: - Model Management
@@ -65,7 +69,7 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
   
   // MARK: - Content Loading
   
-  var contentLoadingState: ContentLoadingState = .Initial  {
+  private var contentLoadingState: ContentLoadingState = .Initial  {
     didSet {
       if isViewLoaded() {
         updatePlaceholderView()
@@ -82,7 +86,18 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
     }
   }
   
+  func resetContentLoadingState() {
+    contentLoadingState = .Initial
+  }
+  
   func loadContent() {
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "connectionStatusDidChange", name: METDDPClientDidChangeConnectionStatusNotification, object: Meteor)
+  }
+  
+  func connectionStatusDidChange() {
+    if !isContentLoaded && Meteor.connectionStatus == .Offline {
+      contentLoadingState = .Offline
+    }
   }
   
   func addSubscriptionWithName(name: String, parameters: [AnyObject]? = nil) {
@@ -110,7 +125,11 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
     }
     if !subscription!.ready {
       calledImmediately = false
-      contentLoadingState = .Loading
+      if Meteor.connectionStatus == .Offline {
+        contentLoadingState = .Offline
+      } else {
+        contentLoadingState = .Loading
+      }
     }
   }
 
@@ -170,6 +189,8 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
     switch contentLoadingState {
     case .Loading:
       placeholderView?.showLoadingIndicator()
+    case .Offline:
+      placeholderView?.showTitle("Could not establish connection to server", message: nil)
     case .Error(let error):
       placeholderView?.showTitle(error.localizedDescription, message: error.localizedFailureReason)
     default:

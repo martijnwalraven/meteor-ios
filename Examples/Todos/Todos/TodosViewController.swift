@@ -57,7 +57,7 @@ class TodosViewController: FetchedResultsTableViewController, UITextFieldDelegat
       
       if list == nil {
         fetchedResults = nil
-        contentLoadingState = .Initial
+        resetContentLoadingState()
       }
       
       updateTableHeaderView()
@@ -80,6 +80,8 @@ class TodosViewController: FetchedResultsTableViewController, UITextFieldDelegat
   // MARK: - Content Loading
   
   override func loadContent() {
+    super.loadContent()
+    
     if list != nil {
       addSubscriptionWithName("todos", parameters: [list!])
     }
