@@ -42,6 +42,7 @@
 NSString * const METDDPErrorDomain = @"com.meteor.DDPClient.ErrorDomain";
 
 NSString * const METDDPClientDidChangeConnectionStatusNotification = @"METDDPClientDidChangeConnectionStatusNotification";
+NSString * const METDDPClientDidChangeAccountNotification = @"METDDPClientDidChangeAccountNotification";
 
 @interface METDDPClient ()
 
@@ -607,6 +608,13 @@ NSString * const METDDPClientDidChangeConnectionStatusNotification = @"METDDPCli
 
 #pragma mark - Accounts
 
+- (void)setAccount:(METAccount *)account {
+  if (_account != account) {
+    _account = account;
+    [[NSNotificationCenter defaultCenter] postNotificationName:METDDPClientDidChangeAccountNotification object:self userInfo:nil];
+  }
+}
+
 - (void)loginWithParameters:(NSArray *)parameters completionHandler:(METLogInCompletionHandler)completionHandler {
   self.loggingIn = YES;
   __block BOOL reconnected = NO;
@@ -621,8 +629,8 @@ NSString * const METDDPClientDidChangeConnectionStatusNotification = @"METDDPCli
     if (reconnected) return;
     
     _pendingLoginResumeHandler = nil;
-    self.account = [self accountFromLoginMethodResult:result];
     self.loggingIn = NO;
+    self.account = [self accountFromLoginMethodResult:result];
     if (completionHandler) {
       completionHandler(error);
     }
