@@ -57,7 +57,7 @@ class TodosViewController: FetchedResultsTableViewController, UITextFieldDelegat
       
       if list == nil {
         fetchedResults = nil
-        resetContentLoadingState()
+        contentLoadingState = .Initial
       }
       
       updateTableHeaderView()
@@ -83,19 +83,26 @@ class TodosViewController: FetchedResultsTableViewController, UITextFieldDelegat
     super.loadContent()
     
     if list != nil {
-      addSubscriptionWithName("todos", parameters: [list!])
-    }
-  }
-  
-  override func subscriptionDidBecomeReady() {
-    if fetchedResults == nil {
-      let fetchRequest = NSFetchRequest(entityName: "Todo")
-      fetchRequest.predicate = NSPredicate(format: "list == %@", list!)
-      fetchRequest.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+      subscriptionLoader.addSubscriptionWithName("todos", parameters: list!)
+      subscriptionLoader.whenReady {
+        if self.fetchedResults == nil {
+          let fetchRequest = NSFetchRequest(entityName: "Todo")
+          fetchRequest.predicate = NSPredicate(format: "list == %@", self.list!)
+          fetchRequest.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+          
+          self.fetchedResults = FetchedResults(managedObjectContext: self.managedObjectContext, fetchRequest: fetchRequest)
+          self.fetchedResults.registerChangeObserver(self)
+          self.fetchedResults.performFetch()
+        }
+      }
       
-      fetchedResults = FetchedResults(managedObjectContext: managedObjectContext, fetchRequest: fetchRequest)
-      fetchedResults.registerChangeObserver(self)
-      fetchedResults.performFetch()
+      if !subscriptionLoader.isReady {
+        if Meteor.connectionStatus == .Offline {
+          contentLoadingState = .Offline
+        } else {
+          contentLoadingState = .Loading
+        }
+      }
     }
   }
   

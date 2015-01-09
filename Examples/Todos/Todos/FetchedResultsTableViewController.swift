@@ -22,7 +22,7 @@ import UIKit
 import CoreData
 import Meteor
 
-enum ContentLoadingState : Printable{
+enum ContentLoadingState : Printable {
   case Initial
   case Loading
   case Offline
@@ -45,13 +45,10 @@ enum ContentLoadingState : Printable{
   }
 }
 
-class FetchedResultsTableViewController: UITableViewController, FetchedResultsChangeObserver {
+class FetchedResultsTableViewController: UITableViewController, FetchedResultsChangeObserver, SubscriptionLoaderDelegate {
   // MARK: - Lifecycle
   
   deinit {
-    if subscription != nil {
-      Meteor.removeSubscription(subscription)
-    }
     NSNotificationCenter.defaultCenter().removeObserver(self)
   }
   
@@ -69,7 +66,7 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
   
   // MARK: - Content Loading
   
-  private var contentLoadingState: ContentLoadingState = .Initial  {
+  var contentLoadingState: ContentLoadingState = .Initial  {
     didSet {
       if isViewLoaded() {
         updatePlaceholderView()
@@ -86,11 +83,8 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
     }
   }
   
-  func resetContentLoadingState() {
-    contentLoadingState = .Initial
-  }
-  
   func loadContent() {
+    subscriptionLoader.delegate = self
     NSNotificationCenter.defaultCenter().addObserver(self, selector: "connectionStatusDidChange", name: METDDPClientDidChangeConnectionStatusNotification, object: Meteor)
   }
   
@@ -100,48 +94,14 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
     }
   }
   
-  func addSubscriptionWithName(name: String, parameters: [AnyObject]? = nil) {
-    var calledImmediately = true
-    subscription = Meteor.addSubscriptionWithName(name, parameters: parameters) { [weak self] (error) -> () in
-      if error == nil {
-        if calledImmediately {
-          self?.subscriptionDidBecomeReady()
-          return
-        }
-        // Make sure changes are merged with the managed object context
-        self?.managedObjectContext.performBlock() {
-          // Context may be on a private queue, so make sure subscriptionDidBecomeRead is called on the main thread
-          dispatch_async(dispatch_get_main_queue()) {
-            self?.subscriptionDidBecomeReady()
-            return
-          }
-        }
-      } else {
-        dispatch_async(dispatch_get_main_queue()) {
-          self?.contentLoadingState = .Error(error)
-          return
-        }
-      }
-    }
-    if !subscription!.ready {
-      calledImmediately = false
-      if Meteor.connectionStatus == .Offline {
-        contentLoadingState = .Offline
-      } else {
-        contentLoadingState = .Loading
-      }
-    }
-  }
-
-  private var subscription: METSubscription? {
-    willSet {
-      if subscription != nil {
-        Meteor.removeSubscription(subscription)
-      }
-    }
-  }
+  // MARK: - Subscriptions
   
-  func subscriptionDidBecomeReady() {
+  var subscriptionLoader = SubscriptionLoader()
+  
+  // MARK SubscriptionLoaderDelegate
+  
+  func subscriptionLoader(subscriptionLoader: SubscriptionLoader, subscription: METSubscription, didFailWithError error: NSError) {
+    contentLoadingState = .Error(error)
   }
   
   // MARK: - View Management

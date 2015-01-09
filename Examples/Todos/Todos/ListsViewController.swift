@@ -23,26 +23,37 @@ import CoreData
 import Meteor
 
 class ListsViewController: FetchedResultsTableViewController {
+  @IBOutlet weak var signInBarButtonItem: UIBarButtonItem!
+  
   // MARK: - Content Loading
   
   override func loadContent() {
     super.loadContent()
     
-    addSubscriptionWithName("publicLists")
-  }
-  
-  override func subscriptionDidBecomeReady() {
-    if fetchedResults == nil {
-      let fetchRequest = NSFetchRequest(entityName: "List")
-      fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+    subscriptionLoader.addSubscriptionWithName("publicLists")
+    subscriptionLoader.addSubscriptionWithName("privateLists")
+    
+    subscriptionLoader.whenReady {
+      if self.fetchedResults == nil {
+        let fetchRequest = NSFetchRequest(entityName: "List")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        
+        self.fetchedResults = FetchedResults(managedObjectContext: self.managedObjectContext, fetchRequest: fetchRequest)
+        self.fetchedResults.registerChangeObserver(self)
+        self.fetchedResults.performFetch()
+      }
       
-      fetchedResults = FetchedResults(managedObjectContext: managedObjectContext, fetchRequest: fetchRequest)
-      fetchedResults.registerChangeObserver(self)
-      fetchedResults.performFetch()
+      if self.isViewLoaded() {
+        self.selectFirstTableViewRowIfNoRowIsCurrentlySelected()
+      }
     }
     
-    if isViewLoaded() {
-      selectFirstTableViewRowIfNoRowIsCurrentlySelected()
+    if !subscriptionLoader.isReady {
+      if Meteor.connectionStatus == .Offline {
+        contentLoadingState = .Offline
+      } else {
+        contentLoadingState = .Loading
+      }
     }
   }
   

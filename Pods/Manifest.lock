@@ -16,7 +16,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   InflectorKit: bb1f5c9feb01d17450b8bcdeb7ab1ef1832b2247
-  Meteor: ecb30d68bcdaedd96c36e6591a0ce6e516889b44
+  Meteor: a44a5a2bce821ad6557bb4dfaa367ef4c44a10c4
   OCMock: f6cb8c162ab9d5620dddf411282c7b2c0ee78854
   PocketSocket: 8c18f973e57fd3042d032626654658df0fa2f126
 

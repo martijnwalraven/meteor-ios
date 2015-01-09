@@ -5,6 +5,7 @@
 #import "METCoreDataDDPClient.h"
 #import "METDatabase.h"
 #import "METDatabaseChanges.h"
+#import "METDDPClient+AccountsPassword.h"
 #import "METDDPClient.h"
 #import "METDocument.h"
 #import "METDocumentChangeDetails.h"

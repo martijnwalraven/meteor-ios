@@ -6,10 +6,10 @@
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,12 +18,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
+func all<S : SequenceType>(source: S, predicate: (S.Generator.Element) -> Bool) -> Bool {
+  for element in source {
+    if !predicate(element) {
+      return false
+    }
+  }
+  return true
+}
 
-#import "METDDPClient.h"
-
-@interface METDDPClient (AccountsPassword)
-
-- (void)loginWithEmail:(NSString *)email password:(NSString *)password completionHandler:(METLogInCompletionHandler)completionHandler;
-
-@end
+func any<S : SequenceType>(source: S, predicate: (S.Generator.Element) -> Bool) -> Bool {
+  for element in source {
+    if predicate(element) {
+      return true
+    }
+  }
+  return false
+}
