@@ -23,6 +23,7 @@
 
 #import "METDDPClient.h"
 @class METIncrementalStore;
+@class METDocumentKey;
 
 @interface METCoreDataDDPClient : METDDPClient
 
@@ -32,5 +33,8 @@
 @property (strong, nonatomic, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (strong, nonatomic, readonly) NSManagedObjectModel *managedObjectModel;
 @property (strong, nonatomic, readonly) NSManagedObjectContext *mainQueueManagedObjectContext;
+
+- (NSManagedObjectID *)objectIDForDocumentKey:(METDocumentKey *)documentKey;
+- (METDocumentKey *)documentKeyForObjectID:(NSManagedObjectID *)objectID;
 
 @end

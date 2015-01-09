@@ -65,13 +65,21 @@
   return [parameters mappedArrayUsingBlock:^id(id parameter) {
     if ([parameter isKindOfClass:[NSManagedObject class]]) {
       NSManagedObject *managedObject = (NSManagedObject *)parameter;
-      parameter = [_persistentStore documentKeyForObjectID:managedObject.objectID].documentID;
+      parameter = [self documentKeyForObjectID:managedObject.objectID].documentID;
     } else if ([parameter isKindOfClass:[NSManagedObjectID class]]) {
       NSManagedObjectID *managedObjectID = (NSManagedObjectID *)parameter;
-      parameter = [_persistentStore documentKeyForObjectID:managedObjectID].documentID;
+      parameter = [self documentKeyForObjectID:managedObjectID].documentID;
     }
     return parameter;
   }];
+}
+
+- (NSManagedObjectID *)objectIDForDocumentKey:(METDocumentKey *)documentKey {
+  return [_persistentStore objectIDForDocumentKey:documentKey];
+}
+
+- (METDocumentKey *)documentKeyForObjectID:(NSManagedObjectID *)objectID {
+  return [_persistentStore documentKeyForObjectID:objectID];
 }
 
 #pragma mark - Notifications
