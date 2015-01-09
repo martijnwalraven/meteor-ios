@@ -609,7 +609,7 @@ NSString * const METDDPClientDidChangeConnectionStatusNotification = @"METDDPCli
 
 - (void)loginWithParameters:(NSArray *)parameters completionHandler:(METLogInCompletionHandler)completionHandler {
   self.loggingIn = YES;
-  __block BOOL reconnected;
+  __block BOOL reconnected = NO;
   __weak METDDPClient *weakSelf = self;
   [self callMethodWithName:@"login" parameters:parameters options:METMethodCallOptionsBarrier receivedResultHandler:^(id result, NSError *error) {
     self.pendingLoginResumeHandler = ^{

@@ -49,8 +49,7 @@
 }
 
 - (void)testSuccessfullyLoggingIn {
-  XCTestExpectation *expectation = [self expectationWithDescription:@"login method returned"];
-  
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completion handler invoked"];
   [_client loginWithParameters:nil completionHandler:^(NSError *error) {
     XCTAssertNil(error);
     [expectation fulfill];
@@ -69,8 +68,7 @@
 }
 
 - (void)testUnsuccessfullyLoggingIn {
-  XCTestExpectation *expectation = [self expectationWithDescription:@"login method returned"];
-  
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completion handler invoked"];
   [_client loginWithParameters:nil completionHandler:^(NSError *error) {
     XCTAssertEqualObjects(error.domain, METDDPErrorDomain);
     XCTAssertEqual(error.code, METDDPServerError);
@@ -87,6 +85,24 @@
   
   XCTAssertFalse(_client.loggingIn);
   XCTAssertNil(_client.account);
+}
+
+- (void)testSettingAccountPostsDidChangeAccountNotification {
+  [self expectationForNotification:METDDPClientDidChangeAccountNotification object:_client handler:nil];
+  
+  _client.account = [[METAccount alloc] initWithUserID:@"lovelace" resumeToken:@"foo" expiryDate:nil];
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+}
+
+- (void)testSettingAccountToNilPostsDidChangeAccountNotification {
+  _client.account = [[METAccount alloc] initWithUserID:@"lovelace" resumeToken:@"foo" expiryDate:nil];
+  
+  [self expectationForNotification:METDDPClientDidChangeAccountNotification object:_client handler:nil];
+  
+  _client.account = nil;
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
 }
 
 - (void)testLoggingInActsAsABarrierMethodInvocation {
@@ -139,7 +155,7 @@
   
   NSString *lastMethodID = [self lastMethodID];
   [_connection receiveMessage:@{@"msg": @"updated", @"methods": @[lastMethodID]}];
-  [_connection receiveMessage:@{@"msg": @"result", @"id": lastMethodID, @"result": @{@"id": @"turing", @"token": @"foo", @"tokenExpires": @"2015-01-01 00:00:00 +0000"}}];
+  [_connection receiveMessage:@{@"msg": @"result", @"id": lastMethodID, @"result": @{@"id": @"turing", @"token": @"foo", @"tokenExpires": @"2016-01-01 00:00:00 +0000"}}];
   
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
   
@@ -182,7 +198,7 @@
   [_client loginWithParameters:nil completionHandler:nil];
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
   
-  [_connection receiveMessage:@{@"msg": @"result", @"id": [self lastMethodID], @"result": @{@"id": @"lovelace", @"token": @"foo", @"tokenExpires": @"2015-01-01 00:00:00 +0000"}}];
+  [_connection receiveMessage:@{@"msg": @"result", @"id": [self lastMethodID], @"result": @{@"id": @"lovelace", @"token": @"foo", @"tokenExpires": @"2016-01-01 00:00:00 +0000"}}];
   
   [_client disconnect];
   
@@ -203,29 +219,24 @@
   XCTAssertNil(_client.account);
 }
 
-- (void)testInvokesCompletionHandlerOnlyOnceWithMostRecentAccountWhenReconnectingWhenResultReceivedButNotUpdatesDone {
-  __block NSUInteger completionHandlerInvocationCount = 0;
-  __block METAccount *accountWhenCompletionHandlerWasInvoked;
+- (void)testInvokesCompletionHandlerWithMostRecentAccountWhenReconnectingWhenResultReceivedButNotUpdatesDone {
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completion handler invoked"];
   [_client loginWithParameters:@[] completionHandler:^(NSError *error) {
-    completionHandlerInvocationCount++;
-    accountWhenCompletionHandlerWasInvoked = _client.account;
+    XCTAssertEqualObjects(@"turing", _client.account.userID);
+    [expectation fulfill];
   }];
   
-  [_connection receiveMessage:@{@"msg": @"result", @"id": [self lastMethodID], @"result": @{@"id": @"lovelace", @"token": @"foo", @"tokenExpires": @"2015-01-01 00:00:00 +0000"}}];
+  [_connection receiveMessage:@{@"msg": @"result", @"id": [self lastMethodID], @"result": @{@"id": @"lovelace", @"token": @"foo", @"tokenExpires": @"2016-01-01 00:00:00 +0000"}}];
   
   [_client disconnect];
-  [self establishConnection];
   
-  [self keyValueObservingExpectationForObject:_client keyPath:@"loggingIn" expectedValue:[NSNumber numberWithBool:NO]];
+  [self establishConnection];
   
   NSString *lastMethodID = [self lastMethodID];
   [_connection receiveMessage:@{@"msg": @"updated", @"methods": @[lastMethodID]}];
-  [_connection receiveMessage:@{@"msg": @"result", @"id": lastMethodID, @"result": @{@"id": @"turing", @"token": @"foo", @"tokenExpires": @"2015-01-01 00:00:00 +0000"}}];
+  [_connection receiveMessage:@{@"msg": @"result", @"id": lastMethodID, @"result": @{@"id": @"turing", @"token": @"foo", @"tokenExpires": @"2016-01-01 00:00:00 +0000"}}];
   
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
-  
-  XCTAssertEqual(completionHandlerInvocationCount, 1);
-  XCTAssertEqualObjects(@"turing", accountWhenCompletionHandlerWasInvoked.userID);
 }
 
 #pragma mark - Helper Methods
