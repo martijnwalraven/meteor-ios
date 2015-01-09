@@ -239,6 +239,24 @@
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
 }
 
+- (void)testSuccessfullyLoggingOut {
+  _client.account = [[METAccount alloc] initWithUserID:@"lovelace" resumeToken:@"foo" expiryDate:nil];
+  
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completion handler invoked"];
+  [_client logoutWithCompletionHandler:^(NSError *error) {
+    XCTAssertNil(error);
+    [expectation fulfill];
+  }];
+  
+  NSString *lastMethodID = [self lastMethodID];
+  [_connection receiveMessage:@{@"msg": @"updated", @"methods": @[lastMethodID]}];
+  [_connection receiveMessage:@{@"msg": @"result", @"id": lastMethodID}];
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+  
+  XCTAssertNil(_client.account);
+}
+
 #pragma mark - Helper Methods
 
 - (void)finishMethodInvocation:(METMethodInvocation *)methodInvocation {

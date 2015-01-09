@@ -48,6 +48,7 @@ typedef id (^METMethodStub)(NSArray *parameters);
 typedef void (^METMethodCompletionHandler)(id result, NSError *error);
 
 typedef void (^METLogInCompletionHandler)(NSError *error);
+typedef void (^METLogOutCompletionHandler)(NSError *error);
 
 @interface METDDPClient : NSObject
 
@@ -76,6 +77,8 @@ typedef void (^METLogInCompletionHandler)(NSError *error);
 
 @property (assign, nonatomic, readonly, getter=isLoggingIn) BOOL loggingIn;
 @property (copy, nonatomic, readonly) METAccount *account;
+
+- (void)logoutWithCompletionHandler:(METLogOutCompletionHandler)completionHandler;
 
 @end
 

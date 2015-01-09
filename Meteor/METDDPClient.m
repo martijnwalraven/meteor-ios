@@ -655,6 +655,15 @@ NSString * const METDDPClientDidChangeAccountNotification = @"METDDPClientDidCha
   [self loginWithParameters:@[@{@"resume": resumeToken}] completionHandler:completionHandler];
 }
 
+- (void)logoutWithCompletionHandler:(METLogOutCompletionHandler)completionHandler {
+  [self callMethodWithName:@"logout" parameters:nil options:METMethodCallOptionsBarrier completionHandler:^(id result, NSError *error) {
+    self.account = nil;
+    if (completionHandler) {
+      completionHandler(error);
+    }
+  }];
+}
+
 #pragma mark - Helper Methods
 
 - (NSArray *)convertParameters:(NSArray *)parameters {
