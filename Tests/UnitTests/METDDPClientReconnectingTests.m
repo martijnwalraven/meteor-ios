@@ -81,7 +81,7 @@
   }];
   
   METSubscription *allPlayers = [_client addSubscriptionWithName:@"allPlayers" parameters:nil];
-  allPlayers.ready = YES;
+  [allPlayers didChangeStatus:METSubscriptionStatusReady error:nil];
   
   [_client disconnect];
   
@@ -101,9 +101,9 @@
   }];
   
   METSubscription *subscription1 = [_client addSubscriptionWithName:@"allPlayers" parameters:nil];
-  subscription1.ready = YES;
+  [subscription1 didChangeStatus:METSubscriptionStatusReady error:nil];
   METSubscription *subscription2 = [_client addSubscriptionWithName:@"playersWithMinimumScore" parameters:@[@20]];
-  subscription2.ready = YES;
+  [subscription2 didChangeStatus:METSubscriptionStatusReady error:nil];
   
   [_client disconnect];
   

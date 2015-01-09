@@ -61,28 +61,13 @@
     if (subscription) {
       [subscription beginUse];
       [subscription.reuseTimer stop];
-      
-      // Invoke completion handler immediately when subscription is ready
-      if (subscription.ready) {
-        completionHandler(nil);
-      } else {
-        // Append completion handler to existing completion handler if needed
-        METSubscriptionCompletionHandler existingCompletionHandler = subscription.completionHandler;
-        if (!existingCompletionHandler) {
-          subscription.completionHandler = completionHandler;
-        } else {
-          subscription.completionHandler = ^(NSError *error) {
-            existingCompletionHandler(error);
-            completionHandler(error);
-          };
-        }
-      }
+      [subscription whenCompleted:completionHandler];
       return;
     };
     
     NSString *subscriptionID = [[METRandomValueGenerator defaultRandomValueGenerator] randomIdentifier];
     subscription = [[METSubscription alloc] initWithIdentifier:subscriptionID name:name parameters:parameters];
-    subscription.completionHandler = completionHandler;
+    [subscription whenCompleted:completionHandler];
     subscription.notInUseTimeout = _defaultNotInUseTimeout;
     [subscription beginUse];
     
@@ -115,7 +100,6 @@
     [subscription endUse];
     
     if (!subscription.inUse) {
-      subscription.completionHandler = nil;
       [self removeSubscriptionToBeRevivedAfterConnect:subscription];
       
       if (subscription.reuseTimer == nil) {
@@ -150,11 +134,7 @@
     [self removeSubscriptionToBeRevivedAfterConnect:subscription];
     
     [_client.methodInvocationCoordinator performAfterAllCurrentlyBufferedDocumentsAreFlushed:^{
-      METSubscriptionCompletionHandler completionHandler = subscription.completionHandler;
-      subscription.ready = YES;
-      if (completionHandler) {
-        completionHandler(nil);
-      }
+      [subscription didChangeStatus:METSubscriptionStatusReady error:nil];
     }];
   });
 }
@@ -169,11 +149,8 @@
     }
     
     [self removeSubscriptionToBeRevivedAfterConnect:subscription];
-    
-    METSubscriptionCompletionHandler completionHandler = subscription.completionHandler;
-    if (completionHandler) {
-      completionHandler(error);
-    }
+
+    [subscription didChangeStatus:METSubscriptionStatusError error:error];
   });
 }
 

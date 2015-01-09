@@ -24,8 +24,9 @@
 
 @interface METSubscription ()
 
-@property (copy, nonatomic, readwrite) METSubscriptionCompletionHandler completionHandler;
-@property (assign, nonatomic, readwrite, getter=isReady) BOOL ready;
+@property (assign, nonatomic, readonly) METSubscriptionStatus status;
+@property (strong, nonatomic, readonly) NSError *error;
+- (void)didChangeStatus:(METSubscriptionStatus)status error:(NSError *)error;
 
 @property (assign, nonatomic, getter=isInUse) BOOL inUse;
 - (void)beginUse;

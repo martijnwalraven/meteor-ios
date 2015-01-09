@@ -22,6 +22,7 @@
 #import "METSubscription_Internal.h"
 
 @implementation METSubscription {
+  METSubscriptionCompletionHandler _completionHandler;
   NSUInteger *_usageCount;
 }
 
@@ -33,6 +34,38 @@
     _parameters = [parameters copy];
   }
   return self;
+}
+
+- (void)didChangeStatus:(METSubscriptionStatus)status error:(NSError *)error {
+  _status = status;
+  _error = error;
+  if (_completionHandler) {
+    _completionHandler(error);
+    _completionHandler = nil;
+  }
+}
+
+- (BOOL)isReady {
+  return _status == METSubscriptionStatusReady;
+}
+
+- (void)whenCompleted:(METSubscriptionCompletionHandler)completionHandler {
+  // Invoke completion handler synchronously if we've already completed
+  if (_status != METSubscriptionStatusPending) {
+    if (completionHandler) {
+      completionHandler(_error);
+    }
+  } else {
+    METSubscriptionCompletionHandler existingCompletionHandler = _completionHandler;
+    _completionHandler = ^(NSError *error) {
+      if (existingCompletionHandler) {
+        existingCompletionHandler(error);
+      }
+      if (completionHandler) {
+        completionHandler(error);
+      }
+    };
+  }
 }
 
 #pragma mark - Usage Count

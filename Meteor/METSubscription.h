@@ -22,6 +22,12 @@
 
 typedef void (^METSubscriptionCompletionHandler)(NSError *error);
 
+typedef NS_ENUM(NSInteger, METSubscriptionStatus) {
+  METSubscriptionStatusPending = 0,
+  METSubscriptionStatusReady,
+  METSubscriptionStatusError
+};
+
 @interface METSubscription : NSObject
 
 - (instancetype)initWithIdentifier:(NSString *)identifier name:(NSString *)name parameters:(id)parameters;
@@ -29,9 +35,9 @@ typedef void (^METSubscriptionCompletionHandler)(NSError *error);
 @property (copy, nonatomic, readonly) NSString *name;
 @property (strong, nonatomic, readonly) id parameters;
 
-@property (copy, nonatomic, readonly) METSubscriptionCompletionHandler completionHandler;
-
 @property (assign, nonatomic, readonly, getter=isReady) BOOL ready;
+
+- (void)whenCompleted:(METSubscriptionCompletionHandler)completionHandler;
 
 @property (assign, nonatomic) NSTimeInterval notInUseTimeout;
 
