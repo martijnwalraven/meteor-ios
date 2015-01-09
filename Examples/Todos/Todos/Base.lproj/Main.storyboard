@@ -183,19 +183,20 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Lists" id="Zdf-7t-Un8">
-                        <barButtonItem key="leftBarButtonItem" image="signin_icon" id="gBE-Tn-HoO">
+                        <barButtonItem key="leftBarButtonItem" image="user_icon" id="gBE-Tn-HoO" userLabel="User Button">
                             <connections>
-                                <segue destination="BjR-Zg-dmg" kind="presentation" modalPresentationStyle="formSheet" id="Ri4-jL-oQQ"/>
+                                <action selector="userButtonPressed" destination="7bK-jq-Zjz" id="FHc-Tf-8IF"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Ssu-7A-TQl">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Ssu-7A-TQl" userLabel="Add Button">
                             <connections>
                                 <action selector="addList" destination="7bK-jq-Zjz" id="NTo-36-v9g"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="signInBarButtonItem" destination="gBE-Tn-HoO" id="D4j-FI-kc7"/>
+                        <outlet property="userBarButtonItem" destination="gBE-Tn-HoO" id="Zay-NL-jCW"/>
+                        <segue destination="BjR-Zg-dmg" kind="presentation" identifier="SignIn" modalPresentationStyle="formSheet" id="z3G-GJ-TWu"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
@@ -296,7 +297,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="signin_icon" width="25" height="25"/>
+        <image name="user_icon" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="6S0-TO-JiA"/>

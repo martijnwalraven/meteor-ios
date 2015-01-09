@@ -104,6 +104,16 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
     contentLoadingState = .Error(error)
   }
   
+  // MARK: - User
+  
+  var currentUser: User? {
+    if let userID = Meteor.account?.userID {
+      let userObjectID = Meteor.objectIDForDocumentKey(METDocumentKey(collectionName: "users", documentID: userID))
+      return managedObjectContext.objectWithID(userObjectID) as? User
+    }
+    return nil;
+  }
+  
   // MARK: - View Management
   
   override func viewDidLoad() {

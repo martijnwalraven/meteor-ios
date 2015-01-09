@@ -18,8 +18,24 @@
         <attribute name="text" attributeType="String" syncable="YES"/>
         <relationship name="list" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="List" inverseName="todos" inverseEntity="List" syncable="YES"/>
     </entity>
+    <entity name="User" representedClassName="Todos.User" syncable="YES">
+        <attribute name="creationDate" optional="YES" attributeType="Date" syncable="YES">
+            <userInfo>
+                <entry key="fieldName" value="createdAt"/>
+            </userInfo>
+        </attribute>
+        <attribute name="emailAddresses" optional="YES" attributeType="Transformable" syncable="YES">
+            <userInfo>
+                <entry key="fieldName" value="emails"/>
+            </userInfo>
+        </attribute>
+        <attribute name="profile" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="services" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
         <element name="List" positionX="261" positionY="189" width="128" height="88"/>
         <element name="Todo" positionX="261" positionY="198" width="128" height="103"/>
+        <element name="User" positionX="270" positionY="234" width="128" height="118"/>
     </elements>
 </model>

@@ -23,7 +23,7 @@ import CoreData
 import Meteor
 
 class ListsViewController: FetchedResultsTableViewController {
-  @IBOutlet weak var signInBarButtonItem: UIBarButtonItem!
+  @IBOutlet weak var userBarButtonItem: UIBarButtonItem!
   
   // MARK: - Content Loading
   
@@ -62,9 +62,19 @@ class ListsViewController: FetchedResultsTableViewController {
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
     
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "accountDidChange", name: METDDPClientDidChangeAccountNotification, object: Meteor)
+    
+    updateUserBarButtonItem()
+    
     if isContentLoaded {
       selectFirstTableViewRowIfNoRowIsCurrentlySelected()
     }
+  }
+  
+  override func viewWillDisappear(animated: Bool) {
+    super.viewWillDisappear(animated)
+    
+    NSNotificationCenter.defaultCenter().removeObserver(self, name: "accountDidChange", object: Meteor)
   }
   
   func selectFirstTableViewRowIfNoRowIsCurrentlySelected() {
@@ -73,6 +83,20 @@ class ListsViewController: FetchedResultsTableViewController {
         tableView.selectRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), animated: false, scrollPosition: .Top)
         performSegueWithIdentifier("showDetail", sender: nil)
       }
+    }
+  }
+  
+  func accountDidChange() {
+    dispatch_async(dispatch_get_main_queue()) {
+      self.updateUserBarButtonItem()
+    }
+  }
+  
+  func updateUserBarButtonItem() {
+    if Meteor.account == nil {
+      userBarButtonItem.image = UIImage(named: "user_icon")
+    } else {
+      userBarButtonItem.image = UIImage(named: "user_icon_selected")
     }
   }
   
@@ -86,12 +110,46 @@ class ListsViewController: FetchedResultsTableViewController {
   
   // MARK: - IBActions
   
+  @IBAction func userButtonPressed() {
+    if Meteor.account == nil {
+      performSegueWithIdentifier("SignIn", sender: nil)
+    } else {
+      showUserAlertSheet()
+    }
+  }
+    
+  func showUserAlertSheet() {
+    let currentUser = self.currentUser
+    
+    let emailAddress = currentUser?.emailAddress
+    let message = emailAddress != nil ? "Signed in as \(emailAddress!)." : "Signed in."
+    
+    let alertController = UIAlertController(title: nil, message: message, preferredStyle: .ActionSheet)
+    
+    let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+    }
+    alertController.addAction(cancelAction)
+    
+    let signOutAction = UIAlertAction(title: "Sign Out", style: .Destructive) { (action) in
+      Meteor.logoutWithCompletionHandler(nil)
+    }
+    alertController.addAction(signOutAction)
+    
+    if let popoverPresentationController = alertController.popoverPresentationController {
+      popoverPresentationController.barButtonItem = userBarButtonItem
+    }
+    
+    presentViewController(alertController, animated: true, completion: nil)
+  }
+  
   @IBAction func addList() {
     let list = NSEntityDescription.insertNewObjectForEntityForName("List", inManagedObjectContext: managedObjectContext) as List
     list.name = nextAvailableDefaultListName
     list.incompleteCount = 0
     saveManagedObjectContext()
   }
+  
+  // MARK: - List Names
   
   var nextAvailableDefaultListName: String {
     return nextAvailableListNameWithBase("List ", alphabet.startIndex)

@@ -35,6 +35,12 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     errorMessageLabel.text = nil
   }
   
+  override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    emailField.becomeFirstResponder()
+  }
+  
   // MARK: UITextFieldDelegate
   
   func textFieldShouldReturn(textField: UITextField) -> Bool {
