@@ -288,6 +288,7 @@
 
 - (void)testInsertingObjectWithNilFieldValue {
   NSManagedObject *player = [NSEntityDescription insertNewObjectForEntityForName:@"Player" inManagedObjectContext:_managedObjectContext];
+  [player setValue:nil forKey:@"name"];
   [player setValue:@10 forKey:@"score"];
   
   [self saveManagedObjectContext];
@@ -404,6 +405,20 @@
   XCTAssertEqualObjects([self documentIDForObjectID:lovelace.objectID], [_store documentForObjectWithID:avatar.objectID][@"playerId"]);
 }
 
+- (void)testSavingOneToOneRelationshipWithNilValue {
+  NSManagedObject *lovelace = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"]];
+  NSManagedObject *avatar = [NSEntityDescription insertNewObjectForEntityForName:@"Avatar" inManagedObjectContext:_managedObjectContext];
+  
+  [lovelace setValue:avatar forKey:@"avatar"];
+  [self saveManagedObjectContext];
+  
+  [lovelace setValue:nil forKey:@"avatar"];
+  [self saveManagedObjectContext];
+  
+  XCTAssertNil([_store documentForObjectWithID:lovelace.objectID][@"avatarId"]);
+  XCTAssertNil([_store documentForObjectWithID:avatar.objectID][@"playerId"]);
+}
+
 - (void)testSavingOneToManyRelationship {
   NSManagedObject *lovelace = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"]];
   NSManagedObject *message1 = [NSEntityDescription insertNewObjectForEntityForName:@"Message" inManagedObjectContext:_managedObjectContext];
@@ -415,6 +430,22 @@
   XCTAssertEqualObjects([self documentIDForObjectID:lovelace.objectID], [_store documentForObjectWithID:message1.objectID][@"senderId"]);
   XCTAssertEqualObjects([self documentIDForObjectID:lovelace.objectID], [_store documentForObjectWithID:message2.objectID][@"senderId"]);
   XCTAssertEqualObjects([NSSet setWithArray:(@[[self documentIDForObjectID:message1.objectID], [self documentIDForObjectID:message2.objectID]])], [self documentIDsForObjects:[lovelace valueForKey:@"sentMessages"]]);
+}
+
+- (void)testSavingOneToManyRelationshipWithNilValue {
+  NSManagedObject *lovelace = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"]];
+  NSManagedObject *message1 = [NSEntityDescription insertNewObjectForEntityForName:@"Message" inManagedObjectContext:_managedObjectContext];
+  NSManagedObject *message2 = [NSEntityDescription insertNewObjectForEntityForName:@"Message" inManagedObjectContext:_managedObjectContext];
+  
+  [lovelace setValue:[NSSet setWithArray:@[message1, message2]] forKey:@"sentMessages"];
+  [self saveManagedObjectContext];
+  
+  [lovelace setValue:nil forKey:@"sentMessages"];
+  [self saveManagedObjectContext];
+  
+  XCTAssertNil([_store documentForObjectWithID:message1.objectID][@"senderId"]);
+  XCTAssertNil([_store documentForObjectWithID:message2.objectID][@"senderId"]);
+  XCTAssertNil([_store documentForObjectWithID:lovelace.objectID][@"sentMessageIds"]);
 }
 
 - (void)testSavingManyToManyRelationship {
@@ -431,6 +462,26 @@
   XCTAssertEqualObjects([NSSet setWithArray:(@[[self documentIDForObjectID:message2.objectID]])], [self documentIDsForObjects:[gauss valueForKey:@"receivedMessages"]]);
   XCTAssertEqualObjects([NSSet setWithArray:(@[[self documentIDForObjectID:lovelace.objectID]])], [self documentIDsForObjects:[message1 valueForKey:@"receivers"]]);
   XCTAssertEqualObjects([NSSet setWithArray:(@[[self documentIDForObjectID:lovelace.objectID], [self documentIDForObjectID:gauss.objectID]])], [self documentIDsForObjects:[message2 valueForKey:@"receivers"]]);
+}
+
+- (void)testSavingManyToManyRelationshipWithNilValue {
+  NSManagedObject *lovelace = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"]];
+  NSManagedObject *gauss = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"gauss"]];
+  NSManagedObject *message1 = [NSEntityDescription insertNewObjectForEntityForName:@"Message" inManagedObjectContext:_managedObjectContext];
+  NSManagedObject *message2 = [NSEntityDescription insertNewObjectForEntityForName:@"Message" inManagedObjectContext:_managedObjectContext];
+  
+  [lovelace setValue:[NSSet setWithArray:@[message1, message2]] forKey:@"receivedMessages"];
+  [gauss setValue:[NSSet setWithArray:@[message2]] forKey:@"receivedMessages"];
+  [self saveManagedObjectContext];
+  
+  [lovelace setValue:nil forKey:@"receivedMessages"];
+  [gauss setValue:nil forKey:@"receivedMessages"];
+  [self saveManagedObjectContext];
+  
+  XCTAssertNil([_store documentForObjectWithID:lovelace.objectID][@"receivedMessageIds"]);
+  XCTAssertNil([_store documentForObjectWithID:gauss.objectID][@"receivedMessageIds"]);
+  XCTAssertNil([_store documentForObjectWithID:message1.objectID][@"receiverIds"]);
+  XCTAssertNil([_store documentForObjectWithID:message2.objectID][@"receiverIds"]);
 }
 
 #pragma mark - Responding To Database Changes

@@ -310,16 +310,24 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
       NSString *fieldName = [self fieldNameForRelationship:relationship];
       if ([relationship isToMany]) {
         NSSet *destinationObjects = (NSSet *)value;
-        NSMutableArray *destinationDocumentIDs = [[NSMutableArray alloc] initWithCapacity:destinationObjects.count];
-        for (NSManagedObject *destinationObject in destinationObjects) {
-          id destinationDocumentID = [self documentKeyForObjectID:destinationObject.objectID].documentID;
-          [destinationDocumentIDs addObject:destinationDocumentID];
+        if (destinationObjects.count < 1) {
+          changedFields[fieldName] = [NSNull null];
+        } else {
+          NSMutableArray *destinationDocumentIDs = [[NSMutableArray alloc] initWithCapacity:destinationObjects.count];
+          for (NSManagedObject *destinationObject in destinationObjects) {
+            id destinationDocumentID = [self documentKeyForObjectID:destinationObject.objectID].documentID;
+            [destinationDocumentIDs addObject:destinationDocumentID];
+          }
+          changedFields[fieldName] = destinationDocumentIDs;
         }
-        changedFields[fieldName] = destinationDocumentIDs;
       } else {
-        NSManagedObject *destinationObject = (NSManagedObject *)value;
-        id destinationDocumentID = [self documentKeyForObjectID:destinationObject.objectID].documentID;
-        changedFields[fieldName] = destinationDocumentID;
+        if (value == [NSNull null]) {
+          changedFields[fieldName] = [NSNull null];
+        } else {
+          NSManagedObject *destinationObject = (NSManagedObject *)value;
+          id destinationDocumentID = [self documentKeyForObjectID:destinationObject.objectID].documentID;
+          changedFields[fieldName] = destinationDocumentID;
+        }
       }
     }
   }];
