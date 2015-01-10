@@ -50,7 +50,7 @@
 
 - (void)testSuccessfullyLoggingIn {
   XCTestExpectation *expectation = [self expectationWithDescription:@"completion handler invoked"];
-  [_client loginWithParameters:nil completionHandler:^(NSError *error) {
+  [_client loginWithMethodName:@"login" parameters:nil completionHandler:^(NSError *error) {
     XCTAssertNil(error);
     [expectation fulfill];
   }];
@@ -69,7 +69,7 @@
 
 - (void)testUnsuccessfullyLoggingIn {
   XCTestExpectation *expectation = [self expectationWithDescription:@"completion handler invoked"];
-  [_client loginWithParameters:nil completionHandler:^(NSError *error) {
+  [_client loginWithMethodName:@"login" parameters:nil completionHandler:^(NSError *error) {
     XCTAssertEqualObjects(error.domain, METDDPErrorDomain);
     XCTAssertEqual(error.code, METDDPServerError);
     [expectation fulfill];
@@ -108,7 +108,7 @@
 - (void)testLoggingInActsAsABarrierMethodInvocation {
   [_client callMethodWithName:@"doSomethingBefore" parameters:nil];
   METMethodInvocation *doSomethingBefore = [self methodInvocationWithName:@"doSomethingBefore"];
-  [_client loginWithParameters:nil completionHandler:nil];
+  [_client loginWithMethodName:@"login" parameters:nil completionHandler:nil];
   [_client callMethodWithName:@"doSomethingAfter" parameters:nil];
   
   METMethodInvocation *login = [self methodInvocationWithName:@"login"];
@@ -195,7 +195,7 @@
 
 - (void)testLogsInWithResumeTokenWhenReconnnectingWhenResultReceivedButNotUpdatesDone {
   [self expectationForSentMessageForMethodWithName:@"login"];
-  [_client loginWithParameters:nil completionHandler:nil];
+  [_client loginWithMethodName:@"login" parameters:nil completionHandler:nil];
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
   
   [_connection receiveMessage:@{@"msg": @"result", @"id": [self lastMethodID], @"result": @{@"id": @"lovelace", @"token": @"foo", @"tokenExpires": @"2016-01-01 00:00:00 +0000"}}];
@@ -209,7 +209,7 @@
 
 - (void)testIsNotLoggedInAutomaticallyWhenResultReceivedButNotUpdatesDone {
   [self expectationForSentMessageForMethodWithName:@"login"];
-  [_client loginWithParameters:nil completionHandler:nil];
+  [_client loginWithMethodName:@"login" parameters:nil completionHandler:nil];
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
   
   [_connection receiveMessage:@{@"msg": @"result", @"id": [self lastMethodID], @"result": @{@"id": @"lovelace", @"token": @"foo", @"tokenExpires": @"2015-01-01 00:00:00 +0000"}}];
@@ -221,7 +221,7 @@
 
 - (void)testInvokesCompletionHandlerWithMostRecentAccountWhenReconnectingWhenResultReceivedButNotUpdatesDone {
   XCTestExpectation *expectation = [self expectationWithDescription:@"completion handler invoked"];
-  [_client loginWithParameters:@[] completionHandler:^(NSError *error) {
+  [_client loginWithMethodName:@"login" parameters:@[] completionHandler:^(NSError *error) {
     XCTAssertEqualObjects(@"turing", _client.account.userID);
     [expectation fulfill];
   }];
