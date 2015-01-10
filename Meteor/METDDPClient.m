@@ -615,11 +615,11 @@ NSString * const METDDPClientDidChangeAccountNotification = @"METDDPClientDidCha
   }
 }
 
-- (void)loginWithParameters:(NSArray *)parameters completionHandler:(METLogInCompletionHandler)completionHandler {
+- (void)loginWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters completionHandler:(METLogInCompletionHandler)completionHandler {
   self.loggingIn = YES;
   __block BOOL reconnected = NO;
   __weak METDDPClient *weakSelf = self;
-  [self callMethodWithName:@"login" parameters:parameters options:METMethodCallOptionsBarrier receivedResultHandler:^(id result, NSError *error) {
+  [self callMethodWithName:methodName parameters:parameters options:METMethodCallOptionsBarrier receivedResultHandler:^(id result, NSError *error) {
     self.pendingLoginResumeHandler = ^{
       reconnected = YES;
       NSString *resumeToken = result[@"token"];
@@ -652,7 +652,7 @@ NSString * const METDDPClientDidChangeAccountNotification = @"METDDPClientDidCha
 }
 
 - (void)loginWithResumeToken:(NSString *)resumeToken completionHandler:(METLogInCompletionHandler)completionHandler {
-  [self loginWithParameters:@[@{@"resume": resumeToken}] completionHandler:completionHandler];
+  [self loginWithMethodName:@"login" parameters:@[@{@"resume": resumeToken}] completionHandler:completionHandler];
 }
 
 - (void)logoutWithCompletionHandler:(METLogOutCompletionHandler)completionHandler {

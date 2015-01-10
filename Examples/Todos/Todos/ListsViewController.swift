@@ -196,4 +196,9 @@ class ListsViewController: FetchedResultsTableViewController {
       }
     }
   }
+  
+  @IBAction func unwindFromSignIn(segue: UIStoryboardSegue) {
+    // Shouldn't be needed, but without it the modal view controller isn't dismissed on the iPad
+    dismissViewControllerAnimated(true, completion: nil)
+  }
 }

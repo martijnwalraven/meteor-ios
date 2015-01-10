@@ -22,12 +22,17 @@ import UIKit
 import CoreData
 import Meteor
 
-class SignInViewController: UIViewController, UITextFieldDelegate {
+class SignUpViewController: UIViewController, UITextFieldDelegate {
   @IBOutlet weak var errorMessageLabel: UILabel!
   @IBOutlet weak var emailField: UITextField!
   @IBOutlet weak var passwordField: UITextField!
+  @IBOutlet weak var passwordConfirmationField: UITextField!
   
   // MARK: View Management
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
   
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
@@ -47,26 +52,32 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     if textField == emailField {
       passwordField.becomeFirstResponder()
     } else if textField == passwordField {
-      passwordField.resignFirstResponder()
-      signIn()
+      passwordConfirmationField.becomeFirstResponder()
+    } else if textField == passwordConfirmationField {
+      passwordConfirmationField.resignFirstResponder()
+      signUp()
     }
     return false
   }
   
   // MARK: IBActions
   
-  @IBAction func signIn() {
+  @IBAction func signUp() {
     errorMessageLabel.text = nil
     
     let email = emailField.text
     let password = passwordField.text
+    let passwordConfirmation = passwordConfirmationField.text
     
-    if email.isEmpty || password.isEmpty {
-      errorMessageLabel.text = "Email and password are required"
+    if email.isEmpty || password.isEmpty || passwordConfirmation.isEmpty {
+      errorMessageLabel.text = "Email, password and password confirmation are required"
+      return
+    } else if password != passwordConfirmation {
+      errorMessageLabel.text = "Password and password confirmation do not match"
       return
     }
     
-    Meteor.loginWithEmail(email, password: password) { (error) -> Void in
+    Meteor.signUpWithEmail(email, password: password) { (error) -> Void in
       if error != nil {
         self.errorMessageLabel.text = error.localizedFailureReason
       } else {

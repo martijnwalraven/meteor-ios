@@ -26,7 +26,11 @@
 @implementation METDDPClient (AccountsPassword)
 
 - (void)loginWithEmail:(NSString *)email password:(NSString *)password completionHandler:(METLogInCompletionHandler)completionHandler {
-  [self loginWithParameters:@[@{@"user": @{@"email": email}, @"password": @{@"digest": [password SHA256String], @"algorithm": @"sha-256"}}] completionHandler:completionHandler];
+  [self loginWithMethodName:@"login" parameters:@[@{@"user": @{@"email": email}, @"password": @{@"digest": [password SHA256String], @"algorithm": @"sha-256"}}] completionHandler:completionHandler];
+}
+
+- (void)signUpWithEmail:(NSString *)email password:(NSString *)password completionHandler:(METLogInCompletionHandler)completionHandler {
+  [self loginWithMethodName:@"createUser" parameters:@[@{@"email": email, @"password": @{@"digest": [password SHA256String], @"algorithm": @"sha-256"}}] completionHandler:completionHandler];
 }
 
 @end

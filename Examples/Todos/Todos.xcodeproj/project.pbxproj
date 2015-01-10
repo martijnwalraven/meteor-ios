@@ -20,6 +20,7 @@
 		9F0C5EB11A542E510077E466 /* FetchedResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0C5EB01A542E510077E466 /* FetchedResultsTableViewController.swift */; };
 		9F49219B1A57FEDF00151F48 /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F49219A1A57FEDF00151F48 /* PlaceholderView.swift */; };
 		9F4921A51A590D8F00151F48 /* FetchedResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4921A41A590D8F00151F48 /* FetchedResults.swift */; };
+		9F87B3531A6152BC0019AE57 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F87B3521A6152BC0019AE57 /* SignUpViewController.swift */; };
 		9FA0A71A1A5EA92000DC6ECC /* SubscriptionLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA0A7191A5EA92000DC6ECC /* SubscriptionLoader.swift */; };
 		9FA0A71C1A5FC78E00DC6ECC /* FunctionalAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA0A71B1A5FC78E00DC6ECC /* FunctionalAdditions.swift */; };
 		9FA0A71E1A5FEF9400DC6ECC /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA0A71D1A5FEF9400DC6ECC /* BorderedButton.swift */; };
@@ -46,6 +47,7 @@
 		9F0C5EB01A542E510077E466 /* FetchedResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsTableViewController.swift; sourceTree = "<group>"; };
 		9F49219A1A57FEDF00151F48 /* PlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
 		9F4921A41A590D8F00151F48 /* FetchedResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResults.swift; sourceTree = "<group>"; };
+		9F87B3521A6152BC0019AE57 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		9FA0A7191A5EA92000DC6ECC /* SubscriptionLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionLoader.swift; sourceTree = "<group>"; };
 		9FA0A71B1A5FC78E00DC6ECC /* FunctionalAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalAdditions.swift; sourceTree = "<group>"; };
 		9FA0A71D1A5FEF9400DC6ECC /* BorderedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				9F0C5E571A53C4E10077E466 /* TodosViewController.swift */,
 				9F0C5EB01A542E510077E466 /* FetchedResultsTableViewController.swift */,
 				9FEA8E421A5E84B600D7DE32 /* SignInViewController.swift */,
+				9F87B3521A6152BC0019AE57 /* SignUpViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 				9F0C5E541A53C4E10077E466 /* Todos.xcdatamodeld in Sources */,
 				9FA0A7201A6034C100DC6ECC /* User.swift in Sources */,
 				9FEA8E411A5E741200D7DE32 /* MeteorExtensions.swift in Sources */,
+				9F87B3531A6152BC0019AE57 /* SignUpViewController.swift in Sources */,
 				9F0C5E561A53C4E10077E466 /* ListsViewController.swift in Sources */,
 				9F0C5E581A53C4E10077E466 /* TodosViewController.swift in Sources */,
 				9F49219B1A57FEDF00151F48 /* PlaceholderView.swift in Sources */,

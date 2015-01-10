@@ -63,7 +63,7 @@ typedef NS_OPTIONS(NSInteger, METMethodCallOptions) {
 @property(strong, nonatomic, readonly) METMethodInvocationContext *currentMethodInvocationContext;
 - (void)sendMethodMessageForMethodInvocation:(METMethodInvocation *)methodInvocation;
 
-- (void)loginWithParameters:(NSArray *)parameters completionHandler:(METLogInCompletionHandler)completionHandler;
+- (void)loginWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters completionHandler:(METLogInCompletionHandler)completionHandler;
 
 - (NSArray *)convertParameters:(NSArray *)parameters;
 
