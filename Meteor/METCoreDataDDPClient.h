@@ -29,9 +29,9 @@
 
 - (instancetype)initWithConnection:(METDDPConnection *)connection managedObjectModel:(NSManagedObjectModel *)managedObjectModel NS_DESIGNATED_INITIALIZER;
 
-@property (strong, nonatomic, readonly) METIncrementalStore *persistentStore;
 @property (strong, nonatomic, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (strong, nonatomic, readonly) NSManagedObjectModel *managedObjectModel;
+@property (strong, nonatomic, readonly) METIncrementalStore *persistentStore;
 @property (strong, nonatomic, readonly) NSManagedObjectContext *mainQueueManagedObjectContext;
 
 - (NSManagedObjectID *)objectIDForDocumentKey:(METDocumentKey *)documentKey;

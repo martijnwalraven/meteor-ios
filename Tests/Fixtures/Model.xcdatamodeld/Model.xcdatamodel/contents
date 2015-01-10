@@ -3,6 +3,11 @@
     <entity name="Avatar" syncable="YES">
         <relationship name="player" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Player" inverseName="avatar" inverseEntity="Player" syncable="YES"/>
     </entity>
+    <entity name="Meal" syncable="YES">
+        <userInfo>
+            <entry key="collectionName" value="foods"/>
+        </userInfo>
+    </entity>
     <entity name="Message" syncable="YES">
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="creationDate" optional="YES" attributeType="Date" syncable="YES">
@@ -25,8 +30,9 @@
         </relationship>
     </entity>
     <elements>
+        <element name="Avatar" positionX="-63" positionY="36" width="128" height="58"/>
         <element name="Message" positionX="-54" positionY="9" width="128" height="103"/>
         <element name="Player" positionX="-63" positionY="-18" width="128" height="118"/>
-        <element name="Avatar" positionX="-63" positionY="36" width="128" height="58"/>
+        <element name="Meal" positionX="-54" positionY="36" width="128" height="43"/>
     </elements>
 </model>

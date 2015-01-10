@@ -37,10 +37,12 @@ NSString * const METIncrementalStoreErrorDomain = @"com.meteor.IncrementalStore.
 NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncrementalStoreObjectsDidChangeNotification";
 
 @implementation METIncrementalStore {
+  NSManagedObjectModel *_managedObjectModel;
+  NSMutableDictionary *_entityNamesByCollectionName;
+  NSMutableDictionary *_collectionNamesByEntityName;
+  
   NSCountedSet *_registeredObjectIDs;
   NSMutableDictionary *_nodesByObjectID;
-  
-  dispatch_queue_t _notificationQueue;
 }
 
 #pragma mark - Class Methods
@@ -58,11 +60,11 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
 - (instancetype)initWithPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)persistentStoreCoordinator configurationName:(NSString *)configurationName URL:(NSURL *)URL options:(NSDictionary *)options {
   self = [super initWithPersistentStoreCoordinator:persistentStoreCoordinator configurationName:configurationName URL:URL options:options];
   if (self) {
+    _managedObjectModel = persistentStoreCoordinator.managedObjectModel;
+    [self initializeMapping];
+    
     _registeredObjectIDs = [[NSCountedSet alloc] init];
     _nodesByObjectID = [[NSMutableDictionary alloc] init];
-    
-    _notificationQueue = dispatch_queue_create("com.meteor.IncrementalStore.notificationQueue", DISPATCH_QUEUE_SERIAL);
-    // dispatch_set_target_queue(_notificationQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(databaseDidChange:) name:METDatabaseDidChangeNotification object:_client.database];
   }
@@ -192,7 +194,7 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
 }
 
 - (NSArray *)documentsForEntity:(NSEntityDescription *)entity {
-  METCollection *collection = [_client.database collectionWithName:[self collectionNameForEntity:entity]];
+  METCollection *collection = [self collectionForEntity:entity];
   return [collection allDocuments];
 }
 
@@ -327,19 +329,36 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
 
 #pragma mark - Mapping Objects To and From Documents
 
+- (void)initializeMapping {
+  NSArray *entities = self.persistentStoreCoordinator.managedObjectModel.entities;
+  
+  _entityNamesByCollectionName = [[NSMutableDictionary alloc] initWithCapacity:entities.count];
+  _collectionNamesByEntityName = [[NSMutableDictionary alloc] initWithCapacity:entities.count];
+  
+  for (NSEntityDescription *entity in entities) {
+    NSString *entityName = entity.name;
+    NSString *collectionName = entity.userInfo[@"collectionName"] ?: [[entityName pluralizedString] lowercaseString];
+
+    _entityNamesByCollectionName[collectionName] = entityName;
+    _collectionNamesByEntityName[entityName] = collectionName;
+  }
+}
+
 - (NSString *)collectionNameForEntity:(NSEntityDescription *)entity {
   NSParameterAssert(entity);
-  return [[entity.name pluralizedString] lowercaseString];
+  return _collectionNamesByEntityName[entity.name];
 }
 
 - (METCollection *)collectionForEntity:(NSEntityDescription *)entity {
-  return [_client.database collectionWithName:[self collectionNameForEntity:entity]];
+  NSString *collectionName = [self collectionNameForEntity:entity];
+  NSAssert(collectionName != nil, @"Could not find collection name for entity name: %@", entity.name);
+  return [_client.database collectionWithName:collectionName];
 }
 
 - (NSEntityDescription *)entityForCollectionName:(NSString *)collectionName {
   NSParameterAssert(collectionName);
-  NSString *entityName = [[collectionName singularizedString] capitalizedString];
-  return [self entityForName:entityName];
+  NSString *entityName = _entityNamesByCollectionName[collectionName];
+  return [self entityForName:entityName] ?: nil;
 }
 
 - (NSManagedObjectID *)objectIDForDocumentKey:(METDocumentKey *)documentKey {
@@ -389,34 +408,32 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
 - (void)databaseDidChange:(NSNotification *)notification {
   METDatabaseChanges *databaseChanges = notification.userInfo[METDatabaseChangesKey];
   
-  dispatch_sync(_notificationQueue, ^{
-    NSMutableSet *insertedObjects = [[NSMutableSet alloc] init];
-    NSMutableSet *updatedObjects = [[NSMutableSet alloc] init];
-    NSMutableSet *deletedObjects = [[NSMutableSet alloc] init];
-    
-    [databaseChanges enumerateDocumentChangeDetailsUsingBlock:^(METDocumentChangeDetails *documentChangeDetails, BOOL *stop) {
-      NSManagedObjectID *objectID = [self objectIDForDocumentKey:documentChangeDetails.documentKey];
-      if (!objectID) {
-        return;
-      }
-      switch (documentChangeDetails.changeType) {
-        case METDocumentChangeTypeAdd:
-          [insertedObjects addObject:objectID];
-          break;
-        case METDocumentChangeTypeUpdate:
-          [updatedObjects addObject:objectID];
-          break;
-        case METDocumentChangeTypeRemove:
-           [deletedObjects addObject:objectID];
-          break;
-      }
-    }];
-    
-    if (insertedObjects.count > 0 || updatedObjects.count > 0 || deletedObjects.count > 0) {
-      NSNotification *notification = [NSNotification notificationWithName:METIncrementalStoreObjectsDidChangeNotification object:self userInfo:@{NSInsertedObjectsKey: [insertedObjects copy], NSUpdatedObjectsKey: [updatedObjects copy], NSDeletedObjectsKey: [deletedObjects copy]}];
-      [[NSNotificationCenter defaultCenter] postNotification:notification];
+  NSMutableSet *insertedObjects = [[NSMutableSet alloc] init];
+  NSMutableSet *updatedObjects = [[NSMutableSet alloc] init];
+  NSMutableSet *deletedObjects = [[NSMutableSet alloc] init];
+  
+  [databaseChanges enumerateDocumentChangeDetailsUsingBlock:^(METDocumentChangeDetails *documentChangeDetails, BOOL *stop) {
+    NSManagedObjectID *objectID = [self objectIDForDocumentKey:documentChangeDetails.documentKey];
+    if (!objectID) {
+      return;
     }
-  });
+    switch (documentChangeDetails.changeType) {
+      case METDocumentChangeTypeAdd:
+        [insertedObjects addObject:objectID];
+        break;
+      case METDocumentChangeTypeUpdate:
+        [updatedObjects addObject:objectID];
+        break;
+      case METDocumentChangeTypeRemove:
+        [deletedObjects addObject:objectID];
+        break;
+    }
+  }];
+  
+  if (insertedObjects.count > 0 || updatedObjects.count > 0 || deletedObjects.count > 0) {
+    NSNotification *notification = [NSNotification notificationWithName:METIncrementalStoreObjectsDidChangeNotification object:self userInfo:@{NSInsertedObjectsKey: [insertedObjects copy], NSUpdatedObjectsKey: [updatedObjects copy], NSDeletedObjectsKey: [deletedObjects copy]}];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+  }
 }
 
 #pragma mark - Node Cache
@@ -438,12 +455,8 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
 
 #pragma mark - Helper Methods
 
-- (NSManagedObjectModel *)managedObjectModel {
-  return self.persistentStoreCoordinator.managedObjectModel;
-}
-
 - (NSEntityDescription *)entityForName:(NSString *)entityName {
-  return [self.managedObjectModel entitiesByName][entityName];
+  return [_managedObjectModel entitiesByName][entityName];
 }
 
 - (NSError *)errorWithCode:(NSInteger)code localizedDescription:(NSString *)localizedDescription {

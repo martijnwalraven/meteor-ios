@@ -90,6 +90,12 @@
   XCTAssertNil(objectID);
 }
 
+- (void)testCustomCollectionNameForEntity {
+  NSManagedObjectID *objectID = [_store objectIDForDocumentKey:[METDocumentKey keyWithCollectionName:@"foods" documentID:@"1"]];
+  
+  XCTAssertEqualObjects(@"Meal", objectID.entity.name);
+}
+
 #pragma mark - Fetching Objects
 
 - (void)testFetchingAllObjectsForEntity {
