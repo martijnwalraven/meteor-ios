@@ -21,13 +21,12 @@ I had already started work on this project when Swift was announced. Although I'
 
 ## Overview
 
-I'm still figuring out usage patterns and I'm actively improving the API. I'm using it with Swift and Core Data in my own projects, so that's what I'l mostly be describing here. You can also use the API at a lower level and deal with documents directly though. Don't expect anything to be stable yet, but please do let me know what you think of it and what improvements you would like to see.
+I'm still figuring out usage patterns and I'm actively improving the API. I'm using it with Swift and Core Data in my own projects, so that's what I'll mostly be describing here. You can also use the API at a lower level and deal with documents directly though. Don't expect anything to be stable yet, but please do let me know what you think of it and what improvements you would like to see.
 
 Basic usage is actually pretty simple:
 
-- Initialize a METCoreDataDDPClient with a WebSocket server URL and call its `connect` method. It is often convenient to set the client up as a singleton so you can access it from anywhere.
-- Call `addSubscriptionWithName:parameters:` at any time to invoke a publish function on the server and receive a specific set of documents.
-- (If you use `autopublish`, the Meteor server will publish all of its collections automatically, without the need to subscribe. It has serious downsides, but can be great to get started during development.)
+- Initialize a `METCoreDataDDPClient` with a WebSocket server URL and call its `connect` method. It is often convenient to set the client up as a singleton so you can access it from anywhere.
+- Call `addSubscriptionWithName:parameters:` at any time to invoke a publish function on the server and receive a specific set of documents. (If you use `autopublish`, the Meteor server will publish all of its collections automatically, without the need to subscribe. It has serious downsides, but can be great to get started during development.)
 - You'll need to set up a managed object model in Xcode, as you would normally do when using Core Data. Entities correspond to collections (with an automatic singular-plural name mapping a la Rails), and properties to fields. The default mapping will often work fine, but you can specify a different `collectionName` or `fieldName` as `userInfo` in the model editor. All types of relationships – one-to-one, one-to-many and many-to-many – are supported, but relationship info has to be stored in documents on both sides (this will change soon, allowing you to specify which side should store the relationship info).
 - You can now use normal Core Data methods to access and modify documents. The client keeps a `mainQueueManagedObjectContext` and automatically merges changes, which is often what you need, but more complex setups (e.g. background contexts, child contexts) are also possible.
 - If you use `NSFetchedResultsController`, all changes that affect the specified fetch request will be propagated automatically, whether they were made from Core Data, directly to documents, or come from a different client and were sent by the server. You can use this to automatically update a `UITableView` or `UICollectionView` for instance (which  gives you some nifty animations for free). You can of course also observe `NSManagedObjectContextDidSaveNotification` notifications yourself and decide what to do with changes as they happen.
@@ -52,7 +51,7 @@ class AppDelegate: UIApplicationDelegate {
 
 ### Waiting for subscriptions
 
-The Todos example includes a `SubscriptionLoader` class that can be used used to wait for subscriptions to become ready (similar to `waitOn` in Iron Router). Using this in `viewWillAppear` makes it easy to avoid displaying partial data sets (and perhaps show a loading indicator, as in the Todos example). (Subscriptions are shared and reused, so there won't be any extra cost to calling `viewWillAppear` again, and if all subscriptions are loaded already the call to `whenReady` will be synchronous.)
+The Todos example includes a `SubscriptionLoader` class that can be used used to wait for subscriptions to become ready (similar to the `waitOn` option in Iron Router). Using this in `viewWillAppear` makes it easy to avoid displaying partial data sets (and perhaps show a loading indicator, as in the Todos example). (Subscriptions are shared and reused, so there won't be any extra cost to calling `viewWillAppear` again, and if all subscriptions are loaded when it is called, `whenReady` will be synchronous.)
 
 ``` swift
 subscriptionLoader.addSubscriptionWithName("publicLists")
