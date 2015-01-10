@@ -336,7 +336,7 @@
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add Task" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N1y-vo-qM2">
                                     <rect key="frame" x="3" y="18" width="594" height="30"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                     <connections>
                                         <outlet property="delegate" destination="SbQ-eC-Wor" id="V9s-fW-TU4"/>
                                     </connections>

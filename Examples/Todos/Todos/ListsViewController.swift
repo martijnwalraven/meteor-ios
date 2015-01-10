@@ -143,32 +143,34 @@ class ListsViewController: FetchedResultsTableViewController {
   }
   
   @IBAction func addList() {
-    let list = NSEntityDescription.insertNewObjectForEntityForName("List", inManagedObjectContext: managedObjectContext) as List
-    list.name = nextAvailableDefaultListName
-    list.incompleteCount = 0
-    saveManagedObjectContext()
-  }
-  
-  // MARK: - List Names
-  
-  var nextAvailableDefaultListName: String {
-    return nextAvailableListNameWithBase("List ", alphabet.startIndex)
-  }
-  
-  func nextAvailableListNameWithBase(base: String, _ nextLetter: CUnsignedChar) -> String {
-    for letter in alphabet {
-      let nextName = base + String(UnicodeScalar(letter))
-      if !listNameExists(nextName) {
-        return nextName
-      }
+    let alertController = UIAlertController(title: nil, message: "Add List", preferredStyle: .Alert)
+    
+    let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
     }
-    return nextAvailableListNameWithBase(base + String(UnicodeScalar(nextLetter)), nextLetter+1)
-  }
-  
-  let alphabet = CUnsignedChar("A")...CUnsignedChar("Z")
-  
-  func listNameExists(name: String) -> Bool {
-    return (fetchedResults.objects as [List]).filter({$0.name == name}).count > 0
+    alertController.addAction(cancelAction)
+    
+    let addAction = UIAlertAction(title: "Add", style: .Default) { (action) in
+      let nameTextField = alertController.textFields![0] as UITextField
+      let name = nameTextField.text
+      if name.isEmpty {
+        return
+      }
+      
+      let list = NSEntityDescription.insertNewObjectForEntityForName("List", inManagedObjectContext: self.managedObjectContext) as List
+      list.name = name
+      list.incompleteCount = 0
+      self.saveManagedObjectContext()
+    }
+    alertController.addAction(addAction)
+    
+    alertController.addTextFieldWithConfigurationHandler { (textField) in
+      textField.placeholder = "Name"
+      textField.autocapitalizationType = .Words
+      textField.returnKeyType = .Done
+      textField.enablesReturnKeyAutomatically = true
+    }
+    
+    presentViewController(alertController, animated: true, completion: nil)
   }
   
   // MARK: - UITableViewDelegate
