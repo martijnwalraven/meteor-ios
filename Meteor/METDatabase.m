@@ -99,15 +99,18 @@ NSString * const METDatabaseChangesKey = @"METDatabaseChangesKey";
 }
 
 - (METCollection *)collectionWithName:(NSString *)collectionName {
-  METCollection *collection = _collectionsByName[collectionName];
+  NSDictionary *collectionsByName = _collectionsByName;
+  METCollection *collection = collectionsByName[collectionName];
   if (!collection) {
-    // As an optimization, _collectionsByName is immutable so we only need to lock when a new collection has to be created, and replace the NSDictionary completely instead of mutating it
-    @synchronized(_collectionsByName) {
-      // Make sure no other thread has created the collection while we were waiting
-      if (!_collectionsByName[collectionName]) {
-        collection = [[METCollection alloc] initWithName:collectionName database:self];
-        _collectionsByName = [_collectionsByName dictionaryByAddingObject:collection forKey:collectionName];
+    // As an optimization, _collectionsByName is immutable so we only need to lock when a new collection has to be created, and replace the dictionary completely instead of mutating it
+    @synchronized(collectionsByName) {
+      // Make sure no other thread has replaced the dictionary while we were waiting
+      if (_collectionsByName != collectionsByName) {
+        // If so, try again with the new dictionary
+        return [self collectionWithName:collectionName];
       }
+      collection = [[METCollection alloc] initWithName:collectionName database:self];
+      _collectionsByName = [_collectionsByName dictionaryByAddingObject:collection forKey:collectionName];
     }
   }
   return collection;
