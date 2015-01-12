@@ -117,7 +117,7 @@ NSString * const METDDPClientDidChangeAccountNotification = @"METDDPClientDidCha
     _database = [[METDatabase alloc] initWithClient:self];
     
     _subscriptionManager = [[METSubscriptionManager alloc] initWithClient:self];
-    _subscriptionManager.defaultNotInUseTimeout = 15;
+    _subscriptionManager.defaultNotInUseTimeout = 180;
     
     _methodInvocationCoordinator = [[METMethodInvocationCoordinator alloc] initWithClient:self];
     
