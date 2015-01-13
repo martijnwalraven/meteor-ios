@@ -23,5 +23,12 @@ import CoreData
 class List: NSManagedObject {
   @NSManaged var name: String!
   @NSManaged var incompleteCount: Int
+
   @NSManaged var todos: NSSet!
+  
+  @NSManaged var user: User?
+  
+  var isPrivate: Bool {
+    return user != nil
+  }
 }

@@ -18,13 +18,17 @@
 		9F0C5E781A53E4450077E466 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0C5E771A53E4450077E466 /* List.swift */; };
 		9F0C5E7A1A53E4F40077E466 /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0C5E791A53E4F40077E466 /* Todo.swift */; };
 		9F0C5EB11A542E510077E466 /* FetchedResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0C5EB01A542E510077E466 /* FetchedResultsTableViewController.swift */; };
+		9F108F731A63B848001B40C9 /* ContentLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F108F721A63B848001B40C9 /* ContentLoading.swift */; };
+		9F108F771A63B9C5001B40C9 /* FetchedResultsTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F108F761A63B9C5001B40C9 /* FetchedResultsTableViewDataSource.swift */; };
 		9F49219B1A57FEDF00151F48 /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F49219A1A57FEDF00151F48 /* PlaceholderView.swift */; };
-		9F4921A51A590D8F00151F48 /* FetchedResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4921A41A590D8F00151F48 /* FetchedResults.swift */; };
 		9F87B3531A6152BC0019AE57 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F87B3521A6152BC0019AE57 /* SignUpViewController.swift */; };
+		9F87B3551A61F19A0019AE57 /* ManagedObjectObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F87B3541A61F19A0019AE57 /* ManagedObjectObserver.swift */; };
+		9F87B3591A6238630019AE57 /* FoundationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F87B3581A6238630019AE57 /* FoundationExtensions.swift */; };
 		9FA0A71A1A5EA92000DC6ECC /* SubscriptionLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA0A7191A5EA92000DC6ECC /* SubscriptionLoader.swift */; };
 		9FA0A71C1A5FC78E00DC6ECC /* FunctionalAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA0A71B1A5FC78E00DC6ECC /* FunctionalAdditions.swift */; };
 		9FA0A71E1A5FEF9400DC6ECC /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA0A71D1A5FEF9400DC6ECC /* BorderedButton.swift */; };
 		9FA0A7201A6034C100DC6ECC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA0A71F1A6034C100DC6ECC /* User.swift */; };
+		9FA52C911A64549600757CC4 /* FetchedResultsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA52C901A64549600757CC4 /* FetchedResultsDataSource.swift */; };
 		9FEA8E411A5E741200D7DE32 /* MeteorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA8E401A5E741200D7DE32 /* MeteorExtensions.swift */; };
 		9FEA8E431A5E84B600D7DE32 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA8E421A5E84B600D7DE32 /* SignInViewController.swift */; };
 /* End PBXBuildFile section */
@@ -45,13 +49,17 @@
 		9F0C5E771A53E4450077E466 /* List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		9F0C5E791A53E4F40077E466 /* Todo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
 		9F0C5EB01A542E510077E466 /* FetchedResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsTableViewController.swift; sourceTree = "<group>"; };
+		9F108F721A63B848001B40C9 /* ContentLoading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentLoading.swift; sourceTree = "<group>"; };
+		9F108F761A63B9C5001B40C9 /* FetchedResultsTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsTableViewDataSource.swift; sourceTree = "<group>"; };
 		9F49219A1A57FEDF00151F48 /* PlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
-		9F4921A41A590D8F00151F48 /* FetchedResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResults.swift; sourceTree = "<group>"; };
 		9F87B3521A6152BC0019AE57 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		9F87B3541A61F19A0019AE57 /* ManagedObjectObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectObserver.swift; sourceTree = "<group>"; };
+		9F87B3581A6238630019AE57 /* FoundationExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoundationExtensions.swift; sourceTree = "<group>"; };
 		9FA0A7191A5EA92000DC6ECC /* SubscriptionLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionLoader.swift; sourceTree = "<group>"; };
 		9FA0A71B1A5FC78E00DC6ECC /* FunctionalAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalAdditions.swift; sourceTree = "<group>"; };
 		9FA0A71D1A5FEF9400DC6ECC /* BorderedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
 		9FA0A71F1A6034C100DC6ECC /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		9FA52C901A64549600757CC4 /* FetchedResultsDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsDataSource.swift; sourceTree = "<group>"; };
 		9FEA8E401A5E741200D7DE32 /* MeteorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeteorExtensions.swift; sourceTree = "<group>"; };
 		9FEA8E421A5E84B600D7DE32 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -102,7 +110,7 @@
 				9F2AFDDA1A559320003E1667 /* View Controllers */,
 				9F49219E1A580ADC00151F48 /* View */,
 				9F2AFDD91A559311003E1667 /* Model */,
-				9F4921A31A590D7200151F48 /* Utils */,
+				9F4921A31A590D7200151F48 /* Utility */,
 				9F0C5E5C1A53C4E10077E466 /* Images.xcassets */,
 				9F0C5E591A53C4E10077E466 /* Main.storyboard */,
 				9F0C5E5E1A53C4E10077E466 /* LaunchScreen.xib */,
@@ -151,15 +159,43 @@
 			name = View;
 			sourceTree = "<group>";
 		};
-		9F4921A31A590D7200151F48 /* Utils */ = {
+		9F4921A31A590D7200151F48 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				9FA0A7191A5EA92000DC6ECC /* SubscriptionLoader.swift */,
-				9F4921A41A590D8F00151F48 /* FetchedResults.swift */,
+				9FA52C941A652A6E00757CC4 /* Content Loading */,
+				9FA52C921A652A5000757CC4 /* Core Data */,
+				9FA52C931A652A6200757CC4 /* Extensions */,
+			);
+			name = Utility;
+			sourceTree = "<group>";
+		};
+		9FA52C921A652A5000757CC4 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				9FA52C901A64549600757CC4 /* FetchedResultsDataSource.swift */,
+				9F108F761A63B9C5001B40C9 /* FetchedResultsTableViewDataSource.swift */,
+				9F87B3541A61F19A0019AE57 /* ManagedObjectObserver.swift */,
+			);
+			name = "Core Data";
+			sourceTree = "<group>";
+		};
+		9FA52C931A652A6200757CC4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9F87B3581A6238630019AE57 /* FoundationExtensions.swift */,
 				9FEA8E401A5E741200D7DE32 /* MeteorExtensions.swift */,
 				9FA0A71B1A5FC78E00DC6ECC /* FunctionalAdditions.swift */,
 			);
-			name = Utils;
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		9FA52C941A652A6E00757CC4 /* Content Loading */ = {
+			isa = PBXGroup;
+			children = (
+				9F108F721A63B848001B40C9 /* ContentLoading.swift */,
+				9FA0A7191A5EA92000DC6ECC /* SubscriptionLoader.swift */,
+			);
+			name = "Content Loading";
 			sourceTree = "<group>";
 		};
 		D5615E1FE56A597C93F9959F /* Frameworks */ = {
@@ -291,17 +327,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F4921A51A590D8F00151F48 /* FetchedResults.swift in Sources */,
 				9F0C5E7A1A53E4F40077E466 /* Todo.swift in Sources */,
 				9FA0A71C1A5FC78E00DC6ECC /* FunctionalAdditions.swift in Sources */,
 				9F0C5EB11A542E510077E466 /* FetchedResultsTableViewController.swift in Sources */,
 				9FEA8E431A5E84B600D7DE32 /* SignInViewController.swift in Sources */,
 				9F0C5E511A53C4E10077E466 /* AppDelegate.swift in Sources */,
+				9F87B3551A61F19A0019AE57 /* ManagedObjectObserver.swift in Sources */,
+				9FA52C911A64549600757CC4 /* FetchedResultsDataSource.swift in Sources */,
 				9FA0A71E1A5FEF9400DC6ECC /* BorderedButton.swift in Sources */,
+				9F87B3591A6238630019AE57 /* FoundationExtensions.swift in Sources */,
 				9F0C5E541A53C4E10077E466 /* Todos.xcdatamodeld in Sources */,
+				9F108F731A63B848001B40C9 /* ContentLoading.swift in Sources */,
 				9FA0A7201A6034C100DC6ECC /* User.swift in Sources */,
 				9FEA8E411A5E741200D7DE32 /* MeteorExtensions.swift in Sources */,
 				9F87B3531A6152BC0019AE57 /* SignUpViewController.swift in Sources */,
+				9F108F771A63B9C5001B40C9 /* FetchedResultsTableViewDataSource.swift in Sources */,
 				9F0C5E561A53C4E10077E466 /* ListsViewController.swift in Sources */,
 				9F0C5E581A53C4E10077E466 /* TodosViewController.swift in Sources */,
 				9F49219B1A57FEDF00151F48 /* PlaceholderView.swift in Sources */,

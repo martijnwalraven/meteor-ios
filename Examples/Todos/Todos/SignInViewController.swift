@@ -27,7 +27,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
   @IBOutlet weak var emailField: UITextField!
   @IBOutlet weak var passwordField: UITextField!
   
-  // MARK: View Management
+  // MARK: View Lifecycle
   
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)

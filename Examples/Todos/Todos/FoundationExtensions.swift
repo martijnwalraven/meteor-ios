@@ -18,20 +18,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-func all<S: SequenceType>(source: S, predicate: (S.Generator.Element) -> Bool) -> Bool {
-  for element in source {
-    if !predicate(element) {
-      return false
-    }
+import Foundation
+
+// Needed to support enumeration
+extension NSHashTable: SequenceType {
+  public func generate() -> NSFastGenerator {
+    return NSFastGenerator(self)
   }
-  return true
 }
 
-func any<S: SequenceType>(source: S, predicate: (S.Generator.Element) -> Bool) -> Bool {
-  for element in source {
-    if predicate(element) {
-      return true
-    }
-  }
-  return false
-}

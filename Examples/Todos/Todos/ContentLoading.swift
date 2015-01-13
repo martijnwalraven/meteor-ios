@@ -18,20 +18,34 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-func all<S: SequenceType>(source: S, predicate: (S.Generator.Element) -> Bool) -> Bool {
-  for element in source {
-    if !predicate(element) {
-      return false
+import Foundation
+
+enum ContentLoadingState : Printable {
+  case Initial
+  case Loading
+  case Loaded
+  case Error(NSError)
+  case Offline
+  
+  var description: String {
+    switch self {
+    case Initial:
+      return "Initial"
+    case Loading:
+      return "Loading"
+    case Loaded:
+      return "Loaded"
+    case Error(let error):
+      return "Error(\(error))"
+    case Offline:
+      return "Offline"
     }
   }
-  return true
 }
 
-func any<S: SequenceType>(source: S, predicate: (S.Generator.Element) -> Bool) -> Bool {
-  for element in source {
-    if predicate(element) {
-      return true
-    }
-  }
-  return false
+protocol ContentLoading {
+  var contentLoadingState: ContentLoadingState { get }
+
+  func setNeedsLoadContent()
+  func loadContentIfNeeded()
 }

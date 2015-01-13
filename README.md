@@ -126,3 +126,5 @@ import Meteor
 ## License
 
 Meteor for iOS is available under the MIT license. See the LICENSE file for more info.
+
+The Todos example contains icons provided by [Icons8](http://icons8.com) under the [Creative Commons Attribution-NoDerivs 3.0 Unported license](https://creativecommons.org/licenses/by-nd/3.0/).

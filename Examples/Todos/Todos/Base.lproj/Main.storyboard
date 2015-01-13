@@ -370,10 +370,17 @@
                             <outlet property="delegate" destination="SbQ-eC-Wor" id="i8S-4C-ONE"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="Pcx-6h-OYa"/>
+                    <navigationItem key="navigationItem" id="Pcx-6h-OYa">
+                        <barButtonItem key="rightBarButtonItem" image="unlocked_icon" id="N8c-LT-9zi" userLabel="List Lock Status Bar Button Item">
+                            <connections>
+                                <action selector="listLockStatusButtonPressed" destination="SbQ-eC-Wor" id="oow-EL-UGI"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="addTaskContainerView" destination="Uvg-YO-prV" id="Dt8-S6-Of4"/>
                         <outlet property="addTaskTextField" destination="N1y-vo-qM2" id="H4d-6T-2g7"/>
+                        <outlet property="listLockStatusBarButtonItem" destination="N8c-LT-9zi" id="jhk-88-7Ho"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nJ0-hh-5Mn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -415,6 +422,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="unlocked_icon" width="22" height="22"/>
         <image name="user_icon" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>

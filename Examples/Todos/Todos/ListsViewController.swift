@@ -25,39 +25,7 @@ import Meteor
 class ListsViewController: FetchedResultsTableViewController {
   @IBOutlet weak var userBarButtonItem: UIBarButtonItem!
   
-  // MARK: - Content Loading
-  
-  override func loadContent() {
-    super.loadContent()
-    
-    subscriptionLoader.addSubscriptionWithName("publicLists")
-    subscriptionLoader.addSubscriptionWithName("privateLists")
-    
-    subscriptionLoader.whenReady {
-      if self.fetchedResults == nil {
-        let fetchRequest = NSFetchRequest(entityName: "List")
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        
-        self.fetchedResults = FetchedResults(managedObjectContext: self.managedObjectContext, fetchRequest: fetchRequest)
-        self.fetchedResults.registerChangeObserver(self)
-        self.fetchedResults.performFetch()
-      }
-      
-      if self.isViewLoaded() {
-        self.selectFirstTableViewRowIfNoRowIsCurrentlySelected()
-      }
-    }
-    
-    if !subscriptionLoader.isReady {
-      if Meteor.connectionStatus == .Offline {
-        contentLoadingState = .Offline
-      } else {
-        contentLoadingState = .Loading
-      }
-    }
-  }
-  
-  // MARK: - View Management
+  // MARK: - View Lifecycle
   
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
@@ -65,10 +33,6 @@ class ListsViewController: FetchedResultsTableViewController {
     NSNotificationCenter.defaultCenter().addObserver(self, selector: "accountDidChange", name: METDDPClientDidChangeAccountNotification, object: Meteor)
     
     updateUserBarButtonItem()
-    
-    if isContentLoaded {
-      selectFirstTableViewRowIfNoRowIsCurrentlySelected()
-    }
   }
   
   override func viewWillDisappear(animated: Bool) {
@@ -77,70 +41,38 @@ class ListsViewController: FetchedResultsTableViewController {
     NSNotificationCenter.defaultCenter().removeObserver(self, name: "accountDidChange", object: Meteor)
   }
   
-  func selectFirstTableViewRowIfNoRowIsCurrentlySelected() {
-    if tableView.indexPathForSelectedRow() == nil && !splitViewController!.collapsed {
-      if fetchedResults.numberOfSections > 0 && fetchedResults.numberOfItemsInSection(0) > 0 {
-        tableView.selectRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), animated: false, scrollPosition: .Top)
-        performSegueWithIdentifier("showDetail", sender: nil)
-      }
+  // MARK: - Content Loading
+  
+  override func configureSubscriptionLoader(subscriptionLoader: SubscriptionLoader) {
+    subscriptionLoader.addSubscriptionWithName("publicLists")
+    subscriptionLoader.addSubscriptionWithName("privateLists")
+  }
+  
+  override func createFetchedResultsController() -> NSFetchedResultsController? {
+    let fetchRequest = NSFetchRequest(entityName: "List")
+    fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+    
+    return NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: "isPrivate", cacheName: nil)
+  }
+  
+  // MARK: - FetchedResultsTableViewDataSourceDelegate
+  
+  func dataSource(dataSource: FetchedResultsTableViewDataSource, configureCell cell: UITableViewCell, forObject object: NSManagedObject, atIndexPath indexPath: NSIndexPath) {
+    if let list = object as? List {
+      cell.textLabel!.text = list.name
+      cell.detailTextLabel!.text = "\(list.incompleteCount)"
+      cell.imageView!.image = (list.user != nil) ? UIImage(named: "locked_icon") : nil
     }
   }
   
-  func accountDidChange() {
-    dispatch_async(dispatch_get_main_queue()) {
-      self.updateUserBarButtonItem()
+  func dataSource(dataSource: FetchedResultsTableViewDataSource, deleteObject object: NSManagedObject, atIndexPath indexPath: NSIndexPath) {
+    if let list = object as? List {
+      managedObjectContext.deleteObject(list)
+      saveManagedObjectContext()
     }
   }
   
-  func updateUserBarButtonItem() {
-    if Meteor.account == nil {
-      userBarButtonItem.image = UIImage(named: "user_icon")
-    } else {
-      userBarButtonItem.image = UIImage(named: "user_icon_selected")
-    }
-  }
-  
-  // MARK: - Table Cell Configuration
-  
-  override func configureCell(cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-    let list = fetchedResults.objectAtIndexPath(indexPath) as List
-    cell.textLabel!.text = list.name
-    cell.detailTextLabel!.text = "\(list.incompleteCount)"
-  }
-  
-  // MARK: - IBActions
-  
-  @IBAction func userButtonPressed() {
-    if Meteor.account == nil {
-      performSegueWithIdentifier("SignIn", sender: nil)
-    } else {
-      showUserAlertSheet()
-    }
-  }
-    
-  func showUserAlertSheet() {
-    let currentUser = self.currentUser
-    
-    let emailAddress = currentUser?.emailAddress
-    let message = emailAddress != nil ? "Signed in as \(emailAddress!)." : "Signed in."
-    
-    let alertController = UIAlertController(title: nil, message: message, preferredStyle: .ActionSheet)
-    
-    let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
-    }
-    alertController.addAction(cancelAction)
-    
-    let signOutAction = UIAlertAction(title: "Sign Out", style: .Destructive) { (action) in
-      Meteor.logoutWithCompletionHandler(nil)
-    }
-    alertController.addAction(signOutAction)
-    
-    if let popoverPresentationController = alertController.popoverPresentationController {
-      popoverPresentationController.barButtonItem = userBarButtonItem
-    }
-    
-    presentViewController(alertController, animated: true, completion: nil)
-  }
+  // MARK: - Adding List
   
   @IBAction func addList() {
     let alertController = UIAlertController(title: nil, message: "Add List", preferredStyle: .Alert)
@@ -173,24 +105,59 @@ class ListsViewController: FetchedResultsTableViewController {
     presentViewController(alertController, animated: true, completion: nil)
   }
   
-  // MARK: - UITableViewDelegate
+  // MARK: - Signing In and Out
   
-  override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    if editingStyle == .Delete {
-      if let list = fetchedResults.objectAtIndexPath(indexPath) as? List {
-        managedObjectContext.deleteObject(list)
-        saveManagedObjectContext()
-      }
+  func accountDidChange() {
+    dispatch_async(dispatch_get_main_queue()) {
+      self.updateUserBarButtonItem()
     }
+  }
+  
+  func updateUserBarButtonItem() {
+    if Meteor.account == nil {
+      userBarButtonItem.image = UIImage(named: "user_icon")
+    } else {
+      userBarButtonItem.image = UIImage(named: "user_icon_selected")
+    }
+  }
+  
+  @IBAction func userButtonPressed() {
+    if Meteor.account == nil {
+      performSegueWithIdentifier("SignIn", sender: nil)
+    } else {
+      showUserAlertSheet()
+    }
+  }
+  
+  func showUserAlertSheet() {
+    let currentUser = self.currentUser
+    
+    let emailAddress = currentUser?.emailAddress
+    let message = emailAddress != nil ? "Signed in as \(emailAddress!)." : "Signed in."
+    
+    let alertController = UIAlertController(title: nil, message: message, preferredStyle: .ActionSheet)
+    
+    let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+    }
+    alertController.addAction(cancelAction)
+    
+    let signOutAction = UIAlertAction(title: "Sign Out", style: .Destructive) { (action) in
+      Meteor.logoutWithCompletionHandler(nil)
+    }
+    alertController.addAction(signOutAction)
+    
+    if let popoverPresentationController = alertController.popoverPresentationController {
+      popoverPresentationController.barButtonItem = userBarButtonItem
+    }
+    
+    presentViewController(alertController, animated: true, completion: nil)
   }
   
   // MARK: - Segues
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     if segue.identifier == "showDetail" {
-      if let indexPath = tableView.indexPathForSelectedRow() {
-        let selectedList = fetchedResults.objectAtIndexPath(indexPath) as List
-        selectedObject = selectedList
+      if let selectedList = dataSource.selectedObject as? List {
         if let todosViewcontroller = (segue.destinationViewController as? UINavigationController)?.topViewController as? TodosViewController {
           todosViewcontroller.managedObjectContext = managedObjectContext
           todosViewcontroller.listID = selectedList.objectID

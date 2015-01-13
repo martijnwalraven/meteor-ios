@@ -6,6 +6,7 @@
             <userInfo/>
         </attribute>
         <relationship name="todos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Todo" inverseName="list" inverseEntity="Todo" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="privateLists" inverseEntity="User" syncable="YES"/>
         <userInfo/>
     </entity>
     <entity name="Todo" representedClassName="Todos.Todo" syncable="YES">
@@ -32,10 +33,11 @@
         <attribute name="profile" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="services" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="privateLists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="List" inverseName="user" inverseEntity="List" syncable="YES"/>
     </entity>
     <elements>
-        <element name="List" positionX="261" positionY="189" width="128" height="88"/>
+        <element name="List" positionX="261" positionY="189" width="128" height="103"/>
         <element name="Todo" positionX="261" positionY="198" width="128" height="103"/>
-        <element name="User" positionX="270" positionY="234" width="128" height="118"/>
+        <element name="User" positionX="270" positionY="234" width="128" height="133"/>
     </elements>
 </model>

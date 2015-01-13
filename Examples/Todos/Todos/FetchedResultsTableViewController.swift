@@ -22,58 +22,54 @@ import UIKit
 import CoreData
 import Meteor
 
-enum ContentLoadingState : Printable {
-  case Initial
-  case Loading
-  case Offline
-  case Loaded
-  case Error(NSError)
-  
-  var description: String {
-    switch self {
-    case Initial:
-      return "Initial"
-    case Loading:
-      return "Loading"
-    case Offline:
-      return "Offline"
-    case Loaded:
-      return "Loaded"
-    case Error(let error):
-      return "Error(\(error))"
-    }
-  }
-}
-
-class FetchedResultsTableViewController: UITableViewController, FetchedResultsChangeObserver, SubscriptionLoaderDelegate {
+class FetchedResultsTableViewController: UITableViewController, ContentLoading, SubscriptionLoaderDelegate, FetchedResultsTableViewDataSourceDelegate {
   // MARK: - Lifecycle
   
   deinit {
     NSNotificationCenter.defaultCenter().removeObserver(self)
   }
   
-  // MARK: - Model Management
+  // MARK: - Model
   
   var managedObjectContext: NSManagedObjectContext!
-  var fetchedResults: FetchedResults!
   
   func saveManagedObjectContext() {
     var error: NSError?
     if !managedObjectContext!.save(&error) {
-      println("Encountered error saving todo: \(error)")
+      println("Encountered error saving managed object context: \(error)")
     }
+  }
+  
+  // MARK: - View Lifecyle
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    updatePlaceholderView()
+  }
+  
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    loadContentIfNeeded()
+  }
+  
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    
+    placeholderView?.frame = tableView.bounds
   }
   
   // MARK: - Content Loading
   
-  var contentLoadingState: ContentLoadingState = .Initial  {
+  private(set) var contentLoadingState: ContentLoadingState = .Initial  {
     didSet {
       if isViewLoaded() {
         updatePlaceholderView()
       }
     }
   }
-
+  
   var isContentLoaded: Bool {
     switch contentLoadingState {
     case .Loaded:
@@ -83,25 +79,83 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
     }
   }
   
-  func loadContent() {
-    subscriptionLoader.delegate = self
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "connectionStatusDidChange", name: METDDPClientDidChangeConnectionStatusNotification, object: Meteor)
+  private(set) var needsLoadContent: Bool = true
+  
+  func setNeedsLoadContent() {
+    needsLoadContent = true
+    if isViewLoaded() {
+      loadContentIfNeeded()
+    }
   }
+  
+  func loadContentIfNeeded() {
+    if needsLoadContent {
+      loadContent()
+    }
+  }
+  
+  func loadContent() {
+    needsLoadContent = false
+    
+    subscriptionLoader = SubscriptionLoader()
+    subscriptionLoader!.delegate = self
+
+    configureSubscriptionLoader(subscriptionLoader!)
+    
+    subscriptionLoader!.whenReady { [weak self] in
+      self?.setUpDataSource()
+      self?.contentLoadingState = .Loaded
+    }
+    
+    if !subscriptionLoader!.isReady {
+      if Meteor.connectionStatus == .Offline {
+        contentLoadingState = .Offline
+      } else {
+        contentLoadingState = .Loading
+      }
+    }
+  }
+  
+  func resetContent() {
+    dataSource = nil
+    tableView.dataSource = nil
+    tableView.reloadData()
+    subscriptionLoader = nil
+    contentLoadingState = .Initial
+  }
+  
+  private var subscriptionLoader: SubscriptionLoader?
+  
+  func configureSubscriptionLoader(subscriptionLoader: SubscriptionLoader) {
+  }
+  
+  var dataSource: FetchedResultsTableViewDataSource!
+  
+  func setUpDataSource() {
+    if let fetchedResultsController = createFetchedResultsController() {
+      dataSource = FetchedResultsTableViewDataSource(tableView: tableView, fetchedResultsController: fetchedResultsController)
+      dataSource.delegate = self
+      tableView.dataSource = dataSource
+      dataSource.performFetch()
+    }
+  }
+  
+  func createFetchedResultsController() -> NSFetchedResultsController? {
+    return nil
+  }
+  
+  // MARK: SubscriptionLoaderDelegate
+  
+  func subscriptionLoader(subscriptionLoader: SubscriptionLoader, subscription: METSubscription, didFailWithError error: NSError) {
+    contentLoadingState = .Error(error)
+  }
+  
+  // MARK: Connection Status Notification
   
   func connectionStatusDidChange() {
     if !isContentLoaded && Meteor.connectionStatus == .Offline {
       contentLoadingState = .Offline
     }
-  }
-  
-  // MARK: - Subscriptions
-  
-  var subscriptionLoader = SubscriptionLoader()
-  
-  // MARK SubscriptionLoaderDelegate
-  
-  func subscriptionLoader(subscriptionLoader: SubscriptionLoader, subscription: METSubscription, didFailWithError error: NSError) {
-    contentLoadingState = .Error(error)
   }
   
   // MARK: - User
@@ -114,29 +168,7 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
     return nil;
   }
   
-  // MARK: - View Management
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    
-    updatePlaceholderView()
-  }
-  
-  override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(animated)
-    
-    if !isContentLoaded {
-      loadContent()
-    }
-  }
-  
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-    
-    placeholderView?.frame = tableView.bounds
-  }
-  
-  // MARK: Placeholder View
+  // MARK: - Placeholder View
   
   private var placeholderView: PlaceholderView?
   private var savedCellSeparatorStyle: UITableViewCellSeparatorStyle = .None
@@ -168,85 +200,9 @@ class FetchedResultsTableViewController: UITableViewController, FetchedResultsCh
     }
   }
   
-  // MARK: - UITableViewDataSource
+  // MARK: - FetchedResultsTableViewDataSourceDelegate
   
-  override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    return fetchedResults?.numberOfSections ?? 0
-  }
-  
-  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return fetchedResults?.numberOfItemsInSection(section) ?? 0
-  }
-  
-  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let reuseIdentifier = cellReuseIdentifierForRowAtIndexPath(indexPath)
-    let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath) as UITableViewCell
-    configureCell(cell, forRowAtIndexPath: indexPath)
-    return cell
-  }
-  
-  // MARK: - Table Cell Configuration
-  
-  func cellReuseIdentifierForRowAtIndexPath(indexPath: NSIndexPath) -> String {
-    return "Cell"
-  }
-  
-  func configureCell(cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-  }
-  
-  // MARK: - Table View Selection
-  
-  var selectedObject: NSManagedObject?
-  
-  func reloadDataWhileKeepingSelection() {
-    tableView.reloadData()
-    if selectedObject != nil {
-      if let indexPath = fetchedResults.indexPathForObject(selectedObject!) {
-        tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
-      }
-    }
-  }
-  
-  // MARK: - FetchedResultsChangeObserver
-  
-  func fetchedResultsDidLoad(fetchedResult: FetchedResults) {
-    self.contentLoadingState = .Loaded
-    reloadDataWhileKeepingSelection()
-  }
-  
-  func fetchedResults(fetchedResult: FetchedResults, didFailWithError error: NSError) {
-    contentLoadingState = .Error(error)
-  }
-  
-  func fetchedResults(fetchedResult: FetchedResults, didChange changes: FetchedResultsChanges) {
-    // Don't perform incremental updates when the table view is not currently visible
-    if tableView.window == nil {
-      reloadDataWhileKeepingSelection()
-      return;
-    }
-    
-    tableView.beginUpdates()
-    
-    for change in changes.changeDetails {
-      switch(change) {
-      case .SectionInserted(let sectionIndex):
-        tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
-      case .SectionDeleted(let sectionIndex):
-        tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Automatic)
-      case .ObjectInserted(let newIndexPath):
-        tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
-      case .ObjectDeleted(let indexPath):
-        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-      case .ObjectUpdated(let indexPath):
-        if let cell = tableView.cellForRowAtIndexPath(indexPath) {
-          configureCell(cell, forRowAtIndexPath: indexPath)
-        }
-      case .ObjectMoved(let indexPath, let newIndexPath):
-        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-        tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
-      }
-    }
-    
-    tableView.endUpdates()
+  func dataSource(dataSource: FetchedResultsTableViewDataSource, didFailWithError error: NSError) {
+    println("Data source encountered error: \(error)")
   }
 }

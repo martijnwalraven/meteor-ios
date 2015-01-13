@@ -29,9 +29,7 @@ class SubscriptionLoader {
   private var subscriptions: [METSubscription] = []
   
   deinit {
-    for subscription in subscriptions {
-      Meteor.removeSubscription(subscription)
-    }
+    removeAllSubscriptions()
   }
   
   func addSubscriptionWithName(name: String, parameters: AnyObject...) -> METSubscription {
@@ -45,14 +43,20 @@ class SubscriptionLoader {
     return subscription
   }
   
+  func removeAllSubscriptions() {
+    for subscription in subscriptions {
+      Meteor.removeSubscription(subscription)
+    }
+  }
+  
   var isReady: Bool {
     return all(subscriptions, {$0.ready})
   }
   
-  func whenReady(completionHandler: () -> Void) {
+  func whenReady(handler: () -> Void) {
     // Invoke completion handler synchronously if we're ready now
     if isReady {
-      completionHandler()
+      handler()
       return
     }
     
@@ -66,6 +70,6 @@ class SubscriptionLoader {
       }
     }
     
-    dispatch_group_notify(group, dispatch_get_main_queue(), completionHandler)
+    dispatch_group_notify(group, dispatch_get_main_queue(), handler)
   }
 }

@@ -28,7 +28,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
   @IBOutlet weak var passwordField: UITextField!
   @IBOutlet weak var passwordConfirmationField: UITextField!
   
-  // MARK: View Management
+  // MARK: View Lifecycle
   
   override func viewDidLoad() {
     super.viewDidLoad()

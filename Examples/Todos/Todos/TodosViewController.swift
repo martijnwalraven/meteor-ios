@@ -23,90 +23,60 @@ import CoreData
 import Meteor
 
 class TodosViewController: FetchedResultsTableViewController, UITextFieldDelegate {
-  // MARK: - Lifecycle
-
-  deinit {
-    NSNotificationCenter.defaultCenter().removeObserver(self)
-  }
+  @IBOutlet weak var listLockStatusBarButtonItem: UIBarButtonItem!
   
-  // MARK: - Model Management
-  
-  override var managedObjectContext: NSManagedObjectContext! {
-    willSet {
-      if managedObjectContext != nil {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NSManagedObjectContextObjectsDidChangeNotification, object: managedObjectContext)
-      }
-    }
-    didSet {
-      if managedObjectContext != nil {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "objectsDidChange:", name: NSManagedObjectContextObjectsDidChangeNotification, object: managedObjectContext)
-      }
-    }
-  }
+  // MARK: - Model
   
   var listID: NSManagedObjectID? {
     didSet {
       assert(managedObjectContext != nil)
-      list = (listID != nil) ? managedObjectContext.objectWithID(listID!) as? List : nil
-    }
-  }
-  
-  private var list: List? {
-    didSet {
-      title = list?.name
       
-      if list == nil {
-        fetchedResults = nil
-        contentLoadingState = .Initial
-      }
-      
-      updateTableHeaderView()
-    }
-  }
-  
-  func objectsDidChange(notification: NSNotification) {
-    if list == nil {
-      return
-    }
-    
-    // Check whether list has been deleted
-    if let deletedObjects = notification.userInfo![NSDeletedObjectsKey]? as? NSSet {
-      if deletedObjects.containsObject(list!) {
+      if listID != nil {
+        if listID != oldValue {
+          list = managedObjectContext!.existingObjectWithID(self.listID!, error: nil) as? List
+        }
+      } else {
         list = nil
       }
     }
   }
   
-  // MARK: - Content Loading
+  private var listObserver: ManagedObjectObserver?
   
-  override func loadContent() {
-    super.loadContent()
-    
-    if list != nil {
-      subscriptionLoader.addSubscriptionWithName("todos", parameters: list!)
-      subscriptionLoader.whenReady {
-        if self.fetchedResults == nil {
-          let fetchRequest = NSFetchRequest(entityName: "Todo")
-          fetchRequest.predicate = NSPredicate(format: "list == %@", self.list!)
-          fetchRequest.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-          
-          self.fetchedResults = FetchedResults(managedObjectContext: self.managedObjectContext, fetchRequest: fetchRequest)
-          self.fetchedResults.registerChangeObserver(self)
-          self.fetchedResults.performFetch()
-        }
-      }
-      
-      if !subscriptionLoader.isReady {
-        if Meteor.connectionStatus == .Offline {
-          contentLoadingState = .Offline
+  private var list: List? {
+    didSet {
+      if list != oldValue {
+        if list != nil {
+          listObserver = ManagedObjectObserver(list!) { (changeType) -> Void in
+            switch changeType {
+            case .Deleted, .Invalidated:
+              self.list = nil
+            case .Updated, .Refreshed:
+              self.listDidChange()
+            default:
+              break
+            }
+          }
         } else {
-          contentLoadingState = .Loading
+          listObserver = nil
+          resetContent()
         }
+        
+        listDidChange()
+        setNeedsLoadContent()
       }
     }
   }
   
-  // MARK: - View Management
+  func listDidChange() {
+    title = list?.name
+    
+    if isViewLoaded() {
+      updateViewWithModel()
+    }
+  }
+  
+  // MARK: - View Lifecycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -117,29 +87,74 @@ class TodosViewController: FetchedResultsTableViewController, UITextFieldDelegat
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
     
-    updateTableHeaderView()
+    updateViewWithModel()
+  }
+
+  // MARK: - Content Loading
+  
+  override func loadContent() {
+    if list == nil {
+      return
+    }
+    
+    super.loadContent()
   }
   
-  func updateTableHeaderView() {
-    if list == nil {
-      tableView.tableHeaderView = nil
-    } else {
-      tableView.tableHeaderView = addTaskContainerView
+  override func configureSubscriptionLoader(subscriptionLoader: SubscriptionLoader) {
+    if list != nil {
+      subscriptionLoader.addSubscriptionWithName("todos", parameters: list!)
     }
   }
   
-  // MARK: - Table Cell Configuration
+  override func createFetchedResultsController() -> NSFetchedResultsController? {
+    if list == nil {
+      return nil
+    }
+    
+    let fetchRequest = NSFetchRequest(entityName: "Todo")
+    fetchRequest.predicate = NSPredicate(format: "list == %@", self.list!)
+    fetchRequest.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+    
+    return NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+  }
   
-  override func configureCell(cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-    let todo = fetchedResults.objectAtIndexPath(indexPath) as Todo
-    cell.textLabel!.text = todo.text
-    cell.accessoryType = todo.checked ? .Checkmark : .None
+  // MARK: - Updating View
+  
+  func updateViewWithModel() {
+    if list == nil {
+      tableView.tableHeaderView = nil
+      listLockStatusBarButtonItem.image = nil
+    } else {
+      tableView.tableHeaderView = addTaskContainerView
+      if list!.user == nil {
+        listLockStatusBarButtonItem.image = UIImage(named: "unlocked_icon")
+      } else {
+        listLockStatusBarButtonItem.image = UIImage(named: "locked_icon")
+      }
+    }
+  }
+  
+  // MARK: - FetchedResultsTableViewDataSourceDelegate
+  
+  func dataSource(dataSource: FetchedResultsTableViewDataSource, configureCell cell: UITableViewCell, forObject object: NSManagedObject, atIndexPath indexPath: NSIndexPath) {
+    if let todo = object as? Todo {
+      cell.textLabel!.text = todo.text
+      cell.accessoryType = todo.checked ? .Checkmark : .None
+    }
+  }
+  
+  func dataSource(dataSource: FetchedResultsTableViewDataSource, deleteObject object: NSManagedObject, atIndexPath indexPath: NSIndexPath) {
+    if let todo = object as? Todo {
+      managedObjectContext.deleteObject(todo)
+      todo.list.incompleteCount--
+      saveManagedObjectContext()
+    }
   }
   
   // MARK: - UITableViewDelegate
   
   override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-    if let todo = fetchedResults.objectAtIndexPath(indexPath) as? Todo {
+    if let todo = dataSource.objectAtIndexPath(indexPath) as? Todo {
       todo.checked = !todo.checked
       if (todo.checked) {
         todo.list.incompleteCount--
@@ -149,16 +164,6 @@ class TodosViewController: FetchedResultsTableViewController, UITextFieldDelegat
       saveManagedObjectContext()
     }
     return nil
-  }
-  
-  override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    if editingStyle == .Delete {
-      if let todo = fetchedResults.objectAtIndexPath(indexPath) as? Todo {
-        managedObjectContext.deleteObject(todo)
-        todo.list.incompleteCount--
-        saveManagedObjectContext()
-      }
-    }
   }
   
   // MARK: - UITextFieldDelegate
@@ -183,5 +188,29 @@ class TodosViewController: FetchedResultsTableViewController, UITextFieldDelegat
     saveManagedObjectContext()
     
     return true
+  }
+  
+  // MARK: - Making Lists Private
+  
+  @IBAction func listLockStatusButtonPressed() {
+    if list != nil {
+      let currentUser = self.currentUser
+      
+      if currentUser == nil {
+        let alertController = UIAlertController(title: nil, message: "Please sign in to make private lists.", preferredStyle: .Alert)
+        let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertController.addAction(okAction)
+        
+        presentViewController(alertController, animated: true, completion: nil)
+        return
+      }
+      
+      if list!.user == nil {
+        list!.user = currentUser
+      } else {
+        list!.user = nil
+      }
+      saveManagedObjectContext()
+    }
   }
 }
