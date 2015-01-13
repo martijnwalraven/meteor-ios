@@ -1,4 +1,4 @@
-// Copyright (c) 2014 Martijn Walraven
+// Copyright (c) 2014-2015 Martijn Walraven
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -87,7 +87,7 @@
 - (void)objectsDidChange:(NSNotification *)notification {
   [_mainQueueManagedObjectContext performBlock:^{
     // NSLog(@"objectsDidChange, inserted: %lu, updated: %lu, deleted: %lu", (unsigned long)[notification.userInfo[NSInsertedObjectsKey] count], (unsigned long)[notification.userInfo[NSUpdatedObjectsKey] count], (unsigned long)[notification.userInfo[NSDeletedObjectsKey] count]);
-    //    NSLog(@"objectsDidChange, inserted: %@, updated: %@, deleted: %@", notification.userInfo[NSInsertedObjectsKey], notification.userInfo[NSUpdatedObjectsKey], notification.userInfo[NSDeletedObjectsKey]);
+    // NSLog(@"objectsDidChange, inserted: %@, updated: %@, deleted: %@", notification.userInfo[NSInsertedObjectsKey], notification.userInfo[NSUpdatedObjectsKey], notification.userInfo[NSDeletedObjectsKey]);
     
     // Use NSPersistentStoreDidImportUbiquitousContentChangesNotification to allow object IDs in the userInfo for mergeChangesFromContextDidSaveNotification
     [_mainQueueManagedObjectContext mergeChangesFromContextDidSaveNotification:[[NSNotification alloc] initWithName:NSPersistentStoreDidImportUbiquitousContentChangesNotification object:notification.object userInfo:notification.userInfo]];

@@ -1,4 +1,4 @@
-// Copyright (c) 2014 Martijn Walraven
+// Copyright (c) 2014-2015 Martijn Walraven
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -52,7 +52,7 @@ typedef void (^METLogOutCompletionHandler)(NSError *error);
 
 @interface METDDPClient : NSObject
 
-- (instancetype)initWithConnection:(METDDPConnection *)connection NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithConnection:(METDDPConnection *)connection;
 - (instancetype)initWithServerURL:(NSURL *)serverURL;
 
 @property(weak, nonatomic) id<METDDPClientDelegate> delegate;
