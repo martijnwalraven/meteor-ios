@@ -84,7 +84,7 @@
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
   
   expectation = [self expectationWithDescription:@"completion handler invoked"];
-  [_collection updateDocumentWithID:@"lovelace" fields:@{@"score": @30, @"color": [NSNull null]} completionHandler:^(id result, NSError *error) {
+  [_collection updateDocumentWithID:@"lovelace" changedFields:@{@"score": @30, @"color": [NSNull null]} completionHandler:^(id result, NSError *error) {
     XCTAssertEqualObjects(result, @1);
     XCTAssertNil(error);
     [expectation fulfill];
@@ -95,7 +95,7 @@
 
 - (void)testUpdatingDocumentWithUnknownIDReturnsZeroForNumberOfAffectedDocuments {
   XCTestExpectation *expectation = [self expectationWithDescription:@"completion handler invoked"];
-  [_collection updateDocumentWithID:@"lovelace" fields:@{@"score": @30, @"color": [NSNull null]} completionHandler:^(id result, NSError *error) {
+  [_collection updateDocumentWithID:@"lovelace" changedFields:@{@"score": @30, @"color": [NSNull null]} completionHandler:^(id result, NSError *error) {
     XCTAssertEqualObjects(result, @0);
     XCTAssertNil(error);
     [expectation fulfill];
