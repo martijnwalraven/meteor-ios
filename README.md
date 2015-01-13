@@ -2,7 +2,9 @@
 
 Meteor for iOS is work in progress, but aims to be a complete DDP client that includes full support for latency compensation and offers Core Data integration. It keeps as close as possible to the semantics of the original JavaScript code, but its design is more in line with Cocoa and Objective-C conventions (although it is perfectly usable from Swift). It has been implemented with concurrent execution in mind and keeps all processing off the main thread, posting batched and consolidated change notifications that can be observed to update the UI. It includes over 200 unit tests and also has some server integration tests that run using a local Meteor test server.
 
-It is in dire need of better documentation, but is already fairly feature complete and seems to work pretty well. For now, the included Todos example (written in Swift) is probably the best way to get an understanding of its abilities. If you want to try it out, you should be able to open the Meteor workspace and run the Todos scheme. It connects to a Meteor example app running at http://meteor-ios-todos.meteor.com.
+It is in dire need of better documentation, but is already fairly feature complete and seems to work pretty well. For now, the included Todos example (written in Swift, for both iPhone and iPad) is probably the best way to get an understanding of its abilities. If you want to try it out, you should be able to open the Meteor workspace and run the Todos scheme. It connects to a Meteor example app running at http://meteor-ios-todos.meteor.com.
+
+[![Meteor for iOS — Todos example](http://img.youtube.com/vi/qWJ2bgg8xxo/0.jpg)](http://www.youtube.com/watch?v=qWJ2bgg8xxo)
 
 ## Features
 
