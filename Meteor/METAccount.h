@@ -20,7 +20,10 @@
 
 #import <Foundation/Foundation.h>
 
-@interface METAccount : NSObject
+@interface METAccount : NSObject <NSCoding>
+
++ (instancetype)defaultAccount;
++ (void)setDefaultAccount:(METAccount *)account;
 
 - (instancetype)initWithUserID:(NSString *)userID resumeToken:(NSString *)token expiryDate:(NSDate *)tokenExpires NS_DESIGNATED_INITIALIZER;
 - (instancetype)init __attribute__((unavailable("Use -initWithUserID:resumeToken:expiryDate: instead")));

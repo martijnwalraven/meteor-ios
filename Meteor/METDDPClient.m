@@ -114,6 +114,8 @@ NSString * const METDDPClientDidChangeAccountNotification = @"METDDPClientDidCha
     _supportedProtocolVersions = @[@"1", @"pre2", @"pre1"];
     _suggestedProtocolVersion = @"1";
     
+    _account = [METAccount defaultAccount];
+    
     _database = [[METDatabase alloc] initWithClient:self];
     
     _subscriptionManager = [[METSubscriptionManager alloc] initWithClient:self];
@@ -611,8 +613,13 @@ NSString * const METDDPClientDidChangeAccountNotification = @"METDDPClientDidCha
 - (void)setAccount:(METAccount *)account {
   if (_account != account) {
     _account = account;
+    [METAccount setDefaultAccount:_account];
     [[NSNotificationCenter defaultCenter] postNotificationName:METDDPClientDidChangeAccountNotification object:self userInfo:nil];
   }
+}
+
+- (NSString *)userID {
+  return _account.userID;
 }
 
 - (void)loginWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters completionHandler:(METLogInCompletionHandler)completionHandler {

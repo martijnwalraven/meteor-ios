@@ -50,7 +50,7 @@ class ListsViewController: FetchedResultsTableViewController {
   
   override func createFetchedResultsController() -> NSFetchedResultsController? {
     let fetchRequest = NSFetchRequest(entityName: "List")
-    fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+    fetchRequest.sortDescriptors = [NSSortDescriptor(key: "isPrivate", ascending: true), NSSortDescriptor(key: "name", ascending: true)]
     
     return NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: managedObjectContext, sectionNameKeyPath: "isPrivate", cacheName: nil)
   }
@@ -114,7 +114,7 @@ class ListsViewController: FetchedResultsTableViewController {
   }
   
   func updateUserBarButtonItem() {
-    if Meteor.account == nil {
+    if Meteor.userID == nil {
       userBarButtonItem.image = UIImage(named: "user_icon")
     } else {
       userBarButtonItem.image = UIImage(named: "user_icon_selected")
@@ -122,7 +122,7 @@ class ListsViewController: FetchedResultsTableViewController {
   }
   
   @IBAction func userButtonPressed() {
-    if Meteor.account == nil {
+    if Meteor.userID == nil {
       performSegueWithIdentifier("SignIn", sender: nil)
     } else {
       showUserAlertSheet()

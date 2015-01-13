@@ -3,8 +3,10 @@ PODS:
   - Meteor (0.1.0):
     - InflectorKit
     - PocketSocket
-  - OCMock (3.1.1)
+    - SimpleKeychain
+  - OCMock (3.1.2)
   - PocketSocket (0.6.4)
+  - SimpleKeychain (0.2.2)
 
 DEPENDENCIES:
   - Meteor (from `.`)
@@ -16,8 +18,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   InflectorKit: bb1f5c9feb01d17450b8bcdeb7ab1ef1832b2247
-  Meteor: a44a5a2bce821ad6557bb4dfaa367ef4c44a10c4
-  OCMock: f6cb8c162ab9d5620dddf411282c7b2c0ee78854
+  Meteor: 97e2c2e8d6cb714539e1be0316c29a776c53c9e9
+  OCMock: ecdd510b73ef397f2f97274785c1e87fd147c49f
   PocketSocket: 8c18f973e57fd3042d032626654658df0fa2f126
+  SimpleKeychain: 05c1ff0ef0c553833d13851fbcf701a55f0f12a3
 
 COCOAPODS: 0.36.0.beta.1

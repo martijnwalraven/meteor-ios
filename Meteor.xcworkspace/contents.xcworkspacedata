@@ -269,6 +269,12 @@
          </Group>
       </Group>
    </Group>
+   <FileRef
+      location = "group:Tests/Meteor Tests.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
    <Group
       location = "container:"
       name = "Examples">
@@ -279,10 +285,4 @@
          location = "group:Examples/Leaderboard/Leaderboard.xcodeproj">
       </FileRef>
    </Group>
-   <FileRef
-      location = "group:Tests/Meteor Tests.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Pods/Pods.xcodeproj">
-   </FileRef>
 </Workspace>

@@ -76,7 +76,7 @@ typedef void (^METLogOutCompletionHandler)(NSError *error);
 - (id)callMethodWithName:(NSString *)methodName parameters:(NSArray *)parameters;
 
 @property (assign, nonatomic, readonly, getter=isLoggingIn) BOOL loggingIn;
-@property (copy, nonatomic, readonly) METAccount *account;
+@property (copy, nonatomic, readonly) NSString *userID;
 
 - (void)logoutWithCompletionHandler:(METLogOutCompletionHandler)completionHandler;
 

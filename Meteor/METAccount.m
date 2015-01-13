@@ -20,7 +20,26 @@
 
 #import "METAccount.h"
 
+#import <SimpleKeychain/A0SimpleKeychain.h>
+
+NSString * const METAccountKeychainItemName = @"MeteorAccount";
+
 @implementation METAccount
+
++ (instancetype)defaultAccount {
+  NSData *data = [[A0SimpleKeychain keychain] dataForKey:METAccountKeychainItemName];
+  if (!data) return nil;
+  return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+}
+
++ (void)setDefaultAccount:(METAccount *)account {
+  if (account) {
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:account];
+    [[A0SimpleKeychain keychain] setData:data forKey:METAccountKeychainItemName];
+  } else {
+    [[A0SimpleKeychain keychain] deleteEntryForKey:METAccountKeychainItemName];
+  }
+}
 
 - (instancetype)initWithUserID:(NSString *)userID resumeToken:(NSString *)resumeToken expiryDate:(NSDate *)expiryDate {
   self = [super init];
@@ -30,6 +49,22 @@
     _expiryDate = [expiryDate copy];
   }
   return self;
+}
+
+#pragma mark - NSCoding
+
+- (instancetype)initWithCoder:(NSCoder *)coder {
+  NSString *userID = [coder decodeObjectForKey:@"userID"];
+  NSString *resumeToken = [coder decodeObjectForKey:@"resumeToken"];
+  NSDate *expiryDate = [coder decodeObjectForKey:@"expiryDate"];
+  
+  return [self initWithUserID:userID resumeToken:resumeToken expiryDate:expiryDate];
+}
+
+- (void)encodeWithCoder:(NSCoder *)coder {
+  [coder encodeObject:_userID forKey:@"userID"];
+  [coder encodeObject:_resumeToken forKey:@"resumeToken"];
+  [coder encodeObject:_expiryDate forKey:@"expiryDate"];
 }
 
 #pragma mark - NSCopying

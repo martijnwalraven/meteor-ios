@@ -22,11 +22,17 @@
 #define COCOAPODS_POD_AVAILABLE_OCMock
 #define COCOAPODS_VERSION_MAJOR_OCMock 3
 #define COCOAPODS_VERSION_MINOR_OCMock 1
-#define COCOAPODS_VERSION_PATCH_OCMock 1
+#define COCOAPODS_VERSION_PATCH_OCMock 2
 
 // PocketSocket
 #define COCOAPODS_POD_AVAILABLE_PocketSocket
 #define COCOAPODS_VERSION_MAJOR_PocketSocket 0
 #define COCOAPODS_VERSION_MINOR_PocketSocket 6
 #define COCOAPODS_VERSION_PATCH_PocketSocket 4
+
+// SimpleKeychain
+#define COCOAPODS_POD_AVAILABLE_SimpleKeychain
+#define COCOAPODS_VERSION_MAJOR_SimpleKeychain 0
+#define COCOAPODS_VERSION_MINOR_SimpleKeychain 2
+#define COCOAPODS_VERSION_PATCH_SimpleKeychain 2
 

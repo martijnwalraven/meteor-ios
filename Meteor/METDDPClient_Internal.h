@@ -48,7 +48,7 @@ typedef NS_OPTIONS(NSInteger, METMethodCallOptions) {
 @property (strong, nonatomic, readwrite) METDatabase *database;
 
 @property (assign, nonatomic, readwrite, getter=isLoggingIn) BOOL loggingIn;
-@property (copy, nonatomic, readwrite) METAccount *account;
+@property (copy, nonatomic) METAccount *account;
 
 - (void)processDataUpdate:(METDataUpdate *)update;
 

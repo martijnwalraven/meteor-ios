@@ -85,6 +85,82 @@
 		9F98ADE7194615810024F542 /* METServerIntegrationTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METServerIntegrationTestCase.m; sourceTree = "<group>"; };
 		9F98ADE9194616B60024F542 /* METServerIntegrationTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = METServerIntegrationTestCase.h; sourceTree = "<group>"; };
 		9F98ADF11946188E0024F542 /* METCallingMutationMethodsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METCallingMutationMethodsTests.m; sourceTree = "<group>"; };
+		9FA52CEB1A65422C00757CC4 /* METDDPClient.h */ = {isa = PBXFileReference; path = METDDPClient.h; sourceTree = "<group>"; };
+		9FA52CEC1A65422C00757CC4 /* METDDPClient.m */ = {isa = PBXFileReference; path = METDDPClient.m; sourceTree = "<group>"; };
+		9FA52CED1A65422C00757CC4 /* METDDPClient_Internal.h */ = {isa = PBXFileReference; path = METDDPClient_Internal.h; sourceTree = "<group>"; };
+		9FA52CEE1A65422C00757CC4 /* METDocumentKey.h */ = {isa = PBXFileReference; path = METDocumentKey.h; sourceTree = "<group>"; };
+		9FA52CEF1A65422C00757CC4 /* METDocumentKey.m */ = {isa = PBXFileReference; path = METDocumentKey.m; sourceTree = "<group>"; };
+		9FA52CF01A65422C00757CC4 /* METDocument.h */ = {isa = PBXFileReference; path = METDocument.h; sourceTree = "<group>"; };
+		9FA52CF11A65422C00757CC4 /* METDocument.m */ = {isa = PBXFileReference; path = METDocument.m; sourceTree = "<group>"; };
+		9FA52CF21A65422C00757CC4 /* METDataUpdate.h */ = {isa = PBXFileReference; path = METDataUpdate.h; sourceTree = "<group>"; };
+		9FA52CF31A65422C00757CC4 /* METDataUpdate.m */ = {isa = PBXFileReference; path = METDataUpdate.m; sourceTree = "<group>"; };
+		9FA52CF41A65422C00757CC4 /* METDDPConnection.h */ = {isa = PBXFileReference; path = METDDPConnection.h; sourceTree = "<group>"; };
+		9FA52CF51A65422C00757CC4 /* METDDPConnection.m */ = {isa = PBXFileReference; path = METDDPConnection.m; sourceTree = "<group>"; };
+		9FA52CF61A65422C00757CC4 /* METDDPHeartbeat.h */ = {isa = PBXFileReference; path = METDDPHeartbeat.h; sourceTree = "<group>"; };
+		9FA52CF71A65422C00757CC4 /* METDDPHeartbeat.m */ = {isa = PBXFileReference; path = METDDPHeartbeat.m; sourceTree = "<group>"; };
+		9FA52CF81A65422C00757CC4 /* METDDPMessage.h */ = {isa = PBXFileReference; path = METDDPMessage.h; sourceTree = "<group>"; };
+		9FA52CF91A65422C00757CC4 /* METDDPMessage.m */ = {isa = PBXFileReference; path = METDDPMessage.m; sourceTree = "<group>"; };
+		9FA52CFA1A65422C00757CC4 /* METEJSONSerialization.h */ = {isa = PBXFileReference; path = METEJSONSerialization.h; sourceTree = "<group>"; };
+		9FA52CFB1A65422C00757CC4 /* METEJSONSerialization.m */ = {isa = PBXFileReference; path = METEJSONSerialization.m; sourceTree = "<group>"; };
+		9FA52CFD1A65422C00757CC4 /* METSubscription.h */ = {isa = PBXFileReference; path = METSubscription.h; sourceTree = "<group>"; };
+		9FA52CFE1A65422C00757CC4 /* METSubscription.m */ = {isa = PBXFileReference; path = METSubscription.m; sourceTree = "<group>"; };
+		9FA52CFF1A65422C00757CC4 /* METSubscription_Internal.h */ = {isa = PBXFileReference; path = METSubscription_Internal.h; sourceTree = "<group>"; };
+		9FA52D001A65422C00757CC4 /* METSubscriptionManager.h */ = {isa = PBXFileReference; path = METSubscriptionManager.h; sourceTree = "<group>"; };
+		9FA52D011A65422C00757CC4 /* METSubscriptionManager.m */ = {isa = PBXFileReference; path = METSubscriptionManager.m; sourceTree = "<group>"; };
+		9FA52D031A65422C00757CC4 /* METMethodInvocation.h */ = {isa = PBXFileReference; path = METMethodInvocation.h; sourceTree = "<group>"; };
+		9FA52D041A65422C00757CC4 /* METMethodInvocation.m */ = {isa = PBXFileReference; path = METMethodInvocation.m; sourceTree = "<group>"; };
+		9FA52D051A65422C00757CC4 /* METMethodInvocation_Internal.h */ = {isa = PBXFileReference; path = METMethodInvocation_Internal.h; sourceTree = "<group>"; };
+		9FA52D061A65422C00757CC4 /* METMethodInvocationContext.h */ = {isa = PBXFileReference; path = METMethodInvocationContext.h; sourceTree = "<group>"; };
+		9FA52D071A65422C00757CC4 /* METMethodInvocationContext.m */ = {isa = PBXFileReference; path = METMethodInvocationContext.m; sourceTree = "<group>"; };
+		9FA52D081A65422C00757CC4 /* METMethodInvocationCoordinator.h */ = {isa = PBXFileReference; path = METMethodInvocationCoordinator.h; sourceTree = "<group>"; };
+		9FA52D091A65422C00757CC4 /* METMethodInvocationCoordinator.m */ = {isa = PBXFileReference; path = METMethodInvocationCoordinator.m; sourceTree = "<group>"; };
+		9FA52D0A1A65422C00757CC4 /* METMethodInvocationCoordinator_Testing.h */ = {isa = PBXFileReference; path = METMethodInvocationCoordinator_Testing.h; sourceTree = "<group>"; };
+		9FA52D0B1A65422C00757CC4 /* METBufferedDocument.h */ = {isa = PBXFileReference; path = METBufferedDocument.h; sourceTree = "<group>"; };
+		9FA52D0C1A65422C00757CC4 /* METBufferedDocument.m */ = {isa = PBXFileReference; path = METBufferedDocument.m; sourceTree = "<group>"; };
+		9FA52D0E1A65422C00757CC4 /* METDatabase.h */ = {isa = PBXFileReference; name = METDatabase.h; path = ../Meteor/Meteor/Meteor/METDatabase.h; sourceTree = "<group>"; };
+		9FA52D0F1A65422C00757CC4 /* METDatabase.m */ = {isa = PBXFileReference; name = METDatabase.m; path = ../Meteor/Meteor/Meteor/METDatabase.m; sourceTree = "<group>"; };
+		9FA52D101A65422C00757CC4 /* METDatabase_Internal.h */ = {isa = PBXFileReference; name = METDatabase_Internal.h; path = ../Meteor/Meteor/Meteor/METDatabase_Internal.h; sourceTree = "<group>"; };
+		9FA52D111A65422C00757CC4 /* METCollection.h */ = {isa = PBXFileReference; name = METCollection.h; path = ../Meteor/Meteor/Meteor/METCollection.h; sourceTree = "<group>"; };
+		9FA52D121A65422C00757CC4 /* METCollection.m */ = {isa = PBXFileReference; name = METCollection.m; path = ../Meteor/Meteor/Meteor/METCollection.m; sourceTree = "<group>"; };
+		9FA52D131A65422C00757CC4 /* METCollection_Internal.h */ = {isa = PBXFileReference; name = METCollection_Internal.h; path = ../Meteor/Meteor/Meteor/METCollection_Internal.h; sourceTree = "<group>"; };
+		9FA52D141A65422C00757CC4 /* METDatabaseChanges.h */ = {isa = PBXFileReference; name = METDatabaseChanges.h; path = ../Meteor/Meteor/Meteor/METDatabaseChanges.h; sourceTree = "<group>"; };
+		9FA52D151A65422C00757CC4 /* METDatabaseChanges.m */ = {isa = PBXFileReference; name = METDatabaseChanges.m; path = ../Meteor/Meteor/Meteor/METDatabaseChanges.m; sourceTree = "<group>"; };
+		9FA52D161A65422C00757CC4 /* METDatabaseChanges_Internal.h */ = {isa = PBXFileReference; name = METDatabaseChanges_Internal.h; path = ../Meteor/Meteor/Meteor/METDatabaseChanges_Internal.h; sourceTree = "<group>"; };
+		9FA52D171A65422C00757CC4 /* METDocumentCache.h */ = {isa = PBXFileReference; name = METDocumentCache.h; path = ../Meteor/Meteor/Meteor/METDocumentCache.h; sourceTree = "<group>"; };
+		9FA52D181A65422C00757CC4 /* METDocumentCache.m */ = {isa = PBXFileReference; name = METDocumentCache.m; path = ../Meteor/Meteor/Meteor/METDocumentCache.m; sourceTree = "<group>"; };
+		9FA52D191A65422C00757CC4 /* METDocumentChangeDetails.h */ = {isa = PBXFileReference; name = METDocumentChangeDetails.h; path = ../Meteor/Meteor/Meteor/METDocumentChangeDetails.h; sourceTree = "<group>"; };
+		9FA52D1A1A65422C00757CC4 /* METDocumentChangeDetails.m */ = {isa = PBXFileReference; name = METDocumentChangeDetails.m; path = ../Meteor/Meteor/Meteor/METDocumentChangeDetails.m; sourceTree = "<group>"; };
+		9FA52D1B1A65422C00757CC4 /* METFetchRequest.h */ = {isa = PBXFileReference; name = METFetchRequest.h; path = ../Meteor/Meteor/Meteor/METFetchRequest.h; sourceTree = "<group>"; };
+		9FA52D1C1A65422C00757CC4 /* METFetchRequest.m */ = {isa = PBXFileReference; name = METFetchRequest.m; path = ../Meteor/Meteor/Meteor/METFetchRequest.m; sourceTree = "<group>"; };
+		9FA52D1E1A65422C00757CC4 /* METCoreDataDDPClient.h */ = {isa = PBXFileReference; name = METCoreDataDDPClient.h; path = ../Meteor/Meteor/Meteor/METCoreDataDDPClient.h; sourceTree = "<group>"; };
+		9FA52D1F1A65422C00757CC4 /* METCoreDataDDPClient.m */ = {isa = PBXFileReference; name = METCoreDataDDPClient.m; path = ../Meteor/Meteor/Meteor/METCoreDataDDPClient.m; sourceTree = "<group>"; };
+		9FA52D201A65422C00757CC4 /* METIncrementalStore.h */ = {isa = PBXFileReference; name = METIncrementalStore.h; path = ../Meteor/Meteor/Meteor/METIncrementalStore.h; sourceTree = "<group>"; };
+		9FA52D211A65422C00757CC4 /* METIncrementalStore.m */ = {isa = PBXFileReference; name = METIncrementalStore.m; path = ../Meteor/Meteor/Meteor/METIncrementalStore.m; sourceTree = "<group>"; };
+		9FA52D221A65422C00757CC4 /* METIncrementalStore_Testing.h */ = {isa = PBXFileReference; name = METIncrementalStore_Testing.h; path = ../Meteor/Meteor/Meteor/METIncrementalStore_Testing.h; sourceTree = "<group>"; };
+		9FA52D241A65422C00757CC4 /* METAccount.h */ = {isa = PBXFileReference; path = METAccount.h; sourceTree = "<group>"; };
+		9FA52D251A65422C00757CC4 /* METAccount.m */ = {isa = PBXFileReference; path = METAccount.m; sourceTree = "<group>"; };
+		9FA52D261A65422C00757CC4 /* METDDPClient+AccountsPassword.h */ = {isa = PBXFileReference; path = "METDDPClient+AccountsPassword.h"; sourceTree = "<group>"; };
+		9FA52D271A65422C00757CC4 /* METDDPClient+AccountsPassword.m */ = {isa = PBXFileReference; path = "METDDPClient+AccountsPassword.m"; sourceTree = "<group>"; };
+		9FA52D291A65422C00757CC4 /* METNetworkReachabilityManager.h */ = {isa = PBXFileReference; path = METNetworkReachabilityManager.h; sourceTree = "<group>"; };
+		9FA52D2A1A65422C00757CC4 /* METNetworkReachabilityManager.m */ = {isa = PBXFileReference; path = METNetworkReachabilityManager.m; sourceTree = "<group>"; };
+		9FA52D2B1A65422C00757CC4 /* METRetryStrategy.h */ = {isa = PBXFileReference; path = METRetryStrategy.h; sourceTree = "<group>"; };
+		9FA52D2C1A65422C00757CC4 /* METRetryStrategy.m */ = {isa = PBXFileReference; path = METRetryStrategy.m; sourceTree = "<group>"; };
+		9FA52D2D1A65422C00757CC4 /* METTimer.h */ = {isa = PBXFileReference; path = METTimer.h; sourceTree = "<group>"; };
+		9FA52D2E1A65422C00757CC4 /* METTimer.m */ = {isa = PBXFileReference; path = METTimer.m; sourceTree = "<group>"; };
+		9FA52D2F1A65422C00757CC4 /* METDynamicVariable.h */ = {isa = PBXFileReference; path = METDynamicVariable.h; sourceTree = "<group>"; };
+		9FA52D301A65422C00757CC4 /* METDynamicVariable.m */ = {isa = PBXFileReference; path = METDynamicVariable.m; sourceTree = "<group>"; };
+		9FA52D311A65422C00757CC4 /* METRandomValueGenerator.h */ = {isa = PBXFileReference; path = METRandomValueGenerator.h; sourceTree = "<group>"; };
+		9FA52D321A65422C00757CC4 /* METRandomValueGenerator.m */ = {isa = PBXFileReference; path = METRandomValueGenerator.m; sourceTree = "<group>"; };
+		9FA52D331A65422C00757CC4 /* METAleaRandomValueGenerator.h */ = {isa = PBXFileReference; path = METAleaRandomValueGenerator.h; sourceTree = "<group>"; };
+		9FA52D341A65422C00757CC4 /* METAleaRandomValueGenerator.m */ = {isa = PBXFileReference; path = METAleaRandomValueGenerator.m; sourceTree = "<group>"; };
+		9FA52D351A65422C00757CC4 /* METRandomStream.h */ = {isa = PBXFileReference; path = METRandomStream.h; sourceTree = "<group>"; };
+		9FA52D361A65422C00757CC4 /* METRandomStream.m */ = {isa = PBXFileReference; path = METRandomStream.m; sourceTree = "<group>"; };
+		9FA52D381A65422C00757CC4 /* NSArray+METAdditions.h */ = {isa = PBXFileReference; path = "NSArray+METAdditions.h"; sourceTree = "<group>"; };
+		9FA52D391A65422C00757CC4 /* NSArray+METAdditions.m */ = {isa = PBXFileReference; path = "NSArray+METAdditions.m"; sourceTree = "<group>"; };
+		9FA52D3A1A65422C00757CC4 /* NSDictionary+METAdditions.h */ = {isa = PBXFileReference; path = "NSDictionary+METAdditions.h"; sourceTree = "<group>"; };
+		9FA52D3B1A65422C00757CC4 /* NSDictionary+METAdditions.m */ = {isa = PBXFileReference; path = "NSDictionary+METAdditions.m"; sourceTree = "<group>"; };
+		9FA52D3C1A65422C00757CC4 /* NSString+METAdditions.h */ = {isa = PBXFileReference; path = "NSString+METAdditions.h"; sourceTree = "<group>"; };
+		9FA52D3D1A65422C00757CC4 /* NSString+METAdditions.m */ = {isa = PBXFileReference; path = "NSString+METAdditions.m"; sourceTree = "<group>"; };
 		9FB1E97A1A5165DE006E6AAA /* METDDPClientLatencyCompensationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METDDPClientLatencyCompensationTests.m; sourceTree = "<group>"; };
 		9FB361F91A5D253000408F61 /* METSubscriptionManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METSubscriptionManagerTests.m; sourceTree = "<group>"; };
 		9FC12A671A43DB1A0002CFBD /* METCollectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METCollectionTests.m; sourceTree = "<group>"; };
@@ -233,6 +309,164 @@
 			name = DDP;
 			sourceTree = "<group>";
 		};
+		9FA52CFC1A65422C00757CC4 /* Connection */ = {
+			isa = PBXGroup;
+			children = (
+				9FA52CF41A65422C00757CC4 /* METDDPConnection.h */,
+				9FA52CF51A65422C00757CC4 /* METDDPConnection.m */,
+				9FA52CF61A65422C00757CC4 /* METDDPHeartbeat.h */,
+				9FA52CF71A65422C00757CC4 /* METDDPHeartbeat.m */,
+				9FA52CF81A65422C00757CC4 /* METDDPMessage.h */,
+				9FA52CF91A65422C00757CC4 /* METDDPMessage.m */,
+				9FA52CFA1A65422C00757CC4 /* METEJSONSerialization.h */,
+				9FA52CFB1A65422C00757CC4 /* METEJSONSerialization.m */,
+			);
+			name = Connection;
+			sourceTree = "<group>";
+		};
+		9FA52D021A65422C00757CC4 /* Subscriptions */ = {
+			isa = PBXGroup;
+			children = (
+				9FA52CFD1A65422C00757CC4 /* METSubscription.h */,
+				9FA52CFE1A65422C00757CC4 /* METSubscription.m */,
+				9FA52CFF1A65422C00757CC4 /* METSubscription_Internal.h */,
+				9FA52D001A65422C00757CC4 /* METSubscriptionManager.h */,
+				9FA52D011A65422C00757CC4 /* METSubscriptionManager.m */,
+			);
+			name = Subscriptions;
+			sourceTree = "<group>";
+		};
+		9FA52D0D1A65422C00757CC4 /* Method Invocations */ = {
+			isa = PBXGroup;
+			children = (
+				9FA52D031A65422C00757CC4 /* METMethodInvocation.h */,
+				9FA52D041A65422C00757CC4 /* METMethodInvocation.m */,
+				9FA52D051A65422C00757CC4 /* METMethodInvocation_Internal.h */,
+				9FA52D061A65422C00757CC4 /* METMethodInvocationContext.h */,
+				9FA52D071A65422C00757CC4 /* METMethodInvocationContext.m */,
+				9FA52D081A65422C00757CC4 /* METMethodInvocationCoordinator.h */,
+				9FA52D091A65422C00757CC4 /* METMethodInvocationCoordinator.m */,
+				9FA52D0A1A65422C00757CC4 /* METMethodInvocationCoordinator_Testing.h */,
+				9FA52D0B1A65422C00757CC4 /* METBufferedDocument.h */,
+				9FA52D0C1A65422C00757CC4 /* METBufferedDocument.m */,
+			);
+			name = "Method Invocations";
+			sourceTree = "<group>";
+		};
+		9FA52D1D1A65422C00757CC4 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				9FA52D0E1A65422C00757CC4 /* METDatabase.h */,
+				9FA52D0F1A65422C00757CC4 /* METDatabase.m */,
+				9FA52D101A65422C00757CC4 /* METDatabase_Internal.h */,
+				9FA52D111A65422C00757CC4 /* METCollection.h */,
+				9FA52D121A65422C00757CC4 /* METCollection.m */,
+				9FA52D131A65422C00757CC4 /* METCollection_Internal.h */,
+				9FA52D141A65422C00757CC4 /* METDatabaseChanges.h */,
+				9FA52D151A65422C00757CC4 /* METDatabaseChanges.m */,
+				9FA52D161A65422C00757CC4 /* METDatabaseChanges_Internal.h */,
+				9FA52D171A65422C00757CC4 /* METDocumentCache.h */,
+				9FA52D181A65422C00757CC4 /* METDocumentCache.m */,
+				9FA52D191A65422C00757CC4 /* METDocumentChangeDetails.h */,
+				9FA52D1A1A65422C00757CC4 /* METDocumentChangeDetails.m */,
+				9FA52D1B1A65422C00757CC4 /* METFetchRequest.h */,
+				9FA52D1C1A65422C00757CC4 /* METFetchRequest.m */,
+			);
+			name = Database;
+			path = Meteor;
+			sourceTree = "<group>";
+		};
+		9FA52D231A65422C00757CC4 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				9FA52D1E1A65422C00757CC4 /* METCoreDataDDPClient.h */,
+				9FA52D1F1A65422C00757CC4 /* METCoreDataDDPClient.m */,
+				9FA52D201A65422C00757CC4 /* METIncrementalStore.h */,
+				9FA52D211A65422C00757CC4 /* METIncrementalStore.m */,
+				9FA52D221A65422C00757CC4 /* METIncrementalStore_Testing.h */,
+			);
+			name = "Core Data";
+			path = Meteor;
+			sourceTree = "<group>";
+		};
+		9FA52D281A65422C00757CC4 /* Accounts */ = {
+			isa = PBXGroup;
+			children = (
+				9FA52D241A65422C00757CC4 /* METAccount.h */,
+				9FA52D251A65422C00757CC4 /* METAccount.m */,
+				9FA52D261A65422C00757CC4 /* METDDPClient+AccountsPassword.h */,
+				9FA52D271A65422C00757CC4 /* METDDPClient+AccountsPassword.m */,
+			);
+			name = Accounts;
+			sourceTree = "<group>";
+		};
+		9FA52D371A65422C00757CC4 /* Random */ = {
+			isa = PBXGroup;
+			children = (
+				9FA52D311A65422C00757CC4 /* METRandomValueGenerator.h */,
+				9FA52D321A65422C00757CC4 /* METRandomValueGenerator.m */,
+				9FA52D331A65422C00757CC4 /* METAleaRandomValueGenerator.h */,
+				9FA52D341A65422C00757CC4 /* METAleaRandomValueGenerator.m */,
+				9FA52D351A65422C00757CC4 /* METRandomStream.h */,
+				9FA52D361A65422C00757CC4 /* METRandomStream.m */,
+			);
+			name = Random;
+			sourceTree = "<group>";
+		};
+		9FA52D3E1A65422C00757CC4 /* Foundation Categories */ = {
+			isa = PBXGroup;
+			children = (
+				9FA52D381A65422C00757CC4 /* NSArray+METAdditions.h */,
+				9FA52D391A65422C00757CC4 /* NSArray+METAdditions.m */,
+				9FA52D3A1A65422C00757CC4 /* NSDictionary+METAdditions.h */,
+				9FA52D3B1A65422C00757CC4 /* NSDictionary+METAdditions.m */,
+				9FA52D3C1A65422C00757CC4 /* NSString+METAdditions.h */,
+				9FA52D3D1A65422C00757CC4 /* NSString+METAdditions.m */,
+			);
+			name = "Foundation Categories";
+			sourceTree = "<group>";
+		};
+		9FA52D3F1A65422C00757CC4 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				9FA52D291A65422C00757CC4 /* METNetworkReachabilityManager.h */,
+				9FA52D2A1A65422C00757CC4 /* METNetworkReachabilityManager.m */,
+				9FA52D2B1A65422C00757CC4 /* METRetryStrategy.h */,
+				9FA52D2C1A65422C00757CC4 /* METRetryStrategy.m */,
+				9FA52D2D1A65422C00757CC4 /* METTimer.h */,
+				9FA52D2E1A65422C00757CC4 /* METTimer.m */,
+				9FA52D2F1A65422C00757CC4 /* METDynamicVariable.h */,
+				9FA52D301A65422C00757CC4 /* METDynamicVariable.m */,
+				9FA52D371A65422C00757CC4 /* Random */,
+				9FA52D3E1A65422C00757CC4 /* Foundation Categories */,
+			);
+			name = Utility;
+			sourceTree = "<group>";
+		};
+		9FA52D401A65422C00757CC4 /* Meteor */ = {
+			isa = PBXGroup;
+			children = (
+				9FA52CEB1A65422C00757CC4 /* METDDPClient.h */,
+				9FA52CEC1A65422C00757CC4 /* METDDPClient.m */,
+				9FA52CED1A65422C00757CC4 /* METDDPClient_Internal.h */,
+				9FA52CEE1A65422C00757CC4 /* METDocumentKey.h */,
+				9FA52CEF1A65422C00757CC4 /* METDocumentKey.m */,
+				9FA52CF01A65422C00757CC4 /* METDocument.h */,
+				9FA52CF11A65422C00757CC4 /* METDocument.m */,
+				9FA52CF21A65422C00757CC4 /* METDataUpdate.h */,
+				9FA52CF31A65422C00757CC4 /* METDataUpdate.m */,
+				9FA52CFC1A65422C00757CC4 /* Connection */,
+				9FA52D021A65422C00757CC4 /* Subscriptions */,
+				9FA52D0D1A65422C00757CC4 /* Method Invocations */,
+				9FA52D1D1A65422C00757CC4 /* Database */,
+				9FA52D231A65422C00757CC4 /* Core Data */,
+				9FA52D281A65422C00757CC4 /* Accounts */,
+				9FA52D3F1A65422C00757CC4 /* Utility */,
+			);
+			name = Meteor;
+			path = ../Meteor;
+			sourceTree = "<group>";
+		};
 		9FE144BE1945E7B7001D9EBD /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
@@ -244,6 +478,7 @@
 		9FFC50931944508E002EA8AF = {
 			isa = PBXGroup;
 			children = (
+				9FA52D401A65422C00757CC4 /* Meteor */,
 				9FFC50AB1944508E002EA8AF /* UnitTests */,
 				9F38F33519447ABE00027BB5 /* ServerIntegrationTests */,
 				9F30533419457769006F1E64 /* Shared */,

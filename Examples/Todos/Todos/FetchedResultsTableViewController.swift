@@ -161,9 +161,9 @@ class FetchedResultsTableViewController: UITableViewController, ContentLoading, 
   // MARK: - User
   
   var currentUser: User? {
-    if let userID = Meteor.account?.userID {
+    if let userID = Meteor.userID {
       let userObjectID = Meteor.objectIDForDocumentKey(METDocumentKey(collectionName: "users", documentID: userID))
-      return managedObjectContext.objectWithID(userObjectID) as? User
+      return managedObjectContext.existingObjectWithID(userObjectID, error: nil) as? User
     }
     return nil;
   }

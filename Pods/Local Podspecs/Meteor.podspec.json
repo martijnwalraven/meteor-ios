@@ -19,13 +19,16 @@
   },
   "requires_arc": true,
   "source_files": "Meteor/**/*.{h,m}",
-  "public_header_files": "Meteor/{METDDPClient,METAccount,METDDPClient+AccountsPassword,METSubscription,METDatabase,METCollection,METDocument,METDocumentKey,METDatabaseChanges,METDocumentChangeDetails,METCoreDataDDPClient,METIncrementalStore}.h",
+  "public_header_files": "Meteor/{METDDPClient,METDDPClient+AccountsPassword,METSubscription,METDatabase,METCollection,METDocument,METDocumentKey,METDatabaseChanges,METDocumentChangeDetails,METCoreDataDDPClient,METIncrementalStore}.h",
   "frameworks": "CoreData",
   "dependencies": {
     "PocketSocket": [
 
     ],
     "InflectorKit": [
+
+    ],
+    "SimpleKeychain": [
 
     ]
   }
