@@ -5,7 +5,7 @@
         <attribute name="name" attributeType="String">
             <userInfo/>
         </attribute>
-        <relationship name="todos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Todo" inverseName="list" inverseEntity="Todo" syncable="YES">
+        <relationship name="todos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Todo" inverseName="list" inverseEntity="Todo" syncable="YES">
             <userInfo>
                 <entry key="storage" value="false"/>
             </userInfo>
@@ -44,7 +44,7 @@
         </relationship>
     </entity>
     <elements>
-        <element name="List" positionX="261" positionY="189" width="128" height="105"/>
+        <element name="List" positionX="261" positionY="189" width="128" height="103"/>
         <element name="Todo" positionX="261" positionY="198" width="128" height="103"/>
         <element name="User" positionX="270" positionY="234" width="128" height="133"/>
     </elements>
