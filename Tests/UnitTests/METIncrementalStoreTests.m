@@ -168,7 +168,7 @@
 
 #pragma mark - Fetching Relationships
 
-- (void)testFetchingOneToOneRelationship {
+- (void)testFetchingOneToOneRelationshipWithTwoWayReferencing {
   [_database performUpdatesInLocalCacheWithoutTrackingChanges:^(METDocumentCache *localCache) {
     [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"avatars" documentID:@"avatar1"] fields:@{@"playerId": @"lovelace"}];
     [localCache updateDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changedFields:@{@"avatarId": @"avatar1"}];
@@ -178,7 +178,7 @@
   XCTAssertEqualObjects(@"avatar1", [self documentIDForObject:[lovelace valueForKey:@"avatar"]]);
 }
 
-- (void)testFetchingOneToOneRelationshipInverse {
+- (void)testFetchingOneToOneRelationshipInverseWithTwoWayReferencing {
   [_database performUpdatesInLocalCacheWithoutTrackingChanges:^(METDocumentCache *localCache) {
     [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"avatars" documentID:@"avatar1"] fields:@{@"playerId": @"lovelace"}];
     [localCache updateDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changedFields:@{@"avatarId": @"avatar1"}];
@@ -188,7 +188,31 @@
   XCTAssertEqualObjects(@"lovelace", [self documentIDForObject:[avatar1 valueForKey:@"player"]]);
 }
 
-- (void)testFetchingOneToManyRelationship
+- (void)testFetchingOneToOneRelationshipWithOneWayReferencing {
+  [self setNoStorageForRelationshipWithName:@"player" inEntityWithName:@"Avatar"];
+  
+  [_database performUpdatesInLocalCacheWithoutTrackingChanges:^(METDocumentCache *localCache) {
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"avatars" documentID:@"avatar1"] fields:@{}];
+    [localCache updateDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changedFields:@{@"avatarId": @"avatar1"}];
+  }];
+  
+  NSManagedObject *lovelace = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"]];
+  XCTAssertEqualObjects(@"avatar1", [self documentIDForObject:[lovelace valueForKey:@"avatar"]]);
+}
+
+- (void)testFetchingOneToOneRelationshipInverseWithOneWayReferencing {
+  [self setNoStorageForRelationshipWithName:@"player" inEntityWithName:@"Avatar"];
+  
+  [_database performUpdatesInLocalCacheWithoutTrackingChanges:^(METDocumentCache *localCache) {
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"avatars" documentID:@"avatar1"] fields:@{}];
+    [localCache updateDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changedFields:@{@"avatarId": @"avatar1"}];
+  }];
+  
+  NSManagedObject *avatar1 = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"avatars" documentID:@"avatar1"]];
+  XCTAssertEqualObjects(@"lovelace", [self documentIDForObject:[avatar1 valueForKey:@"player"]]);
+}
+
+- (void)testFetchingOneToManyRelationshipWithTwoWayReferencing
 {
   [_database performUpdatesInLocalCacheWithoutTrackingChanges:^(METDocumentCache *localCache) {
     [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"messages" documentID:@"message1"] fields:@{@"senderId": @"lovelace"}];
@@ -204,7 +228,7 @@
   XCTAssertEqualObjects([NSSet setWithArray:(@[@"message3"])], [self documentIDsForObjects:[gauss valueForKey:@"sentMessages"]]);
 }
 
-- (void)testFetchingManyToOneRelationship
+- (void)testFetchingManyToOneRelationshipWithTwoWayReferencing
 {
   [_database performUpdatesInLocalCacheWithoutTrackingChanges:^(METDocumentCache *localCache) {
     [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"messages" documentID:@"message1"] fields:@{@"senderId": @"lovelace"}];
@@ -212,6 +236,36 @@
     [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"messages" documentID:@"message3"] fields:@{@"senderId": @"gauss"}];
     [localCache updateDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changedFields:@{@"sentMessageIds": @[@"message1", @"message2"]}];
     [localCache updateDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"gauss"] changedFields:@{@"sentMessageIds": @[@"message3"]}];
+  }];
+  
+  NSManagedObject *message = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"messages" documentID:@"message1"]];
+  XCTAssertEqualObjects(@"lovelace", [self documentIDForObject:[message valueForKey:@"sender"]]);
+}
+
+- (void)testFetchingOneToManyRelationshipWithOneWayReferencing
+{
+  [self setNoStorageForRelationshipWithName:@"sentMessages" inEntityWithName:@"Player"];
+  
+  [_database performUpdatesInLocalCacheWithoutTrackingChanges:^(METDocumentCache *localCache) {
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"messages" documentID:@"message1"] fields:@{@"senderId": @"lovelace"}];
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"messages" documentID:@"message2"] fields:@{@"senderId": @"lovelace"}];
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"messages" documentID:@"message3"] fields:@{@"senderId": @"gauss"}];
+  }];
+  
+  NSManagedObject *lovelace = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"]];
+  NSManagedObject *gauss = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"gauss"]];
+  XCTAssertEqualObjects([NSSet setWithArray:(@[@"message1", @"message2"])], [self documentIDsForObjects:[lovelace valueForKey:@"sentMessages"]]);
+  XCTAssertEqualObjects([NSSet setWithArray:(@[@"message3"])], [self documentIDsForObjects:[gauss valueForKey:@"sentMessages"]]);
+}
+
+- (void)testFetchingManyToOneRelationshipWithOneWayReferencing
+{
+  [self setNoStorageForRelationshipWithName:@"sentMessages" inEntityWithName:@"Player"];
+  
+  [_database performUpdatesInLocalCacheWithoutTrackingChanges:^(METDocumentCache *localCache) {
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"messages" documentID:@"message1"] fields:@{@"senderId": @"lovelace"}];
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"messages" documentID:@"message2"] fields:@{@"senderId": @"lovelace"}];
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"messages" documentID:@"message3"] fields:@{@"senderId": @"gauss"}];
   }];
   
   NSManagedObject *message = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"messages" documentID:@"message1"]];
@@ -394,7 +448,7 @@
 
 #pragma mark - Saving Relationships
 
-- (void)testSavingOneToOneRelationship {
+- (void)testSavingOneToOneRelationshipWithTwoWayReferencing {
   NSManagedObject *lovelace = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"]];
   NSManagedObject *avatar = [NSEntityDescription insertNewObjectForEntityForName:@"Avatar" inManagedObjectContext:_managedObjectContext];
   
@@ -403,6 +457,19 @@
 
   XCTAssertEqualObjects([self documentIDForObjectID:avatar.objectID], [_store documentForObjectWithID:lovelace.objectID][@"avatarId"]);
   XCTAssertEqualObjects([self documentIDForObjectID:lovelace.objectID], [_store documentForObjectWithID:avatar.objectID][@"playerId"]);
+}
+
+- (void)testSavingOneToOneRelationshipWithOneWayReferencing {
+  [self setNoStorageForRelationshipWithName:@"player" inEntityWithName:@"Avatar"];
+  
+  NSManagedObject *lovelace = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"]];
+  NSManagedObject *avatar = [NSEntityDescription insertNewObjectForEntityForName:@"Avatar" inManagedObjectContext:_managedObjectContext];
+  
+  [lovelace setValue:avatar forKey:@"avatar"];
+  [self saveManagedObjectContext];
+  
+  XCTAssertEqualObjects([self documentIDForObjectID:avatar.objectID], [_store documentForObjectWithID:lovelace.objectID][@"avatarId"]);
+  XCTAssertNil([_store documentForObjectWithID:avatar.objectID][@"playerId"]);
 }
 
 - (void)testSavingOneToOneRelationshipWithNilValue {
@@ -419,7 +486,7 @@
   XCTAssertNil([_store documentForObjectWithID:avatar.objectID][@"playerId"]);
 }
 
-- (void)testSavingOneToManyRelationship {
+- (void)testSavingOneToManyRelationshipWithTwoWayReferencing {
   NSManagedObject *lovelace = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"]];
   NSManagedObject *message1 = [NSEntityDescription insertNewObjectForEntityForName:@"Message" inManagedObjectContext:_managedObjectContext];
   NSManagedObject *message2 = [NSEntityDescription insertNewObjectForEntityForName:@"Message" inManagedObjectContext:_managedObjectContext];
@@ -430,6 +497,21 @@
   XCTAssertEqualObjects([self documentIDForObjectID:lovelace.objectID], [_store documentForObjectWithID:message1.objectID][@"senderId"]);
   XCTAssertEqualObjects([self documentIDForObjectID:lovelace.objectID], [_store documentForObjectWithID:message2.objectID][@"senderId"]);
   XCTAssertEqualObjects([NSSet setWithArray:(@[[self documentIDForObjectID:message1.objectID], [self documentIDForObjectID:message2.objectID]])], [self documentIDsForObjects:[lovelace valueForKey:@"sentMessages"]]);
+}
+
+- (void)testSavingOneToManyRelationshipWithOneWayReferencing {
+  [self setNoStorageForRelationshipWithName:@"sentMessages" inEntityWithName:@"Player"];
+  
+  NSManagedObject *lovelace = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"]];
+  NSManagedObject *message1 = [NSEntityDescription insertNewObjectForEntityForName:@"Message" inManagedObjectContext:_managedObjectContext];
+  NSManagedObject *message2 = [NSEntityDescription insertNewObjectForEntityForName:@"Message" inManagedObjectContext:_managedObjectContext];
+  
+  [lovelace setValue:[NSSet setWithArray:@[message1, message2]] forKey:@"sentMessages"];
+  [self saveManagedObjectContext];
+  
+  XCTAssertEqualObjects([self documentIDForObjectID:lovelace.objectID], [_store documentForObjectWithID:message1.objectID][@"senderId"]);
+  XCTAssertEqualObjects([self documentIDForObjectID:lovelace.objectID], [_store documentForObjectWithID:message2.objectID][@"senderId"]);
+  XCTAssertNil([_store documentForObjectWithID:lovelace.objectID][@"sentMessageIds"]);
 }
 
 - (void)testSavingOneToManyRelationshipWithNilValue {
@@ -523,7 +605,95 @@
   }];
 }
 
+- (void)testPostsObjectsDidChangeNotificationForOneToOneRelationshipWithOneWayReferencing {
+  [_database performUpdatesInLocalCacheWithoutTrackingChanges:^(METDocumentCache *localCache) {
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"avatars" documentID:@"avatar1"] fields:@{}];
+  }];
+  
+  [self expectationForNotification:METIncrementalStoreObjectsDidChangeNotification object:_store handler:^BOOL(NSNotification *notification) {
+    NSDictionary *userInfo = notification.userInfo;
+    XCTAssertEqualObjects([NSSet setWithArray:(@[@"lovelace", @"avatar1"])], [self documentIDsForObjectIDs:userInfo[NSUpdatedObjectsKey]]);
+    return YES;
+  }];
+  
+  [_database performUpdatesInLocalCache:^(METDocumentCache *localCache) {
+    [localCache updateDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changedFields:@{@"avatarId": @"avatar1"}];
+  }];
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+}
+
+- (void)testOnlyPostsObjectsDidChangeNotificationForOneToOneRelationshipWithOneWayReferencingIfReferenceFieldChanged {
+  [_database performUpdatesInLocalCacheWithoutTrackingChanges:^(METDocumentCache *localCache) {
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"avatars" documentID:@"avatar1"] fields:@{}];
+  }];
+  
+  [self expectationForNotification:METIncrementalStoreObjectsDidChangeNotification object:_store handler:^BOOL(NSNotification *notification) {
+    NSDictionary *userInfo = notification.userInfo;
+    XCTAssertEqualObjects([NSSet setWithArray:(@[@"lovelace"])], [self documentIDsForObjectIDs:userInfo[NSUpdatedObjectsKey]]);
+    return YES;
+  }];
+  
+  [_database performUpdatesInLocalCache:^(METDocumentCache *localCache) {
+    [localCache updateDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changedFields:@{@"name": @"Ada Gauss"}];
+  }];
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+}
+
+- (void)testPostsObjectsDidChangeNotificationForOneToManyRelationshipWithOneWayReferencing {
+  [self expectationForNotification:METIncrementalStoreObjectsDidChangeNotification object:_store handler:^BOOL(NSNotification *notification) {
+    NSDictionary *userInfo = notification.userInfo;
+    XCTAssertEqualObjects([NSSet setWithArray:@[@"message1"]], [self documentIDsForObjectIDs:userInfo[NSInsertedObjectsKey]]);
+    XCTAssertEqualObjects([NSSet setWithArray:@[@"lovelace"]], [self documentIDsForObjectIDs:userInfo[NSUpdatedObjectsKey]]);
+    return YES;
+  }];
+  
+  [_database performUpdatesInLocalCache:^(METDocumentCache *localCache) {
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"messages" documentID:@"message1"] fields:@{@"senderId": @"lovelace"}];
+  }];
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+}
+
+- (void)testOnlyPostsObjectsDidChangeNotificationForOneToManyRelationshipWithOneWayReferencingIfReferenceFieldChanged {
+  [self expectationForNotification:METIncrementalStoreObjectsDidChangeNotification object:_store handler:^BOOL(NSNotification *notification) {
+    NSDictionary *userInfo = notification.userInfo;
+    XCTAssertEqualObjects([NSSet setWithArray:@[@"message1"]], [self documentIDsForObjectIDs:userInfo[NSInsertedObjectsKey]]);
+    XCTAssertEqualObjects([NSSet set], [self documentIDsForObjectIDs:userInfo[NSUpdatedObjectsKey]]);
+    return YES;
+  }];
+  
+  [_database performUpdatesInLocalCache:^(METDocumentCache *localCache) {
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"messages" documentID:@"message1"] fields:@{@"text": @"Hello"}];
+  }];
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+}
+
+- (void)testPostsObjectsDidChangeNotificationDoesntReportNewObjectsInvolvedInRelationshipsAsBothInsertedAnsUpdated {
+  [self expectationForNotification:METIncrementalStoreObjectsDidChangeNotification object:_store handler:^BOOL(NSNotification *notification) {
+    NSDictionary *userInfo = notification.userInfo;
+    XCTAssertEqualObjects(([NSSet setWithArray:@[@"message1", @"crick"]]), [self documentIDsForObjectIDs:userInfo[NSInsertedObjectsKey]]);
+    XCTAssertEqualObjects([NSSet set], [self documentIDsForObjectIDs:userInfo[NSUpdatedObjectsKey]]);
+    return YES;
+  }];
+  
+  [_database performUpdatesInLocalCache:^(METDocumentCache *localCache) {
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"messages" documentID:@"message1"] fields:@{@"senderId": @"crick"}];
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"crick"] fields:@{@"name": @"Francis Crick"}];
+  }];
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+}
+
 #pragma mark - Helper Methods
+
+- (void)setNoStorageForRelationshipWithName:(NSString *)relationshipName inEntityWithName:(NSString *)entityName {
+  NSEntityDescription *entity = _managedObjectModel.entitiesByName[entityName];
+  NSRelationshipDescription *relationship = entity.relationshipsByName[relationshipName];
+  relationship.userInfo = @{@"storage": @NO};
+}
 
 - (id)documentIDForObject:(NSManagedObject *)object {
   NSParameterAssert(object);
