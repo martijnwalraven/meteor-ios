@@ -2,7 +2,7 @@
 
 Meteor for iOS is work in progress, but aims to be a complete DDP client that includes full support for latency compensation and offers Core Data integration. It keeps as close as possible to the semantics of the original JavaScript code, but its design is more in line with Cocoa and Objective-C conventions (although it is perfectly usable from Swift). It has been implemented with concurrent execution in mind and keeps all processing off the main thread, posting batched and consolidated change notifications that can be observed to update the UI. It includes over 200 unit tests and also has some server integration tests that run using a local Meteor test server.
 
-It is in dire need of better documentation, but is already fairly feature complete and seems to work pretty well. For now, the included Todos example (written in Swift, for both iPhone and iPad) is probably the best way to get an understanding of its abilities. If you want to try it out, you should be able to open the Meteor workspace and run the Todos scheme. It connects to a Meteor example app running at http://meteor-ios-todos.meteor.com.
+It is in dire need of better documentation, but is already fairly feature complete and seems to work pretty well. For now, the included Todos example (written in Swift, for both iPhone and iPad) is probably the best way to get an understanding of its abilities. If you want to try it out, you should be able to open the Meteor workspace and run the Todos scheme. It connects to a Meteor example app running at http://meteor-ios-todos.meteor.com. If you want to get a quick idea of what it's capable of you may want to have a look at this short screen recording:
 
 [![Meteor for iOS — Todos example](http://img.youtube.com/vi/qWJ2bgg8xxo/0.jpg)](http://www.youtube.com/watch?v=qWJ2bgg8xxo)
 
@@ -91,14 +91,14 @@ The easiest way to use Meteor for iOS in your own project is through CocoaPods. 
 
 Because CocoaPods 0.36 has not been officially released, you'll have to install a prerelease version using `gem install cocoapods --pre`.
 
-You can then write a `Podfile` referencing the project on GitHub (I will add it to the CocoaPods repo once it is more stable):
+You can then write a Podfile referencing the 'Meteor' pod:
 ```
 platform :ios, '8.0'
 use_frameworks!
-pod 'Meteor', git: 'https://github.com/martijnwalraven/meteor-ios.git' 
+pod 'Meteor' 
 ```
 
-Meteor for iOS will then be built as a framework and is made available as a Clang module that can easily be imported without further configuration (you may need to build the project first before the module is recognized):
+With this Podfile, Meteor for iOS will be built as a framework and is made available as a Clang module that can easily be imported without further configuration (you may need to build the project first before the module is recognized however):
 
 In Objective-C:
 ``` objective-c
