@@ -61,6 +61,8 @@
       if (existingCompletionHandler) {
         existingCompletionHandler(error);
       }
+- (void)whenDone:(METSubscriptionCompletionHandler)completionHandler {
+  NSParameterAssert(completionHandler);
       if (completionHandler) {
         completionHandler(error);
       }

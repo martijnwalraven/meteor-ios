@@ -37,7 +37,7 @@ typedef NS_ENUM(NSInteger, METSubscriptionStatus) {
 
 @property (assign, nonatomic, readonly, getter=isReady) BOOL ready;
 
-- (void)whenCompleted:(METSubscriptionCompletionHandler)completionHandler;
+- (void)whenDone:(METSubscriptionCompletionHandler)completionHandler;
 
 @property (assign, nonatomic) NSTimeInterval notInUseTimeout;
 

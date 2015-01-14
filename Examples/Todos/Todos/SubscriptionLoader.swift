@@ -34,7 +34,7 @@ class SubscriptionLoader {
   
   func addSubscriptionWithName(name: String, parameters: AnyObject...) -> METSubscription {
     let subscription = Meteor.addSubscriptionWithName(name, parameters: parameters)
-    subscription.whenCompleted { (error) -> Void in
+    subscription.whenDone { (error) -> Void in
       if error != nil {
         self.delegate?.subscriptionLoader(self, subscription: subscription, didFailWithError: error)
       }
@@ -63,10 +63,8 @@ class SubscriptionLoader {
     let group = dispatch_group_create()
     for subscription in subscriptions {
       dispatch_group_enter(group)
-      subscription.whenCompleted { (error) -> Void in
-        if error == nil {
-          dispatch_group_leave(group)
-        }
+      subscription.whenDone { (error) -> Void in
+        dispatch_group_leave(group)
       }
     }
     
