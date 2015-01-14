@@ -45,7 +45,7 @@
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
   
   XCTAssertFalse(_client.loggingIn);
-  XCTAssertNil(_client.account);
+  XCTAssertNil(_client.userID);
 }
 
 - (void)testLoggingInWithEmailAndCorrectPassword {
@@ -61,7 +61,7 @@
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
   
   XCTAssertFalse(_client.loggingIn);
-  XCTAssertNotNil(_client.account);
+  XCTAssertNotNil(_client.userID);
 }
 
 - (void)testLoggingInAfterReconnect {
@@ -78,7 +78,7 @@
   [_client connect];
   
   XCTAssertFalse(_client.loggingIn);
-  XCTAssertNotNil(_client.account);
+  XCTAssertNotNil(_client.userID);
 }
 
 @end
