@@ -61,13 +61,17 @@
     if (subscription) {
       [subscription beginUse];
       [subscription.reuseTimer stop];
-      [subscription whenCompleted:completionHandler];
+      if (completionHandler) {
+        [subscription whenDone:completionHandler];
+      }
       return;
     };
     
     NSString *subscriptionID = [[METRandomValueGenerator defaultRandomValueGenerator] randomIdentifier];
     subscription = [[METSubscription alloc] initWithIdentifier:subscriptionID name:name parameters:parameters];
-    [subscription whenCompleted:completionHandler];
+    if (completionHandler) {
+      [subscription whenDone:completionHandler];
+    }
     subscription.notInUseTimeout = _defaultNotInUseTimeout;
     [subscription beginUse];
     
@@ -130,7 +134,7 @@
       NSLog(@"Received ready message for unknown subscription ID: %@", subscriptionID);
       return;
     }
-    
+            
     [self removeSubscriptionToBeRevivedAfterConnect:subscription];
     
     [_client.methodInvocationCoordinator performAfterAllCurrentlyBufferedDocumentsAreFlushed:^{

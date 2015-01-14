@@ -72,50 +72,52 @@
 }
 
 - (id)callMethodWithName:(NSString *)methodName parameters:(NSArray *)parameters options:(METMethodCallOptions)options receivedResultHandler:(METMethodCompletionHandler)receivedResultHandler completionHandler:(METMethodCompletionHandler)completionHandler {
-  METMethodInvocationContext *enclosingMethodInvocationContext = [_methodInvocationContextDynamicVariable currentValue];
-  BOOL alreadyInSimulation = enclosingMethodInvocationContext != nil;
-  
-  METMethodStub stub = _methodStubsByName[methodName];
-  __block id resultFromStub;
-  
-  if (!alreadyInSimulation) {
-    METMethodInvocation *methodInvocation = [[METMethodInvocation alloc] init];
-    methodInvocation.client = _client;
-    methodInvocation.methodName = methodName;
-    methodInvocation.parameters = parameters;
-    // Setting NSOperation name can be useful for debug purposes
-    methodInvocation.name = parameters ? [NSString stringWithFormat:@"%@(%@)", methodName, parameters] : methodName;
-    methodInvocation.barrier = options & METMethodCallOptionsBarrier;
-    methodInvocation.receivedResultHandler = receivedResultHandler;
-    methodInvocation.completionHandler = completionHandler;
+  @synchronized(self) {
+    METMethodInvocationContext *enclosingMethodInvocationContext = [_methodInvocationContextDynamicVariable currentValue];
+    BOOL alreadyInSimulation = enclosingMethodInvocationContext != nil;
     
-    if (stub) {
-      METMethodInvocationContext *methodInvocationContext = [[METMethodInvocationContext alloc] initWithMethodName:methodName enclosingMethodInvocationContext:nil];
+    METMethodStub stub = _methodStubsByName[methodName];
+    __block id resultFromStub;
+    
+    if (!alreadyInSimulation) {
+      METMethodInvocation *methodInvocation = [[METMethodInvocation alloc] init];
+      methodInvocation.client = _client;
+      methodInvocation.methodName = methodName;
+      methodInvocation.parameters = parameters;
+      // Setting NSOperation name can be useful for debug purposes
+      methodInvocation.name = parameters ? [NSString stringWithFormat:@"%@(%@)", methodName, parameters] : methodName;
+      methodInvocation.barrier = options & METMethodCallOptionsBarrier;
+      methodInvocation.receivedResultHandler = receivedResultHandler;
+      methodInvocation.completionHandler = completionHandler;
+      
+      if (stub) {
+        METMethodInvocationContext *methodInvocationContext = [[METMethodInvocationContext alloc] initWithMethodName:methodName enclosingMethodInvocationContext:nil];
+        
+        [_methodInvocationContextDynamicVariable performBlock:^{
+          METDatabaseChanges *changesPerformedByStub = [_client.database performUpdatesAndReturnChanges:^{
+            NSArray *deepCopyOfParameters = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:parameters]];
+            resultFromStub = stub(deepCopyOfParameters);
+          }];
+          methodInvocation.changesPerformedByStub = changesPerformedByStub;
+        } withValue:methodInvocationContext];
+        
+        methodInvocation.randomSeed = methodInvocationContext.randomSeed;
+      }
+      
+      [self addMethodInvocation:methodInvocation];
+    } else if (stub) {
+      METMethodInvocationContext *methodInvocationContext = [[METMethodInvocationContext alloc] initWithMethodName:methodName enclosingMethodInvocationContext:enclosingMethodInvocationContext];
       
       [_methodInvocationContextDynamicVariable performBlock:^{
-        METDatabaseChanges *changesPerformedByStub = [_client.database performUpdatesAndReturnChanges:^{
-          NSArray *deepCopyOfParameters = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:parameters]];
-          resultFromStub = stub(deepCopyOfParameters);
-        }];
-        methodInvocation.changesPerformedByStub = changesPerformedByStub;
+        resultFromStub = stub(parameters);
       } withValue:methodInvocationContext];
-      
-      methodInvocation.randomSeed = methodInvocationContext.randomSeed;
     }
     
-    [self addMethodInvocation:methodInvocation];
-  } else if (stub) {
-    METMethodInvocationContext *methodInvocationContext = [[METMethodInvocationContext alloc] initWithMethodName:methodName enclosingMethodInvocationContext:enclosingMethodInvocationContext];
-    
-    [_methodInvocationContextDynamicVariable performBlock:^{
-      resultFromStub = stub(parameters);
-    } withValue:methodInvocationContext];
-  }
-  
-  if (alreadyInSimulation || (options & METMethodCallOptionsReturnStubValue)) {
-    return resultFromStub;
-  } else {
-    return nil;
+    if (alreadyInSimulation || (options & METMethodCallOptionsReturnStubValue)) {
+      return resultFromStub;
+    } else {
+      return nil;
+    }
   }
 }
 
@@ -229,7 +231,7 @@
 }
 
 - (void)performAfterAllCurrentlyBufferedDocumentsAreFlushed:(void (^)())block {
-  @synchronized(self) {
+  @synchronized(self) {    
     if (_bufferedDocumentsByKey.count < 1) {
       [_client.database performAfterBufferedUpdatesAreFlushed:block];
       return;

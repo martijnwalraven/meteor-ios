@@ -37,51 +37,63 @@
 }
 
 - (void)didChangeStatus:(METSubscriptionStatus)status error:(NSError *)error {
-  _status = status;
-  _error = error;
-  if (_completionHandler) {
-    _completionHandler(error);
-    _completionHandler = nil;
+  @synchronized(self) {
+    _status = status;
+    _error = error;
+    if (_completionHandler) {
+      _completionHandler(error);
+      _completionHandler = nil;
+    }
   }
 }
 
 - (BOOL)isReady {
-  return _status == METSubscriptionStatusReady;
+  @synchronized(self) {
+    return _status == METSubscriptionStatusReady;
+  }
 }
 
-- (void)whenCompleted:(METSubscriptionCompletionHandler)completionHandler {
-  // Invoke completion handler synchronously if we've already completed
-  if (_status != METSubscriptionStatusPending) {
-    if (completionHandler) {
-      completionHandler(_error);
-    }
-  } else {
-    METSubscriptionCompletionHandler existingCompletionHandler = _completionHandler;
-    _completionHandler = ^(NSError *error) {
-      if (existingCompletionHandler) {
-        existingCompletionHandler(error);
-      }
 - (void)whenDone:(METSubscriptionCompletionHandler)completionHandler {
   NSParameterAssert(completionHandler);
+  
+  @synchronized(self) {
+    // Invoke completion handler synchronously if we've already completed
+    if (_status != METSubscriptionStatusPending) {
       if (completionHandler) {
-        completionHandler(error);
+        completionHandler(_error);
       }
-    };
+    } else {
+      METSubscriptionCompletionHandler existingCompletionHandler = _completionHandler;
+      if (existingCompletionHandler) {
+        _completionHandler = ^(NSError *error) {
+          existingCompletionHandler(error);
+          completionHandler(error);
+        };
+      } else {
+        _completionHandler = completionHandler;
+      }
+    }
   }
 }
 
 #pragma mark - Usage Count
 
 - (BOOL)isInUse {
-  return _usageCount > 0;
+  @synchronized(self) {
+    return _usageCount > 0;
+  }
 }
 
 - (void)beginUse {
-  _usageCount++;
+  @synchronized(self) {
+    _usageCount++;
+  }
 }
 
 - (void)endUse {
-  _usageCount--;
+  @synchronized(self) {
+    _usageCount--;
+  }
 }
 
 #pragma mark - NSObject
