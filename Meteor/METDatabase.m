@@ -51,7 +51,7 @@ NSString * const METDatabaseChangesKey = @"METDatabaseChangesKey";
   dispatch_queue_t _dataUpdatesQueue;
   NSMutableArray *_bufferedDataUpdates;
   dispatch_source_t _bufferedDataUpdatesSource;
-  NSMutableArray *_pendingAfterFlushBlocks;
+  dispatch_block_t _pendingAfterFlushBlock;
   BOOL _removeExistingDocumentsBeforeNextFlush;
 }
 
@@ -72,7 +72,6 @@ NSString * const METDatabaseChangesKey = @"METDatabaseChangesKey";
 
     _dataUpdatesQueue = dispatch_queue_create("com.meteor.Database.dataUpdatesQueue", DISPATCH_QUEUE_SERIAL);
     dispatch_set_target_queue(_dataUpdatesQueue, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0));
-    _pendingAfterFlushBlocks = [[NSMutableArray alloc] init];
     _bufferedDataUpdates = [[NSMutableArray alloc] init];
     
     _bufferedDataUpdatesSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_DATA_ADD, 0, 0, _dataUpdatesQueue);
@@ -144,16 +143,24 @@ NSString * const METDatabaseChangesKey = @"METDatabaseChangesKey";
     [_bufferedDataUpdates removeAllObjects];
   }];
   
-  for (dispatch_block_t block in _pendingAfterFlushBlocks) {
-    block();
+  if (_pendingAfterFlushBlock) {
+    _pendingAfterFlushBlock();
+    _pendingAfterFlushBlock = nil;
   }
-  [_pendingAfterFlushBlocks removeAllObjects];
 }
 
 - (void)performAfterBufferedUpdatesAreFlushed:(void (^)())block {
-  dispatch_sync(_dataUpdatesQueue, ^{
+  dispatch_async(_dataUpdatesQueue, ^{
     if (_bufferedDataUpdates.count > 0) {
-      [_pendingAfterFlushBlocks addObject:[block copy]];
+      dispatch_block_t existingPendingAfterFlushBlock = _pendingAfterFlushBlock;
+      if (existingPendingAfterFlushBlock) {
+        _pendingAfterFlushBlock = ^{
+          existingPendingAfterFlushBlock();
+          block();
+        };
+      } else {
+        _pendingAfterFlushBlock = block;
+      }
     } else {
       block();
     }
@@ -222,7 +229,7 @@ NSString * const METDatabaseChangesKey = @"METDatabaseChangesKey";
 - (void)reset {
   [self performUpdatesInLocalCache:^(METDocumentCache *localCache) {
     [_bufferedDataUpdates removeAllObjects];
-    [_pendingAfterFlushBlocks removeAllObjects];
+    _pendingAfterFlushBlock = nil;
     _removeExistingDocumentsBeforeNextFlush = YES;
   }];
 }
