@@ -26,20 +26,35 @@ NSString * const METAccountKeychainItemName = @"MeteorAccount";
 
 @implementation METAccount
 
+#pragma mark - Class Methods
+
 + (instancetype)defaultAccount {
-  NSData *data = [[A0SimpleKeychain keychain] dataForKey:METAccountKeychainItemName];
+  A0SimpleKeychain *keychain = [self keychain];
+  if (!keychain) return nil;
+  NSData *data = [keychain dataForKey:METAccountKeychainItemName];
   if (!data) return nil;
   return [NSKeyedUnarchiver unarchiveObjectWithData:data];
 }
 
 + (void)setDefaultAccount:(METAccount *)account {
+  A0SimpleKeychain *keychain = [self keychain];
+  if (!keychain) return;
+  
   if (account) {
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:account];
-    [[A0SimpleKeychain keychain] setData:data forKey:METAccountKeychainItemName];
+    [keychain setData:data forKey:METAccountKeychainItemName];
   } else {
-    [[A0SimpleKeychain keychain] deleteEntryForKey:METAccountKeychainItemName];
+    [keychain deleteEntryForKey:METAccountKeychainItemName];
   }
 }
+
++ (A0SimpleKeychain *)keychain {
+  NSString *bundleIdentifier = [NSBundle mainBundle].bundleIdentifier;
+  if (!bundleIdentifier) return nil;
+  return [A0SimpleKeychain keychainWithService:bundleIdentifier];
+}
+
+#pragma mark - Lifecycle
 
 - (instancetype)initWithUserID:(NSString *)userID resumeToken:(NSString *)resumeToken expiryDate:(NSDate *)expiryDate {
   self = [super init];
