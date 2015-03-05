@@ -67,6 +67,25 @@
   XCTAssertEqualObjects(@"lovelace", _client.account.userID);
 }
 
+- (void)testSuccessfullyLoggingInWithoutExpiryDate {
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completion handler invoked"];
+  [_client loginWithMethodName:@"login" parameters:nil completionHandler:^(NSError *error) {
+    XCTAssertNil(error);
+    [expectation fulfill];
+  }];
+  
+  XCTAssertTrue(_client.loggingIn);
+  
+  NSString *lastMethodID = [self lastMethodID];
+  [_connection receiveMessage:@{@"msg": @"updated", @"methods": @[lastMethodID]}];
+  [_connection receiveMessage:@{@"msg": @"result", @"id": lastMethodID, @"result": @{@"id": @"lovelace", @"token": @"foo"}}];
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+  
+  XCTAssertFalse(_client.loggingIn);
+  XCTAssertEqualObjects(@"lovelace", _client.account.userID);
+}
+
 - (void)testUnsuccessfullyLoggingIn {
   XCTestExpectation *expectation = [self expectationWithDescription:@"completion handler invoked"];
   [_client loginWithMethodName:@"login" parameters:nil completionHandler:^(NSError *error) {
