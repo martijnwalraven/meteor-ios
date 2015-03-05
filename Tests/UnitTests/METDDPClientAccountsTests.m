@@ -50,7 +50,7 @@
 
 - (void)testSuccessfullyLoggingIn {
   XCTestExpectation *expectation = [self expectationWithDescription:@"completion handler invoked"];
-  [_client loginWithMethodName:@"login" parameters:nil completionHandler:^(NSError *error) {
+  [_client loginWithMethodName:@"login" parameters:nil completionHandler:^(id result, NSError *error) {
     XCTAssertNil(error);
     [expectation fulfill];
   }];
@@ -69,7 +69,7 @@
 
 - (void)testUnsuccessfullyLoggingIn {
   XCTestExpectation *expectation = [self expectationWithDescription:@"completion handler invoked"];
-  [_client loginWithMethodName:@"login" parameters:nil completionHandler:^(NSError *error) {
+  [_client loginWithMethodName:@"login" parameters:nil completionHandler:^(id result, NSError *error) {
     XCTAssertEqualObjects(error.domain, METDDPErrorDomain);
     XCTAssertEqual(error.code, METDDPServerError);
     [expectation fulfill];
@@ -221,7 +221,7 @@
 
 - (void)testInvokesCompletionHandlerWithMostRecentAccountWhenReconnectingWhenResultReceivedButNotUpdatesDone {
   XCTestExpectation *expectation = [self expectationWithDescription:@"completion handler invoked"];
-  [_client loginWithMethodName:@"login" parameters:@[] completionHandler:^(NSError *error) {
+  [_client loginWithMethodName:@"login" parameters:@[] completionHandler:^(id result, NSError *error) {
     XCTAssertEqualObjects(@"turing", _client.account.userID);
     [expectation fulfill];
   }];

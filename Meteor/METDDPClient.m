@@ -622,7 +622,7 @@ NSString * const METDDPClientDidChangeAccountNotification = @"METDDPClientDidCha
   return _account.userID;
 }
 
-- (void)loginWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters completionHandler:(METLogInCompletionHandler)completionHandler {
+- (void)loginWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters completionHandler:(METMethodCompletionHandler)completionHandler {
   self.loggingIn = YES;
   __block BOOL reconnected = NO;
   __weak METDDPClient *weakSelf = self;
@@ -639,7 +639,7 @@ NSString * const METDDPClientDidChangeAccountNotification = @"METDDPClientDidCha
     self.loggingIn = NO;
     self.account = [self accountFromLoginMethodResult:result];
     if (completionHandler) {
-      completionHandler(error);
+      completionHandler(result, error);
     }
   }];
 }
@@ -658,7 +658,7 @@ NSString * const METDDPClientDidChangeAccountNotification = @"METDDPClientDidCha
   return nil;
 }
 
-- (void)loginWithResumeToken:(NSString *)resumeToken completionHandler:(METLogInCompletionHandler)completionHandler {
+- (void)loginWithResumeToken:(NSString *)resumeToken completionHandler:(METMethodCompletionHandler)completionHandler {
   [self loginWithMethodName:@"login" parameters:@[@{@"resume": resumeToken}] completionHandler:completionHandler];
 }
 
