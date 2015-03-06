@@ -190,6 +190,9 @@
             location = "group:METAccount.m">
          </FileRef>
          <FileRef
+            location = "group:METDDPClient_Accounts.h">
+         </FileRef>
+         <FileRef
             location = "group:METDDPClient+AccountsPassword.h">
          </FileRef>
          <FileRef

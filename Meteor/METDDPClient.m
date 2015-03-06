@@ -20,6 +20,7 @@
 
 #import "METDDPClient.h"
 #import "METDDPClient_Internal.h"
+#import "METDDPClient_Accounts.h"
 
 #import <UIKit/UIKit.h>
 
@@ -335,7 +336,7 @@ NSString * const METDDPClientDidChangeAccountNotification = @"METDDPClientDidCha
     if (_pendingLoginResumeHandler) {
       _pendingLoginResumeHandler();
     } else if (_account) {
-      [self loginWithResumeToken:_account.resumeToken completionHandler:nil];
+      [self loginWithResumeToken:_account.resumeToken methodCompletion:nil loginCompletion:nil];
     }
   }];
   _methodInvocationCoordinator.suspended = NO;
@@ -622,7 +623,31 @@ NSString * const METDDPClientDidChangeAccountNotification = @"METDDPClientDidCha
   return _account.userID;
 }
 
-- (void)loginWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters completionHandler:(METMethodCompletionHandler)completionHandler {
+/**
+ * Performs login via the given methodName. The completion handler callback exposes the login response
+ * body to the caller to allow for more flexibility in a custom meteor login.
+ */
+- (void)methodLoginWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters completionHandler:(METMethodCompletionHandler)completionHandler {
+  [self loginWithMethodName:methodName parameters:parameters methodCompletionHandler:completionHandler loginCompletionHandler:nil];
+}
+
+/**
+ * Performs login via the given methodName. Takes a traditional `METLogInCompletionHandler` to be
+ * informed only whether the login has succeeded or failed.
+ */
+- (void)loginWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters completionHandler:(METLogInCompletionHandler)completionHandler {
+  [self loginWithMethodName:methodName parameters:parameters methodCompletionHandler:nil loginCompletionHandler:completionHandler];
+}
+
+/**
+ * Private workhorse method that actually performs the login via the given method name and handles
+ * any required internal login logic with the response.
+ *
+ * Suports two callbacks although will only be called with one.  The first is a `METMethodCompletionhandler`
+ * that will be called with the login response, as well as an error if one occurs. The second is
+ * a `METLogInCompletionHandler` to be informed only of when
+ */
+- (void)loginWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters methodCompletionHandler:(METMethodCompletionHandler)methodCompletionHandler loginCompletionHandler:(METLogInCompletionHandler)loginCompletionHandler {
   self.loggingIn = YES;
   __block BOOL reconnected = NO;
   __weak METDDPClient *weakSelf = self;
@@ -630,7 +655,7 @@ NSString * const METDDPClientDidChangeAccountNotification = @"METDDPClientDidCha
     self.pendingLoginResumeHandler = ^{
       reconnected = YES;
       NSString *resumeToken = result[@"token"];
-      [weakSelf loginWithResumeToken:resumeToken completionHandler:completionHandler];
+      [weakSelf loginWithResumeToken:resumeToken methodCompletion:methodCompletionHandler loginCompletion:loginCompletionHandler];
     };
   } completionHandler:^(id result, NSError *error) {
     if (reconnected) return;
@@ -638,8 +663,15 @@ NSString * const METDDPClientDidChangeAccountNotification = @"METDDPClientDidCha
     _pendingLoginResumeHandler = nil;
     self.loggingIn = NO;
     self.account = [self accountFromLoginMethodResult:result];
-    if (completionHandler) {
-      completionHandler(result, error);
+    
+    // if we have a method completion handler call it with result and error
+    if (methodCompletionHandler) {
+      methodCompletionHandler(result, error);
+    }
+    
+    // if we have a completion handler call the completion handler with only the error
+    if (loginCompletionHandler) {
+      loginCompletionHandler(error);
     }
   }];
 }
@@ -658,8 +690,8 @@ NSString * const METDDPClientDidChangeAccountNotification = @"METDDPClientDidCha
   return nil;
 }
 
-- (void)loginWithResumeToken:(NSString *)resumeToken completionHandler:(METMethodCompletionHandler)completionHandler {
-  [self loginWithMethodName:@"login" parameters:@[@{@"resume": resumeToken}] completionHandler:completionHandler];
+- (void)loginWithResumeToken:(NSString *)resumeToken methodCompletion:(METMethodCompletionHandler)methodCompletionHandler loginCompletion:(METLogInCompletionHandler)loginCompletionHandler {
+  [self loginWithMethodName:@"login" parameters:@[@{@"resume": resumeToken}] methodCompletionHandler:methodCompletionHandler loginCompletionHandler:loginCompletionHandler];
 }
 
 - (void)logoutWithCompletionHandler:(METLogOutCompletionHandler)completionHandler {

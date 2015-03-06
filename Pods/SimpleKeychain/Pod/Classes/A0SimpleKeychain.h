@@ -1,6 +1,6 @@
 //  A0SimpleKeychain.h
 //
-// Copyright (c) 2014-2015 Auth0 (http://auth0.com)
+// Copyright (c) 2014 Auth0 (http://auth0.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -58,6 +58,54 @@ typedef NS_ENUM(NSInteger, A0SimpleKeychainItemAccessible) {
      *  @see kSecAttrAccessibleAlwaysThisDeviceOnly
      */
     A0SimpleKeychainItemAccessibleAlwaysThisDeviceOnly
+};
+
+#define A0ErrorDomain @"com.auth0.simplekeychain"
+
+/**
+ * Enum with keychain error codes. It's a mirror of the keychain error codes. 
+ */
+typedef NS_ENUM(NSInteger, A0SimpleKeychainError) {
+    /**
+     * @see errSecSuccess
+     */
+    A0SimpleKeychainErrorNoError = 0,
+    /**
+     * @see errSecUnimplemented
+     */
+    A0SimpleKeychainErrorUnimplemented = -4,
+    /**
+     * @see errSecParam
+     */
+    A0SimpleKeychainErrorWrongParameter = -50,
+    /**
+     * @see errSecAllocate
+     */
+    A0SimpleKeychainErrorAllocation = -108,
+    /**
+     * @see errSecNotAvailable
+     */
+    A0SimpleKeychainErrorNotAvailable = -25291,
+    /**
+     * @see errSecAuthFailed
+     */
+    A0SimpleKeychainErrorAuthFailed = -25293,
+    /**
+     * @see errSecDuplicateItem
+     */
+    A0SimpleKeychainErrorDuplicateItem = -25299,
+    /**
+     * @see errSecItemNotFound
+     */
+    A0SimpleKeychainErrorItemNotFound = -25300,
+    /**
+     * @see errSecInteractionNotAllowed
+     */
+    A0SimpleKeychainErrorInteractionNotAllowed = -25308,
+    /**
+     * @see errSecDecode
+     */
+    A0SimpleKeychainErrorDecode = -26275
 };
 
 /**
@@ -218,6 +266,18 @@ typedef NS_ENUM(NSInteger, A0SimpleKeychainItemAccessible) {
  *  @return the value or nil if an error occurs.
  */
 - (NSData *)dataForKey:(NSString *)key promptMessage:(NSString *)message;
+
+/**
+ *  Fetches a NSData from the keychain
+ *
+ *  @param key     the key of the value to fetch
+ *  @param message prompt message to display for TouchID/passcode prompt if neccesary
+ *  @param err     Returns an error, if the item cannot be retrieved. F.e. item not found 
+ *                 or user authentication failed in TouchId case.
+ *
+ *  @return the value or nil if an error occurs.
+ */
+- (NSData *)dataForKey:(NSString *)key promptMessage:(NSString *)message error:(NSError**)err;
 
 /**
  *  Checks if a key has a value in the Keychain

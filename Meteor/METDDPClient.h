@@ -78,7 +78,6 @@ typedef void (^METLogOutCompletionHandler)(NSError *error);
 @property (assign, nonatomic, readonly, getter=isLoggingIn) BOOL loggingIn;
 @property (copy, nonatomic, readonly) NSString *userID;
 
-- (void)loginWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters completionHandler:(METMethodCompletionHandler)completionHandler;
 - (void)logoutWithCompletionHandler:(METLogOutCompletionHandler)completionHandler;
 
 @end
