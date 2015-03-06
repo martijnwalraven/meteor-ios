@@ -650,7 +650,8 @@ NSString * const METDDPClientDidChangeAccountNotification = @"METDDPClientDidCha
     NSString *resumeToken = result[@"token"];
     NSDate *expiryDate = result[@"tokenExpires"];
     
-    if (userID && resumeToken && expiryDate) {
+    // verify login method result includes userID and resumeToken. expiryDate is optional.
+    if (userID && resumeToken) {
       METAccount *account = [[METAccount alloc] initWithUserID:userID resumeToken:resumeToken expiryDate:expiryDate];
       return account;
     }
