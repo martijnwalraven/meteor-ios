@@ -30,4 +30,6 @@
 
 - (void)signUpWithEmail:(NSString *)email password:(NSString *)password firstName:(NSString *)firstName lastName:(NSString *)lastName completionHandler:(METLogInCompletionHandler)completionHandler;
 
+- (void)signUpWithEmail:(NSString *)email password:(NSString *)password profile:(NSDictionary *)profile completionHandler:(METLogInCompletionHandler)completionHandler;
+
 @end
