@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 #import "METDDPClient+AccountsPassword.h"
-#import "METDDPClient_Internal.h"
+#import "METDDPClient_Accounts.h"
 
 #import "NSString+METAdditions.h"
 
