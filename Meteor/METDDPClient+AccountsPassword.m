@@ -19,18 +19,25 @@
 // THE SOFTWARE.
 
 #import "METDDPClient+AccountsPassword.h"
-#import "METDDPClient_Accounts.h"
 
 #import "NSString+METAdditions.h"
 
 @implementation METDDPClient (AccountsPassword)
 
 - (void)loginWithEmail:(NSString *)email password:(NSString *)password completionHandler:(METLogInCompletionHandler)completionHandler {
-  [self loginWithMethodName:@"login" parameters:@[@{@"user": @{@"email": email}, @"password": @{@"digest": [password SHA256String], @"algorithm": @"sha-256"}}] completionHandler:completionHandler];
+  [self loginWithMethodName:@"login" parameters:@[@{@"user": @{@"email": email}, @"password": @{@"digest": [password SHA256String], @"algorithm": @"sha-256"}}] completionHandler:^(id result, NSError *error) {
+    if (completionHandler) {
+      completionHandler(error);
+    }
+  }];
 }
 
 - (void)signUpWithEmail:(NSString *)email password:(NSString *)password completionHandler:(METLogInCompletionHandler)completionHandler {
-  [self loginWithMethodName:@"createUser" parameters:@[@{@"email": email, @"password": @{@"digest": [password SHA256String], @"algorithm": @"sha-256"}}] completionHandler:completionHandler];
+  [self loginWithMethodName:@"createUser" parameters:@[@{@"email": email, @"password": @{@"digest": [password SHA256String], @"algorithm": @"sha-256"}}] completionHandler:^(id result, NSError *error){
+    if (completionHandler) {
+      completionHandler(error);
+    }
+  }];
 }
 
 @end
