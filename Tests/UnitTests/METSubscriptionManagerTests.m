@@ -235,4 +235,14 @@
   XCTAssertEqual(subscription1, subscription2);
 }
 
+- (void)testSubscriptionRemovedImmediatelyWhenSubHasNotInUseTimeoutOfZero {
+  _subscriptionManager.defaultNotInUseTimeout = 0;
+  
+  METSubscription *subscription1 = [_subscriptionManager addSubscriptionWithName:@"todos" parameters:@[@"bla"] completionHandler:nil];
+  [_subscriptionManager removeSubscription:subscription1];
+  METSubscription *subscription2 = [_subscriptionManager addSubscriptionWithName:@"todos" parameters:@[@"bla"] completionHandler:nil];
+  
+  XCTAssertNotEqual(subscription1, subscription2);
+}
+
 @end

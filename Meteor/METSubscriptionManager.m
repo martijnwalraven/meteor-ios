@@ -84,19 +84,6 @@
   return subscription;
 }
 
-- (METSubscription *)existingSubscriptionWithName:(NSString *)name parameters:(NSArray *)parameters {
-  __block METSubscription *existingSubscription;
-  
-  [_subscriptionsByID enumerateKeysAndObjectsUsingBlock:^(NSString *subscriptionID, METSubscription *subscription, BOOL *stop) {
-    if ([subscription.name isEqualToString:name] && (subscription.parameters == parameters || [subscription.parameters isEqualToArray:parameters])) {
-      existingSubscription = subscription;
-      *stop = YES;
-    }
-  }];
-        
-  return existingSubscription;
-}
-
 - (void)removeSubscription:(METSubscription *)subscription {
   NSParameterAssert(subscription);
   
@@ -106,21 +93,25 @@
     if (!subscription.inUse) {
       [self removeSubscriptionToBeRevivedAfterConnect:subscription];
       
-      if (subscription.reuseTimer == nil) {
-        subscription.reuseTimer = [[METTimer alloc] initWithQueue:_queue block:^{
-          // Subscription was reused before timeout
-          if (subscription.inUse) {
-            return;
-          }
-          
-          [_subscriptionsByID removeObjectForKey:subscription.identifier];
-          
-          if (_client.connected) {
-            [_client sendUnsubMessageForSubscription:subscription];
-          }
-        }];
+      if (subscription.notInUseTimeout == 0) {
+        // the no timeout has been specified, or a timeout of 0, perform unsub synchronously
+        // and immediately
+        [self performUnsubForSubscription:subscription];
+      } else {
+        // if we have a notInUseTimeout configured for this subscription, perform unsub after a
+        // timeout if the subscription has not been reused before then.
+        if (subscription.reuseTimer == nil) {
+          subscription.reuseTimer = [[METTimer alloc] initWithQueue:_queue block:^{
+            // Subscription was reused before timeout
+            if (subscription.inUse) {
+              return;
+            }
+            
+            [self performUnsubForSubscription:subscription];
+          }];
+        }
+        [subscription.reuseTimer startWithTimeInterval:subscription.notInUseTimeout];
       }
-      [subscription.reuseTimer startWithTimeInterval:subscription.notInUseTimeout];
     }
   });
 }
@@ -190,11 +181,40 @@
   return _subscriptionsToBeRevivedAfterReconnect.count > 0;
 }
 
+#pragma mark - Helpers
+
+- (METSubscription *)existingSubscriptionWithName:(NSString *)name parameters:(NSArray *)parameters {
+  __block METSubscription *existingSubscription;
+  
+  [_subscriptionsByID enumerateKeysAndObjectsUsingBlock:^(NSString *subscriptionID, METSubscription *subscription, BOOL *stop) {
+    if ([subscription.name isEqualToString:name] && (subscription.parameters == parameters || [subscription.parameters isEqualToArray:parameters])) {
+      existingSubscription = subscription;
+      *stop = YES;
+    }
+  }];
+  
+  return existingSubscription;
+}
+
 - (void)removeSubscriptionToBeRevivedAfterConnect:(METSubscription *)subscription {
   [_subscriptionsToBeRevivedAfterReconnect removeObject:subscription];
   if (!self.waitingForSubscriptionsToBeRevivedAfterReconnect) {
     _subscriptionsToBeRevivedAfterReconnect = nil;
     [_client allSubscriptionsToBeRevivedAfterReconnectAreDone];
+  }
+}
+
+/**
+ * Private helper method for actually performing the unsubscribe for a subscription. Removes
+ * from managed store of `subscriptionsByID` and sends `unsub` message via ddp.
+ *
+ * Should only be called within blocks dispatched to this managers `_queue`.
+ */
+- (void)performUnsubForSubscription:(METSubscription *)subscription {
+  [_subscriptionsByID removeObjectForKey:subscription.identifier];
+  
+  if (_client.connected) {
+    [_client sendUnsubMessageForSubscription:subscription];
   }
 }
 
