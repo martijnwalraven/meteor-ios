@@ -60,6 +60,7 @@ typedef void (^METLogOutCompletionHandler)(NSError *error);
 - (void)connect;
 - (void)disconnect;
 
+@property (strong, nonatomic, readonly) NSURL *serverURL;
 @property (assign, nonatomic, readonly, getter=isConnected) BOOL connected;
 @property (assign, nonatomic, readonly) METDDPConnectionStatus connectionStatus;
 

@@ -157,6 +157,10 @@ NSString * const METDDPClientDidChangeAccountNotification = @"METDDPClientDidCha
 
 #pragma mark - Connecting
 
+- (NSURL *)serverURL {
+  return _connection.serverURL;
+}
+
 - (METDDPConnectionStatus)connectionStatus {
   @synchronized(self) {
     return _connectionStatus;
