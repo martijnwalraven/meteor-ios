@@ -1,5 +1,6 @@
 #import <UIKit/UIKit.h>
 
+#import "METAccount.h"
 #import "METCollection.h"
 #import "METCoreDataDDPClient.h"
 #import "METDatabase.h"

@@ -1,6 +1,6 @@
 //  A0SimpleKeychain.h
 //
-// Copyright (c) 2014-2015 Auth0 (http://auth0.com)
+// Copyright (c) 2014 Auth0 (http://auth0.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -66,22 +66,29 @@
 }
 
 - (NSData *)dataForKey:(NSString *)key promptMessage:(NSString *)message {
+    return [self dataForKey:key promptMessage:message error:nil];
+}
+
+- (NSData *)dataForKey:(NSString *)key promptMessage:(NSString *)message error:(NSError**)err {
     if (!key) {
         return nil;
     }
-
+    
     NSDictionary *query = [self queryFetchOneByKey:key message:message];
     CFTypeRef data = nil;
     OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)query, &data);
     if (status != errSecSuccess) {
+        if(err != nil) {
+            *err = [NSError errorWithDomain:A0ErrorDomain code:status userInfo:@{NSLocalizedDescriptionKey : [self stringForSecStatus:status]}];
+        }
         return nil;
     }
-
+    
     NSData *dataFound = [NSData dataWithData:(__bridge NSData *)data];
     if (data) {
         CFRelease(data);
     }
-
+    
     return dataFound;
 }
 
@@ -224,6 +231,34 @@
             accessibility = kSecAttrAccessibleAfterFirstUnlock;
     }
     return accessibility;
+}
+
+- (NSString*)stringForSecStatus:(OSStatus)status {
+    
+    switch(status) {
+        case errSecSuccess:
+            return NSLocalizedStringFromTable(@"errSecSuccess: No error", @"SimpleKeychain", @"Possible error from keychain. ");
+        case errSecUnimplemented:
+            return NSLocalizedStringFromTable(@"errSecUnimplemented: Function or operation not implemented", @"SimpleKeychain", @"Possible error from keychain. ");
+        case errSecParam:
+            return NSLocalizedStringFromTable(@"errSecParam: One or more parameters passed to the function were not valid", @"SimpleKeychain", @"Possible error from keychain. ");
+        case errSecAllocate:
+            return NSLocalizedStringFromTable(@"errSecAllocate: Failed to allocate memory", @"SimpleKeychain", @"Possible error from keychain. ");
+        case errSecNotAvailable:
+            return NSLocalizedStringFromTable(@"errSecNotAvailable: No trust results are available", @"SimpleKeychain", @"Possible error from keychain. ");
+        case errSecAuthFailed:
+            return NSLocalizedStringFromTable(@"errSecAuthFailed: Authorization/Authentication failed", @"SimpleKeychain", @"Possible error from keychain. ");
+        case errSecDuplicateItem:
+            return NSLocalizedStringFromTable(@"errSecDuplicateItem: The item already exists", @"SimpleKeychain", @"Possible error from keychain. ");
+        case errSecItemNotFound:
+            return NSLocalizedStringFromTable(@"errSecItemNotFound: The item cannot be found", @"SimpleKeychain", @"Possible error from keychain. ");
+        case errSecInteractionNotAllowed:
+            return NSLocalizedStringFromTable(@"errSecInteractionNotAllowed: Interaction with the Security Server is not allowed", @"SimpleKeychain", @"Possible error from keychain. ");
+        case errSecDecode:
+            return NSLocalizedStringFromTable(@"errSecDecode: Unable to decode the provided data", @"SimpleKeychain", @"Possible error from keychain. ");
+        default:
+            return [NSString stringWithFormat:NSLocalizedStringFromTable(@"Unknown error code %d", @"SimpleKeychain", @"Possible error from keychain. "), status];
+    }
 }
 
 #pragma mark - Query Dictionary Builder methods

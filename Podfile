@@ -1,26 +1,26 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
-platform :ios, '7.0'
 use_frameworks!
 
+platform :ios, '7.0'
+
 workspace 'Meteor'
-xcodeproj 'Tests/Meteor Tests'
+
+xcodeproj 'Meteor'
+link_with ['Meteor', 'UnitTests', 'ServerIntegrationTests']
+
+podspec
   
-target 'MeteorUnitTests' do
-  pod 'Meteor', path: '.'
+target 'UnitTests' do
   pod 'OCMock'
 end
 
-target 'MeteorServerIntegrationTests' do
-  pod 'Meteor', path: '.'
-end
-
-target 'Leaderboard' do
+target 'Leaderboard', exclusive: true do
   xcodeproj 'Examples/Leaderboard/Leaderboard'
   pod 'Meteor', path: '.'
 end
 
-target 'Todos' do
+target 'Todos', exclusive: true do
   xcodeproj 'Examples/Todos/Todos'
   pod 'Meteor', path: '.'
 end

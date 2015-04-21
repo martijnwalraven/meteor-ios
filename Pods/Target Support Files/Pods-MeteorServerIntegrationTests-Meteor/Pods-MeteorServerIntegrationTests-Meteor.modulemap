@@ -1,6 +1,0 @@
-framework module Meteor {
-  umbrella header "Pods-MeteorServerIntegrationTests-Meteor-umbrella.h"
-
-  export *
-  module * { export * }
-}

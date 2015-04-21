@@ -1,7 +1,8 @@
 {
   "name": "Meteor",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "summary": "Meteor for iOS.",
+  "description": "    Meteor for iOS is a DDP client with support for latency compensation and Core Data integration.\n",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -12,14 +13,14 @@
   },
   "source": {
     "git": "https://github.com/martijnwalraven/meteor-ios.git",
-    "tag": "0.1.0"
+    "tag": "0.1.2"
   },
   "platforms": {
     "ios": "7.0"
   },
   "requires_arc": true,
   "source_files": "Meteor/**/*.{h,m}",
-  "public_header_files": "Meteor/{METDDPClient,METDDPClient+AccountsPassword,METSubscription,METDatabase,METCollection,METDocument,METDocumentKey,METDatabaseChanges,METDocumentChangeDetails,METCoreDataDDPClient,METIncrementalStore}.h",
+  "public_header_files": "Meteor/{METDDPClient,METSubscription,METDatabase,METCollection,METDocument,METDocumentKey,METDatabaseChanges,METDocumentChangeDetails,METAccount,METDDPClient+AccountsPassword,METCoreDataDDPClient,METIncrementalStore}.h",
   "frameworks": "CoreData",
   "dependencies": {
     "PocketSocket": [

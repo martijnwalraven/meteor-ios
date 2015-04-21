@@ -1,0 +1,6 @@
+framework module PocketSocket {
+  umbrella header "Pods-PocketSocket-umbrella.h"
+
+  export *
+  module * { export * }
+}

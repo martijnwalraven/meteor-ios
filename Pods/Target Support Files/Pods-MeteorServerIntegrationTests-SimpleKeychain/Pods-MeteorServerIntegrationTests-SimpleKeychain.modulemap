@@ -1,6 +1,0 @@
-framework module SimpleKeychain {
-  umbrella header "Pods-MeteorServerIntegrationTests-SimpleKeychain-umbrella.h"
-
-  export *
-  module * { export * }
-}

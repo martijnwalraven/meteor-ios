@@ -1,0 +1,6 @@
+framework module SimpleKeychain {
+  umbrella header "Pods-SimpleKeychain-umbrella.h"
+
+  export *
+  module * { export * }
+}
