@@ -28,7 +28,7 @@ class User: NSManagedObject {
   
   @NSManaged var emailAddresses: [NamedValues]?
   var emailAddress: String? {
-    return emailAddresses?.first?["address"]? as? String
+    return emailAddresses?.first?["address"] as? String
   }
   
   @NSManaged var profile: NamedValues?

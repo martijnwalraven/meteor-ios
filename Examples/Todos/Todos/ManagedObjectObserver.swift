@@ -64,7 +64,7 @@ public class ManagedObjectObserver: NSObject {
   
   func objectsDidChange(notification: NSNotification) {
     func notificationContainsObjectForUserInfoKey(userInfoKey: NSString) -> Bool {
-      if let objects = notification.userInfo![userInfoKey]? as? NSSet {
+      if let objects = notification.userInfo![userInfoKey] as? NSSet {
         return objects.containsObject(managedObject)
       }
       return false

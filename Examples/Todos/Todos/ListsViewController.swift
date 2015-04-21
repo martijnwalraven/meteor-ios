@@ -82,13 +82,13 @@ class ListsViewController: FetchedResultsTableViewController {
     alertController.addAction(cancelAction)
     
     let addAction = UIAlertAction(title: "Add", style: .Default) { (action) in
-      let nameTextField = alertController.textFields![0] as UITextField
+      let nameTextField = alertController.textFields![0] as! UITextField
       let name = nameTextField.text
       if name.isEmpty {
         return
       }
       
-      let list = NSEntityDescription.insertNewObjectForEntityForName("List", inManagedObjectContext: self.managedObjectContext) as List
+      let list = NSEntityDescription.insertNewObjectForEntityForName("List", inManagedObjectContext: self.managedObjectContext) as! List
       list.name = name
       list.incompleteCount = 0
       self.saveManagedObjectContext()

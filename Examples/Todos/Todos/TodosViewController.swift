@@ -180,7 +180,7 @@ class TodosViewController: FetchedResultsTableViewController, UITextFieldDelegat
       return false
     }
     
-    let todo = NSEntityDescription.insertNewObjectForEntityForName("Todo", inManagedObjectContext: managedObjectContext) as Todo
+    let todo = NSEntityDescription.insertNewObjectForEntityForName("Todo", inManagedObjectContext: managedObjectContext) as! Todo
     todo.creationDate = NSDate()
     todo.text = text
     todo.list = list

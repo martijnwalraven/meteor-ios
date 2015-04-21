@@ -26,7 +26,7 @@ class PlaceholderView: UIView {
     setUp()
   }
   
-  convenience override init() {
+  convenience init() {
     self.init(frame: CGRectZero)
   }
 

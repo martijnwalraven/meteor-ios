@@ -53,16 +53,16 @@ public class FetchedResultsDataSource: NSObject, NSFetchedResultsControllerDeleg
   }
   
   public func numberOfItemsInSection(section: Int) -> Int {
-    let sectionInfo = fetchedResultsController.sections?[section] as NSFetchedResultsSectionInfo
+    let sectionInfo = fetchedResultsController.sections?[section] as! NSFetchedResultsSectionInfo
     return sectionInfo.numberOfObjects ?? 0
   }
   
   public var objects: [NSManagedObject] {
-    return fetchedResultsController.fetchedObjects as [NSManagedObject]
+    return fetchedResultsController.fetchedObjects as! [NSManagedObject]
   }
   
   public func objectAtIndexPath(indexPath: NSIndexPath) -> NSManagedObject {
-    return fetchedResultsController.objectAtIndexPath(indexPath) as NSManagedObject
+    return fetchedResultsController.objectAtIndexPath(indexPath) as! NSManagedObject
   }
   
   public func indexPathForObject(object: NSManagedObject) -> NSIndexPath? {
@@ -101,11 +101,11 @@ public class FetchedResultsDataSource: NSObject, NSFetchedResultsControllerDeleg
 
   // MARK: - NSFetchedResultsControllerDelegate
 
-  public func controllerWillChangeContent(controller: NSFetchedResultsController!) {
+  public func controllerWillChangeContent(controller: NSFetchedResultsController) {
     changes = [ChangeDetail]()
   }
   
-  public func controller(controller: NSFetchedResultsController!, didChangeSection sectionInfo: NSFetchedResultsSectionInfo!, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+  public func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
     switch(type) {
     case .Insert:
       changes!.append(.SectionInserted(sectionIndex))
@@ -116,16 +116,16 @@ public class FetchedResultsDataSource: NSObject, NSFetchedResultsControllerDeleg
     }
   }
   
-  public func controller(controller: NSFetchedResultsController!, didChangeObject object: AnyObject!, atIndexPath indexPath: NSIndexPath!, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath!) {
+  public func controller(controller: NSFetchedResultsController, didChangeObject object: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
     switch(type) {
     case .Insert:
-      changes!.append(.ObjectInserted(newIndexPath))
+      changes!.append(.ObjectInserted(newIndexPath!))
     case .Delete:
-      changes!.append(.ObjectDeleted(indexPath))
+      changes!.append(.ObjectDeleted(indexPath!))
     case .Update:
-      changes!.append(.ObjectUpdated(indexPath))
+      changes!.append(.ObjectUpdated(indexPath!))
     case .Move:
-      changes!.append(.ObjectMoved(indexPath: indexPath, newIndexPath: newIndexPath))
+      changes!.append(.ObjectMoved(indexPath: indexPath!, newIndexPath: newIndexPath!))
     default:
       break
     }

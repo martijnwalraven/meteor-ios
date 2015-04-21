@@ -55,7 +55,7 @@ public class FetchedResultsTableViewDataSource: FetchedResultsDataSource, UITabl
   public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let object = objectAtIndexPath(indexPath)
     let reuseIdentifier = cellReuseIdentifierForObject(object, atIndexPath: indexPath)
-    let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath) as UITableViewCell
+    let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath) as! UITableViewCell
     configureCell(cell, forObject: object, atIndexPath: indexPath)
     return cell
   }

@@ -32,12 +32,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     
     Meteor.connect()
     
-    let splitViewController = self.window!.rootViewController as UISplitViewController
+    let splitViewController = self.window!.rootViewController as! UISplitViewController
     splitViewController.preferredDisplayMode = .AllVisible
     splitViewController.delegate = self
 
-    let masterNavigationController = splitViewController.viewControllers[0] as UINavigationController
-    let listViewController = masterNavigationController.topViewController as ListsViewController
+    let masterNavigationController = splitViewController.viewControllers[0] as! UINavigationController
+    let listViewController = masterNavigationController.topViewController as! ListsViewController
     listViewController.managedObjectContext = Meteor.mainQueueManagedObjectContext
     
     return true
