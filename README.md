@@ -1,29 +1,55 @@
-# Meteor for iOS
+# Meteor iOS
 
-Meteor for iOS is work in progress, but aims to be a complete DDP client that includes full support for latency compensation and offers Core Data integration. It keeps as close as possible to the semantics of the original JavaScript code, but its design is more in line with Cocoa and Objective-C conventions (although it is perfectly usable from Swift). It has been implemented with concurrent execution in mind and keeps all processing off the main thread, posting batched and consolidated change notifications that can be observed to update the UI. It includes over 200 unit tests and also has some server integration tests that run using a local Meteor test server.
+Meteor iOS aims to be an easy way to integrate native iOS apps with a Meteor server through DDP, while supporting many of the principles that make Meteor such a great platform. It has been written in Objective-C, but is also perfectly usable from Swift.
 
-It is in dire need of better documentation, but is already fairly feature complete and seems to work pretty well. For now, the included Todos example (written in Swift, for both iPhone and iPad) is probably the best way to get an understanding of its abilities. If you want to try it out, you should be able to open the Meteor workspace and run the Todos scheme. It connects to a Meteor example app running at http://meteor-ios-todos.meteor.com. If you want to get a quick idea of what it's capable of you may want to have a look at this short screen recording:
+*If you're a Meteor web developer…* it's now easy for a native iOS app to participate in Meteor's full stack reactivity.
 
-[![Meteor for iOS — Todos example](http://img.youtube.com/vi/qWJ2bgg8xxo/0.jpg)](http://www.youtube.com/watch?v=qWJ2bgg8xxo)
+*If you're an iOS developer…* Meteor is an amazing backend for your app that will save you tons of time.
 
-## Features
+### Differences between Meteor iOS and other DDP clients
 
-- Full support for latency compensation, faithfully (I hope) reproducing the semantics of the original JavaScript code. Modifications to documents are reflected immediately in the local cache and will be ammended by server changes only when the server completes sending data updates for the method (multiple methods concurrently modifying the same documents are handled correctly).
-- Posting batched and consolidated change notifications at appropriate times, instead of relying on fine grained updates. This helps keep UI work on the main thread to a minimum without sacrificing responsiveness.
-- Core Data integration using an `NSIncrementalStore` subclass. Mapping between documents and `NSManagedObject`s is performed automatically (but can be customized). Different types of relationships are also supported, both for fetching and saving (with configurable storage). Modifications made to documents (possibly from other clients) will lead to the posting of an object change notification that is used to merge changes into `NSManagedObjectContext`s.
-- Subscriptions are shared and reused whenever possible. If a subscription is no longer in use, we don't actually unsubscribe until after a configurable timeout. This means data won't have to be removed and added if it is needed again later.
-- Correct handling of reconnection. Data updates on the new connection will be buffered until all subscriptions that were ready before have become ready again. Only then are updates applied and is a change notification posted (if anything actually changed).
+Meteor iOS is more than a barebones DDP client. Rather than notifying you of individual data updates and leaving it at that, it has been designed to bring full stack reativity to iOS. Currently, this is most easily done by integrating with Core Data. By only writing a few lines of code, we get reactive updates from the database to the UI.
 
-### Swift
+Among other things, it includes full support for latency compensation and supports writing your own method stubs. It has been implemented with concurrent execution in mind and keeps all processing off the main thread, posting batched and consolidated change notifications that can be observed to update the UI. 
 
-Although the framework has been written in Objective-C, it works well with Swift. In fact, both the Todos example and a larger project I work on myself exclusively use Swift. In the future, I plan on updating the API to take better advantage of Swift language features. I'm also planning on including (and documenting!) some utility code written in Swift extracted from the Todos example and my own project code.
+It keeps as close as possible to the semantics of the original Meteor JavaScript code. It's behavior is covered by over 200 unit tests and it also has some server integration tests that run using a local Meteor test server.
 
-I had already started work on this project when Swift was announced. Although I'm impressed by Swift, I decided it was too soon to consider a rewrite. The language was and is evolving, and some potentially useful language features are still missing (in particular around generics and protocols). Performance can be unpredictable (especially when dealing with arrays and dictionaries) and tool support (Xcode) is not as stable as it is for Objective-C. Once the Swift language and implementation stabilize and language idioms become established, a complete or partial rewrite might be a viable option.
+## Getting Started
 
+For now, the included Todos example (written in Swift, for both iPhone and iPad) is probably the best way to get an understanding of what Meteor iOS is capable of. If you want to try it out, you should be able to open the Meteor workspace and run the Todos scheme. It connects to a Meteor example app running at http://meteor-ios-todos.meteor.com. If you want to get a quick idea of what it's capable of you may want to have a look at this short screen recording:
 
-## Overview
+[![Meteor iOS — Todos example](http://img.youtube.com/vi/qWJ2bgg8xxo/0.jpg)](http://www.youtube.com/watch?v=qWJ2bgg8xxo) 
 
-I'm still figuring out usage patterns and I'm actively improving the API. I'm using it with Swift and Core Data in my own projects, so that's what I'll mostly be describing here. You can also use the API at a lower level and deal with documents directly though. Don't expect anything to be stable yet, but please do let me know what you think of it and what improvements you would like to see.
+## Installation with CocoaPods
+
+The easiest way to use Meteor iOS in your own project is through CocoaPods. Add `pod 'Meteor'` to your Podfile and run `pod install` to install the library.
+
+To use CocoaPods with Swift, you'll have to install [CocoaPods 0.36 or later](http://blog.cocoapods.org/CocoaPods-0.36/) and enable framework support in your Podfile:
+```
+platform :ios, '8.0'
+use_frameworks!
+pod 'Meteor' 
+```
+
+With this Podfile, Meteor iOS will be built as a framework and can easily be imported without further configuration (you may need to build the project first before the module is recognized however):
+
+In Objective-C:
+``` objective-c
+@import Meteor;
+```
+
+In Swift:
+``` swift
+import Meteor
+```
+
+As an alternative, you should also be able to install the framework through [Carthage](https://github.com/Carthage/Carthage). Add `github "martijnwalraven/meteor-ios"` to your Cartfile and run `carthage update` to build the framework. Then, drag the built .framework file to your application's Xcode project to use it.
+
+## Usage
+
+I'm still figuring out usage patterns and I'm actively improving the API. I'm using Meteor iOS with Swift and Core Data in my own projects, so that's what I'll mostly be describing here. You can also use the API at a lower level and deal with documents directly though. See [this wiki page](https://github.com/martijnwalraven/meteor-ios/wiki/Usage-without-Core-Data) for more information about the lower-level API and about using Meteor iOS without Core Data.
+
+Don't expect anything to be stable yet, but please do let me know what you think of the API and what improvements you would like to see.
 
 Basic usage is actually pretty simple:
 
@@ -85,32 +111,21 @@ if !managedObjectContext.save(&error) {
 }
 ```
 
-## Installation with CocoaPods
+## Features
 
-The easiest way to use Meteor for iOS in your own project is through CocoaPods. Until recently, there was no convenient way to use CocoaPods with Swift. The release of CocoaPods 0.36 promises to change this however, by supporting frameworks (see http://blog.cocoapods.org/Pod-Authors-Guide-to-CocoaPods-Frameworks/). As frameworks are only supported on iOS 8 or higher, this means iOS 7 users are out of luck for now. It should be possible to support both building as a framework and as a static library, but I don't know enough about CocoaPods to get this to work reliably. Input is very welcome!
+- Full support for latency compensation, faithfully (I hope) reproducing the semantics of the original JavaScript code. Modifications to documents are reflected immediately in the local cache and will be ammended by server changes only when the server completes sending data updates for the method (multiple methods concurrently modifying the same documents are handled correctly).
+- Posting batched and consolidated change notifications at appropriate times, instead of relying on fine grained updates. This helps keep UI work on the main thread to a minimum without sacrificing responsiveness.
+- Core Data integration using an `NSIncrementalStore` subclass. Mapping between documents and `NSManagedObject`s is performed automatically (but can be customized). Different types of relationships are also supported, both for fetching and saving (with configurable storage). Modifications made to documents (possibly from other clients) will lead to the posting of an object change notification that is used to merge changes into `NSManagedObjectContext`s.
+- Subscriptions are shared and reused whenever possible. If a subscription is no longer in use, we don't actually unsubscribe until after a configurable timeout. This means data won't have to be removed and added if it is needed again later.
+- Correct handling of reconnection. Data updates on the new connection will be buffered until all subscriptions that were ready before have become ready again. Only then are updates applied and is a change notification posted (if anything actually changed).
 
-Because CocoaPods 0.36 has not been officially released, you'll have to install a prerelease version using `gem install cocoapods --pre`.
+### Swift
 
-You can then write a Podfile referencing the 'Meteor' pod:
-```
-platform :ios, '8.0'
-use_frameworks!
-pod 'Meteor' 
-```
+Although the framework has been written in Objective-C, it works well with Swift. In fact, both the Todos example and a larger project I work on myself exclusively use Swift. In the future, I plan on updating the API to take better advantage of Swift language features. I'm also planning on including (and documenting!) some utility code written in Swift extracted from the Todos example and my own project code.
 
-With this Podfile, Meteor for iOS will be built as a framework and is made available as a Clang module that can easily be imported without further configuration (you may need to build the project first before the module is recognized however):
+I had already started work on this project when Swift was announced. Although I'm impressed by Swift, I decided it was too soon to consider a rewrite. The language was and is evolving, and some potentially useful language features are still missing (in particular around generics and protocols). Performance can be unpredictable (especially when dealing with arrays and dictionaries) and tool support (Xcode) is not as stable as it is for Objective-C. Once the Swift language and implementation stabilize and language idioms become established, a complete or partial rewrite might be a viable option.
 
-In Objective-C:
-``` objective-c
-@import Meteor;
-```
-
-In Swift:
-``` swift
-import Meteor
-```
-
-## Some implementation details
+## Some implementation details for the curious
 
 - Data updates from the server are buffered and applied in batches. Buffering uses a GCD dispatch source to coalesce events, meaning data updates that arrive before the buffer has had a chance to be flushed will be applied together.
 - Unless specified explicitly, document IDs are randomly generated on the client and a shared `randomSeed` is included with the `method` DDP message to keep generated IDs synchronized between client and server even in complex scenarios (such as method stubs recursively calling other stubs).
@@ -127,6 +142,6 @@ import Meteor
 
 ## License
 
-Meteor for iOS is available under the MIT license. See the LICENSE file for more info.
+Meteor iOS is available under the MIT license. See the LICENSE file for more info.
 
 The Todos example contains icons provided by [Icons8](http://icons8.com) under the [Creative Commons Attribution-NoDerivs 3.0 Unported license](https://creativecommons.org/licenses/by-nd/3.0/).
