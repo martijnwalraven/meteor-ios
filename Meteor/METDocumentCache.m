@@ -29,7 +29,6 @@
 @implementation METDocumentCache {
   dispatch_queue_t _queue;
   NSMutableDictionary *_documentsByCollectionNameByDocumentID;
-  NSMutableDictionary *_snapshot;
 }
 
 - (instancetype)init {
