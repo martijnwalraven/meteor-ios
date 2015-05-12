@@ -20,6 +20,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METTimer : NSObject
 
 - (instancetype)initWithQueue:(dispatch_queue_t)queue block:(void (^)())block;
@@ -30,3 +32,5 @@
 - (void)stop;
 
 @end
+
+NS_ASSUME_NONNULL_END

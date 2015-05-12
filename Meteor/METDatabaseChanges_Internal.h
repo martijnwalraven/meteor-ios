@@ -22,13 +22,17 @@
 
 #import "METDatabaseChanges.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METDatabaseChanges ()
 
 - (BOOL)hasChanges;
 
-- (void)willChangeDocumentWithKey:(METDocumentKey *)documentKey fieldsBeforeChanges:(NSDictionary *)fieldsBeforeChanges;
-- (void)didChangeDocumentWithKey:(METDocumentKey *)documentKey fieldsAfterChanges:(NSDictionary *)fieldsAfterChanges;
+- (void)willChangeDocumentWithKey:(METDocumentKey *)documentKey fieldsBeforeChanges:(nullable NSDictionary *)fieldsBeforeChanges;
+- (void)didChangeDocumentWithKey:(METDocumentKey *)documentKey fieldsAfterChanges:(nullable NSDictionary *)fieldsAfterChanges;
 
 - (void)addDatabaseChanges:(METDatabaseChanges *)databaseChanges;
 
 @end
+
+NS_ASSUME_NONNULL_END

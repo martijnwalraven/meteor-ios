@@ -23,27 +23,31 @@
 #import "METDDPClient.h"
 @class METDatabaseChanges;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METMethodInvocation : NSOperation <NSCopying>
 
 @property (weak, nonatomic) METDDPClient *client;
 @property (copy, nonatomic) NSString *methodID;
 @property (copy, nonatomic) NSString *methodName;
-@property (strong, nonatomic) id parameters;
-@property (copy, nonatomic) NSString *randomSeed;
+@property (nullable, strong, nonatomic) id parameters;
+@property (nullable, copy, nonatomic) NSString *randomSeed;
 @property (assign, nonatomic, getter=isBarrier) BOOL barrier;
 
-@property (copy, nonatomic) METMethodCompletionHandler receivedResultHandler;
-@property (copy, nonatomic) METMethodCompletionHandler completionHandler;
+@property (nullable, copy, nonatomic) METMethodCompletionHandler receivedResultHandler;
+@property (nullable, copy, nonatomic) METMethodCompletionHandler completionHandler;
 
-@property (strong, nonatomic) METDatabaseChanges *changesPerformedByStub;
+@property (nullable, strong, nonatomic) METDatabaseChanges *changesPerformedByStub;
 
 @property (assign, nonatomic, readonly) BOOL messageSent;
 
 @property (assign, nonatomic, readonly) BOOL resultReceived;
-@property (strong, nonatomic, readonly) id result;
-@property (strong, nonatomic, readonly) NSError *error;
+@property (nullable, strong, nonatomic, readonly) id result;
+@property (nullable, strong, nonatomic, readonly) NSError *error;
 
 @property (assign, nonatomic, readonly) BOOL updatesDone;
 @property (assign, nonatomic, readonly) BOOL updatesFlushed;
 
 @end
+
+NS_ASSUME_NONNULL_END

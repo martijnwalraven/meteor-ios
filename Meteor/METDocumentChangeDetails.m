@@ -41,7 +41,7 @@
 }
 
 - (NSDictionary *)changedFields {
-  NSMutableDictionary *changedFields = [_fieldsAfterChanges mutableCopy];
+  NSMutableDictionary *changedFields = [[NSMutableDictionary alloc] initWithDictionary:_fieldsAfterChanges];
   [changedFields enumerateKeysAndObjectsUsingBlock:^(NSString *name, id newValue, BOOL *stop) {
     id oldValue = _fieldsBeforeChanges[name];
     if (oldValue && [oldValue isEqual:newValue]) {

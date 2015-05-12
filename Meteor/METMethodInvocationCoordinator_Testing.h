@@ -22,6 +22,8 @@
 
 @class METBufferedDocument;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METMethodInvocationCoordinator ()
 
 @property (strong, nonatomic, readonly) NSOperationQueue *operationQueue;
@@ -32,3 +34,5 @@
 - (METBufferedDocument *)bufferedDocumentForKey:(METDocumentKey *)documentKey;
 
 @end
+
+NS_ASSUME_NONNULL_END

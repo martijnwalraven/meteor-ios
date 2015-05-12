@@ -155,7 +155,7 @@
   
   XCTAssertEqual(1, [_collection allDocuments].count);
   
-  [self expectationForChangeToDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changeType:METDocumentChangeTypeRemove changedFields:nil];
+  [self expectationForChangeToDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changeType:METDocumentChangeTypeRemove changedFields:@{@"name": [NSNull null], @"score": [NSNull null], @"color": [NSNull null]}];
   
   [self notifyDidReceiveUpdatesDoneForLastMethodInvocation];
   
@@ -374,7 +374,7 @@
     [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] fields:@{@"name": @"Ada Lovelace", @"score": @25, @"color": @"blue"}];
   }];
   
-  [self expectationForChangeToDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changeType:METDocumentChangeTypeRemove changedFields:nil];
+  [self expectationForChangeToDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changeType:METDocumentChangeTypeRemove changedFields:@{@"name": [NSNull null], @"score": [NSNull null], @"color": [NSNull null]}];
   
   [_collection removeDocumentWithID:@"lovelace"];
   

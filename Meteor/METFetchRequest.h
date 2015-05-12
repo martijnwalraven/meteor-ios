@@ -20,6 +20,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METFetchRequest : NSObject
 
 - (instancetype)initWithCollectionName:(NSString *)collectionName NS_DESIGNATED_INITIALIZER;
@@ -27,3 +29,5 @@
 @property (copy, nonatomic, readonly) NSString *collectionName;
 
 @end
+
+NS_ASSUME_NONNULL_END

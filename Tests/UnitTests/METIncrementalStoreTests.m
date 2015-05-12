@@ -407,7 +407,7 @@
   NSManagedObject *lovelace = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"]];
   [_managedObjectContext deleteObject:lovelace];
   
-  [self expectationForChangeToDocumentWithKey:[_store documentKeyForObjectID:lovelace.objectID] changeType:METDocumentChangeTypeRemove changedFields:nil];
+  [self expectationForChangeToDocumentWithKey:[_store documentKeyForObjectID:lovelace.objectID] changeType:METDocumentChangeTypeRemove changedFields:@{@"name": [NSNull null], @"score": [NSNull null]}];
   
   [self saveManagedObjectContext];
   

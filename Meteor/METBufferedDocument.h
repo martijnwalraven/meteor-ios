@@ -22,9 +22,11 @@
 
 @class METMethodInvocation;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METBufferedDocument : NSObject
 
-@property (copy, nonatomic) NSDictionary *fields;
+@property (nullable, copy, nonatomic) NSDictionary *fields;
 
 - (void)addMethodInvocationWaitingUntilUpdatesAreDone:(METMethodInvocation *)methodInvocation;
 - (void)removeMethodInvocationWaitingUntilUpdatesAreDone:(METMethodInvocation *)methodInvocation;
@@ -34,3 +36,5 @@
 - (void)didFlush;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -20,10 +20,14 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSArray (METAdditions)
 
-- (id)firstObjectPassingTest:(BOOL (^)(id object))block;
+- (nullable id)firstObjectPassingTest:(BOOL (^)(id object))block;
 - (NSArray *)mappedArrayUsingBlock:(id (^)(id object))block;
 - (NSArray *)filteredArrayWithObjectsPassingTest:(BOOL (^)(id object))block;
 
 @end
+
+NS_ASSUME_NONNULL_END

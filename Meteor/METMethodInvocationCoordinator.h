@@ -26,6 +26,8 @@
 @class METDocumentKey;
 @class METDataUpdate;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METMethodInvocationCoordinator : NSObject
 
 - (instancetype)initWithClient:(METDDPClient *)client NS_DESIGNATED_INITIALIZER;
@@ -51,3 +53,5 @@
 - (void)performAfterAllCurrentlyBufferedDocumentsAreFlushed:(void (^)())block;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -22,6 +22,8 @@
 
 @class METRandomValueGenerator;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METRandomStream : NSObject
 
 - (instancetype)initWithSeeds:(NSArray *)seeds;
@@ -29,3 +31,5 @@
 - (METRandomValueGenerator *)sequenceWithName:(NSString *)name;
 
 @end
+
+NS_ASSUME_NONNULL_END

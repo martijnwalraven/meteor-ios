@@ -35,7 +35,7 @@ class SubscriptionLoader {
   func addSubscriptionWithName(name: String, parameters: AnyObject...) -> METSubscription {
     let subscription = Meteor.addSubscriptionWithName(name, parameters: parameters)
     subscription.whenDone { (error) -> Void in
-      if error != nil {
+      if let error = error {
         self.delegate?.subscriptionLoader(self, subscription: subscription, didFailWithError: error)
       }
     }

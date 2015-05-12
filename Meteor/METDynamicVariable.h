@@ -20,9 +20,13 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METDynamicVariable : NSObject
 
 - (id)currentValue;
 - (void)performBlock:(void (^)())block withValue:(id)value;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -20,6 +20,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METDocumentKey : NSObject <NSCopying>
 
 + (instancetype)keyWithCollectionName:(NSString *)collectionName documentID:(id)documentID;
@@ -29,3 +31,5 @@
 @property (copy, nonatomic, readonly) id documentID;
 
 @end
+
+NS_ASSUME_NONNULL_END

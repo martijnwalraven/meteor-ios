@@ -24,14 +24,16 @@
 
 @protocol METDDPConnectionDelegate;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METDDPConnection : NSObject<PSWebSocketDelegate>
 
 - (instancetype)initWithServerURL:(NSURL *)serverURL NS_DESIGNATED_INITIALIZER;;
 @property (strong, nonatomic, readonly) NSURL *serverURL;
 @property (assign, nonatomic, readonly) NSTimeInterval timeoutInterval;
 
-@property (weak, nonatomic) id<METDDPConnectionDelegate> delegate;
-@property (strong, nonatomic) dispatch_queue_t delegateQueue;
+@property (nullable, weak, nonatomic) id<METDDPConnectionDelegate> delegate;
+@property (nullable, strong, nonatomic) dispatch_queue_t delegateQueue;
 
 - (void)open;
 - (void)close;
@@ -49,3 +51,5 @@
 - (void)connectionDidClose:(METDDPConnection *)connection;
 
 @end
+
+NS_ASSUME_NONNULL_END

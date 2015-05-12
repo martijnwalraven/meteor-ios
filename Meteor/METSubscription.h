@@ -20,7 +20,9 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^METSubscriptionCompletionHandler)(NSError *error);
+NS_ASSUME_NONNULL_BEGIN
+
+typedef void (^METSubscriptionCompletionHandler)(NSError * __nullable error);
 
 typedef NS_ENUM(NSInteger, METSubscriptionStatus) {
   METSubscriptionStatusPending = 0,
@@ -42,3 +44,5 @@ typedef NS_ENUM(NSInteger, METSubscriptionStatus) {
 @property (assign, nonatomic) NSTimeInterval notInUseTimeout;
 
 @end
+
+NS_ASSUME_NONNULL_END

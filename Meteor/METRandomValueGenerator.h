@@ -20,6 +20,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METRandomValueGenerator : NSObject
 
 + (METRandomValueGenerator *)defaultRandomValueGenerator;
@@ -32,3 +34,5 @@
 - (NSString *)randomIdentifier;
 
 @end
+
+NS_ASSUME_NONNULL_END

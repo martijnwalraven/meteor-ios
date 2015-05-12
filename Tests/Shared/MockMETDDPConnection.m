@@ -29,7 +29,7 @@ NSString * const METDDPConnectionSentMessageKey = @"METDDPConnectionSentMessageK
 }
 
 - (instancetype)init {
-  return [self initWithServerURL:nil];
+  return [self initWithServerURL:[[NSURL alloc] init]];
 }
 
 - (void)failNextOpeningAttemptWithError:(NSError *)error {

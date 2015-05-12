@@ -20,6 +20,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(NSInteger, METNetworkReachabilityStatus) {
   METNetworkReachabilityStatusUnknown = 0,
   METNetworkReachabilityStatusNotReachable,
@@ -32,8 +34,8 @@ typedef NS_ENUM(NSInteger, METNetworkReachabilityStatus) {
 
 - (instancetype)initWithHostName:(NSString *)hostName;
 
-@property (weak, nonatomic) id<METNetworkReachabilityManagerDelegate> delegate;
-@property (strong, nonatomic) dispatch_queue_t delegateQueue;
+@property (nullable, weak, nonatomic) id<METNetworkReachabilityManagerDelegate> delegate;
+@property (nullable, strong, nonatomic) dispatch_queue_t delegateQueue;
 
 @property (assign, nonatomic) METNetworkReachabilityStatus reachabilityStatus;
 
@@ -47,3 +49,5 @@ typedef NS_ENUM(NSInteger, METNetworkReachabilityStatus) {
 - (void)networkReachabilityManager:(METNetworkReachabilityManager *)reachabilityManager didDetectReachabilityStatusChange:(METNetworkReachabilityStatus)reachabilityStatus;
 
 @end
+
+NS_ASSUME_NONNULL_END

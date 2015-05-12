@@ -22,6 +22,8 @@
 
 @class METDocumentKey;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METDocument : NSObject <NSCopying>
 
 - (instancetype)initWithKey:(METDocumentKey *)key fields:(NSDictionary *)fields NS_DESIGNATED_INITIALIZER;
@@ -35,3 +37,5 @@
 - (BOOL)isEqualToDocument:(METDocument *)document;
 
 @end
+
+NS_ASSUME_NONNULL_END

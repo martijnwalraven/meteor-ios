@@ -22,16 +22,20 @@
 
 @class METTimer;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METSubscription ()
 
 @property (assign, nonatomic, readonly) METSubscriptionStatus status;
 @property (strong, nonatomic, readonly) NSError *error;
-- (void)didChangeStatus:(METSubscriptionStatus)status error:(NSError *)error;
+- (void)didChangeStatus:(METSubscriptionStatus)status error:(nullable NSError *)error;
 
 @property (assign, nonatomic, getter=isInUse) BOOL inUse;
 - (void)beginUse;
 - (void)endUse;
 
-@property (strong, nonatomic) METTimer *reuseTimer;
+@property (nullable, strong, nonatomic) METTimer *reuseTimer;
 
 @end
+
+NS_ASSUME_NONNULL_END

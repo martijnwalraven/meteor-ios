@@ -22,14 +22,18 @@
 
 #import "METDDPClient.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METDDPClient (AccountsPassword)
 
-- (void)loginWithEmail:(NSString *)email password:(NSString *)password completionHandler:(METLogInCompletionHandler)completionHandler;
+- (void)loginWithEmail:(NSString *)email password:(NSString *)password completionHandler:(nullable METLogInCompletionHandler)completionHandler;
 
-- (void)signUpWithEmail:(NSString *)email password:(NSString *)password completionHandler:(METLogInCompletionHandler)completionHandler;
+- (void)signUpWithEmail:(NSString *)email password:(NSString *)password completionHandler:(nullable METLogInCompletionHandler)completionHandler;
 
-- (void)signUpWithEmail:(NSString *)email password:(NSString *)password firstName:(NSString *)firstName lastName:(NSString *)lastName completionHandler:(METLogInCompletionHandler)completionHandler;
+- (void)signUpWithEmail:(NSString *)email password:(NSString *)password firstName:(NSString *)firstName lastName:(NSString *)lastName completionHandler:(nullable METLogInCompletionHandler)completionHandler;
 
-- (void)signUpWithEmail:(NSString *)email password:(NSString *)password profile:(NSDictionary *)profile completionHandler:(METLogInCompletionHandler)completionHandler;
+- (void)signUpWithEmail:(NSString *)email password:(NSString *)password profile:(nullable NSDictionary *)profile completionHandler:(nullable METLogInCompletionHandler)completionHandler;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -22,6 +22,8 @@
 
 @class METDocumentKey;
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(NSInteger, METDocumentChangeType) {
   METDocumentChangeTypeAdd,
   METDocumentChangeTypeUpdate,
@@ -33,12 +35,14 @@ typedef NS_ENUM(NSInteger, METDocumentChangeType) {
 - (instancetype)initWithDocumentKey:(METDocumentKey *)documentKey NS_DESIGNATED_INITIALIZER;
 - (instancetype)init __attribute__((unavailable("Use -initWithDocumentKey: instead")));
 
-@property (weak, nonatomic, readonly) METDocumentKey *documentKey;
+@property (copy, nonatomic, readonly) METDocumentKey *documentKey;
 
-@property (copy, nonatomic) NSDictionary *fieldsBeforeChanges;
-@property (copy, nonatomic) NSDictionary *fieldsAfterChanges;
+@property (nullable, copy, nonatomic) NSDictionary *fieldsBeforeChanges;
+@property (nullable, copy, nonatomic) NSDictionary *fieldsAfterChanges;
 
 @property (atomic, readonly) METDocumentChangeType changeType;
-@property (copy, nonatomic, readonly) NSDictionary *changedFields;
+@property (nullable, copy, nonatomic, readonly) NSDictionary *changedFields;
 
 @end
+
+NS_ASSUME_NONNULL_END

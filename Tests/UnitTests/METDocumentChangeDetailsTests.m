@@ -53,6 +53,13 @@
   XCTAssertEqualObjects(@{@"score": @30}, _changeDetails.changedFields);
 }
 
+- (void)testChangedFieldsWithFieldsBeforeChangesSetToNilReturnsAddedFields {
+  _changeDetails.fieldsBeforeChanges = nil;
+  _changeDetails.fieldsAfterChanges = @{@"name": @"Ada Lovelace", @"score": @25};
+  
+  XCTAssertEqualObjects((@{@"name": @"Ada Lovelace", @"score": @25}), _changeDetails.changedFields);
+}
+
 - (void)testChangedFieldsWithFieldValueChangedReturnsChangedField {
   _changeDetails.fieldsBeforeChanges = @{@"name": @"Ada Lovelace", @"score": @25};
   _changeDetails.fieldsAfterChanges = @{@"name": @"Ada Lovelace", @"score": @30};
@@ -65,6 +72,13 @@
   _changeDetails.fieldsAfterChanges = @{@"name": @"Ada Lovelace"};
   
   XCTAssertEqualObjects(@{@"color": [NSNull null]}, _changeDetails.changedFields);
+}
+
+- (void)testChangedFieldsWithFieldsAfterChangesSetToNilReturnsRemovedFields {
+  _changeDetails.fieldsBeforeChanges = @{@"name": @"Ada Lovelace", @"score": @25};
+  _changeDetails.fieldsAfterChanges = nil;
+  
+  XCTAssertEqualObjects((@{@"name": [NSNull null], @"score": [NSNull null]}), _changeDetails.changedFields);
 }
 
 @end

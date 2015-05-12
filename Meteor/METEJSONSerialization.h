@@ -20,6 +20,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 extern NSString * const METEJSONSerializationErrorDomain;
 
 @interface METEJSONSerialization : NSObject
@@ -28,3 +30,5 @@ extern NSString * const METEJSONSerializationErrorDomain;
 + (id)EJSONObjectFromObject:(id)object error:(NSError **)error;
 
 @end
+
+NS_ASSUME_NONNULL_END

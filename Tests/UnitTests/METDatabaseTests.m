@@ -83,7 +83,7 @@
     [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] fields:@{@"name": @"Ada Lovelace", @"score": @25}];
   }];
   
-  [self expectationForChangeToDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changeType:METDocumentChangeTypeRemove changedFields:nil];
+  [self expectationForChangeToDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changeType:METDocumentChangeTypeRemove changedFields:@{@"name": [NSNull null], @"score": [NSNull null]}];
   
   METDataUpdate *update = [[METDataUpdate alloc] initWithUpdateType:METDataUpdateTypeRemove documentKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] fields:nil];
   [_database applyDataUpdate:update];
@@ -165,7 +165,7 @@
   [self expectationForDatabaseDidChangeNotificationWithHandler:^BOOL(METDatabaseChanges *databaseChanges) {
     [self verifyDatabaseChanges:databaseChanges containsChangeToDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changeType:METDocumentChangeTypeAdd changedFields:@{@"name": @"Ada Lovelace", @"score": @25}];
     [self verifyDatabaseChanges:databaseChanges containsChangeToDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"gauss"] changeType:METDocumentChangeTypeUpdate changedFields:@{@"score": @10}];
-    [self verifyDatabaseChanges:databaseChanges containsChangeToDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"shannon"] changeType:METDocumentChangeTypeRemove changedFields:nil];
+    [self verifyDatabaseChanges:databaseChanges containsChangeToDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"shannon"] changeType:METDocumentChangeTypeRemove changedFields:@{@"name": [NSNull null], @"score": [NSNull null]}];
     return YES;
   }];
   

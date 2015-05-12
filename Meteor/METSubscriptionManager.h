@@ -23,6 +23,8 @@
 #import "METSubscription.h"
 @class METDDPClient;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METSubscriptionManager : NSObject
 
 - (instancetype)initWithClient:(METDDPClient *)client NS_DESIGNATED_INITIALIZER;
@@ -30,7 +32,7 @@
 
 @property (assign, nonatomic) NSTimeInterval defaultNotInUseTimeout;
 
-- (METSubscription *)addSubscriptionWithName:(NSString *)name parameters:(NSArray *)parameters completionHandler:(METSubscriptionCompletionHandler)completionHandler;
+- (METSubscription *)addSubscriptionWithName:(NSString *)name parameters:(nullable NSArray *)parameters completionHandler:(nullable METSubscriptionCompletionHandler)completionHandler;
 - (void)removeSubscription:(METSubscription *)subscription;
 
 - (void)didReceiveReadyForSubscriptionWithID:(NSString *)subscriptionID;
@@ -39,3 +41,5 @@
 - (void)reviveReadySubscriptionsAfterReconnect;
 
 @end
+
+NS_ASSUME_NONNULL_END

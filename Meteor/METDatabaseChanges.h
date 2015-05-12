@@ -23,6 +23,8 @@
 @class METDocumentKey;
 @class METDocumentChangeDetails;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METDatabaseChanges : NSObject
 
 - (NSSet *)affectedDocumentKeys;
@@ -32,3 +34,5 @@
 - (void)removeAllDocumentChangeDetails;
 
 @end
+
+NS_ASSUME_NONNULL_END

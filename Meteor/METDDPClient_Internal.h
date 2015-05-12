@@ -29,6 +29,8 @@
 @class METMethodInvocationContext;
 @class METMethodInvocationCoordinator;
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_OPTIONS(NSInteger, METMethodCallOptions) {
   METMethodCallOptionsNone = 0,
   METMethodCallOptionsReturnStubValue = 1 << 0,
@@ -40,15 +42,15 @@ typedef NS_OPTIONS(NSInteger, METMethodCallOptions) {
 @interface METDDPClient () <METDDPConnectionDelegate, METDDPHeartbeatDelegate, METNetworkReachabilityManagerDelegate>
 
 @property (assign, nonatomic, readwrite) METDDPConnectionStatus connectionStatus;
-@property(strong, nonatomic) METNetworkReachabilityManager *networkReachabilityManager;
+@property (strong, nonatomic) METNetworkReachabilityManager *networkReachabilityManager;
 
-@property (copy, nonatomic, readonly) NSString *protocolVersion;
-@property (copy, nonatomic, readonly) NSString *sessionID;
+@property (nullable, copy, nonatomic, readonly) NSString *protocolVersion;
+@property (nullable, copy, nonatomic, readonly) NSString *sessionID;
 
 @property (strong, nonatomic, readwrite) METDatabase *database;
 
 @property (assign, nonatomic, readwrite, getter=isLoggingIn) BOOL loggingIn;
-@property (copy, nonatomic) METAccount *account;
+@property (nullable, copy, nonatomic) METAccount *account;
 
 - (void)processDataUpdate:(METDataUpdate *)update;
 
@@ -56,15 +58,17 @@ typedef NS_OPTIONS(NSInteger, METMethodCallOptions) {
 - (void)sendUnsubMessageForSubscription:(METSubscription *)subscription;
 - (void)allSubscriptionsToBeRevivedAfterReconnectAreDone;
 
-- (id)callMethodWithName:(NSString *)methodName parameters:(NSArray *)parameters options:(METMethodCallOptions)options completionHandler:(METMethodCompletionHandler)completionHandler;
-- (id)callMethodWithName:(NSString *)methodName parameters:(NSArray *)parameters options:(METMethodCallOptions)options receivedResultHandler:(METMethodCompletionHandler)receivedResultHandler completionHandler:(METMethodCompletionHandler)completionHandler;
+- (id)callMethodWithName:(NSString *)methodName parameters:(nullable NSArray *)parameters options:(METMethodCallOptions)options completionHandler:(nullable METMethodCompletionHandler)completionHandler;
+- (id)callMethodWithName:(NSString *)methodName parameters:(nullable NSArray *)parameters options:(METMethodCallOptions)options receivedResultHandler:(nullable METMethodCompletionHandler)receivedResultHandler completionHandler:(nullable METMethodCompletionHandler)completionHandler;
 
-@property(strong, nonatomic, readonly) METMethodInvocationCoordinator *methodInvocationCoordinator;
-@property(strong, nonatomic, readonly) METMethodInvocationContext *currentMethodInvocationContext;
+@property (strong, nonatomic, readonly) METMethodInvocationCoordinator *methodInvocationCoordinator;
+@property (nullable, strong, nonatomic, readonly) METMethodInvocationContext *currentMethodInvocationContext;
 - (void)sendMethodMessageForMethodInvocation:(METMethodInvocation *)methodInvocation;
 
-- (void)loginWithMethodName:(NSString *)methodName parameters:(NSArray *)parameters completionHandler:(METLogInCompletionHandler)completionHandler;
+- (void)loginWithMethodName:(NSString *)methodName parameters:(nullable NSArray *)parameters completionHandler:(nullable METLogInCompletionHandler)completionHandler;
 
 - (NSArray *)convertParameters:(NSArray *)parameters;
 
 @end
+
+NS_ASSUME_NONNULL_END

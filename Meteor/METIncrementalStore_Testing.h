@@ -22,6 +22,8 @@
 
 @class METDocument;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METIncrementalStore ()
 
 - (METDocument *)documentForObjectWithID:(NSManagedObjectID *)objectID;
@@ -29,3 +31,5 @@
 - (NSUInteger)numberOfCachedNodes;
 
 @end
+
+NS_ASSUME_NONNULL_END

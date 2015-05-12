@@ -20,6 +20,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class METDocumentKey;
 
 typedef NS_ENUM(NSInteger, METDataUpdateType) {
@@ -33,8 +35,10 @@ typedef NS_ENUM(NSInteger, METDataUpdateType) {
 
 @property (assign, nonatomic) METDataUpdateType updateType;
 @property (strong, nonatomic, readonly) METDocumentKey *documentKey;
-@property (copy, nonatomic, readonly) NSDictionary *fields;
+@property (nullable, copy, nonatomic, readonly) NSDictionary *fields;
 
-- (instancetype)initWithUpdateType:(METDataUpdateType)updateType documentKey:(METDocumentKey *)documentKey fields:(NSDictionary *)fields;
+- (instancetype)initWithUpdateType:(METDataUpdateType)updateType documentKey:(METDocumentKey *)documentKey fields:(nullable NSDictionary *)fields;
 
 @end
+
+NS_ASSUME_NONNULL_END

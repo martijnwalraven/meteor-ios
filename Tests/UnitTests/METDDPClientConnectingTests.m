@@ -78,7 +78,7 @@
   
   [self keyValueObservingExpectationForObject:_client keyPath:@"connectionStatus" expectedValue:[NSNumber numberWithInteger:METDDPConnectionStatusWaiting]];
   
-  [_client connection:_connection didFailWithError:nil];
+  [_client connection:_connection didFailWithError:[[NSError alloc] init]];
   
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
 }
@@ -98,7 +98,7 @@
   
   [self keyValueObservingExpectationForObject:_client keyPath:@"connectionStatus" expectedValue:[NSNumber numberWithInteger:METDDPConnectionStatusWaiting]];
   
-  [_client connection:_connection didFailWithError:nil];
+  [_client connection:_connection didFailWithError:[[NSError alloc] init]];
   
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
 }
@@ -123,7 +123,7 @@
   
   [self keyValueObservingExpectationForObject:_client keyPath:@"connectionStatus" expectedValue:[NSNumber numberWithInteger:METDDPConnectionStatusOffline]];
   
-  [_client connection:_connection didFailWithError:nil];
+  [_client connection:_connection didFailWithError:[[NSError alloc] init]];
   
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
 }
@@ -138,7 +138,7 @@
   
   [self keyValueObservingExpectationForObject:_client keyPath:@"connectionStatus" expectedValue:[NSNumber numberWithInteger:METDDPConnectionStatusOffline]];
   
-  [_client connection:_connection didFailWithError:nil];
+  [_client connection:_connection didFailWithError:[[NSError alloc] init]];
   
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
 }

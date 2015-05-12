@@ -58,7 +58,7 @@
   [_databaseChanges willChangeDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] fieldsBeforeChanges:@{@"name": @"Ada Lovelace"}];
   [_databaseChanges didChangeDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] fieldsAfterChanges:nil];
   
-  [self verifyDatabaseChanges:_databaseChanges containsChangeToDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changeType:METDocumentChangeTypeRemove changedFields:nil];
+  [self verifyDatabaseChanges:_databaseChanges containsChangeToDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changeType:METDocumentChangeTypeRemove changedFields:@{@"name": [NSNull null]}];
 }
 
 - (void)testFieldsBeforeAndAfterAreTheSame {

@@ -20,6 +20,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSDictionary (METAdditions)
 
 + (instancetype)dictionaryWithObject:(id)object forKeys:(NSArray *)keys;
@@ -32,3 +34,5 @@
 - (NSDictionary *)fieldsByApplyingChangedFields:(NSDictionary *)changedFields;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -24,6 +24,8 @@
 @class METDDPClient;
 @class METDocumentKey;
 
+NS_ASSUME_NONNULL_BEGIN
+
 extern NSString * const METIncrementalStoreErrorDomain;
 
 extern NSString * const METIncrementalStoreObjectsDidChangeNotification;
@@ -38,3 +40,5 @@ extern NSString * const METIncrementalStoreObjectsDidChangeNotification;
 - (METDocumentKey *)documentKeyForObjectID:(NSManagedObjectID *)objectID;
 
 @end
+
+NS_ASSUME_NONNULL_END

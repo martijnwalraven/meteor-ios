@@ -22,6 +22,8 @@
 
 @protocol METDDPHeartbeatDelegate;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METDDPHeartbeat : NSObject
 
 @property(weak, nonatomic) id<METDDPHeartbeatDelegate> delegate;
@@ -44,3 +46,5 @@
 - (void)heartbeatDidTimeout:(METDDPHeartbeat *)heartbeat;
 
 @end
+
+NS_ASSUME_NONNULL_END

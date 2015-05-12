@@ -20,8 +20,12 @@
 
 #import "METCollection.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METCollection ()
 
 - (id)generateNewDocumentID;
 
 @end
+
+NS_ASSUME_NONNULL_END

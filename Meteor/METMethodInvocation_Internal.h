@@ -20,12 +20,16 @@
 
 #import "METMethodInvocation.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METMethodInvocation ()
 
 @property (strong, nonatomic) NSSet *documentKeysAffectedByStub;
 
-- (void)didReceiveResult:(id)result error:(NSError *)error;
+- (void)didReceiveResult:(nullable id)result error:(nullable NSError *)error;
 - (void)didReceiveUpdatesDone;
 - (void)didFlushUpdates;
 
 @end
+
+NS_ASSUME_NONNULL_END

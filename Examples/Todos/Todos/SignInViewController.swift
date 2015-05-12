@@ -67,7 +67,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
     }
     
     Meteor.loginWithEmail(email, password: password) { (error) -> Void in
-      if error != nil {
+      if let error = error {
         self.errorMessageLabel.text = error.localizedFailureReason
       } else {
         self.performSegueWithIdentifier("Unwind", sender: self)

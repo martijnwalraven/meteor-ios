@@ -117,7 +117,7 @@
   
   [self expectationForDatabaseDidChangeNotificationWithHandler:^BOOL(METDatabaseChanges *databaseChanges) {
     [self verifyDatabaseChanges:databaseChanges containsChangeToDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changeType:METDocumentChangeTypeUpdate changedFields:@{@"score": @30}];
-    [self verifyDatabaseChanges:databaseChanges containsChangeToDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"gauss"] changeType:METDocumentChangeTypeRemove changedFields:nil];
+    [self verifyDatabaseChanges:databaseChanges containsChangeToDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"gauss"] changeType:METDocumentChangeTypeRemove changedFields:@{@"name": [NSNull null], @"score": [NSNull null]}];
     return YES;
   }];
   
@@ -138,8 +138,8 @@
   [_client disconnect];
   
   [self expectationForDatabaseDidChangeNotificationWithHandler:^BOOL(METDatabaseChanges *databaseChanges) {
-    [self verifyDatabaseChanges:databaseChanges containsChangeToDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changeType:METDocumentChangeTypeRemove changedFields:nil];
-    [self verifyDatabaseChanges:databaseChanges containsChangeToDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"gauss"] changeType:METDocumentChangeTypeRemove changedFields:nil];
+    [self verifyDatabaseChanges:databaseChanges containsChangeToDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changeType:METDocumentChangeTypeRemove changedFields:@{@"name": [NSNull null], @"score": [NSNull null]}];
+    [self verifyDatabaseChanges:databaseChanges containsChangeToDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"gauss"] changeType:METDocumentChangeTypeRemove changedFields:@{@"name": [NSNull null], @"score": [NSNull null]}];
     return YES;
   }];
   

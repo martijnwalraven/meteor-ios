@@ -22,15 +22,19 @@
 
 @class METRandomStream;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METMethodInvocationContext : NSObject <NSCopying>
 
 @property (copy, nonatomic, readonly) NSString *methodName;
-@property (strong, nonatomic, readonly) METMethodInvocationContext *enclosingMethodInvocationContext;
+@property (nullable, strong, nonatomic, readonly) METMethodInvocationContext *enclosingMethodInvocationContext;
 
-- (instancetype)initWithMethodName:(NSString *)methodName enclosingMethodInvocationContext:(METMethodInvocationContext *)enclosingMethodInvocationContext;
+- (instancetype)initWithMethodName:(NSString *)methodName enclosingMethodInvocationContext:(nullable METMethodInvocationContext *)enclosingMethodInvocationContext;
 
-@property (copy, nonatomic) NSString *userID;
-@property (strong, nonatomic) METRandomStream *randomStream;
-@property (copy, nonatomic) NSString *randomSeed;
+@property (nullable, copy, nonatomic) NSString *userID;
+@property (nullable, strong, nonatomic) METRandomStream *randomStream;
+@property (nullable, copy, nonatomic) NSString *randomSeed;
 
 @end
+
+NS_ASSUME_NONNULL_END

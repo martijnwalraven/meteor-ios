@@ -20,16 +20,20 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METAccount : NSObject <NSCoding>
 
 + (instancetype)defaultAccount;
 + (void)setDefaultAccount:(METAccount *)account;
 
-- (instancetype)initWithUserID:(NSString *)userID resumeToken:(NSString *)token expiryDate:(NSDate *)tokenExpires NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithUserID:(NSString *)userID resumeToken:(NSString *)token expiryDate:(nullable NSDate *)tokenExpires NS_DESIGNATED_INITIALIZER;
 - (instancetype)init __attribute__((unavailable("Use -initWithUserID:resumeToken:expiryDate: instead")));
 
 @property (copy, nonatomic, readonly) NSString *userID;
 @property (copy, nonatomic, readonly) NSString *resumeToken;
-@property (copy, nonatomic, readonly) NSDate *expiryDate;
+@property (nullable, copy, nonatomic, readonly) NSDate *expiryDate;
 
 @end
+
+NS_ASSUME_NONNULL_END

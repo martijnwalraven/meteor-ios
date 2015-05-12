@@ -26,14 +26,16 @@
 @class METFetchRequest;
 @class METCollection;
 
+NS_ASSUME_NONNULL_BEGIN
+
 extern NSString * const METDatabaseDidChangeNotification;
 extern NSString * const METDatabaseChangesKey;
 
 @interface METDatabase : NSObject
 
-- (instancetype)initWithClient:(METDDPClient *)client NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithClient:(nullable METDDPClient *)client NS_DESIGNATED_INITIALIZER;
 - (instancetype)init __attribute__((unavailable("Use -initWithClient: instead")));
-@property (weak, nonatomic, readonly) METDDPClient *client;
+@property (nullable, weak, nonatomic, readonly) METDDPClient *client;
 
 - (NSArray *)executeFetchRequest:(METFetchRequest *)fetchRequest;
 - (METDocument *)documentWithKey:(METDocumentKey *)documentKey;
@@ -44,3 +46,5 @@ extern NSString * const METDatabaseChangesKey;
 - (METCollection *)collectionWithName:(NSString *)collectionName;
 
 @end
+
+NS_ASSUME_NONNULL_END

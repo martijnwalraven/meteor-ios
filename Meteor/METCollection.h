@@ -25,6 +25,8 @@
 @class METDatabase;
 @class METDocument;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METCollection : NSObject
 
 - (instancetype)initWithName:(NSString *)name database:(METDatabase *)database NS_DESIGNATED_INITIALIZER;
@@ -36,15 +38,17 @@
 - (METDocument *)documentWithID:(id)documentID;
 
 - (id)insertDocumentWithID:(id)documentID fields:(NSDictionary *)fields;
-- (id)insertDocumentWithID:(id)documentID fields:(NSDictionary *)fields completionHandler:(METMethodCompletionHandler)completionHandler;
+- (id)insertDocumentWithID:(id)documentID fields:(NSDictionary *)fields completionHandler:(nullable METMethodCompletionHandler)completionHandler;
 
 - (id)insertDocumentWithFields:(NSDictionary *)fields;
-- (id)insertDocumentWithFields:(NSDictionary *)fields completionHandler:(METMethodCompletionHandler)completionHandler;
+- (id)insertDocumentWithFields:(NSDictionary *)fields completionHandler:(nullable METMethodCompletionHandler)completionHandler;
 
 - (id)updateDocumentWithID:(id)documentID changedFields:(NSDictionary *)fields;
-- (id)updateDocumentWithID:(id)documentID changedFields:(NSDictionary *)fields completionHandler:(METMethodCompletionHandler)completionHandler;
+- (id)updateDocumentWithID:(id)documentID changedFields:(NSDictionary *)fields completionHandler:(nullable METMethodCompletionHandler)completionHandler;
 
 - (id)removeDocumentWithID:(id)documentID;
-- (id)removeDocumentWithID:(id)documentID completionHandler:(METMethodCompletionHandler)completionHandler;
+- (id)removeDocumentWithID:(id)documentID completionHandler:(nullable METMethodCompletionHandler)completionHandler;
 
 @end
+
+NS_ASSUME_NONNULL_END

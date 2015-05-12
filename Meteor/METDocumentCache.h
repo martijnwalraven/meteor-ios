@@ -26,6 +26,8 @@
 @class METFetchRequest;
 @class METDataUpdate;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface METDocumentCache : NSObject
 
 @property (weak, nonatomic) id<METDocumentCacheDelegate> delegate;
@@ -45,7 +47,9 @@
 
 @protocol METDocumentCacheDelegate <NSObject>
 
-- (void)documentCache:(METDocumentCache *)cache willChangeDocumentWithKey:(METDocumentKey *)documentKey fieldsBeforeChanges:(NSDictionary *)fieldsBeforeChanges;
-- (void)documentCache:(METDocumentCache *)cache didChangeDocumentWithKey:(METDocumentKey *)documentKey fieldsAfterChanges:(NSDictionary *)fieldsAfterChanges;
+- (void)documentCache:(METDocumentCache *)cache willChangeDocumentWithKey:(METDocumentKey *)documentKey fieldsBeforeChanges:(nullable NSDictionary *)fieldsBeforeChanges;
+- (void)documentCache:(METDocumentCache *)cache didChangeDocumentWithKey:(METDocumentKey *)documentKey fieldsAfterChanges:(nullable NSDictionary *)fieldsAfterChanges;
 
 @end
+
+NS_ASSUME_NONNULL_END
