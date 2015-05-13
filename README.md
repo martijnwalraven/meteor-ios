@@ -1,6 +1,6 @@
 # Meteor iOS
 
-Meteor iOS aims to be an easy way to integrate native iOS apps with a Meteor server through DDP, while supporting many of the principles that make Meteor such a great platform. It has been written in Objective-C, but is also perfectly usable from Swift.
+Meteor iOS integrates native iOS apps with the Meteor platform (http://www.meteor.com) through DDP. It offers full support for latency compensation and supports a Core Data programming model. It has been written in Objective-C, but is also perfectly usable from Swift.
 
 *If you're a Meteor web developer…* it's now easy for a native iOS app to participate in Meteor's full stack reactivity.
 

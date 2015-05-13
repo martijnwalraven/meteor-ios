@@ -1,9 +1,9 @@
 Pod::Spec.new do |s|
   s.name         = "Meteor"
   s.version      = "0.1.2"
-  s.summary      = "Meteor for iOS."
+  s.summary      = "Meteor iOS."
   s.description  = <<-DESC
-    Meteor for iOS is a DDP client with support for latency compensation and Core Data integration.
+    Meteor iOS integrates native iOS apps with the Meteor platform through DDP.
     DESC
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
   s.homepage     = "https://github.com/martijnwalraven/meteor-ios"
