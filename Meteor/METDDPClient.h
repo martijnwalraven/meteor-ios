@@ -22,12 +22,12 @@
 
 #import "METSubscription.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
 @class METDDPConnection;
 @class METDatabase;
 @protocol METDDPClientDelegate;
 @class METAccount;
+
+NS_ASSUME_NONNULL_BEGIN
 
 extern NSString * const METDDPErrorDomain;
 typedef NS_ENUM(NSInteger, METDDPErrorType) {
@@ -52,21 +52,41 @@ typedef void (^METMethodCompletionHandler)(id __nullable result, NSError * __nul
 typedef void (^METLogInCompletionHandler)(NSError * __nullable error);
 typedef void (^METLogOutCompletionHandler)(NSError * __nullable error);
 
+/*!
+ A `METDDPClient` object acts as the main entry point into Meteor iOS.
+ */
 @interface METDDPClient : NSObject
+
+#pragma mark - Initialization
+/// @name Initializing a METDDPClient Object
 
 - (instancetype)initWithConnection:(nullable METDDPConnection *)connection;
 - (instancetype)initWithServerURL:(NSURL *)serverURL;
 
+#pragma mark - Delegate
+/// @name Managing the Delegate
+
 @property (nullable, weak, nonatomic) id<METDDPClientDelegate> delegate;
 
-- (void)connect;
-- (void)disconnect;
+#pragma mark - Connection
+/// @name Accessing Connection Status
 
 @property (nullable, strong, nonatomic, readonly) NSURL *serverURL;
 @property (assign, nonatomic, readonly, getter=isConnected) BOOL connected;
 @property (assign, nonatomic, readonly) METDDPConnectionStatus connectionStatus;
 
+/// @name Managing the Connection
+
+- (void)connect;
+- (void)disconnect;
+
+#pragma mark - Database
+/// @name Accessing the Database
+
 @property (strong, nonatomic, readonly) METDatabase *database;
+
+#pragma mark - Subscriptions
+/// @name Managing Subscriptions
 
 - (METSubscription *)addSubscriptionWithName:(NSString *)name;
 - (METSubscription *)addSubscriptionWithName:(NSString *)name completionHandler:(nullable METSubscriptionCompletionHandler)completionHandler;
@@ -74,12 +94,23 @@ typedef void (^METLogOutCompletionHandler)(NSError * __nullable error);
 - (METSubscription *)addSubscriptionWithName:(NSString *)name parameters:(nullable NSArray *)parameters completionHandler:(nullable METSubscriptionCompletionHandler)completionHandler;
 - (void)removeSubscription:(METSubscription *)subscription;
 
+#pragma mark - Method Invocations
+/// @name Defining Method Stubs
+
 - (void)defineStubForMethodWithName:(NSString *)methodName usingBlock:(METMethodStub)block;
+
+/// @name Performing Method Invocations
+
 - (nullable id)callMethodWithName:(NSString *)methodName parameters:(nullable NSArray *)parameters completionHandler:(nullable METMethodCompletionHandler)completionHandler;
 - (nullable id)callMethodWithName:(NSString *)methodName parameters:(nullable NSArray *)parameters;
 
+#pragma mark - Accounts
+/// @name Accessing Account Status
+
 @property (assign, nonatomic, readonly, getter=isLoggingIn) BOOL loggingIn;
 @property (nullable, copy, nonatomic, readonly) NSString *userID;
+
+/// @name Logging Out
 
 - (void)logoutWithCompletionHandler:(nullable METLogOutCompletionHandler)completionHandler;
 

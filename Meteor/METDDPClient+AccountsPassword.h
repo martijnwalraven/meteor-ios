@@ -26,7 +26,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface METDDPClient (AccountsPassword)
 
+/// @name Logging In with Password
+
 - (void)loginWithEmail:(NSString *)email password:(NSString *)password completionHandler:(nullable METLogInCompletionHandler)completionHandler;
+
+/// @name Signing Up with Password
 
 - (void)signUpWithEmail:(NSString *)email password:(NSString *)password completionHandler:(nullable METLogInCompletionHandler)completionHandler;
 
