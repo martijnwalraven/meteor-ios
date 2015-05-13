@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>--company-id</key>
+	<string>com.meteor</string>
+	<key>--project-company</key>
+	<string>Meteor</string>
+	<key>--project-name</key>
+	<string>Meteor iOS</string>
+	<key>--repeat-first-par</key>
+	<false/>
+	<key>--merge-categories</key>
+	<true/>
+	<key>--keep-merged-sections</key>
+	<true/>
+	<key>--keep-undocumented-objects</key>
+	<true/>
+	<key>--keep-undocumented-members</key>
+	<true/>
+	<key>--warn-empty-description</key>
+	<true/>
+	<key>--warn-undocumented-member</key>
+	<true/>
+	<key>--warn-undocumented-object</key>
+	<true/>
+	<key>--warn-unknown-directive</key>
+	<true/>
+	<key>--warn-invalid-crossref</key>
+	<false/>
+	<key>--logformat</key>
+	<string>xcode</string>
+	<key>--verbose</key>
+	<string>2</string>
+</dict>
+</plist>

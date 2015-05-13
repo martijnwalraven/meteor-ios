@@ -17,11 +17,11 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   Meteor:
-    :path: .
+    :path: "."
 
 SPEC CHECKSUMS:
   InflectorKit: 64497199e6764f4d8337cab7f700a77b13d76a73
-  Meteor: 6f36ba1e8b204bdb57c9b888a842a67624e60991
+  Meteor: 8d641c15ac35ccc359718b40d57a80f2fee8a51d
   OCMock: a10ea9f0a6e921651f96f78b6faee95ebc813b92
   PocketSocket: eee7ef375f55b98e7ca79e097d9c61fd688e9494
   SimpleKeychain: 8de48eb1de10c6403911a6be52e127e5b5d31404
