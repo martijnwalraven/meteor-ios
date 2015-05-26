@@ -146,7 +146,7 @@
 		9FFE08571AE41E5900416683 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FA46E671AE417AE00598B70 /* CoreData.framework */; };
 		AEA4738A754B651E031D4529 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20D7FE8BF28679F563811FBA /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CE653CC0EC62642F38EE6F7A /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20D7FE8BF28679F563811FBA /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		F47FD7C43EB50DA52F3F90D1 /* Pods_UnitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22FA5C34DDDBE58156D3D2F6 /* Pods_UnitTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		DE1E1B5C297EFE73FC445528 /* Pods_Unit_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5DCC16BF091962C3365E676 /* Pods_Unit_Tests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -291,11 +291,14 @@
 		9FAB38A81AE3E88200E99519 /* NSDictionary+METAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+METAdditions.m"; sourceTree = "<group>"; };
 		9FAB38A91AE3E88200E99519 /* NSString+METAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+METAdditions.h"; sourceTree = "<group>"; };
 		9FAB38AA1AE3E88200E99519 /* NSString+METAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+METAdditions.m"; sourceTree = "<group>"; };
-		9FAB38FC1AE3E8C000E99519 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FAB38FC1AE3E8C000E99519 /* Unit Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Unit Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FAB38FF1AE3E8C000E99519 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9FAB390C1AE3E8D700E99519 /* ServerIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ServerIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FAB390C1AE3E8D700E99519 /* Server Integration Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Server Integration Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FAB390F1AE3E8D700E99519 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B38B774A5339E54DAB89D715 /* Pods-Unit Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unit Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Unit Tests/Pods-Unit Tests.release.xcconfig"; sourceTree = "<group>"; };
+		C5DCC16BF091962C3365E676 /* Pods_Unit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Unit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCC56EB4A80155520AFEE2AA /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		EAB5ED093B389561B3116ADE /* Pods-Unit Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Unit Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Unit Tests/Pods-Unit Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED994D2DA2112C0E22C6BD30 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -315,7 +318,7 @@
 				9FFE08571AE41E5900416683 /* CoreData.framework in Frameworks */,
 				9F90ED321AE41A1700D7BF84 /* Meteor.framework in Frameworks */,
 				CE653CC0EC62642F38EE6F7A /* Pods.framework in Frameworks */,
-				F47FD7C43EB50DA52F3F90D1 /* Pods_UnitTests.framework in Frameworks */,
+				DE1E1B5C297EFE73FC445528 /* Pods_Unit_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,6 +340,8 @@
 			children = (
 				CCC56EB4A80155520AFEE2AA /* Pods.debug.xcconfig */,
 				ED994D2DA2112C0E22C6BD30 /* Pods.release.xcconfig */,
+				EAB5ED093B389561B3116ADE /* Pods-Unit Tests.debug.xcconfig */,
+				B38B774A5339E54DAB89D715 /* Pods-Unit Tests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -591,8 +596,8 @@
 			isa = PBXGroup;
 			children = (
 				9FAB38421AE3E76900E99519 /* Meteor.framework */,
-				9FAB38FC1AE3E8C000E99519 /* UnitTests.xctest */,
-				9FAB390C1AE3E8D700E99519 /* ServerIntegrationTests.xctest */,
+				9FAB38FC1AE3E8C000E99519 /* Unit Tests.xctest */,
+				9FAB390C1AE3E8D700E99519 /* Server Integration Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -688,6 +693,7 @@
 				9FA46E671AE417AE00598B70 /* CoreData.framework */,
 				20D7FE8BF28679F563811FBA /* Pods.framework */,
 				22FA5C34DDDBE58156D3D2F6 /* Pods_UnitTests.framework */,
+				C5DCC16BF091962C3365E676 /* Pods_Unit_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -786,7 +792,7 @@
 			);
 			name = "Unit Tests";
 			productName = MeteorUnitTests;
-			productReference = 9FAB38FC1AE3E8C000E99519 /* UnitTests.xctest */;
+			productReference = 9FAB38FC1AE3E8C000E99519 /* Unit Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		9FAB390B1AE3E8D700E99519 /* Server Integration Tests */ = {
@@ -807,7 +813,7 @@
 			);
 			name = "Server Integration Tests";
 			productName = MeteorServerIntegrationTests;
-			productReference = 9FAB390C1AE3E8D700E99519 /* ServerIntegrationTests.xctest */;
+			productReference = 9FAB390C1AE3E8D700E99519 /* Server Integration Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -949,7 +955,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Unit Tests/Pods-Unit Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A3BA7F7F17B333B3E4941E50 /* Check Pods Manifest.lock */ = {
@@ -979,7 +985,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Unit Tests/Pods-Unit Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EC8503DE5C0400CF33FECB0D /* Embed Pods Frameworks */ = {
@@ -1268,7 +1274,7 @@
 		};
 		9FAB39061AE3E8C000E99519 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CCC56EB4A80155520AFEE2AA /* Pods.debug.xcconfig */;
+			baseConfigurationReference = EAB5ED093B389561B3116ADE /* Pods-Unit Tests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = NO;
 				CLANG_MODULES_AUTOLINK = NO;
@@ -1289,7 +1295,7 @@
 		};
 		9FAB39071AE3E8C000E99519 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ED994D2DA2112C0E22C6BD30 /* Pods.release.xcconfig */;
+			baseConfigurationReference = B38B774A5339E54DAB89D715 /* Pods-Unit Tests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = NO;
 				CLANG_MODULES_AUTOLINK = NO;
@@ -1352,6 +1358,7 @@
 				9F1EEB8F1B0357AF00402BFB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9FAB383C1AE3E76900E99519 /* Build configuration list for PBXProject "Meteor" */ = {
 			isa = XCConfigurationList;

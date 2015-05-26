@@ -1,5 +1,5 @@
 framework module SimpleKeychain {
-  umbrella header "Pods-UnitTests-SimpleKeychain-umbrella.h"
+  umbrella header "Pods-Unit Tests-SimpleKeychain-umbrella.h"
 
   export *
   module * { export * }

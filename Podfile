@@ -7,11 +7,12 @@ platform :ios, '7.0'
 workspace 'Meteor'
 
 xcodeproj 'Meteor'
-link_with ['Meteor', 'UnitTests', 'ServerIntegrationTests']
 
 podspec
+
+link_with ['Meteor', 'Server Integration Tests']
   
-target 'UnitTests' do
+target 'Unit Tests' do
   pod 'OCMock'
 end
 
