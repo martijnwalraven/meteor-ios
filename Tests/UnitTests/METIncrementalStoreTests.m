@@ -499,7 +499,7 @@
   XCTAssertEqualObjects([NSSet setWithArray:(@[[self documentIDForObjectID:message1.objectID], [self documentIDForObjectID:message2.objectID]])], [self documentIDsForObjects:[lovelace valueForKey:@"sentMessages"]]);
 }
 
-- (void)testSavingOneToManyRelationshipWithOneWayReferencing {
+- (void)testSavingOneToManyRelationshipWithReferenceFieldOnTheOneSide {
   [self setNoStorageForRelationshipWithName:@"sentMessages" inEntityWithName:@"Player"];
   
   NSManagedObject *lovelace = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"]];
@@ -512,6 +512,21 @@
   XCTAssertEqualObjects([self documentIDForObjectID:lovelace.objectID], [_store documentForObjectWithID:message1.objectID][@"senderId"]);
   XCTAssertEqualObjects([self documentIDForObjectID:lovelace.objectID], [_store documentForObjectWithID:message2.objectID][@"senderId"]);
   XCTAssertNil([_store documentForObjectWithID:lovelace.objectID][@"sentMessageIds"]);
+}
+
+- (void)testSavingOneToManyRelationshipWithReferenceFieldOnTheManySide {
+  [self setNoStorageForRelationshipWithName:@"sender" inEntityWithName:@"Message"];
+  
+  NSManagedObject *lovelace = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"]];
+  NSManagedObject *message1 = [NSEntityDescription insertNewObjectForEntityForName:@"Message" inManagedObjectContext:_managedObjectContext];
+  NSManagedObject *message2 = [NSEntityDescription insertNewObjectForEntityForName:@"Message" inManagedObjectContext:_managedObjectContext];
+  
+  [lovelace setValue:[NSSet setWithArray:@[message1, message2]] forKey:@"sentMessages"];
+  [self saveManagedObjectContext];
+  
+  XCTAssertNil([_store documentForObjectWithID:message1.objectID][@"senderId"]);
+  XCTAssertNil([_store documentForObjectWithID:message2.objectID][@"senderId"]);
+  XCTAssertEqualObjects([NSSet setWithArray:(@[[self documentIDForObjectID:message1.objectID], [self documentIDForObjectID:message2.objectID]])], [self documentIDsForObjects:[lovelace valueForKey:@"sentMessages"]]);
 }
 
 - (void)testSavingOneToManyRelationshipWithNilValue {
@@ -606,6 +621,8 @@
 }
 
 - (void)testPostsObjectsDidChangeNotificationForOneToOneRelationshipWithOneWayReferencing {
+  [self setNoStorageForRelationshipWithName:@"player" inEntityWithName:@"Avatar"];
+
   [_database performUpdatesInLocalCacheWithoutTrackingChanges:^(METDocumentCache *localCache) {
     [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"avatars" documentID:@"avatar1"] fields:@{}];
   }];
@@ -624,6 +641,8 @@
 }
 
 - (void)testOnlyPostsObjectsDidChangeNotificationForOneToOneRelationshipWithOneWayReferencingIfReferenceFieldChanged {
+  [self setNoStorageForRelationshipWithName:@"player" inEntityWithName:@"Avatar"];
+
   [_database performUpdatesInLocalCacheWithoutTrackingChanges:^(METDocumentCache *localCache) {
     [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"avatars" documentID:@"avatar1"] fields:@{}];
   }];
@@ -641,7 +660,30 @@
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
 }
 
-- (void)testPostsObjectsDidChangeNotificationForOneToManyRelationshipWithOneWayReferencing {
+- (void)testPostsObjectsDidChangeNotificationForOneToOneRelationshipWithOneWayReferencingWhenReferencedDocumentIsAddedLater {
+  [self setNoStorageForRelationshipWithName:@"player" inEntityWithName:@"Avatar"];
+  
+  [_database performUpdatesInLocalCacheWithoutTrackingChanges:^(METDocumentCache *localCache) {
+    [localCache updateDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changedFields:@{@"avatarId": @"avatar1"}];
+  }];
+  
+  [self expectationForNotification:METIncrementalStoreObjectsDidChangeNotification object:_store handler:^BOOL(NSNotification *notification) {
+    NSDictionary *userInfo = notification.userInfo;
+    XCTAssertEqualObjects([NSSet setWithArray:@[@"avatar1"]], [self documentIDsForObjectIDs:userInfo[NSInsertedObjectsKey]]);
+    XCTAssertEqualObjects([NSSet setWithArray:(@[@"lovelace"])], [self documentIDsForObjectIDs:userInfo[NSUpdatedObjectsKey]]);
+    return YES;
+  }];
+  
+  [_database performUpdatesInLocalCache:^(METDocumentCache *localCache) {
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"avatars" documentID:@"avatar1"] fields:@{}];
+  }];
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+}
+
+- (void)testPostsObjectsDidChangeNotificationForOneToManyRelationshipWithReferenceFieldOnTheOneSide {
+  [self setNoStorageForRelationshipWithName:@"sentMessages" inEntityWithName:@"Player"];
+
   [self expectationForNotification:METIncrementalStoreObjectsDidChangeNotification object:_store handler:^BOOL(NSNotification *notification) {
     NSDictionary *userInfo = notification.userInfo;
     XCTAssertEqualObjects([NSSet setWithArray:@[@"message1"]], [self documentIDsForObjectIDs:userInfo[NSInsertedObjectsKey]]);
@@ -656,7 +698,9 @@
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
 }
 
-- (void)testOnlyPostsObjectsDidChangeNotificationForOneToManyRelationshipWithOneWayReferencingIfReferenceFieldChanged {
+- (void)testOnlyPostsObjectsDidChangeNotificationForOneToManyRelationshipWithReferenceFieldOnTheOneSideIfFieldChanged {
+  [self setNoStorageForRelationshipWithName:@"sentMessages" inEntityWithName:@"Player"];
+
   [self expectationForNotification:METIncrementalStoreObjectsDidChangeNotification object:_store handler:^BOOL(NSNotification *notification) {
     NSDictionary *userInfo = notification.userInfo;
     XCTAssertEqualObjects([NSSet setWithArray:@[@"message1"]], [self documentIDsForObjectIDs:userInfo[NSInsertedObjectsKey]]);
@@ -666,6 +710,88 @@
   
   [_database performUpdatesInLocalCache:^(METDocumentCache *localCache) {
     [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"messages" documentID:@"message1"] fields:@{@"text": @"Hello"}];
+  }];
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+}
+
+- (void)testPostsObjectsDidChangeNotificationForOneToManyRelationshipWithReferenceFieldOnTheOneSideWhenReferencedDocumentIsAddedLater {
+  [self setNoStorageForRelationshipWithName:@"sentMessages" inEntityWithName:@"Player"];
+  
+  [_database performUpdatesInLocalCacheWithoutTrackingChanges:^(METDocumentCache *localCache) {
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"messages" documentID:@"message1"] fields:@{@"senderId": @"crick"}];
+  }];
+  
+  [self expectationForNotification:METIncrementalStoreObjectsDidChangeNotification object:_store handler:^BOOL(NSNotification *notification) {
+    NSDictionary *userInfo = notification.userInfo;
+    XCTAssertEqualObjects([NSSet setWithArray:@[@"crick"]], [self documentIDsForObjectIDs:userInfo[NSInsertedObjectsKey]]);
+    XCTAssertEqualObjects([NSSet setWithArray:@[@"message1"]], [self documentIDsForObjectIDs:userInfo[NSUpdatedObjectsKey]]);
+    return YES;
+  }];
+  
+  [_database performUpdatesInLocalCache:^(METDocumentCache *localCache) {
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"crick"] fields:@{@"name": @"Francis Crick"}];
+  }];
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+}
+
+- (void)testPostsObjectsDidChangeNotificationForOneToManyRelationshipWithReferenceFieldOnTheManySide {
+  [self setNoStorageForRelationshipWithName:@"sender" inEntityWithName:@"Message"];
+  
+  [_database performUpdatesInLocalCacheWithoutTrackingChanges:^(METDocumentCache *localCache) {
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"messages" documentID:@"message1"] fields:@{}];
+  }];
+  
+  [self expectationForNotification:METIncrementalStoreObjectsDidChangeNotification object:_store handler:^BOOL(NSNotification *notification) {
+    NSDictionary *userInfo = notification.userInfo;
+    XCTAssertEqualObjects([NSSet setWithArray:(@[@"lovelace", @"message1"])], [self documentIDsForObjectIDs:userInfo[NSUpdatedObjectsKey]]);
+    return YES;
+  }];
+  
+  [_database performUpdatesInLocalCache:^(METDocumentCache *localCache) {
+    [localCache updateDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changedFields:@{@"sentMessageIds": @[@"message1"]}];
+  }];
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+}
+
+- (void)testOnlyPostsObjectsDidChangeNotificationForOneToManyRelationshipWithReferenceFieldOnTheManySideIfFieldChanged {
+  [self setNoStorageForRelationshipWithName:@"sender" inEntityWithName:@"Message"];
+  
+  [_database performUpdatesInLocalCacheWithoutTrackingChanges:^(METDocumentCache *localCache) {
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"messages" documentID:@"message1"] fields:@{}];
+  }];
+  
+  [self expectationForNotification:METIncrementalStoreObjectsDidChangeNotification object:_store handler:^BOOL(NSNotification *notification) {
+    NSDictionary *userInfo = notification.userInfo;
+    XCTAssertEqualObjects([NSSet setWithArray:(@[@"lovelace"])], [self documentIDsForObjectIDs:userInfo[NSUpdatedObjectsKey]]);
+    return YES;
+  }];
+  
+  [_database performUpdatesInLocalCache:^(METDocumentCache *localCache) {
+    [localCache updateDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changedFields:@{@"score": @30}];
+  }];
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+}
+
+- (void)testPostsObjectsDidChangeNotificationForOneToManyRelationshipWithReferenceFieldOnTheManySideWhenReferencedDocumentIsAddedLater {
+  [self setNoStorageForRelationshipWithName:@"sender" inEntityWithName:@"Message"];
+  
+  [_database performUpdatesInLocalCacheWithoutTrackingChanges:^(METDocumentCache *localCache) {
+    [localCache updateDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changedFields:@{@"sentMessageIds": @[@"message1"]}];
+  }];
+  
+  [self expectationForNotification:METIncrementalStoreObjectsDidChangeNotification object:_store handler:^BOOL(NSNotification *notification) {
+    NSDictionary *userInfo = notification.userInfo;
+    XCTAssertEqualObjects([NSSet setWithArray:@[@"message1"]], [self documentIDsForObjectIDs:userInfo[NSInsertedObjectsKey]]);
+    XCTAssertEqualObjects([NSSet setWithArray:(@[@"lovelace"])], [self documentIDsForObjectIDs:userInfo[NSUpdatedObjectsKey]]);
+    return YES;
+  }];
+  
+  [_database performUpdatesInLocalCache:^(METDocumentCache *localCache) {
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"messages" documentID:@"message1"] fields:@{}];
   }];
   
   [self waitForExpectationsWithTimeout:1.0 handler:nil];
