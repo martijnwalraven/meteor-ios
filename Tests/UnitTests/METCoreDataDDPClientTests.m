@@ -57,7 +57,87 @@
   XCTAssertEqualObjects(@[@"lovelace"], [_client convertParameters:@[lovelace.objectID]]);
 }
 
+- (void)testMergesChangesForOneToOneRelationshipWithOneWayReferencingWhenReferencedDocumentIsRemovedAndAddedAgainLater {
+  [self setNoStorageForRelationshipWithName:@"player" inEntityWithName:@"Avatar"];
+  
+  [_client.database performUpdatesInLocalCacheWithoutTrackingChanges:^(METDocumentCache *localCache) {
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"avatars" documentID:@"avatar1"] fields:@{}];
+    [localCache updateDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] changedFields:@{@"avatarId": @"avatar1"}];
+  }];
+  
+  NSManagedObject *lovelace = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"]];
+  NSManagedObject *avatar1 = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"avatars" documentID:@"avatar1"]];
+  
+  XCTAssertEqualObjects(avatar1, [lovelace valueForKey:@"avatar"]);
+  XCTAssertEqualObjects(lovelace, [avatar1 valueForKey:@"player"]);
+  
+  [self expectationForChangeToObject:avatar1 userInfoKey:NSDeletedObjectsKey];
+  
+  [_client.database performUpdatesInLocalCache:^(METDocumentCache *localCache) {
+    [localCache removeDocumentWithKey:[METDocumentKey keyWithCollectionName:@"avatars" documentID:@"avatar1"]];
+  }];
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+  
+  XCTAssertNil([lovelace valueForKey:@"avatar"]);
+  
+  [self expectationForChangeToObject:avatar1 userInfoKey:NSInsertedObjectsKey];
+  
+  [_client.database performUpdatesInLocalCache:^(METDocumentCache *localCache) {
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"avatars" documentID:@"avatar1"] fields:@{@"name": @"test"}];
+  }];
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+  
+  XCTAssertEqualObjects(avatar1, [lovelace valueForKey:@"avatar"]);
+  XCTAssertEqualObjects(lovelace, [avatar1 valueForKey:@"player"]);
+}
+
+- (void)testMergesChangesForOneToManyRelationshipWithReferenceFieldOnTheOneSideWhenReferencedDocumentIsRemovedAndAddedAgainLater {
+  [self setNoStorageForRelationshipWithName:@"sentMessages" inEntityWithName:@"Player"];
+  
+  [_client.database performUpdatesInLocalCacheWithoutTrackingChanges:^(METDocumentCache *localCache) {
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] fields:@{@"name": @"Ada Lovelace"}];
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"messages" documentID:@"message1"] fields:@{@"senderId": @"lovelace"}];
+  }];
+  
+  NSManagedObject *lovelace = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"]];
+  NSManagedObject *message1 = [self existingObjectForDocumentWithKey:[METDocumentKey keyWithCollectionName:@"messages" documentID:@"message1"]];
+  
+  XCTAssertEqualObjects(lovelace, [message1 valueForKey:@"sender"]);
+  XCTAssertEqualObjects([NSSet setWithObject:message1], [lovelace valueForKey:@"sentMessages"]);
+  
+  [self expectationForChangeToObject:lovelace userInfoKey:NSDeletedObjectsKey];
+  
+  [_client.database performUpdatesInLocalCache:^(METDocumentCache *localCache) {
+    [localCache removeDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"]];
+  }];
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+  
+  XCTAssertNil([message1 valueForKey:@"sender"]);
+  
+  [self expectationForChangeToObject:lovelace userInfoKey:NSInsertedObjectsKey];
+  
+  [_client.database performUpdatesInLocalCache:^(METDocumentCache *localCache) {
+    [localCache addDocumentWithKey:[METDocumentKey keyWithCollectionName:@"players" documentID:@"lovelace"] fields:@{@"name": @"Ada Lovelace"}];
+  }];
+  
+  [self waitForExpectationsWithTimeout:1.0 handler:nil];
+  
+  NSLog(@"lovelace.sentMessages: %@", [lovelace valueForKey:@"sentMessages"]);
+  
+  XCTAssertEqualObjects(lovelace, [message1 valueForKey:@"sender"]);
+  XCTAssertEqualObjects([NSSet setWithObject:message1], [lovelace valueForKey:@"sentMessages"]);
+}
+
 #pragma mark - Helper Methods
+
+- (void)setNoStorageForRelationshipWithName:(NSString *)relationshipName inEntityWithName:(NSString *)entityName {
+  NSEntityDescription *entity = _client.managedObjectModel.entitiesByName[entityName];
+  NSRelationshipDescription *relationship = entity.relationshipsByName[relationshipName];
+  relationship.userInfo = @{@"storage": @NO};
+}
 
 - (NSManagedObject *)existingObjectWithID:(NSManagedObjectID *)objectID {
   NSError *error;
@@ -71,6 +151,13 @@
 - (NSManagedObject *)existingObjectForDocumentWithKey:(METDocumentKey *)documentKey {
   NSManagedObjectID *objectID = [_client.persistentStore objectIDForDocumentKey:documentKey];
   return [self existingObjectWithID:objectID];
+}
+
+- (XCTestExpectation *)expectationForChangeToObject:(NSManagedObject *)object userInfoKey:(NSString *)userInfoKey {
+  return [self expectationForNotification:NSManagedObjectContextObjectsDidChangeNotification object:object.managedObjectContext handler:^BOOL(NSNotification *notification) {
+    NSSet *changedObjects = notification.userInfo[userInfoKey];
+    return [changedObjects containsObject:object];
+  }];
 }
 
 @end

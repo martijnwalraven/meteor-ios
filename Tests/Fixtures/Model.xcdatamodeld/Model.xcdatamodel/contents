@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14D136" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Avatar" syncable="YES">
-        <relationship name="player" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Player" inverseName="avatar" inverseEntity="Player" syncable="YES"/>
+    <entity name="Avatar" representedClassName="METManagedObject" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="player" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Player" inverseName="avatar" inverseEntity="Player" syncable="YES"/>
     </entity>
     <entity name="Meal" syncable="YES">
         <userInfo>
@@ -15,20 +16,20 @@
                 <entry key="fieldName" value="createdAt"/>
             </userInfo>
         </attribute>
-        <relationship name="receivers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Player" inverseName="receivedMessages" inverseEntity="Player" syncable="YES"/>
-        <relationship name="sender" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Player" inverseName="sentMessages" inverseEntity="Player" syncable="YES"/>
+        <relationship name="receivers" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Player" inverseName="receivedMessages" inverseEntity="Player" syncable="YES"/>
+        <relationship name="sender" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Player" inverseName="sentMessages" inverseEntity="Player" syncable="YES"/>
     </entity>
-    <entity name="Player" syncable="YES">
+    <entity name="Player" representedClassName="METManagedObject" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="score" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <relationship name="avatar" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Avatar" inverseName="player" inverseEntity="Avatar" syncable="YES"/>
-        <relationship name="receivedMessages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="receivers" inverseEntity="Message" syncable="YES"/>
-        <relationship name="sentMessages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="sender" inverseEntity="Message" syncable="YES"/>
+        <relationship name="avatar" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Avatar" inverseName="player" inverseEntity="Avatar" syncable="YES"/>
+        <relationship name="receivedMessages" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Message" inverseName="receivers" inverseEntity="Message" syncable="YES"/>
+        <relationship name="sentMessages" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Message" inverseName="sender" inverseEntity="Message" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Avatar" positionX="-63" positionY="36" width="128" height="58"/>
+        <element name="Avatar" positionX="-63" positionY="36" width="128" height="30"/>
         <element name="Meal" positionX="-54" positionY="36" width="128" height="45"/>
-        <element name="Message" positionX="-54" positionY="9" width="128" height="103"/>
+        <element name="Message" positionX="-54" positionY="9" width="128" height="105"/>
         <element name="Player" positionX="-63" positionY="-18" width="128" height="120"/>
     </elements>
 </model>

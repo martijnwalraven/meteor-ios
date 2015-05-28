@@ -270,8 +270,9 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
   NSString *fieldName = [self fieldNameForRelationship:relationship];
   id destinationDocumentID = document[fieldName];
   
-  if (destinationDocumentID) {
-    return [self objectIDForDocumentKey:[METDocumentKey keyWithCollectionName:[self collectionNameForEntity:relationship.destinationEntity] documentID:destinationDocumentID]];
+  METDocument *destinationDocument = [_client.database documentWithKey:[METDocumentKey keyWithCollectionName:[self collectionNameForEntity:relationship.destinationEntity] documentID:destinationDocumentID]];
+  if (destinationDocument) {
+    return [self objectIDForDocument:destinationDocument];
   }
   
   return [NSNull null];
@@ -302,7 +303,12 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
   if (!destinationDocumentIDs) return nil;
   NSEntityDescription *destinationEntity = relationship.destinationEntity;
   return [destinationDocumentIDs mappedArrayUsingBlock:^id(id destinationDocumentID) {
-    return [self objectIDForDocumentKey:[METDocumentKey keyWithCollectionName:[self collectionNameForEntity:destinationEntity] documentID:destinationDocumentID]];
+    METDocument *destinationDocument = [_client.database documentWithKey:[METDocumentKey keyWithCollectionName:[self collectionNameForEntity:destinationEntity] documentID:destinationDocumentID]];
+    if (destinationDocument) {
+      return [self objectIDForDocument:destinationDocument];
+    } else {
+      return nil;
+    }
   }];
 }
 
@@ -588,5 +594,5 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
   userInfo[NSLocalizedDescriptionKey] = localizedDescription;
   return [NSError errorWithDomain:METIncrementalStoreErrorDomain code:code userInfo:userInfo];
 }
-
+ 
 @end
