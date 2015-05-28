@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Meteor"
-  s.version      = "0.1.2"
+  s.version      = "0.1.3"
   s.summary      = "Meteor iOS."
   s.description  = <<-DESC
     Meteor iOS integrates native iOS apps with the Meteor platform through DDP.
