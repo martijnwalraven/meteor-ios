@@ -14,7 +14,4 @@
          location = "group:Examples/Leaderboard/Leaderboard.xcodeproj">
       </FileRef>
    </Group>
-   <FileRef
-      location = "group:Pods/Pods.xcodeproj">
-   </FileRef>
 </Workspace>
