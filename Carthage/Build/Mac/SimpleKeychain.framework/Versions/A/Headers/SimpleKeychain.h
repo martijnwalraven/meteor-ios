@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 auth0. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for SimpleKeychain.
 FOUNDATION_EXPORT double SimpleKeychainVersionNumber;

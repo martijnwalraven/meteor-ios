@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9FAB38411AE3E76900E99519"
                BuildableName = "Meteor.framework"
-               BlueprintName = "Meteor"
+               BlueprintName = "Meteor iOS"
                ReferencedContainer = "container:Meteor.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -58,7 +58,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9FAB38411AE3E76900E99519"
             BuildableName = "Meteor.framework"
-            BlueprintName = "Meteor"
+            BlueprintName = "Meteor iOS"
             ReferencedContainer = "container:Meteor.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -77,7 +77,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9FAB38411AE3E76900E99519"
             BuildableName = "Meteor.framework"
-            BlueprintName = "Meteor"
+            BlueprintName = "Meteor iOS"
             ReferencedContainer = "container:Meteor.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -95,7 +95,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9FAB38411AE3E76900E99519"
             BuildableName = "Meteor.framework"
-            BlueprintName = "Meteor"
+            BlueprintName = "Meteor iOS"
             ReferencedContainer = "container:Meteor.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

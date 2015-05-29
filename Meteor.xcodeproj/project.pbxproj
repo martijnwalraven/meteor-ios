@@ -718,6 +718,7 @@
 				9FAB38BA1AE3E88200E99519 /* METDatabaseChanges.h in Headers */,
 				9FAB38CD1AE3E88200E99519 /* METDocumentChangeDetails.h in Headers */,
 				9FAB38B41AE3E88200E99519 /* METCoreDataDDPClient.h in Headers */,
+				9FAB38D91AE3E88200E99519 /* METIncrementalStore.h in Headers */,
 				9FAB38F61AE3E88200E99519 /* NSString+METAdditions.h in Headers */,
 				9FAB38BE1AE3E88200E99519 /* METDDPClient_Internal.h in Headers */,
 				9FAB38B61AE3E88200E99519 /* METDatabase_Internal.h in Headers */,
@@ -748,16 +749,15 @@
 				9FAB38EB1AE3E88200E99519 /* METSubscription_Internal.h in Headers */,
 				9FAB38F21AE3E88200E99519 /* NSArray+METAdditions.h in Headers */,
 				9FAB38F41AE3E88200E99519 /* NSDictionary+METAdditions.h in Headers */,
-				9FAB38D91AE3E88200E99519 /* METIncrementalStore.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		9FAB38411AE3E76900E99519 /* Meteor */ = {
+		9FAB38411AE3E76900E99519 /* Meteor iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9FAB38581AE3E76900E99519 /* Build configuration list for PBXNativeTarget "Meteor" */;
+			buildConfigurationList = 9FAB38581AE3E76900E99519 /* Build configuration list for PBXNativeTarget "Meteor iOS" */;
 			buildPhases = (
 				9FAB383D1AE3E76900E99519 /* Sources */,
 				9FAB383E1AE3E76900E99519 /* Frameworks */,
@@ -769,7 +769,7 @@
 			);
 			dependencies = (
 			);
-			name = Meteor;
+			name = "Meteor iOS";
 			productName = Meteor;
 			productReference = 9FAB38421AE3E76900E99519 /* Meteor.framework */;
 			productType = "com.apple.product-type.framework";
@@ -851,7 +851,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9FAB38411AE3E76900E99519 /* Meteor */,
+				9FAB38411AE3E76900E99519 /* Meteor iOS */,
 				9FAB38FB1AE3E8C000E99519 /* Unit Tests */,
 				9FAB390B1AE3E8D700E99519 /* Server Integration Tests */,
 				9F1EEB8C1B0357AF00402BFB /* API Documentation */,
@@ -1092,12 +1092,12 @@
 /* Begin PBXTargetDependency section */
 		9FAB39041AE3E8C000E99519 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9FAB38411AE3E76900E99519 /* Meteor */;
+			target = 9FAB38411AE3E76900E99519 /* Meteor iOS */;
 			targetProxy = 9FAB39031AE3E8C000E99519 /* PBXContainerItemProxy */;
 		};
 		9FAB39141AE3E8D700E99519 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9FAB38411AE3E76900E99519 /* Meteor */;
+			target = 9FAB38411AE3E76900E99519 /* Meteor iOS */;
 			targetProxy = 9FAB39131AE3E8D700E99519 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1221,7 +1221,7 @@
 				INFOPLIST_FILE = Meteor/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Meteor;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1243,7 +1243,7 @@
 				INFOPLIST_FILE = Meteor/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Meteor;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -1341,7 +1341,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9FAB38581AE3E76900E99519 /* Build configuration list for PBXNativeTarget "Meteor" */ = {
+		9FAB38581AE3E76900E99519 /* Build configuration list for PBXNativeTarget "Meteor iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9FAB38591AE3E76900E99519 /* Debug */,

@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 mattt thompson. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for InflectorKit.
 FOUNDATION_EXPORT double InflectorKitVersionNumber;

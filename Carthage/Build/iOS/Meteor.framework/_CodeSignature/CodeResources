@@ -6,7 +6,7 @@
 	<dict>
 		<key>Frameworks/InflectorKit.framework/InflectorKit</key>
 		<data>
-		sr3/pa0Kmqn+o4AebVQaiPsocZE=
+		XUIaFcYK4nwXW+EBZjh1O7fjh3A=
 		</data>
 		<key>Frameworks/InflectorKit.framework/Info.plist</key>
 		<data>
@@ -22,7 +22,7 @@
 		</data>
 		<key>Frameworks/PocketSocket.framework/PocketSocket</key>
 		<data>
-		LPR4r0US8bpwl+ZADfvag0LkJCg=
+		vZHaiabkVo3aZvWIJ4tmXNaN6oE=
 		</data>
 		<key>Frameworks/PocketSocket.framework/_CodeSignature/CodeResources</key>
 		<data>
@@ -34,7 +34,7 @@
 		</data>
 		<key>Frameworks/SimpleKeychain.framework/SimpleKeychain</key>
 		<data>
-		ewYT7CYvPK4k4FyCBEtGOsQI40U=
+		0vn3IGdd4XAv9qgTBRuYz34C0dA=
 		</data>
 		<key>Frameworks/SimpleKeychain.framework/_CodeSignature/CodeResources</key>
 		<data>
@@ -94,7 +94,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		F/R2F2HB6+T4hnZ/QiHPQ3x0CU0=
+		gJ8yMfLe9eaLrfwl/KaL/r2c0UE=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -105,7 +105,7 @@
 	<dict>
 		<key>Frameworks/InflectorKit.framework/InflectorKit</key>
 		<data>
-		sr3/pa0Kmqn+o4AebVQaiPsocZE=
+		XUIaFcYK4nwXW+EBZjh1O7fjh3A=
 		</data>
 		<key>Frameworks/InflectorKit.framework/Info.plist</key>
 		<data>
@@ -121,7 +121,7 @@
 		</data>
 		<key>Frameworks/PocketSocket.framework/PocketSocket</key>
 		<data>
-		LPR4r0US8bpwl+ZADfvag0LkJCg=
+		vZHaiabkVo3aZvWIJ4tmXNaN6oE=
 		</data>
 		<key>Frameworks/PocketSocket.framework/_CodeSignature/CodeResources</key>
 		<data>
@@ -133,7 +133,7 @@
 		</data>
 		<key>Frameworks/SimpleKeychain.framework/SimpleKeychain</key>
 		<data>
-		ewYT7CYvPK4k4FyCBEtGOsQI40U=
+		0vn3IGdd4XAv9qgTBRuYz34C0dA=
 		</data>
 		<key>Frameworks/SimpleKeychain.framework/_CodeSignature/CodeResources</key>
 		<data>
