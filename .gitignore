@@ -43,4 +43,4 @@ DerivedData
 .meteor/meteorite
 
 # Carthage
-Carthage/Checkouts
+Carthage/Checkouts/
