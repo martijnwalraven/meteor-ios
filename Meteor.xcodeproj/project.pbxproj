@@ -25,6 +25,9 @@
 		7CBF1A581B18FF3C00967AEE /* InflectorKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A551B18FF3C00967AEE /* InflectorKit.framework */; };
 		7CBF1A591B18FF3C00967AEE /* PocketSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A561B18FF3C00967AEE /* PocketSocket.framework */; };
 		7CBF1A5A1B18FF3C00967AEE /* SimpleKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A571B18FF3C00967AEE /* SimpleKeychain.framework */; };
+		7CBF1A5C1B18FFAA00967AEE /* InflectorKit.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7CBF1A551B18FF3C00967AEE /* InflectorKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7CBF1A5D1B18FFAA00967AEE /* PocketSocket.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7CBF1A561B18FF3C00967AEE /* PocketSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7CBF1A5E1B18FFAA00967AEE /* SimpleKeychain.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7CBF1A571B18FF3C00967AEE /* SimpleKeychain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9F030F591AE3E98F00BCC4C8 /* METAleaRandomValueGeneratorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F030F3B1AE3E98F00BCC4C8 /* METAleaRandomValueGeneratorTests.m */; };
 		9F030F5A1AE3E98F00BCC4C8 /* METCollectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F030F3C1AE3E98F00BCC4C8 /* METCollectionTests.m */; };
 		9F030F5B1AE3E98F00BCC4C8 /* METCoreDataDDPClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F030F3D1AE3E98F00BCC4C8 /* METCoreDataDDPClientTests.m */; };
@@ -164,6 +167,22 @@
 			remoteInfo = Meteor;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7CBF1A5B1B18FF9800967AEE /* Copy Dependencies */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7CBF1A5C1B18FFAA00967AEE /* InflectorKit.framework in Copy Dependencies */,
+				7CBF1A5D1B18FFAA00967AEE /* PocketSocket.framework in Copy Dependencies */,
+				7CBF1A5E1B18FFAA00967AEE /* SimpleKeychain.framework in Copy Dependencies */,
+			);
+			name = "Copy Dependencies";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		7CBF1A551B18FF3C00967AEE /* InflectorKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InflectorKit.framework; path = Carthage/Build/iOS/InflectorKit.framework; sourceTree = "<group>"; };
@@ -740,12 +759,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9FAB38581AE3E76900E99519 /* Build configuration list for PBXNativeTarget "Meteor" */;
 			buildPhases = (
-				A3BA7F7F17B333B3E4941E50 /* Check Pods Manifest.lock */,
 				9FAB383D1AE3E76900E99519 /* Sources */,
 				9FAB383E1AE3E76900E99519 /* Frameworks */,
 				9FAB383F1AE3E76900E99519 /* Headers */,
 				9FAB38401AE3E76900E99519 /* Resources */,
-				1575F2095DF65818321ECDE5 /* Copy Pods Resources */,
+				7CBF1A5B1B18FF9800967AEE /* Copy Dependencies */,
 			);
 			buildRules = (
 			);
@@ -866,21 +884,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1575F2095DF65818321ECDE5 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		476F80729CDFACE46C501BED /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -938,21 +941,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A3BA7F7F17B333B3E4941E50 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		B59EC88D624C660B44DE080A /* Embed Pods Frameworks */ = {
