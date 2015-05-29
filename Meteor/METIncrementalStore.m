@@ -218,7 +218,7 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
       }
     } else if ([property isKindOfClass:[NSRelationshipDescription class]]) {
       NSRelationshipDescription *relationship = (NSRelationshipDescription *)property;
-      if (![self isReferenceStoredInSourceDocumentForRelationship:relationship]) continue;
+      if (![self sourceDocumentStoresReferenceFieldForRelationship:relationship]) continue;
       
       if ([relationship isToMany]) {
         NSArray *objectIDs = [self objectIDsForToManyRelationship:relationship inDocument:document];
@@ -234,13 +234,13 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
   return values;
 }
 
-- (BOOL)isReferenceStoredInSourceDocumentForRelationship:(NSRelationshipDescription *)relationship {
+- (BOOL)sourceDocumentStoresReferenceFieldForRelationship:(NSRelationshipDescription *)relationship {
   id storageInfo = relationship.userInfo[@"storage"];
   return !storageInfo || ![storageInfo boolValue] == NO;
 }
 
 - (id)objectIDForToOneRelationship:(NSRelationshipDescription *)relationship forObjectWithID:(NSManagedObjectID *)objectID {
-  if ([self isReferenceStoredInSourceDocumentForRelationship:relationship]) {
+  if ([self sourceDocumentStoresReferenceFieldForRelationship:relationship]) {
     METDocument *document = [self documentForObjectWithID:objectID];
     return [self objectIDForToOneRelationship:relationship inDocument:document];
   } else {
@@ -271,15 +271,16 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
   NSString *fieldName = [self fieldNameForRelationship:relationship];
   id destinationDocumentID = document[fieldName];
   
-  if (destinationDocumentID) {
-    return [self objectIDForDocumentKey:[METDocumentKey keyWithCollectionName:[self collectionNameForEntity:relationship.destinationEntity] documentID:destinationDocumentID]];
+  METDocument *destinationDocument = [_client.database documentWithKey:[METDocumentKey keyWithCollectionName:[self collectionNameForEntity:relationship.destinationEntity] documentID:destinationDocumentID]];
+  if (destinationDocument) {
+    return [self objectIDForDocument:destinationDocument];
   }
   
   return [NSNull null];
 }
 
 - (NSArray *)objectIDsForToManyRelationship:(NSRelationshipDescription *)relationship forObjectWithID:(NSManagedObjectID *)objectID {
-  if ([self isReferenceStoredInSourceDocumentForRelationship:relationship]) {
+  if ([self sourceDocumentStoresReferenceFieldForRelationship:relationship]) {
     METDocument *document = [self documentForObjectWithID:objectID];
     return [self objectIDsForToManyRelationship:relationship inDocument:document];
   } else {
@@ -303,7 +304,12 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
   if (!destinationDocumentIDs) return nil;
   NSEntityDescription *destinationEntity = relationship.destinationEntity;
   return [destinationDocumentIDs mappedArrayUsingBlock:^id(id destinationDocumentID) {
-    return [self objectIDForDocumentKey:[METDocumentKey keyWithCollectionName:[self collectionNameForEntity:destinationEntity] documentID:destinationDocumentID]];
+    METDocument *destinationDocument = [_client.database documentWithKey:[METDocumentKey keyWithCollectionName:[self collectionNameForEntity:destinationEntity] documentID:destinationDocumentID]];
+    if (destinationDocument) {
+      return [self objectIDForDocument:destinationDocument];
+    } else {
+      return nil;
+    }
   }];
 }
 
@@ -352,7 +358,7 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
       changedFields[fieldName] = value;
     } else if ([property isKindOfClass:[NSRelationshipDescription class]]) {
       NSRelationshipDescription *relationship = (NSRelationshipDescription *)property;
-      if (![self isReferenceStoredInSourceDocumentForRelationship:relationship]) return;
+      if (![self sourceDocumentStoresReferenceFieldForRelationship:relationship]) return;
       
       NSString *fieldName = [self fieldNameForRelationship:relationship];
       if ([relationship isToMany]) {
@@ -494,9 +500,11 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
     for (NSPropertyDescription *property in entity) {
       if ([property isKindOfClass:[NSRelationshipDescription class]]) {
         NSRelationshipDescription *relationship = (NSRelationshipDescription *)property;
-        if ([self isReferenceStoredInSourceDocumentForRelationship:relationship]) {
+        
+        if ([self sourceDocumentStoresReferenceFieldForRelationship:relationship]) {
           NSString *fieldName = [self fieldNameForRelationship:relationship];
           METCollection *destinationCollection = [self collectionForEntity:relationship.destinationEntity];
+          
           if ([relationship isToMany]) {
             NSArray *destinationDocumentIDs = changedFields[fieldName];
             if (destinationDocumentIDs && destinationDocumentIDs != (id)[NSNull null]) {
@@ -513,6 +521,34 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
               if ([destinationCollection documentWithID:destinationDocumentID]) {
                 NSManagedObjectID *destinationObjectID = [self objectIDForEntity:relationship.destinationEntity documentID:destinationDocumentID];
                 [updatedObjects addObject:destinationObjectID];
+              }
+            }
+          }
+        } else {
+          NSRelationshipDescription *inverseRelationship = relationship.inverseRelationship;
+          if (inverseRelationship) {
+            id expectedDestinationDocumentID = documentChangeDetails.documentKey.documentID;
+            NSEntityDescription *sourceEntity = inverseRelationship.entity;
+            NSString *fieldName = [self fieldNameForRelationship:inverseRelationship];
+            for (METDocument *sourceDocument in [self documentsForEntity:sourceEntity]) {
+              if ([inverseRelationship isToMany]) {
+                NSArray *destinationDocumentIDs = sourceDocument[fieldName];
+                if (destinationDocumentIDs && destinationDocumentIDs != (id)[NSNull null]) {
+                  for (id destinationDocumentID in destinationDocumentIDs) {
+                    if ([destinationDocumentID isEqual:expectedDestinationDocumentID]) {
+                      NSManagedObjectID *sourceObjectID = [self objectIDForDocument:sourceDocument];
+                      [updatedObjects addObject:sourceObjectID];
+                    }
+                  }
+                }
+              } else {
+                id destinationDocumentID = sourceDocument[fieldName];
+                if (destinationDocumentID && destinationDocumentID != [NSNull null]) {
+                  if ([destinationDocumentID isEqual:expectedDestinationDocumentID]) {
+                    NSManagedObjectID *sourceObjectID = [self objectIDForDocument:sourceDocument];
+                    [updatedObjects addObject:sourceObjectID];
+                  }
+                }
               }
             }
           }
@@ -559,5 +595,5 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
   userInfo[NSLocalizedDescriptionKey] = localizedDescription;
   return [NSError errorWithDomain:METIncrementalStoreErrorDomain code:code userInfo:userInfo];
 }
-
+ 
 @end

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Meteor"
-  s.version      = "0.1.2"
+  s.version      = File.read('VERSION')
   s.summary      = "Meteor iOS."
   s.description  = <<-DESC
     Meteor iOS integrates native iOS apps with the Meteor platform through DDP.
@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.public_header_files = `./Scripts/find_headers.rb --public`.split("\n")
   s.private_header_files = `./Scripts/find_headers.rb --private`.split("\n")
       
-	s.framework = 'CoreData'
+	s.frameworks = 'CoreData'
   
   s.dependency 'PocketSocket'
   s.dependency 'InflectorKit'
