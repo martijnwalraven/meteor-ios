@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.public_header_files = `./Scripts/find_headers.rb --public`.split("\n")
   s.private_header_files = `./Scripts/find_headers.rb --private`.split("\n")
       
-	s.framework = 'CoreData'
+	s.frameworks = 'CoreData'
   
   s.dependency 'PocketSocket'
   s.dependency 'InflectorKit'

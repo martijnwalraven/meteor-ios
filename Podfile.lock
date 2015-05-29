@@ -1,6 +1,6 @@
 PODS:
   - InflectorKit (0.0.1)
-  - Meteor (0.1.2):
+  - Meteor (0.1.3):
     - InflectorKit
     - PocketSocket
     - SimpleKeychain
@@ -21,7 +21,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   InflectorKit: 64497199e6764f4d8337cab7f700a77b13d76a73
-  Meteor: 8d641c15ac35ccc359718b40d57a80f2fee8a51d
+  Meteor: afc03dabd2488c71035fbabd5ceed2f56a9c295c
   OCMock: a10ea9f0a6e921651f96f78b6faee95ebc813b92
   PocketSocket: eee7ef375f55b98e7ca79e097d9c61fd688e9494
   SimpleKeychain: 8de48eb1de10c6403911a6be52e127e5b5d31404

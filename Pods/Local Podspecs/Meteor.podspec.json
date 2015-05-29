@@ -1,6 +1,6 @@
 {
   "name": "Meteor",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "summary": "Meteor iOS.",
   "description": "    Meteor iOS integrates native iOS apps with the Meteor platform through DDP.\n",
   "license": {
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/martijnwalraven/meteor-ios.git",
-    "tag": "0.1.2"
+    "tag": "0.1.3"
   },
   "platforms": {
     "ios": "7.0"

@@ -16,7 +16,7 @@
 #define COCOAPODS_POD_AVAILABLE_Meteor
 #define COCOAPODS_VERSION_MAJOR_Meteor 0
 #define COCOAPODS_VERSION_MINOR_Meteor 1
-#define COCOAPODS_VERSION_PATCH_Meteor 2
+#define COCOAPODS_VERSION_PATCH_Meteor 3
 
 // PocketSocket
 #define COCOAPODS_POD_AVAILABLE_PocketSocket
