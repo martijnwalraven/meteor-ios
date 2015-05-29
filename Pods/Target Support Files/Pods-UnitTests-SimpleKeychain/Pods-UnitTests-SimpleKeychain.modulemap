@@ -1,6 +1,0 @@
-framework module SimpleKeychain {
-  umbrella header "Pods-UnitTests-SimpleKeychain-umbrella.h"
-
-  export *
-  module * { export * }
-}
