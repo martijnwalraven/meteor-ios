@@ -21,7 +21,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		54058539AFED47AF304A6776 /* (null) in Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (Required, ); }; };
 		7CBF1A581B18FF3C00967AEE /* InflectorKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A551B18FF3C00967AEE /* InflectorKit.framework */; };
 		7CBF1A591B18FF3C00967AEE /* PocketSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A561B18FF3C00967AEE /* PocketSocket.framework */; };
 		7CBF1A5A1B18FF3C00967AEE /* SimpleKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A571B18FF3C00967AEE /* SimpleKeychain.framework */; };
@@ -59,6 +58,20 @@
 		9F030F7C1AE3E9A800BCC4C8 /* METDocumentIDGenerationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F030F761AE3E9A800BCC4C8 /* METDocumentIDGenerationTests.m */; };
 		9F030F7D1AE3E9A800BCC4C8 /* METServerIntegrationTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F030F781AE3E9A800BCC4C8 /* METServerIntegrationTestCase.m */; };
 		9F030F7E1AE3E9A800BCC4C8 /* METSubscriptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F030F791AE3E9A800BCC4C8 /* METSubscriptionsTests.m */; };
+		9F2A960B1B199E5900DE99CC /* InflectorKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A551B18FF3C00967AEE /* InflectorKit.framework */; };
+		9F2A960C1B199E5900DE99CC /* PocketSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A561B18FF3C00967AEE /* PocketSocket.framework */; };
+		9F2A960D1B199E5900DE99CC /* SimpleKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A571B18FF3C00967AEE /* SimpleKeychain.framework */; };
+		9F2A960E1B199E5A00DE99CC /* InflectorKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A551B18FF3C00967AEE /* InflectorKit.framework */; };
+		9F2A960F1B199E5A00DE99CC /* PocketSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A561B18FF3C00967AEE /* PocketSocket.framework */; };
+		9F2A96101B199E5A00DE99CC /* SimpleKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A571B18FF3C00967AEE /* SimpleKeychain.framework */; };
+		9F2A96121B19A7F100DE99CC /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F2A96111B19A7F100DE99CC /* OCMock.framework */; };
+		9F2A96141B19AC2D00DE99CC /* OCMock.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 9F2A96111B19A7F100DE99CC /* OCMock.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9F2A96151B19AC2D00DE99CC /* InflectorKit.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7CBF1A551B18FF3C00967AEE /* InflectorKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9F2A96161B19AC2D00DE99CC /* PocketSocket.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7CBF1A561B18FF3C00967AEE /* PocketSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9F2A96171B19AC2D00DE99CC /* SimpleKeychain.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7CBF1A571B18FF3C00967AEE /* SimpleKeychain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9F2A96191B19AC7E00DE99CC /* InflectorKit.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7CBF1A551B18FF3C00967AEE /* InflectorKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9F2A961A1B19AC7E00DE99CC /* PocketSocket.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7CBF1A561B18FF3C00967AEE /* PocketSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9F2A961B1B19AC7E00DE99CC /* SimpleKeychain.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7CBF1A571B18FF3C00967AEE /* SimpleKeychain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9F2F63D11AE3EBC1005E98DA /* MockMETDDPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F63CA1AE3EBC1005E98DA /* MockMETDDPConnection.m */; };
 		9F2F63D21AE3EBC1005E98DA /* MockMETDDPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F63CA1AE3EBC1005E98DA /* MockMETDDPConnection.m */; };
 		9F2F63D31AE3EBC1005E98DA /* XCTAsyncTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F63CC1AE3EBC1005E98DA /* XCTAsyncTestCase.m */; };
@@ -182,6 +195,33 @@
 			name = "Copy Dependencies";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9F2A96131B19AC1700DE99CC /* Copy Dependencies */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9F2A96141B19AC2D00DE99CC /* OCMock.framework in Copy Dependencies */,
+				9F2A96151B19AC2D00DE99CC /* InflectorKit.framework in Copy Dependencies */,
+				9F2A96161B19AC2D00DE99CC /* PocketSocket.framework in Copy Dependencies */,
+				9F2A96171B19AC2D00DE99CC /* SimpleKeychain.framework in Copy Dependencies */,
+			);
+			name = "Copy Dependencies";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F2A96181B19AC6E00DE99CC /* Copy Dependencies */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9F2A96191B19AC7E00DE99CC /* InflectorKit.framework in Copy Dependencies */,
+				9F2A961A1B19AC7E00DE99CC /* PocketSocket.framework in Copy Dependencies */,
+				9F2A961B1B19AC7E00DE99CC /* SimpleKeychain.framework in Copy Dependencies */,
+			);
+			name = "Copy Dependencies";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -221,6 +261,7 @@
 		9F030F771AE3E9A800BCC4C8 /* METServerIntegrationTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = METServerIntegrationTestCase.h; sourceTree = "<group>"; };
 		9F030F781AE3E9A800BCC4C8 /* METServerIntegrationTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METServerIntegrationTestCase.m; sourceTree = "<group>"; };
 		9F030F791AE3E9A800BCC4C8 /* METSubscriptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METSubscriptionsTests.m; sourceTree = "<group>"; };
+		9F2A96111B19A7F100DE99CC /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = Carthage/Build/iOS/OCMock.framework; sourceTree = "<group>"; };
 		9F2F63C91AE3EBC1005E98DA /* MockMETDDPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockMETDDPConnection.h; sourceTree = "<group>"; };
 		9F2F63CA1AE3EBC1005E98DA /* MockMETDDPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockMETDDPConnection.m; sourceTree = "<group>"; };
 		9F2F63CB1AE3EBC1005E98DA /* XCTAsyncTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCTAsyncTestCase.h; sourceTree = "<group>"; };
@@ -333,6 +374,10 @@
 			files = (
 				9FFE08571AE41E5900416683 /* CoreData.framework in Frameworks */,
 				9F90ED321AE41A1700D7BF84 /* Meteor.framework in Frameworks */,
+				9F2A960C1B199E5900DE99CC /* PocketSocket.framework in Frameworks */,
+				9F2A960B1B199E5900DE99CC /* InflectorKit.framework in Frameworks */,
+				9F2A960D1B199E5900DE99CC /* SimpleKeychain.framework in Frameworks */,
+				9F2A96121B19A7F100DE99CC /* OCMock.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,8 +385,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F2A960E1B199E5A00DE99CC /* InflectorKit.framework in Frameworks */,
+				9F2A960F1B199E5A00DE99CC /* PocketSocket.framework in Frameworks */,
+				9F2A96101B199E5A00DE99CC /* SimpleKeychain.framework in Frameworks */,
 				9FAB39121AE3E8D700E99519 /* Meteor.framework in Frameworks */,
-				54058539AFED47AF304A6776 /* (null) in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,8 +398,8 @@
 		9F030F391AE3E93300BCC4C8 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				9FAB38FD1AE3E8C000E99519 /* UnitTests */,
-				9FAB390D1AE3E8D700E99519 /* ServerIntegrationTests */,
+				9FAB38FD1AE3E8C000E99519 /* Unit Tests */,
+				9FAB390D1AE3E8D700E99519 /* Server Integration Tests */,
 				9F2F63C81AE3EBC1005E98DA /* Shared */,
 				9F2F63D91AE3EBCE005E98DA /* Fixtures */,
 			);
@@ -636,7 +683,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		9FAB38FD1AE3E8C000E99519 /* UnitTests */ = {
+		9FAB38FD1AE3E8C000E99519 /* Unit Tests */ = {
 			isa = PBXGroup;
 			children = (
 				9F030F461AE3E98F00BCC4C8 /* METDDPClientTestCase.h */,
@@ -655,7 +702,7 @@
 				9F0604E11AE659F40054B5EF /* Utility */,
 				9FAB38FE1AE3E8C000E99519 /* Supporting Files */,
 			);
-			path = UnitTests;
+			path = "Unit Tests";
 			sourceTree = "<group>";
 		};
 		9FAB38FE1AE3E8C000E99519 /* Supporting Files */ = {
@@ -666,7 +713,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		9FAB390D1AE3E8D700E99519 /* ServerIntegrationTests */ = {
+		9FAB390D1AE3E8D700E99519 /* Server Integration Tests */ = {
 			isa = PBXGroup;
 			children = (
 				9F030F741AE3E9A800BCC4C8 /* METAccountsTests.m */,
@@ -677,7 +724,7 @@
 				9F030F791AE3E9A800BCC4C8 /* METSubscriptionsTests.m */,
 				9FAB390E1AE3E8D700E99519 /* Supporting Files */,
 			);
-			path = ServerIntegrationTests;
+			path = "Server Integration Tests";
 			sourceTree = "<group>";
 		};
 		9FAB390E1AE3E8D700E99519 /* Supporting Files */ = {
@@ -691,6 +738,7 @@
 		CD177ED33A653A70E94323B2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9F2A96111B19A7F100DE99CC /* OCMock.framework */,
 				7CBF1A551B18FF3C00967AEE /* InflectorKit.framework */,
 				7CBF1A561B18FF3C00967AEE /* PocketSocket.framework */,
 				7CBF1A571B18FF3C00967AEE /* SimpleKeychain.framework */,
@@ -778,12 +826,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9FAB39051AE3E8C000E99519 /* Build configuration list for PBXNativeTarget "Unit Tests" */;
 			buildPhases = (
-				FBB1287AB8DF2B325E6B8C43 /* Check Pods Manifest.lock */,
 				9FAB38F81AE3E8C000E99519 /* Sources */,
 				9FAB38F91AE3E8C000E99519 /* Frameworks */,
 				9FAB38FA1AE3E8C000E99519 /* Resources */,
-				B59EC88D624C660B44DE080A /* Embed Pods Frameworks */,
-				A14919194F150BD07FF69311 /* Copy Pods Resources */,
+				9F2A96131B19AC1700DE99CC /* Copy Dependencies */,
 			);
 			buildRules = (
 			);
@@ -799,12 +845,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9FAB39151AE3E8D700E99519 /* Build configuration list for PBXNativeTarget "Server Integration Tests" */;
 			buildPhases = (
-				476F80729CDFACE46C501BED /* Check Pods Manifest.lock */,
 				9FAB39081AE3E8D700E99519 /* Sources */,
 				9FAB39091AE3E8D700E99519 /* Frameworks */,
 				9FAB390A1AE3E8D700E99519 /* Resources */,
-				EC8503DE5C0400CF33FECB0D /* Embed Pods Frameworks */,
-				874771F13E20FADE7BCBBA14 /* Copy Pods Resources */,
+				9F2A96181B19AC6E00DE99CC /* Copy Dependencies */,
 			);
 			buildRules = (
 			);
@@ -884,36 +928,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		476F80729CDFACE46C501BED /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		874771F13E20FADE7BCBBA14 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		9F1EEB901B0357B800402BFB /* Build API Documentation */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -927,66 +941,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export PATH=\"/usr/local/var/rbenv/shims:${PATH}\"\n\nOUTPUT_DIR=\"${BUILT_PRODUCTS_DIR}/Documentation\"\nBUILD_VERSION=$(/usr/libexec/PlistBuddy -c \"Print CFBuildVersion\" $buildPlist)\nPUBLIC_HEADER_FILES=$($PROJECT_DIR/Scripts/find_headers.rb --public)\n\n/usr/local/bin/appledoc \\\n--clean-output \\\n--project-version BUILD_VERSION \\\n--exit-threshold 2 \\\n--create-html \\\n--no-create-docset \\\n--no-install-docset \\\n--output $OUTPUT_DIR \\\n\"${PROJECT_DIR}/Documentation/AppledocSettings.plist\" \\\n$PUBLIC_HEADER_FILES\n\nopen \"${OUTPUT_DIR}/html/index.html\"";
-		};
-		A14919194F150BD07FF69311 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B59EC88D624C660B44DE080A /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UnitTests/Pods-UnitTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EC8503DE5C0400CF33FECB0D /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FBB1287AB8DF2B325E6B8C43 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1256,12 +1210,13 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = Tests/UnitTests/Info.plist;
+				INFOPLIST_FILE = "Tests/Unit Tests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1276,8 +1231,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = Tests/UnitTests/Info.plist;
+				INFOPLIST_FILE = "Tests/Unit Tests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1292,12 +1248,13 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = Tests/ServerIntegrationTests/Info.plist;
+				INFOPLIST_FILE = "Tests/Server Integration Tests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1312,8 +1269,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = Tests/ServerIntegrationTests/Info.plist;
+				INFOPLIST_FILE = "Tests/Server Integration Tests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
