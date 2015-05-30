@@ -1,1 +1,0 @@
-PODS_UNIT_TESTS_POCKETSOCKET_OTHER_LDFLAGS = -l"system" -l"z" -framework "CFNetwork" -framework "Foundation" -framework "Security"

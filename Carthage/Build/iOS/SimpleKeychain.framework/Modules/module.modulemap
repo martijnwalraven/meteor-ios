@@ -1,0 +1,6 @@
+framework module SimpleKeychain {
+  umbrella header "SimpleKeychain.h"
+
+  export *
+  module * { export * }
+}

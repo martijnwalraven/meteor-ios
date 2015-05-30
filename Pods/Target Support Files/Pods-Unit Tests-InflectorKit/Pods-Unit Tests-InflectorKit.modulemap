@@ -1,6 +1,0 @@
-framework module InflectorKit {
-  umbrella header "Pods-Unit Tests-InflectorKit-umbrella.h"
-
-  export *
-  module * { export * }
-}

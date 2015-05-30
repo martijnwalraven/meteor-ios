@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7CBF1A8E1B1902D200967AEE /* InflectorKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A8A1B1902D200967AEE /* InflectorKit.framework */; };
+		7CBF1A8F1B1902D200967AEE /* Meteor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A8B1B1902D200967AEE /* Meteor.framework */; };
+		7CBF1A901B1902D200967AEE /* PocketSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A8C1B1902D200967AEE /* PocketSocket.framework */; };
+		7CBF1A911B1902D200967AEE /* SimpleKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A8D1B1902D200967AEE /* SimpleKeychain.framework */; };
+		7CBF1A981B19030A00967AEE /* InflectorKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7CBF1A8A1B1902D200967AEE /* InflectorKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7CBF1A991B19030A00967AEE /* Meteor.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7CBF1A8B1B1902D200967AEE /* Meteor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7CBF1A9A1B19030A00967AEE /* PocketSocket.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7CBF1A8C1B1902D200967AEE /* PocketSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7CBF1A9B1B19030A00967AEE /* SimpleKeychain.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7CBF1A8D1B1902D200967AEE /* SimpleKeychain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9FFE6C661A51D4C9008C1B11 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFE6C651A51D4C9008C1B11 /* main.m */; };
 		9FFE6C741A51D4C9008C1B11 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FFE6C731A51D4C9008C1B11 /* Images.xcassets */; };
 		9FFE6C771A51D4C9008C1B11 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFE6C751A51D4C9008C1B11 /* LaunchScreen.xib */; };
@@ -15,13 +23,29 @@
 		9FFE6C971A51D550008C1B11 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFE6C901A51D550008C1B11 /* AppDelegate.m */; };
 		9FFE6C981A51D550008C1B11 /* PlayersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFE6C921A51D550008C1B11 /* PlayersTableViewController.m */; };
 		9FFE6C991A51D550008C1B11 /* PlayerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFE6C941A51D550008C1B11 /* PlayerTableViewCell.m */; };
-		C52C741A955A06B0844F1937 /* Pods_Leaderboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20BEEB36533289C4372EE0C3 /* Pods_Leaderboard.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		7CBF1A971B19030200967AEE /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7CBF1A981B19030A00967AEE /* InflectorKit.framework in CopyFiles */,
+				7CBF1A991B19030A00967AEE /* Meteor.framework in CopyFiles */,
+				7CBF1A9A1B19030A00967AEE /* PocketSocket.framework in CopyFiles */,
+				7CBF1A9B1B19030A00967AEE /* SimpleKeychain.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		014A97DEB7534B02405BCE6D /* Pods-Leaderboard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Leaderboard.release.xcconfig"; path = "../../Pods/Target Support Files/Pods-Leaderboard/Pods-Leaderboard.release.xcconfig"; sourceTree = "<group>"; };
-		19D4A9302E4965203161D9B1 /* Pods-Leaderboard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Leaderboard.debug.xcconfig"; path = "../../Pods/Target Support Files/Pods-Leaderboard/Pods-Leaderboard.debug.xcconfig"; sourceTree = "<group>"; };
-		20BEEB36533289C4372EE0C3 /* Pods_Leaderboard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Leaderboard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CBF1A8A1B1902D200967AEE /* InflectorKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InflectorKit.framework; path = ../../Carthage/Build/iOS/InflectorKit.framework; sourceTree = "<group>"; };
+		7CBF1A8B1B1902D200967AEE /* Meteor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Meteor.framework; path = ../../Carthage/Build/iOS/Meteor.framework; sourceTree = "<group>"; };
+		7CBF1A8C1B1902D200967AEE /* PocketSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PocketSocket.framework; path = ../../Carthage/Build/iOS/PocketSocket.framework; sourceTree = "<group>"; };
+		7CBF1A8D1B1902D200967AEE /* SimpleKeychain.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimpleKeychain.framework; path = ../../Carthage/Build/iOS/SimpleKeychain.framework; sourceTree = "<group>"; };
 		9FFE6C601A51D4C9008C1B11 /* Leaderboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Leaderboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FFE6C641A51D4C9008C1B11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9FFE6C651A51D4C9008C1B11 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -42,7 +66,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C52C741A955A06B0844F1937 /* Pods_Leaderboard.framework in Frameworks */,
+				7CBF1A8F1B1902D200967AEE /* Meteor.framework in Frameworks */,
+				7CBF1A901B1902D200967AEE /* PocketSocket.framework in Frameworks */,
+				7CBF1A911B1902D200967AEE /* SimpleKeychain.framework in Frameworks */,
+				7CBF1A8E1B1902D200967AEE /* InflectorKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,7 +79,10 @@
 		6D78A33710AC34B40BF6342A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				20BEEB36533289C4372EE0C3 /* Pods_Leaderboard.framework */,
+				7CBF1A8A1B1902D200967AEE /* InflectorKit.framework */,
+				7CBF1A8B1B1902D200967AEE /* Meteor.framework */,
+				7CBF1A8C1B1902D200967AEE /* PocketSocket.framework */,
+				7CBF1A8D1B1902D200967AEE /* SimpleKeychain.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -63,7 +93,6 @@
 				9FFE6C621A51D4C9008C1B11 /* Leaderboard */,
 				9FFE6C611A51D4C9008C1B11 /* Products */,
 				6D78A33710AC34B40BF6342A /* Frameworks */,
-				EF16E1919D6E980C9F20ACBE /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -102,15 +131,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		EF16E1919D6E980C9F20ACBE /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				19D4A9302E4965203161D9B1 /* Pods-Leaderboard.debug.xcconfig */,
-				014A97DEB7534B02405BCE6D /* Pods-Leaderboard.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -118,12 +138,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9FFE6C861A51D4C9008C1B11 /* Build configuration list for PBXNativeTarget "Leaderboard" */;
 			buildPhases = (
-				0F0F6409B7EC8A0788F659E8 /* Check Pods Manifest.lock */,
 				9FFE6C5C1A51D4C9008C1B11 /* Sources */,
 				9FFE6C5D1A51D4C9008C1B11 /* Frameworks */,
 				9FFE6C5E1A51D4C9008C1B11 /* Resources */,
-				13F9A7249CC8859378DBA292 /* Embed Pods Frameworks */,
-				B3BC93042F9E09A6F4C4E72A /* Copy Pods Resources */,
+				7CBF1A971B19030200967AEE /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -178,54 +196,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		0F0F6409B7EC8A0788F659E8 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		13F9A7249CC8859378DBA292 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../../Pods/Target Support Files/Pods-Leaderboard/Pods-Leaderboard-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B3BC93042F9E09A6F4C4E72A /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../../Pods/Target Support Files/Pods-Leaderboard/Pods-Leaderboard-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9FFE6C5C1A51D4C9008C1B11 /* Sources */ = {
@@ -334,9 +304,12 @@
 		};
 		9FFE6C871A51D4C9008C1B11 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 19D4A9302E4965203161D9B1 /* Pods-Leaderboard.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/justinmakaila/Workspace/Objc/meteor-ios/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Leaderboard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -345,9 +318,12 @@
 		};
 		9FFE6C881A51D4C9008C1B11 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 014A97DEB7534B02405BCE6D /* Pods-Leaderboard.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/justinmakaila/Workspace/Objc/meteor-ios/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Leaderboard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

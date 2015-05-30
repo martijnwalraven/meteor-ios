@@ -41,3 +41,6 @@ DerivedData
 # Meteor
 .meteor/local
 .meteor/meteorite
+
+# Carthage
+Carthage/Checkouts/

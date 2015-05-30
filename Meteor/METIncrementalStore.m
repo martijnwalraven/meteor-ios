@@ -30,7 +30,8 @@
 #import "METDatabaseChanges.h"
 #import "METDocumentChangeDetails.h"
 #import "NSArray+METAdditions.h"
-#import "NSString+InflectorKit.h"
+
+#import <InflectorKit/NSString+InflectorKit.h>
 
 NSString * const METIncrementalStoreErrorDomain = @"com.meteor.IncrementalStore.ErrorDomain";
 
