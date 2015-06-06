@@ -166,7 +166,7 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
                 [documents addObjectsFromArray:[self documentsForEntity:subentity]];
             } else {
                 // documents is nil, can be caused by an abstract entity, which indeed could have non-abstract subentities
-                documents = [[self documentsForEntity:entity] mutableCopy];
+                documents = [[self documentsForEntity:subentity] mutableCopy];
             }
         }
     }
