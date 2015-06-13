@@ -7,14 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7CBF1A8E1B1902D200967AEE /* InflectorKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A8A1B1902D200967AEE /* InflectorKit.framework */; };
-		7CBF1A8F1B1902D200967AEE /* Meteor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A8B1B1902D200967AEE /* Meteor.framework */; };
-		7CBF1A901B1902D200967AEE /* PocketSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A8C1B1902D200967AEE /* PocketSocket.framework */; };
-		7CBF1A911B1902D200967AEE /* SimpleKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A8D1B1902D200967AEE /* SimpleKeychain.framework */; };
-		7CBF1A981B19030A00967AEE /* InflectorKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7CBF1A8A1B1902D200967AEE /* InflectorKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7CBF1A991B19030A00967AEE /* Meteor.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7CBF1A8B1B1902D200967AEE /* Meteor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7CBF1A9A1B19030A00967AEE /* PocketSocket.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7CBF1A8C1B1902D200967AEE /* PocketSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7CBF1A9B1B19030A00967AEE /* SimpleKeychain.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7CBF1A8D1B1902D200967AEE /* SimpleKeychain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9F3B25771B2C8C2600F0E2FA /* Meteor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3B25761B2C8C2600F0E2FA /* Meteor.framework */; };
+		9F3B25781B2C8C2600F0E2FA /* Meteor.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9F3B25761B2C8C2600F0E2FA /* Meteor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9FFE6C661A51D4C9008C1B11 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFE6C651A51D4C9008C1B11 /* main.m */; };
 		9FFE6C741A51D4C9008C1B11 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FFE6C731A51D4C9008C1B11 /* Images.xcassets */; };
 		9FFE6C771A51D4C9008C1B11 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFE6C751A51D4C9008C1B11 /* LaunchScreen.xib */; };
@@ -32,20 +26,14 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				7CBF1A981B19030A00967AEE /* InflectorKit.framework in CopyFiles */,
-				7CBF1A991B19030A00967AEE /* Meteor.framework in CopyFiles */,
-				7CBF1A9A1B19030A00967AEE /* PocketSocket.framework in CopyFiles */,
-				7CBF1A9B1B19030A00967AEE /* SimpleKeychain.framework in CopyFiles */,
+				9F3B25781B2C8C2600F0E2FA /* Meteor.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		7CBF1A8A1B1902D200967AEE /* InflectorKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InflectorKit.framework; path = ../../Carthage/Build/iOS/InflectorKit.framework; sourceTree = "<group>"; };
-		7CBF1A8B1B1902D200967AEE /* Meteor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Meteor.framework; path = ../../Carthage/Build/iOS/Meteor.framework; sourceTree = "<group>"; };
-		7CBF1A8C1B1902D200967AEE /* PocketSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PocketSocket.framework; path = ../../Carthage/Build/iOS/PocketSocket.framework; sourceTree = "<group>"; };
-		7CBF1A8D1B1902D200967AEE /* SimpleKeychain.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimpleKeychain.framework; path = ../../Carthage/Build/iOS/SimpleKeychain.framework; sourceTree = "<group>"; };
+		9F3B25761B2C8C2600F0E2FA /* Meteor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = Meteor.framework; path = "/Users/martijnwalraven/Library/Developer/Xcode/DerivedData/Meteor-camtfjeimyleqjfaxdzkjwdbqoyr/Build/Products/Debug-iphoneos/Meteor.framework"; sourceTree = "<absolute>"; };
 		9FFE6C601A51D4C9008C1B11 /* Leaderboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Leaderboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FFE6C641A51D4C9008C1B11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9FFE6C651A51D4C9008C1B11 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -66,10 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7CBF1A8F1B1902D200967AEE /* Meteor.framework in Frameworks */,
-				7CBF1A901B1902D200967AEE /* PocketSocket.framework in Frameworks */,
-				7CBF1A911B1902D200967AEE /* SimpleKeychain.framework in Frameworks */,
-				7CBF1A8E1B1902D200967AEE /* InflectorKit.framework in Frameworks */,
+				9F3B25771B2C8C2600F0E2FA /* Meteor.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,10 +64,7 @@
 		6D78A33710AC34B40BF6342A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7CBF1A8A1B1902D200967AEE /* InflectorKit.framework */,
-				7CBF1A8B1B1902D200967AEE /* Meteor.framework */,
-				7CBF1A8C1B1902D200967AEE /* PocketSocket.framework */,
-				7CBF1A8D1B1902D200967AEE /* SimpleKeychain.framework */,
+				9F3B25761B2C8C2600F0E2FA /* Meteor.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -308,7 +290,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/justinmakaila/Workspace/Objc/meteor-ios/Carthage/Build/iOS",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Meteor-camtfjeimyleqjfaxdzkjwdbqoyr/Build/Products/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = Leaderboard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -322,7 +304,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/justinmakaila/Workspace/Objc/meteor-ios/Carthage/Build/iOS",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Meteor-camtfjeimyleqjfaxdzkjwdbqoyr/Build/Products/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = Leaderboard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
