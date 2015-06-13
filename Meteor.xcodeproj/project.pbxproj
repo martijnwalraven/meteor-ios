@@ -24,9 +24,9 @@
 		7CBF1A581B18FF3C00967AEE /* InflectorKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A551B18FF3C00967AEE /* InflectorKit.framework */; };
 		7CBF1A591B18FF3C00967AEE /* PocketSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A561B18FF3C00967AEE /* PocketSocket.framework */; };
 		7CBF1A5A1B18FF3C00967AEE /* SimpleKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A571B18FF3C00967AEE /* SimpleKeychain.framework */; };
-		7CBF1A5C1B18FFAA00967AEE /* InflectorKit.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7CBF1A551B18FF3C00967AEE /* InflectorKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7CBF1A5D1B18FFAA00967AEE /* PocketSocket.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7CBF1A561B18FF3C00967AEE /* PocketSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7CBF1A5E1B18FFAA00967AEE /* SimpleKeychain.framework in Copy Dependencies */ = {isa = PBXBuildFile; fileRef = 7CBF1A571B18FF3C00967AEE /* SimpleKeychain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7CBF1A5C1B18FFAA00967AEE /* InflectorKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A551B18FF3C00967AEE /* InflectorKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7CBF1A5D1B18FFAA00967AEE /* PocketSocket.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A561B18FF3C00967AEE /* PocketSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7CBF1A5E1B18FFAA00967AEE /* SimpleKeychain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A571B18FF3C00967AEE /* SimpleKeychain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9F030F591AE3E98F00BCC4C8 /* METAleaRandomValueGeneratorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F030F3B1AE3E98F00BCC4C8 /* METAleaRandomValueGeneratorTests.m */; };
 		9F030F5A1AE3E98F00BCC4C8 /* METCollectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F030F3C1AE3E98F00BCC4C8 /* METCollectionTests.m */; };
 		9F030F5B1AE3E98F00BCC4C8 /* METCoreDataDDPClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F030F3D1AE3E98F00BCC4C8 /* METCoreDataDDPClientTests.m */; };
@@ -182,17 +182,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		7CBF1A5B1B18FF9800967AEE /* Copy Dependencies */ = {
+		7CBF1A5B1B18FF9800967AEE /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				7CBF1A5C1B18FFAA00967AEE /* InflectorKit.framework in Copy Dependencies */,
-				7CBF1A5D1B18FFAA00967AEE /* PocketSocket.framework in Copy Dependencies */,
-				7CBF1A5E1B18FFAA00967AEE /* SimpleKeychain.framework in Copy Dependencies */,
+				7CBF1A5C1B18FFAA00967AEE /* InflectorKit.framework in Embed Frameworks */,
+				7CBF1A5D1B18FFAA00967AEE /* PocketSocket.framework in Embed Frameworks */,
+				7CBF1A5E1B18FFAA00967AEE /* SimpleKeychain.framework in Embed Frameworks */,
 			);
-			name = "Copy Dependencies";
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		9F2A96131B19AC1700DE99CC /* Copy Dependencies */ = {
@@ -807,11 +807,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9FAB38581AE3E76900E99519 /* Build configuration list for PBXNativeTarget "Meteor iOS" */;
 			buildPhases = (
+				9F2A9D761B2C9313002DD57A /* Set Version */,
 				9FAB383D1AE3E76900E99519 /* Sources */,
 				9FAB383E1AE3E76900E99519 /* Frameworks */,
 				9FAB383F1AE3E76900E99519 /* Headers */,
 				9FAB38401AE3E76900E99519 /* Resources */,
-				7CBF1A5B1B18FF9800967AEE /* Copy Dependencies */,
+				7CBF1A5B1B18FF9800967AEE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -940,7 +941,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export PATH=\"/usr/local/var/rbenv/shims:${PATH}\"\n\nOUTPUT_DIR=\"${BUILT_PRODUCTS_DIR}/Documentation\"\nBUILD_VERSION=$(/usr/libexec/PlistBuddy -c \"Print CFBuildVersion\" $buildPlist)\nPUBLIC_HEADER_FILES=$($PROJECT_DIR/Scripts/find_headers.rb --project Meteor --target \"Meteor iOS\" --public)\n\n/usr/local/bin/appledoc \\\n--clean-output \\\n--project-version BUILD_VERSION \\\n--exit-threshold 2 \\\n--create-html \\\n--no-create-docset \\\n--no-install-docset \\\n--output $OUTPUT_DIR \\\n\"${PROJECT_DIR}/Documentation/AppledocSettings.plist\" \\\n$PUBLIC_HEADER_FILES\n\nopen \"${OUTPUT_DIR}/html/index.html\"";
+			shellScript = "export PATH=\"/usr/local/var/rbenv/shims:${PATH}\"\n\nOUTPUT_DIR=\"${BUILT_PRODUCTS_DIR}/Documentation\"\nVERSION=$(<VERSION)\nPUBLIC_HEADER_FILES=$($PROJECT_DIR/Scripts/find_headers.rb --project Meteor --target \"Meteor iOS\" --public)\n\n/usr/local/bin/appledoc \\\n--clean-output \\\n--project-version VERSION \\\n--exit-threshold 2 \\\n--create-html \\\n--no-create-docset \\\n--no-install-docset \\\n--output $OUTPUT_DIR \\\n\"${PROJECT_DIR}/Documentation/AppledocSettings.plist\" \\\n$PUBLIC_HEADER_FILES\n\nopen \"${OUTPUT_DIR}/html/index.html\"";
+		};
+		9F2A9D761B2C9313002DD57A /* Set Version */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Set Version";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = ./Scripts/set_version.sh;
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1090,7 +1106,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1137,7 +1152,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1166,7 +1180,6 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1188,7 +1201,6 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
