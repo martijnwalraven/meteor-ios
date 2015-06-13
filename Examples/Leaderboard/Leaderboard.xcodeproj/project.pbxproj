@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9F3B25771B2C8C2600F0E2FA /* Meteor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3B25761B2C8C2600F0E2FA /* Meteor.framework */; };
-		9F3B25781B2C8C2600F0E2FA /* Meteor.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9F3B25761B2C8C2600F0E2FA /* Meteor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9F55D5261B2CAFAB00858CE7 /* Meteor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F55D5251B2CAFAB00858CE7 /* Meteor.framework */; };
+		9F55D5271B2CAFAB00858CE7 /* Meteor.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9F55D5251B2CAFAB00858CE7 /* Meteor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9FFE6C661A51D4C9008C1B11 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFE6C651A51D4C9008C1B11 /* main.m */; };
 		9FFE6C741A51D4C9008C1B11 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FFE6C731A51D4C9008C1B11 /* Images.xcassets */; };
 		9FFE6C771A51D4C9008C1B11 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFE6C751A51D4C9008C1B11 /* LaunchScreen.xib */; };
@@ -20,20 +20,21 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		7CBF1A971B19030200967AEE /* CopyFiles */ = {
+		7CBF1A971B19030200967AEE /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9F3B25781B2C8C2600F0E2FA /* Meteor.framework in CopyFiles */,
+				9F55D5271B2CAFAB00858CE7 /* Meteor.framework in Embed Frameworks */,
 			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		9F3B25761B2C8C2600F0E2FA /* Meteor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = Meteor.framework; path = "/Users/martijnwalraven/Library/Developer/Xcode/DerivedData/Meteor-camtfjeimyleqjfaxdzkjwdbqoyr/Build/Products/Debug-iphoneos/Meteor.framework"; sourceTree = "<absolute>"; };
+		9F55D5251B2CAFAB00858CE7 /* Meteor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Meteor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FFE6C601A51D4C9008C1B11 /* Leaderboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Leaderboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FFE6C641A51D4C9008C1B11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9FFE6C651A51D4C9008C1B11 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -54,7 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F3B25771B2C8C2600F0E2FA /* Meteor.framework in Frameworks */,
+				9F55D5261B2CAFAB00858CE7 /* Meteor.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,7 +65,7 @@
 		6D78A33710AC34B40BF6342A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9F3B25761B2C8C2600F0E2FA /* Meteor.framework */,
+				9F55D5251B2CAFAB00858CE7 /* Meteor.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -123,7 +124,7 @@
 				9FFE6C5C1A51D4C9008C1B11 /* Sources */,
 				9FFE6C5D1A51D4C9008C1B11 /* Frameworks */,
 				9FFE6C5E1A51D4C9008C1B11 /* Resources */,
-				7CBF1A971B19030200967AEE /* CopyFiles */,
+				7CBF1A971B19030200967AEE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -288,10 +289,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Meteor-camtfjeimyleqjfaxdzkjwdbqoyr/Build/Products/Debug-iphoneos",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Leaderboard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -302,10 +300,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/Meteor-camtfjeimyleqjfaxdzkjwdbqoyr/Build/Products/Debug-iphoneos",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Leaderboard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
