@@ -940,7 +940,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export PATH=\"/usr/local/var/rbenv/shims:${PATH}\"\n\nOUTPUT_DIR=\"${BUILT_PRODUCTS_DIR}/Documentation\"\nBUILD_VERSION=$(/usr/libexec/PlistBuddy -c \"Print CFBuildVersion\" $buildPlist)\nPUBLIC_HEADER_FILES=$($PROJECT_DIR/Scripts/find_headers.rb --public)\n\n/usr/local/bin/appledoc \\\n--clean-output \\\n--project-version BUILD_VERSION \\\n--exit-threshold 2 \\\n--create-html \\\n--no-create-docset \\\n--no-install-docset \\\n--output $OUTPUT_DIR \\\n\"${PROJECT_DIR}/Documentation/AppledocSettings.plist\" \\\n$PUBLIC_HEADER_FILES\n\nopen \"${OUTPUT_DIR}/html/index.html\"";
+			shellScript = "export PATH=\"/usr/local/var/rbenv/shims:${PATH}\"\n\nOUTPUT_DIR=\"${BUILT_PRODUCTS_DIR}/Documentation\"\nBUILD_VERSION=$(/usr/libexec/PlistBuddy -c \"Print CFBuildVersion\" $buildPlist)\nPUBLIC_HEADER_FILES=$($PROJECT_DIR/Scripts/find_headers.rb --project Meteor --target \"Meteor iOS\" --public)\n\n/usr/local/bin/appledoc \\\n--clean-output \\\n--project-version BUILD_VERSION \\\n--exit-threshold 2 \\\n--create-html \\\n--no-create-docset \\\n--no-install-docset \\\n--output $OUTPUT_DIR \\\n\"${PROJECT_DIR}/Documentation/AppledocSettings.plist\" \\\n$PUBLIC_HEADER_FILES\n\nopen \"${OUTPUT_DIR}/html/index.html\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 

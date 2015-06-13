@@ -14,8 +14,8 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.source_files = 'Meteor/**/*.{h,m}'
-  s.public_header_files = `./Scripts/find_headers.rb --public`.split("\n")
-  s.private_header_files = `./Scripts/find_headers.rb --private`.split("\n")
+  s.public_header_files = `./Scripts/find_headers.rb --project Meteor --target "Meteor iOS" --public`.split("\n")
+  s.private_header_files = `./Scripts/find_headers.rb --project Meteor --target "Meteor iOS" --private`.split("\n")
       
 	s.frameworks = 'CoreData'
   
