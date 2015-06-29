@@ -279,31 +279,31 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
   return [NSNull null];
 }
 
-- (NSArray *)objectIDsForToManyRelationship:(NSRelationshipDescription *)relationship forObjectWithID:(NSManagedObjectID *)objectID {
+- (id)objectIDsForToManyRelationship:(NSRelationshipDescription *)relationship forObjectWithID:(NSManagedObjectID *)objectID {
+  NSMutableArray *objectIDs = [[NSMutableArray alloc] init];
   if ([self sourceDocumentStoresReferenceFieldForRelationship:relationship]) {
     METDocument *document = [self documentForObjectWithID:objectID];
-    return [self objectIDsForToManyRelationship:relationship inDocument:document];
+    [objectIDs addObjectsFromArray:[self objectIDsForToManyRelationship:relationship inDocument:document]];
   } else {
     NSRelationshipDescription *inverseRelationship = relationship.inverseRelationship;
     NSString *sourceDocumentID = [self documentKeyForObjectID:objectID].documentID;
     NSArray *destinationDocuments = [self documentsForEntity:relationship.destinationEntity];
     NSString *fieldName = [self fieldNameForRelationship:inverseRelationship];
-    NSMutableArray *objectIDs = [[NSMutableArray alloc] init];
     for (METDocument *document in destinationDocuments) {
       if ([document[fieldName] isEqual:sourceDocumentID]) {
         [objectIDs addObject:[self objectIDForDocument:document]];
       }
     }
-    return objectIDs;
   }
+  return relationship.isOrdered ? objectIDs : [NSSet setWithArray:objectIDs];
 }
 
-- (NSArray *)objectIDsForToManyRelationship:(NSRelationshipDescription *)relationship inDocument:(METDocument *)document {
+- (id)objectIDsForToManyRelationship:(NSRelationshipDescription *)relationship inDocument:(METDocument *)document {
   NSString *fieldName = [self fieldNameForRelationship:relationship];
   NSArray *destinationDocumentIDs = document[fieldName];
   if (!destinationDocumentIDs) return nil;
   NSEntityDescription *destinationEntity = relationship.destinationEntity;
-  return [destinationDocumentIDs mappedArrayUsingBlock:^id(id destinationDocumentID) {
+  NSArray *objectIDs = [destinationDocumentIDs mappedArrayUsingBlock:^id(id destinationDocumentID) {
     METDocument *destinationDocument = [_client.database documentWithKey:[METDocumentKey keyWithCollectionName:[self collectionNameForEntity:destinationEntity] documentID:destinationDocumentID]];
     if (destinationDocument) {
       return [self objectIDForDocument:destinationDocument];
@@ -311,6 +311,7 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
       return nil;
     }
   }];
+  return relationship.isOrdered ? objectIDs : [NSSet setWithArray:objectIDs];
 }
 
 #pragma mark - Saving
