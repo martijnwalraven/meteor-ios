@@ -8,7 +8,7 @@ Meteor iOS integrates native iOS apps with the Meteor platform (http://www.meteo
 
 ### Differences between Meteor iOS and other DDP clients
 
-Meteor iOS is more than a barebones DDP client. Rather than notifying you of individual data updates and leaving it at that, it has been designed to bring full stack reativity to iOS. Currently, this is most easily done by integrating with Core Data. By only writing a few lines of code, we get reactive updates from the database to the UI.
+Meteor iOS is more than a barebones DDP client. Rather than notifying you of individual data updates and leaving it at that, it has been designed to bring full stack creativity to iOS. Currently, this is most easily done by integrating with Core Data. By only writing a few lines of code, we get reactive updates from the database to the UI.
 
 Among other things, it includes full support for latency compensation and supports writing your own method stubs. It has been implemented with concurrent execution in mind and keeps all processing off the main thread, posting batched and consolidated change notifications that can be observed to update the UI. 
 
