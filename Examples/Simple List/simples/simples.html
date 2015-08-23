@@ -1,0 +1,23 @@
+<head>
+  <title>Lists</title>
+</head>
+ 
+<body>
+  <div class="container">
+    <header>
+      <h1>Lists</h1>
+      <form class="new-list">
+        <input type="text" name="text" placeholder="Type to add new list" />
+    </form>
+    </header>
+    <ul>
+      {{#each lists}}
+        {{> list}}
+      {{/each}}
+    </ul>
+  </div>
+</body>
+ 
+<template name="list">
+  <li>{{name}}</li>
+</template>
