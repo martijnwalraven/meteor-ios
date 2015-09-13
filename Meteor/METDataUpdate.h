@@ -37,7 +37,8 @@ typedef NS_ENUM(NSInteger, METDataUpdateType) {
 @property (strong, nonatomic, readonly) METDocumentKey *documentKey;
 @property (nullable, copy, nonatomic, readonly) NSDictionary *fields;
 
-- (instancetype)initWithUpdateType:(METDataUpdateType)updateType documentKey:(METDocumentKey *)documentKey fields:(nullable NSDictionary *)fields;
+- (instancetype)initWithUpdateType:(METDataUpdateType)updateType documentKey:(METDocumentKey *)documentKey fields:(nullable NSDictionary *)fields NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
 
 @end
 

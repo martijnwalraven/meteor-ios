@@ -34,7 +34,8 @@ extern NSString * const METDatabaseChangesKey;
 @interface METDatabase : NSObject
 
 - (instancetype)initWithClient:(nullable METDDPClient *)client NS_DESIGNATED_INITIALIZER;
-- (instancetype)init __attribute__((unavailable("Use -initWithClient: instead")));
+- (instancetype)init NS_UNAVAILABLE;
+
 @property (nullable, weak, nonatomic, readonly) METDDPClient *client;
 
 - (NSArray *)executeFetchRequest:(METFetchRequest *)fetchRequest;

@@ -23,7 +23,7 @@ import CoreData
 public class ManagedObjectObserver: NSObject {
   private(set) var managedObject: NSManagedObject
   
-  public enum ChangeType: Printable {
+  public enum ChangeType: CustomStringConvertible {
     case Inserted
     case Updated
     case Deleted

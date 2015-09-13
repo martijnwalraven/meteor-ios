@@ -1,0 +1,51 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "10DA96EF135C773C9BA3718573A5F9304B0AFC11",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "E4BCE3AE6B24E41B9BCE312FF3B0B6CD0B8B8025" : 0,
+    "10DA96EF135C773C9BA3718573A5F9304B0AFC11" : 0,
+    "3692ABDCB445527429496D19963AFF94CAB1E068" : 0,
+    "0B81FAFF54B23ED6731069BA92626DF803B3F47D" : 0,
+    "63F37AB05971A66E37AC872B23CBE92BF6EA1B64" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "F34017F2-DDE0-4FEA-867B-178E2B8C1781",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "E4BCE3AE6B24E41B9BCE312FF3B0B6CD0B8B8025" : "meteor-ios\/Vendor\/ocmock\/",
+    "10DA96EF135C773C9BA3718573A5F9304B0AFC11" : "meteor-ios\/",
+    "3692ABDCB445527429496D19963AFF94CAB1E068" : "meteor-ios\/Vendor\/PocketSocket\/",
+    "0B81FAFF54B23ED6731069BA92626DF803B3F47D" : "meteor-ios\/Vendor\/InflectorKit\/",
+    "63F37AB05971A66E37AC872B23CBE92BF6EA1B64" : "meteor-ios\/Vendor\/SimpleKeychain\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Meteor",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Meteor.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/github.com\/mattt\/InflectorKit.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "0B81FAFF54B23ED6731069BA92626DF803B3F47D"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:martijnwalraven\/meteor-ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "10DA96EF135C773C9BA3718573A5F9304B0AFC11"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/github.com\/zwopple\/PocketSocket.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "3692ABDCB445527429496D19963AFF94CAB1E068"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/github.com\/auth0\/SimpleKeychain.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "63F37AB05971A66E37AC872B23CBE92BF6EA1B64"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/github.com\/erikdoe\/ocmock.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E4BCE3AE6B24E41B9BCE312FF3B0B6CD0B8B8025"
+    }
+  ]
+}

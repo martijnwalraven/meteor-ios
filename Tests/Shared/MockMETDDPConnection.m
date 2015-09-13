@@ -28,10 +28,6 @@ NSString * const METDDPConnectionSentMessageKey = @"METDDPConnectionSentMessageK
   NSError *_openingError;
 }
 
-- (instancetype)init {
-  return [self initWithServerURL:[[NSURL alloc] init]];
-}
-
 - (void)failNextOpeningAttemptWithError:(NSError *)error {
   _openingError = error;
 }

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Meteor"
-  s.version      = File.read('VERSION')
+  s.version      = `agvtool what-marketing-version -terse1`
   s.summary      = "Meteor iOS."
   s.description  = <<-DESC
     Meteor iOS integrates native iOS apps with the Meteor platform through DDP.
@@ -14,11 +14,11 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.source_files = 'Meteor/**/*.{h,m}'
-  s.public_header_files = `./Scripts/find_headers.rb --project Meteor --target "Meteor iOS" --public`.split("\n")
-  s.private_header_files = `./Scripts/find_headers.rb --project Meteor --target "Meteor iOS" --private`.split("\n")
-      
+  s.public_header_files = `./scripts/find_headers.rb --project Meteor --target "Meteor iOS" --public`.split("\n")
+  s.private_header_files = `./scripts/find_headers.rb --project Meteor --target "Meteor iOS" --private`.split("\n")
+
 	s.frameworks = 'CoreData'
-  
+
   s.dependency 'PocketSocket'
   s.dependency 'InflectorKit'
   s.dependency 'SimpleKeychain'

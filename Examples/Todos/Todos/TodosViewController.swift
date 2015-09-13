@@ -33,7 +33,7 @@ class TodosViewController: FetchedResultsTableViewController, UITextFieldDelegat
       
       if listID != nil {
         if listID != oldValue {
-          list = managedObjectContext!.existingObjectWithID(self.listID!, error: nil) as? List
+          list = (try? managedObjectContext!.existingObjectWithID(self.listID!)) as? List
         }
       } else {
         list = nil
@@ -172,13 +172,12 @@ class TodosViewController: FetchedResultsTableViewController, UITextFieldDelegat
   @IBOutlet weak var addTaskTextField: UITextField!
   
   func textFieldShouldReturn(textField: UITextField) -> Bool {
-    let text = addTaskTextField.text
-    addTaskTextField.text = nil
-    
-    if text.isEmpty {
+    guard let text = addTaskTextField.text where !text.isEmpty else {
       addTaskTextField.resignFirstResponder()
       return false
     }
+    
+    addTaskTextField.text = nil
     
     let todo = NSEntityDescription.insertNewObjectForEntityForName("Todo", inManagedObjectContext: managedObjectContext) as! Todo
     todo.creationDate = NSDate()

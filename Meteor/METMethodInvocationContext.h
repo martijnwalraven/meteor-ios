@@ -26,10 +26,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface METMethodInvocationContext : NSObject <NSCopying>
 
+- (instancetype)initWithMethodName:(NSString *)methodName enclosingMethodInvocationContext:(nullable METMethodInvocationContext *)enclosingMethodInvocationContext NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
+
 @property (copy, nonatomic, readonly) NSString *methodName;
 @property (nullable, strong, nonatomic, readonly) METMethodInvocationContext *enclosingMethodInvocationContext;
-
-- (instancetype)initWithMethodName:(NSString *)methodName enclosingMethodInvocationContext:(nullable METMethodInvocationContext *)enclosingMethodInvocationContext;
 
 @property (nullable, copy, nonatomic) NSString *userID;
 @property (nullable, strong, nonatomic) METRandomStream *randomStream;

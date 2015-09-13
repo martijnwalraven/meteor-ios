@@ -1,8 +1,0 @@
-# !!!: Change this to zwopple/PocketSocket when the PR is accepted
-github "justinmakaila/PocketSocket" >= 0.6.5
-
-# !!!: Change this to mattt/InflectorKit when the PR is accepted
-github "justinmakaila/InflectorKit" >= 0.0.2
-
-# !!!: Change this to auth0/SimpleKeychain when the PR is accepted
-github "justinmakaila/SimpleKeychain" >= 0.3.1

@@ -1,0 +1,12 @@
+[submodule "Vendor/PocketSocket"]
+	path = Vendor/PocketSocket
+	url = git://github.com/zwopple/PocketSocket.git
+[submodule "Vendor/InflectorKit"]
+	path = Vendor/InflectorKit
+	url = git://github.com/mattt/InflectorKit.git
+[submodule "Vendor/SimpleKeychain"]
+	path = Vendor/SimpleKeychain
+	url = git://github.com/auth0/SimpleKeychain.git
+[submodule "Vendor/ocmock"]
+	path = Vendor/ocmock
+	url = git://github.com/erikdoe/ocmock.git

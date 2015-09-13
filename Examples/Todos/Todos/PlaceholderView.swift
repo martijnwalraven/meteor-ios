@@ -30,7 +30,7 @@ class PlaceholderView: UIView {
     self.init(frame: CGRectZero)
   }
 
-  required init(coder: NSCoder) {
+  required init?(coder: NSCoder) {
     super.init(coder: coder)
   }
   
@@ -47,17 +47,19 @@ class PlaceholderView: UIView {
   func setUp() {
     let textColor = UIColor(white: 172/255.0, alpha:1)
     
+    translatesAutoresizingMaskIntoConstraints = false
+    
     loadingIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
-    loadingIndicatorView.setTranslatesAutoresizingMaskIntoConstraints(false)
+    loadingIndicatorView.translatesAutoresizingMaskIntoConstraints = false
     loadingIndicatorView.color = UIColor.lightGrayColor()
     addSubview(loadingIndicatorView)
     
     contentView = UIView(frame: CGRectZero)
-    contentView.setTranslatesAutoresizingMaskIntoConstraints(false)
+    contentView.translatesAutoresizingMaskIntoConstraints = false
     addSubview(contentView)
     
     titleLabel = UILabel(frame: CGRectZero)
-    titleLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+    titleLabel.translatesAutoresizingMaskIntoConstraints = false
     titleLabel.textAlignment = .Center
     titleLabel.backgroundColor = nil
     titleLabel.opaque = false
@@ -67,7 +69,7 @@ class PlaceholderView: UIView {
     contentView.addSubview(titleLabel)
     
     messageLabel = UILabel(frame: CGRectZero)
-    messageLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+    messageLabel.translatesAutoresizingMaskIntoConstraints = false
     messageLabel.textAlignment = .Center
     messageLabel.backgroundColor = nil
     messageLabel.opaque = false
@@ -85,14 +87,14 @@ class PlaceholderView: UIView {
     let views = ["contentView": contentView, "titleLabel": titleLabel, "messageLabel": messageLabel]
     
     if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
-      addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-(>=30)-[contentView(<=418)]-(>=30)-|", options: nil, metrics: nil, views: views))
+      addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-(>=30)-[contentView(<=418)]-(>=30)-|", options: [], metrics: nil, views: views))
     } else {
-      addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-30-[contentView]-30-|", options: nil, metrics: nil, views: views))
+      addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-30-[contentView]-30-|", options: [], metrics: nil, views: views))
     }
     
-    addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[titleLabel]|", options: nil, metrics: nil, views: views))
-    addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[messageLabel]|", options: nil, metrics: nil, views: views))
-    addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[titleLabel]-15-[messageLabel]|", options: nil, metrics: nil, views: views))
+    addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[titleLabel]|", options: [], metrics: nil, views: views))
+    addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[messageLabel]|", options: [], metrics: nil, views: views))
+    addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[titleLabel]-15-[messageLabel]|", options: [], metrics: nil, views: views))
   }
   
   private var title: String? {

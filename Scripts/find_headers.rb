@@ -38,11 +38,11 @@ ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 options = {}
 OptionParser.new do |opts|
   opts.banner = 'Usage: find_headers.rb [options]'
-  
+
   opts.on('--project PROJECT_NAME', 'Xcode project name') do |v|
     options[:project] = v
   end
-  
+
   opts.on('--target TARGET_NAME', 'Xcode target name') do |v|
     options[:target] = v
   end
@@ -63,15 +63,20 @@ separator = "\n"
 
 project = Xcodeproj::Project.open(ROOT + "#{options[:project]}.xcodeproj")
 target = project.targets.find { |t| t.name == options[:target] }
+fail "Could not find target '#{options[:target]}'" unless target
 
 public_headers = target.headers_build_phase.files.select do |build_file|
   settings = build_file.settings
-  settings && settings['ATTRIBUTES'].include?('Public')
+  return unless settings
+  attributes = settings['ATTRIBUTES']
+  attributes && attributes.include?('Public')
 end
 
 private_headers = target.headers_build_phase.files.select do |build_file|
   settings = build_file.settings
-  settings && settings['ATTRIBUTES'].include?('Private')
+  return unless settings
+  attributes = settings['ATTRIBUTES']
+  attributes && attributes.include?('Private')
 end
 
 if options[:public]

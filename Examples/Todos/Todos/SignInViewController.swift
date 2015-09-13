@@ -58,10 +58,8 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
   @IBAction func signIn() {
     errorMessageLabel.text = nil
     
-    let email = emailField.text
-    let password = passwordField.text
-    
-    if email.isEmpty || password.isEmpty {
+    guard let email = emailField.text where !email.isEmpty,
+      let password = passwordField.text where !password.isEmpty else {
       errorMessageLabel.text = "Email and password are required"
       return
     }

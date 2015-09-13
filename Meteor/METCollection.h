@@ -30,7 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface METCollection : NSObject
 
 - (instancetype)initWithName:(NSString *)name database:(METDatabase *)database NS_DESIGNATED_INITIALIZER;
-- (instancetype)init __attribute__((unavailable("Use -initWithName:database: instead")));
+- (instancetype)init NS_UNAVAILABLE;
+
 @property (copy, nonatomic, readonly) NSString *name;
 @property (weak, nonatomic) METDatabase *database;
 

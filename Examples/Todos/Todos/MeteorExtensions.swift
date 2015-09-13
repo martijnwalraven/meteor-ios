@@ -20,7 +20,7 @@
 
 import Meteor
 
-extension METDDPConnectionStatus: Printable {
+extension METDDPConnectionStatus: CustomStringConvertible {
   public var description: String {
     switch self {
     case .Offline:

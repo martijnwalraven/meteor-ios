@@ -20,7 +20,7 @@
 
 import Foundation
 
-enum ContentLoadingState : Printable {
+enum ContentLoadingState : CustomStringConvertible {
   case Initial
   case Loading
   case Loaded
