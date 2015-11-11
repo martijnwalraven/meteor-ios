@@ -12,7 +12,7 @@ Meteor iOS is more than a barebones DDP client. Rather than notifying you of ind
 
 Among other things, it includes full support for latency compensation and supports writing your own method stubs. It has been implemented with concurrent execution in mind and keeps all processing off the main thread, posting batched and consolidated change notifications that can be observed to update the UI. 
 
-It keeps as close as possible to the semantics of the original Meteor JavaScript code. It's behavior is covered by over 200 unit tests and it also has some server integration tests that run using a local Meteor test server.
+It keeps as close as possible to the semantics of the original Meteor JavaScript code. Its behavior is covered by over 200 unit tests and it also has some server integration tests that run using a local Meteor test server.
 
 ## Getting Started
 
