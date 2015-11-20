@@ -398,7 +398,7 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
   
   for (NSEntityDescription *entity in entities) {
     NSString *entityName = entity.name;
-    NSString *collectionName = entity.userInfo[@"collectionName"] ?: [[entityName pluralizedString] lowercaseString];
+    NSString *collectionName = entity.userInfo[@"collectionName"] ?: [[entityName pluralizedString] stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:[[entityName lowercaseString] substringToIndex:1]];
 
     _entityNamesByCollectionName[collectionName] = entityName;
     _collectionNamesByEntityName[entityName] = collectionName;
