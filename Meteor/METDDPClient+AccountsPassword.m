@@ -29,6 +29,10 @@
   [self loginWithMethodName:@"login" parameters:@[@{@"user": @{@"email": email}, @"password": @{@"digest": [password SHA256String], @"algorithm": @"sha-256"}}] completionHandler:completionHandler];
 }
 
+- (void)loginWithUsername:(NSString *)username password:(NSString *)password completionHandler:(METLogInCompletionHandler)completionHandler {
+  [self loginWithMethodName:@"login" parameters:@[@{@"user": @{@"username": username}, @"password": @{@"digest": [password SHA256String], @"algorithm": @"sha-256"}}] completionHandler:completionHandler];
+}
+
 - (void)signUpWithEmail:(NSString *)email password:(NSString *)password completionHandler:(METLogInCompletionHandler)completionHandler {
   [self signUpWithEmail:email password:password profile:nil completionHandler:completionHandler];
 }
