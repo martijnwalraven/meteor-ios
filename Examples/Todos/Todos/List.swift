@@ -22,7 +22,7 @@ import CoreData
 
 class List: NSManagedObject {
   @NSManaged var name: String!
-  @NSManaged var incompleteCount: Int
+  @NSManaged var incompleteCount: Int64
 
   @NSManaged var todos: NSSet!
   
