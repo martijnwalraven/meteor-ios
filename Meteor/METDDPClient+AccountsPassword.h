@@ -30,6 +30,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)loginWithEmail:(NSString *)email password:(NSString *)password completionHandler:(nullable METLogInCompletionHandler)completionHandler;
 
+/// @name Logging In with Parameters (e.g. Facebook Token, needs custom login handler on server side)
+- (void)loginWithMethodName:(NSString *)methodName parameters:(nullable NSArray *)parameters completionHandler:(nullable METLogInCompletionHandler)completionHandler;
+
 /// @name Signing Up with Password
 
 - (void)signUpWithEmail:(NSString *)email password:(NSString *)password completionHandler:(nullable METLogInCompletionHandler)completionHandler;
