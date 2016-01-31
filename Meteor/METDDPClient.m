@@ -520,7 +520,11 @@ NSString * const METDDPClientDidChangeAccountNotification = @"METDDPClientDidCha
 }
 
 - (void)removeSubscription:(METSubscription *)subscription {
-  [_subscriptionManager removeSubscription:subscription];
+    [self removeSubscription:subscription immediately:NO completionHandler:nil];
+}
+
+- (void)removeSubscription:(METSubscription *)subscription immediately:(BOOL)immediately completionHandler:(nullable METSubscriptionCompletionHandler)completionHandler {
+  [_subscriptionManager removeSubscription:subscription immediately:immediately completionHandler:completionHandler];
 }
 
 - (void)sendUnsubMessageForSubscription:(METSubscription *)subscription {
