@@ -95,6 +95,7 @@ typedef void (^METLogOutCompletionHandler)(NSError * __nullable error);
 - (METSubscription *)addSubscriptionWithName:(NSString *)name parameters:(nullable NSArray *)parameters;
 - (METSubscription *)addSubscriptionWithName:(NSString *)name parameters:(nullable NSArray *)parameters completionHandler:(nullable METSubscriptionCompletionHandler)completionHandler;
 - (void)removeSubscription:(METSubscription *)subscription;
+- (void)removeSubscription:(METSubscription *)subscription immediately:(BOOL)immediately completionHandler:(nullable METSubscriptionCompletionHandler)completionHandler;
 
 #pragma mark - Method Invocations
 /// @name Defining Method Stubs

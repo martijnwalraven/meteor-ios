@@ -35,6 +35,8 @@
 
 @end
 
+NSString * const METSubscriptionManagerErrorDomain = @"com.meteor.SubscriptionManager.ErrorDomain";
+
 @implementation METSubscriptionManager {
   dispatch_queue_t _queue;
   NSMutableDictionary *_subscriptionsByID;
@@ -97,7 +99,7 @@
   return existingSubscription;
 }
 
-- (void)removeSubscription:(METSubscription *)subscription {
+- (void)removeSubscription:(METSubscription *)subscription immediately:(BOOL)immediately completionHandler:(nullable METSubscriptionCompletionHandler)completionHandler {
   NSParameterAssert(subscription);
   
   dispatch_async(_queue, ^{
@@ -106,23 +108,38 @@
     if (!subscription.inUse) {
       [self removeSubscriptionToBeRevivedAfterConnect:subscription];
       
-      if (subscription.reuseTimer == nil) {
-        subscription.reuseTimer = [[METTimer alloc] initWithQueue:_queue block:^{
-          // Subscription was reused before timeout
-          if (subscription.inUse) {
-            return;
-          }
-          
-          [_subscriptionsByID removeObjectForKey:subscription.identifier];
-          
-          if (_client.connected) {
-            [_client sendUnsubMessageForSubscription:subscription];
-          }
-        }];
+      if (immediately) {
+        [self removeSubscription:subscription completionHandler:completionHandler];
+      } else {
+        if (subscription.reuseTimer == nil) {
+          subscription.reuseTimer = [[METTimer alloc] initWithQueue:_queue block:^{
+            // Subscription was reused before timeout
+            if (subscription.inUse) {
+              return;
+            }
+            [self removeSubscription:subscription completionHandler:completionHandler];
+          }];
+        }
+        [subscription.reuseTimer startWithTimeInterval:subscription.notInUseTimeout];
       }
-      [subscription.reuseTimer startWithTimeInterval:subscription.notInUseTimeout];
     }
   });
+}
+
+- (void)removeSubscription:(METSubscription *)subscription completionHandler:(METSubscriptionCompletionHandler)completionHandler {
+    [_subscriptionsByID removeObjectForKey:subscription.identifier];
+    
+    NSError *error = nil;
+    
+    if (_client.connected) {
+        [_client sendUnsubMessageForSubscription:subscription];
+    } else {
+        error = [NSError errorWithDomain:METSubscriptionManagerErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: @"Client is not connected"}];
+    }
+    
+    if (completionHandler) {
+        completionHandler(error);
+    }
 }
 
 - (void)didReceiveReadyForSubscriptionWithID:(NSString *)subscriptionID {
