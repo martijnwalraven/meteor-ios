@@ -112,8 +112,9 @@ typedef void (^METLogOutCompletionHandler)(NSError * __nullable error);
 @property (assign, nonatomic, readonly, getter=isLoggingIn) BOOL loggingIn;
 @property (nullable, copy, nonatomic, readonly) NSString *userID;
 
-/// @name Logging Out
+/// @name Logging and Logging Out
 
+- (void)loginWithMethodName:(NSString *)methodName parameters:(nullable NSArray *)parameters completionHandler:(nullable METLogInCompletionHandler)completionHandler;
 - (void)logoutWithCompletionHandler:(nullable METLogOutCompletionHandler)completionHandler;
 
 @end
