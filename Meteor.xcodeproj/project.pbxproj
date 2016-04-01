@@ -23,6 +23,7 @@
 		9F37394E1BA47B2D00E1FE15 /* METDocumentIDGenerationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3739471BA47B2D00E1FE15 /* METDocumentIDGenerationTests.m */; };
 		9F37394F1BA47B2D00E1FE15 /* METServerIntegrationTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3739491BA47B2D00E1FE15 /* METServerIntegrationTestCase.m */; };
 		9F3739501BA47B2D00E1FE15 /* METSubscriptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F37394A1BA47B2D00E1FE15 /* METSubscriptionsTests.m */; };
+		9F84274F1CAEAF6C00B69666 /* METDDPConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F896A5E1BA42A1400C9BBA0 /* METDDPConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9F896A301BA428D400C9BBA0 /* Meteor.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F896A2F1BA428D400C9BBA0 /* Meteor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9F896A371BA428D400C9BBA0 /* Meteor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F896A2C1BA428D400C9BBA0 /* Meteor.framework */; };
 		9F896A921BA42A1400C9BBA0 /* METAccount.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F896A461BA42A1400C9BBA0 /* METAccount.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -49,7 +50,6 @@
 		9F896AA71BA42A1400C9BBA0 /* METDDPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896A5B1BA42A1400C9BBA0 /* METDDPClient.m */; };
 		9F896AA81BA42A1400C9BBA0 /* METDDPClient+AccountsPassword.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F896A5C1BA42A1400C9BBA0 /* METDDPClient+AccountsPassword.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9F896AA91BA42A1400C9BBA0 /* METDDPClient+AccountsPassword.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896A5D1BA42A1400C9BBA0 /* METDDPClient+AccountsPassword.m */; };
-		9F896AAA1BA42A1400C9BBA0 /* METDDPConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F896A5E1BA42A1400C9BBA0 /* METDDPConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9F896AAB1BA42A1400C9BBA0 /* METDDPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896A5F1BA42A1400C9BBA0 /* METDDPConnection.m */; };
 		9F896AAC1BA42A1400C9BBA0 /* METDDPHeartbeat.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F896A601BA42A1400C9BBA0 /* METDDPHeartbeat.h */; };
 		9F896AAD1BA42A1400C9BBA0 /* METDDPHeartbeat.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896A611BA42A1400C9BBA0 /* METDDPHeartbeat.m */; };
@@ -189,6 +189,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 9F896A2B1BA428D400C9BBA0;
 			remoteInfo = "Meteor iOS";
+		};
+		9F84274B1CAEAF4E00B69666 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9F3738C21BA470CD00E1FE15 /* PocketSocket.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 275D3AE91B02811E0013B9A9;
+			remoteInfo = "PocketSocket-Mac";
+		};
+		9F84274D1CAEAF4E00B69666 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9F3738C21BA470CD00E1FE15 /* PocketSocket.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EE453D0F1CABF60300A2EA13;
+			remoteInfo = PSAutobahnServerTests;
 		};
 		9F896A381BA428D400C9BBA0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -383,7 +397,9 @@
 			isa = PBXGroup;
 			children = (
 				9F3738C81BA470CD00E1FE15 /* libPocketSocket.a */,
+				9F84274C1CAEAF4E00B69666 /* libPocketSocket-Mac.a */,
 				9F3738CA1BA470CD00E1FE15 /* PSAutobahnClientTests.xctest */,
+				9F84274E1CAEAF4E00B69666 /* PSAutobahnServerTests.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -704,6 +720,7 @@
 				9F896A9B1BA42A1400C9BBA0 /* METCoreDataDDPClient.h in Headers */,
 				9F896AB01BA42A1400C9BBA0 /* METDocument.h in Headers */,
 				9F896AA11BA42A1400C9BBA0 /* METDatabaseChanges.h in Headers */,
+				9F84274F1CAEAF6C00B69666 /* METDDPConnection.h in Headers */,
 				9F896AA81BA42A1400C9BBA0 /* METDDPClient+AccountsPassword.h in Headers */,
 				9F896AA61BA42A1400C9BBA0 /* METDDPClient.h in Headers */,
 				9F896A921BA42A1400C9BBA0 /* METAccount.h in Headers */,
@@ -717,7 +734,6 @@
 				9F896ACD1BA42A1400C9BBA0 /* METRandomValueGenerator.h in Headers */,
 				9F896A941BA42A1400C9BBA0 /* METAleaRandomValueGenerator.h in Headers */,
 				9F896AA01BA42A1400C9BBA0 /* METDatabaseChanges_Internal.h in Headers */,
-				9F896AAA1BA42A1400C9BBA0 /* METDDPConnection.h in Headers */,
 				9F896ABC1BA42A1400C9BBA0 /* METFetchRequest.h in Headers */,
 				9F896AC21BA42A1400C9BBA0 /* METMethodInvocation.h in Headers */,
 				9F896AD11BA42A1400C9BBA0 /* METSubscription_Internal.h in Headers */,
@@ -900,6 +916,20 @@
 			remoteRef = 9F3739241BA477F700E1FE15 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		9F84274C1CAEAF4E00B69666 /* libPocketSocket-Mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libPocketSocket-Mac.a";
+			remoteRef = 9F84274B1CAEAF4E00B69666 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9F84274E1CAEAF4E00B69666 /* PSAutobahnServerTests.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = PSAutobahnServerTests.app;
+			remoteRef = 9F84274D1CAEAF4E00B69666 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -1077,7 +1107,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 131;
+				CURRENT_PROJECT_VERSION = 127;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1129,7 +1159,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 131;
+				CURRENT_PROJECT_VERSION = 127;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1161,7 +1191,7 @@
 			buildSettings = {
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 131;
+				DYLIB_CURRENT_VERSION = 127;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Meteor/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1178,7 +1208,7 @@
 			buildSettings = {
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 131;
+				DYLIB_CURRENT_VERSION = 127;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Meteor/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";

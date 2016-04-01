@@ -20,7 +20,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import <PocketSocket/PSWebSocket.h>
+@protocol PSWebSocketDelegate;
 
 @protocol METDDPConnectionDelegate;
 
