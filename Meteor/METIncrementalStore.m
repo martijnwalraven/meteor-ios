@@ -235,7 +235,8 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
 }
 
 - (BOOL)sourceDocumentStoresReferenceFieldForRelationship:(NSRelationshipDescription *)relationship {
-    return [relationship.userInfo[@"storage"] boolValue] ? YES : NO;
+    id storageInfo = relationship.userInfo[@"storage"];
+    return !storageInfo || ![storageInfo boolValue] == NO;
 }
 
 - (id)objectIDForToOneRelationship:(NSRelationshipDescription *)relationship forObjectWithID:(NSManagedObjectID *)objectID {
