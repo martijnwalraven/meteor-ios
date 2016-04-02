@@ -67,14 +67,14 @@ fail "Could not find target '#{options[:target]}'" unless target
 
 public_headers = target.headers_build_phase.files.select do |build_file|
   settings = build_file.settings
-  return unless settings
+  next unless settings
   attributes = settings['ATTRIBUTES']
   attributes && attributes.include?('Public')
 end
 
 private_headers = target.headers_build_phase.files.select do |build_file|
   settings = build_file.settings
-  return unless settings
+  next unless settings
   attributes = settings['ATTRIBUTES']
   attributes && attributes.include?('Private')
 end
