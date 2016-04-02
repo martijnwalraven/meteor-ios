@@ -33,7 +33,7 @@
 - (void)testSubscribingWithUnknownNameResultsInError {
   XCTestExpectation *expectation = [self expectationWithDescription:@"completion handler invoked"];
   [_client addSubscriptionWithName:@"someSubscription" parameters:nil completionHandler:^(NSError *error) {
-    NSError *expectedError = [NSError errorWithDomain:METDDPErrorDomain code:METDDPServerError userInfo:@{NSLocalizedDescriptionKey: @"Received error response from server", NSLocalizedFailureReasonErrorKey:@"Subscription not found"}];
+    NSError *expectedError = [NSError errorWithDomain:METDDPErrorDomain code:METDDPServerError userInfo:@{NSLocalizedDescriptionKey: @"Received error response from server", NSLocalizedFailureReasonErrorKey:@"Subscription 'someSubscription' not found"}];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-retain-cycles"
     XCTAssertEqualObjects(expectedError, error);
