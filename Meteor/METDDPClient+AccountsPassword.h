@@ -30,6 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)loginWithEmail:(NSString *)email password:(NSString *)password completionHandler:(nullable METLogInCompletionHandler)completionHandler;
 
+- (void)loginWithUsername:(NSString *)username password:(NSString *)password completionHandler:(nullable METLogInCompletionHandler)completionHandler;
+
 /// @name Signing Up with Password
 
 - (void)signUpWithEmail:(NSString *)email password:(NSString *)password completionHandler:(nullable METLogInCompletionHandler)completionHandler;
