@@ -1,0 +1,515 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9F0C5E511A53C4E10077E466 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0C5E501A53C4E10077E466 /* AppDelegate.swift */; };
+		9F0C5E541A53C4E10077E466 /* Todos.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9F0C5E521A53C4E10077E466 /* Todos.xcdatamodeld */; };
+		9F0C5E561A53C4E10077E466 /* ListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0C5E551A53C4E10077E466 /* ListsViewController.swift */; };
+		9F0C5E581A53C4E10077E466 /* TodosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0C5E571A53C4E10077E466 /* TodosViewController.swift */; };
+		9F0C5E5B1A53C4E10077E466 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F0C5E591A53C4E10077E466 /* Main.storyboard */; };
+		9F0C5E5D1A53C4E10077E466 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F0C5E5C1A53C4E10077E466 /* Images.xcassets */; };
+		9F0C5E601A53C4E10077E466 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F0C5E5E1A53C4E10077E466 /* LaunchScreen.xib */; };
+		9F0C5E781A53E4450077E466 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0C5E771A53E4450077E466 /* List.swift */; };
+		9F0C5EB11A542E510077E466 /* FetchedResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F0C5EB01A542E510077E466 /* FetchedResultsTableViewController.swift */; };
+		9F108F731A63B848001B40C9 /* ContentLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F108F721A63B848001B40C9 /* ContentLoading.swift */; };
+		9F108F771A63B9C5001B40C9 /* FetchedResultsTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F108F761A63B9C5001B40C9 /* FetchedResultsTableViewDataSource.swift */; };
+		9F49219B1A57FEDF00151F48 /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F49219A1A57FEDF00151F48 /* PlaceholderView.swift */; };
+		9F55D5241B2CAF8900858CE7 /* Meteor.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9F55D5221B2CAF8900858CE7 /* Meteor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9F87B3551A61F19A0019AE57 /* ManagedObjectObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F87B3541A61F19A0019AE57 /* ManagedObjectObserver.swift */; };
+		9F87B3591A6238630019AE57 /* FoundationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F87B3581A6238630019AE57 /* FoundationExtensions.swift */; };
+		9FA0A71A1A5EA92000DC6ECC /* SubscriptionLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA0A7191A5EA92000DC6ECC /* SubscriptionLoader.swift */; };
+		9FA0A71C1A5FC78E00DC6ECC /* FunctionalAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA0A71B1A5FC78E00DC6ECC /* FunctionalAdditions.swift */; };
+		9FA0A71E1A5FEF9400DC6ECC /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA0A71D1A5FEF9400DC6ECC /* BorderedButton.swift */; };
+		9FA52C911A64549600757CC4 /* FetchedResultsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA52C901A64549600757CC4 /* FetchedResultsDataSource.swift */; };
+		9FEA8E411A5E741200D7DE32 /* MeteorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FEA8E401A5E741200D7DE32 /* MeteorExtensions.swift */; };
+		E486469B1B7917C2005702C0 /* Meteor.xcodeproj in Frameworks */ = {isa = PBXBuildFile; fileRef = E486468E1B7917B6005702C0 /* Meteor.xcodeproj */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E48646951B7917B6005702C0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E486468E1B7917B6005702C0 /* Meteor.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9FAB38421AE3E76900E99519;
+			remoteInfo = "Meteor iOS";
+		};
+		E48646971B7917B6005702C0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E486468E1B7917B6005702C0 /* Meteor.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9FAB38FC1AE3E8C000E99519;
+			remoteInfo = "Unit Tests";
+		};
+		E48646991B7917B6005702C0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E486468E1B7917B6005702C0 /* Meteor.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9FAB390C1AE3E8D700E99519;
+			remoteInfo = "Server Integration Tests";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9FC1CDBE1B2CAE7C00D2E81B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9F55D5241B2CAF8900858CE7 /* Meteor.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		9F0C5E4B1A53C4E10077E466 /* Todos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todos.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F0C5E4F1A53C4E10077E466 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9F0C5E501A53C4E10077E466 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9F0C5E531A53C4E10077E466 /* Todos.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Todos.xcdatamodel; sourceTree = "<group>"; };
+		9F0C5E551A53C4E10077E466 /* ListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsViewController.swift; sourceTree = "<group>"; };
+		9F0C5E571A53C4E10077E466 /* TodosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodosViewController.swift; sourceTree = "<group>"; };
+		9F0C5E5A1A53C4E10077E466 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9F0C5E5C1A53C4E10077E466 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		9F0C5E5F1A53C4E10077E466 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		9F0C5E771A53E4450077E466 /* List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
+		9F0C5EB01A542E510077E466 /* FetchedResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsTableViewController.swift; sourceTree = "<group>"; };
+		9F108F721A63B848001B40C9 /* ContentLoading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentLoading.swift; sourceTree = "<group>"; };
+		9F108F761A63B9C5001B40C9 /* FetchedResultsTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsTableViewDataSource.swift; sourceTree = "<group>"; };
+		9F49219A1A57FEDF00151F48 /* PlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
+		9F55D5221B2CAF8900858CE7 /* Meteor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Meteor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F87B3541A61F19A0019AE57 /* ManagedObjectObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectObserver.swift; sourceTree = "<group>"; };
+		9F87B3581A6238630019AE57 /* FoundationExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoundationExtensions.swift; sourceTree = "<group>"; };
+		9FA0A7191A5EA92000DC6ECC /* SubscriptionLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionLoader.swift; sourceTree = "<group>"; };
+		9FA0A71B1A5FC78E00DC6ECC /* FunctionalAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalAdditions.swift; sourceTree = "<group>"; };
+		9FA0A71D1A5FEF9400DC6ECC /* BorderedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
+		9FA52C901A64549600757CC4 /* FetchedResultsDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsDataSource.swift; sourceTree = "<group>"; };
+		9FEA8E401A5E741200D7DE32 /* MeteorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeteorExtensions.swift; sourceTree = "<group>"; };
+		E486468E1B7917B6005702C0 /* Meteor.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Meteor.xcodeproj; path = ../../Meteor.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9F0C5E481A53C4E10077E466 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E486469B1B7917C2005702C0 /* Meteor.xcodeproj in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9F0C5E421A53C4E10077E466 = {
+			isa = PBXGroup;
+			children = (
+				9F0C5E4D1A53C4E10077E466 /* Todos */,
+				9F0C5E4C1A53C4E10077E466 /* Products */,
+				D5615E1FE56A597C93F9959F /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		9F0C5E4C1A53C4E10077E466 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9F0C5E4B1A53C4E10077E466 /* Todos.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9F0C5E4D1A53C4E10077E466 /* Todos */ = {
+			isa = PBXGroup;
+			children = (
+				9F0C5E501A53C4E10077E466 /* AppDelegate.swift */,
+				9F2AFDDA1A559320003E1667 /* View Controllers */,
+				9F49219E1A580ADC00151F48 /* View */,
+				9F2AFDD91A559311003E1667 /* Model */,
+				9F4921A31A590D7200151F48 /* Utility */,
+				9F0C5E5C1A53C4E10077E466 /* Images.xcassets */,
+				9F0C5E591A53C4E10077E466 /* Main.storyboard */,
+				9F0C5E5E1A53C4E10077E466 /* LaunchScreen.xib */,
+				9F0C5E4E1A53C4E10077E466 /* Supporting Files */,
+			);
+			path = Todos;
+			sourceTree = "<group>";
+		};
+		9F0C5E4E1A53C4E10077E466 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9F0C5E4F1A53C4E10077E466 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9F2AFDD91A559311003E1667 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9F0C5E521A53C4E10077E466 /* Todos.xcdatamodeld */,
+				9F0C5E771A53E4450077E466 /* List.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		9F2AFDDA1A559320003E1667 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9F0C5E551A53C4E10077E466 /* ListsViewController.swift */,
+				9F0C5E571A53C4E10077E466 /* TodosViewController.swift */,
+				9F0C5EB01A542E510077E466 /* FetchedResultsTableViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		9F49219E1A580ADC00151F48 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9F49219A1A57FEDF00151F48 /* PlaceholderView.swift */,
+				9FA0A71D1A5FEF9400DC6ECC /* BorderedButton.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		9F4921A31A590D7200151F48 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				9FA52C941A652A6E00757CC4 /* Content Loading */,
+				9FA52C921A652A5000757CC4 /* Core Data */,
+				9FA52C931A652A6200757CC4 /* Extensions */,
+			);
+			name = Utility;
+			sourceTree = "<group>";
+		};
+		9FA52C921A652A5000757CC4 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				9FA52C901A64549600757CC4 /* FetchedResultsDataSource.swift */,
+				9F108F761A63B9C5001B40C9 /* FetchedResultsTableViewDataSource.swift */,
+				9F87B3541A61F19A0019AE57 /* ManagedObjectObserver.swift */,
+			);
+			name = "Core Data";
+			sourceTree = "<group>";
+		};
+		9FA52C931A652A6200757CC4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9F87B3581A6238630019AE57 /* FoundationExtensions.swift */,
+				9FEA8E401A5E741200D7DE32 /* MeteorExtensions.swift */,
+				9FA0A71B1A5FC78E00DC6ECC /* FunctionalAdditions.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		9FA52C941A652A6E00757CC4 /* Content Loading */ = {
+			isa = PBXGroup;
+			children = (
+				9F108F721A63B848001B40C9 /* ContentLoading.swift */,
+				9FA0A7191A5EA92000DC6ECC /* SubscriptionLoader.swift */,
+			);
+			name = "Content Loading";
+			sourceTree = "<group>";
+		};
+		D5615E1FE56A597C93F9959F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E486468E1B7917B6005702C0 /* Meteor.xcodeproj */,
+				9F55D5221B2CAF8900858CE7 /* Meteor.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E486468F1B7917B6005702C0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E48646961B7917B6005702C0 /* Meteor.framework */,
+				E48646981B7917B6005702C0 /* Unit Tests.xctest */,
+				E486469A1B7917B6005702C0 /* Server Integration Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9F0C5E4A1A53C4E10077E466 /* Todos */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9F0C5E6F1A53C4E10077E466 /* Build configuration list for PBXNativeTarget "Todos" */;
+			buildPhases = (
+				9F0C5E471A53C4E10077E466 /* Sources */,
+				9F0C5E481A53C4E10077E466 /* Frameworks */,
+				9F0C5E491A53C4E10077E466 /* Resources */,
+				9FC1CDBE1B2CAE7C00D2E81B /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Todos;
+			productName = Todos;
+			productReference = 9F0C5E4B1A53C4E10077E466 /* Todos.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9F0C5E431A53C4E10077E466 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Martijn Walraven";
+				TargetAttributes = {
+					9F0C5E4A1A53C4E10077E466 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+				};
+			};
+			buildConfigurationList = 9F0C5E461A53C4E10077E466 /* Build configuration list for PBXProject "Todos" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9F0C5E421A53C4E10077E466;
+			productRefGroup = 9F0C5E4C1A53C4E10077E466 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = E486468F1B7917B6005702C0 /* Products */;
+					ProjectRef = E486468E1B7917B6005702C0 /* Meteor.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				9F0C5E4A1A53C4E10077E466 /* Todos */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		E48646961B7917B6005702C0 /* Meteor.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Meteor.framework;
+			remoteRef = E48646951B7917B6005702C0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E48646981B7917B6005702C0 /* Unit Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Unit Tests.xctest";
+			remoteRef = E48646971B7917B6005702C0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E486469A1B7917B6005702C0 /* Server Integration Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Server Integration Tests.xctest";
+			remoteRef = E48646991B7917B6005702C0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9F0C5E491A53C4E10077E466 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F0C5E5B1A53C4E10077E466 /* Main.storyboard in Resources */,
+				9F0C5E601A53C4E10077E466 /* LaunchScreen.xib in Resources */,
+				9F0C5E5D1A53C4E10077E466 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9F0C5E471A53C4E10077E466 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9FA0A71C1A5FC78E00DC6ECC /* FunctionalAdditions.swift in Sources */,
+				9F0C5EB11A542E510077E466 /* FetchedResultsTableViewController.swift in Sources */,
+				9F0C5E511A53C4E10077E466 /* AppDelegate.swift in Sources */,
+				9F87B3551A61F19A0019AE57 /* ManagedObjectObserver.swift in Sources */,
+				9FA52C911A64549600757CC4 /* FetchedResultsDataSource.swift in Sources */,
+				9FA0A71E1A5FEF9400DC6ECC /* BorderedButton.swift in Sources */,
+				9F87B3591A6238630019AE57 /* FoundationExtensions.swift in Sources */,
+				9F0C5E541A53C4E10077E466 /* Todos.xcdatamodeld in Sources */,
+				9F108F731A63B848001B40C9 /* ContentLoading.swift in Sources */,
+				9FEA8E411A5E741200D7DE32 /* MeteorExtensions.swift in Sources */,
+				9F108F771A63B9C5001B40C9 /* FetchedResultsTableViewDataSource.swift in Sources */,
+				9F0C5E561A53C4E10077E466 /* ListsViewController.swift in Sources */,
+				9F0C5E581A53C4E10077E466 /* TodosViewController.swift in Sources */,
+				9F49219B1A57FEDF00151F48 /* PlaceholderView.swift in Sources */,
+				9F0C5E781A53E4450077E466 /* List.swift in Sources */,
+				9FA0A71A1A5EA92000DC6ECC /* SubscriptionLoader.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		9F0C5E591A53C4E10077E466 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9F0C5E5A1A53C4E10077E466 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		9F0C5E5E1A53C4E10077E466 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9F0C5E5F1A53C4E10077E466 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		9F0C5E6D1A53C4E10077E466 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9F0C5E6E1A53C4E10077E466 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9F0C5E701A53C4E10077E466 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Todos/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		9F0C5E711A53C4E10077E466 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Todos/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9F0C5E461A53C4E10077E466 /* Build configuration list for PBXProject "Todos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9F0C5E6D1A53C4E10077E466 /* Debug */,
+				9F0C5E6E1A53C4E10077E466 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9F0C5E6F1A53C4E10077E466 /* Build configuration list for PBXNativeTarget "Todos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9F0C5E701A53C4E10077E466 /* Debug */,
+				9F0C5E711A53C4E10077E466 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		9F0C5E521A53C4E10077E466 /* Todos.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				9F0C5E531A53C4E10077E466 /* Todos.xcdatamodel */,
+			);
+			currentVersion = 9F0C5E531A53C4E10077E466 /* Todos.xcdatamodel */;
+			path = Todos.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 9F0C5E431A53C4E10077E466 /* Project object */;
+}

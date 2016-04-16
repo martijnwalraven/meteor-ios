@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14F27" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="List" representedClassName="Todos.List">
+        <attribute name="name" attributeType="String">
+            <userInfo/>
+        </attribute>
+        <userInfo/>
+    </entity>
+    <elements>
+        <element name="List" positionX="-45" positionY="194" width="128" height="60"/>
+    </elements>
+</model>
