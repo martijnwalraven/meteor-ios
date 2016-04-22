@@ -50,7 +50,7 @@ class SubscriptionLoader {
   }
   
   var isReady: Bool {
-    return all(subscriptions, {$0.ready})
+    return all(subscriptions, predicate: {$0.ready})
   }
   
   func whenReady(handler: () -> Void) {

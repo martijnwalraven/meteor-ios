@@ -1,6 +1,0 @@
-framework module Meteor {
-  umbrella header "Meteor.h"
-
-  export *
-  module * { export * }
-}

@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface METDocument : NSObject <NSCopying>
 
 - (instancetype)initWithKey:(METDocumentKey *)key fields:(NSDictionary *)fields NS_DESIGNATED_INITIALIZER;
-- (instancetype)init __attribute__((unavailable("Use -initWithKey:fields: instead")));
+- (instancetype)init NS_UNAVAILABLE;
 
 @property (strong, nonatomic, readonly) METDocumentKey *key;
 @property (copy, nonatomic, readonly) NSDictionary *fields;

@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setDefaultAccount:(METAccount *)account;
 
 - (instancetype)initWithUserID:(NSString *)userID resumeToken:(NSString *)token expiryDate:(nullable NSDate *)tokenExpires NS_DESIGNATED_INITIALIZER;
-- (instancetype)init __attribute__((unavailable("Use -initWithUserID:resumeToken:expiryDate: instead")));
+- (instancetype)init NS_UNAVAILABLE;
 
 @property (copy, nonatomic, readonly) NSString *userID;
 @property (copy, nonatomic, readonly) NSString *resumeToken;

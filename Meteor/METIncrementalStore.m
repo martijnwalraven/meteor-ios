@@ -245,8 +245,8 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
 }
 
 - (BOOL)sourceDocumentStoresReferenceFieldForRelationship:(NSRelationshipDescription *)relationship {
-  id storageInfo = relationship.userInfo[@"storage"];
-  return !storageInfo || ![storageInfo boolValue] == NO;
+    id storageInfo = relationship.userInfo[@"storage"];
+    return !storageInfo || ![storageInfo boolValue] == NO;
 }
 
 - (id)objectIDForToOneRelationship:(NSRelationshipDescription *)relationship forObjectWithID:(NSManagedObjectID *)objectID {
@@ -408,7 +408,7 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
   
   for (NSEntityDescription *entity in entities) {
     NSString *entityName = entity.name;
-    NSString *collectionName = entity.userInfo[@"collectionName"] ?: [[entityName pluralizedString] lowercaseString];
+    NSString *collectionName = entity.userInfo[@"collectionName"] ?: [[entityName pluralizedString] stringByReplacingCharactersInRange:NSMakeRange(0, 1) withString:[[entityName lowercaseString] substringToIndex:1]];
 
     _entityNamesByCollectionName[collectionName] = entityName;
     _collectionNamesByEntityName[entityName] = collectionName;

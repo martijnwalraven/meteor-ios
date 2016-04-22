@@ -4,11 +4,11 @@ Meteor.methods({
   anotherMethod: function(data) {
     return Players.insert(data);
   },
-  
+
   addPlayer: function(data) {
     return Meteor.call("anotherMethod", data);
   },
-  
+
   addExamplePlayers: function() {
     var names = ["Ada Lovelace", "Grace Hopper", "Marie Curie",
                  "Carl Friedrich Gauss", "Nikola Tesla", "Claude Shannon"];
@@ -19,7 +19,7 @@ Meteor.methods({
       });
     });
   },
-  
+
   reset: function() {
     Players.remove({});
   }
@@ -45,9 +45,12 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
+    if (Meteor.users.find().count() === 0) {
+      Accounts.createUser({ email: "martijn@martijnwalraven.com", password: "correct"})
+    }
   });
-  
-  Meteor.publish('allPlayers', function() {
-    return Players.find(); 
+
+  Meteor.publish("allPlayers", function() {
+    return Players.find();
   });
 }

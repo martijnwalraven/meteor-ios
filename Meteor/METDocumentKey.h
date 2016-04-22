@@ -27,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)keyWithCollectionName:(NSString *)collectionName documentID:(id)documentID;
 
 - (instancetype)initWithCollectionName:(NSString *)collectionName documentID:(id)documentID NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
+
 @property (copy, nonatomic, readonly) NSString *collectionName;
 @property (copy, nonatomic, readonly) id documentID;
 

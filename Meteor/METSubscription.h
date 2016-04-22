@@ -32,7 +32,9 @@ typedef NS_ENUM(NSInteger, METSubscriptionStatus) {
 
 @interface METSubscription : NSObject
 
-- (instancetype)initWithIdentifier:(NSString *)identifier name:(NSString *)name parameters:(id)parameters;
+- (instancetype)initWithIdentifier:(NSString *)identifier name:(NSString *)name parameters:(id)parameters NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
+
 @property (copy, nonatomic, readonly) NSString *identifier;
 @property (copy, nonatomic, readonly) NSString *name;
 @property (strong, nonatomic, readonly) id parameters;

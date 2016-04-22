@@ -39,6 +39,14 @@ options = {}
 OptionParser.new do |opts|
   opts.banner = 'Usage: find_headers.rb [options]'
 
+  opts.on('--project PROJECT_NAME', 'Xcode project name') do |v|
+    options[:project] = v
+  end
+
+  opts.on('--target TARGET_NAME', 'Xcode target name') do |v|
+    options[:target] = v
+  end
+
   opts.on('--public', 'Find public headers') do |v|
     options[:public] = v
   end
@@ -48,22 +56,27 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-required_opts = options[:public] || options[:private]
-fail ArgumentError, 'Must provide --public or --private' unless required_opts
+required_opts = options[:project] || options[:target] || options[:public] || options[:private]
+fail ArgumentError, 'Must provide --project, --target and --public or --private' unless required_opts
 
 separator = "\n"
 
-project = Xcodeproj::Project.open(ROOT + 'Meteor.xcodeproj')
-target = project.targets.find { |t| t.name == 'Meteor' }
+project = Xcodeproj::Project.open(ROOT + "#{options[:project]}.xcodeproj")
+target = project.targets.find { |t| t.name == options[:target] }
+fail "Could not find target '#{options[:target]}'" unless target
 
 public_headers = target.headers_build_phase.files.select do |build_file|
   settings = build_file.settings
-  settings && settings['ATTRIBUTES'].include?('Public')
+  next unless settings
+  attributes = settings['ATTRIBUTES']
+  attributes && attributes.include?('Public')
 end
 
 private_headers = target.headers_build_phase.files.select do |build_file|
   settings = build_file.settings
-  settings && settings['ATTRIBUTES'].include?('Private')
+  next unless settings
+  attributes = settings['ATTRIBUTES']
+  attributes && attributes.include?('Private')
 end
 
 if options[:public]

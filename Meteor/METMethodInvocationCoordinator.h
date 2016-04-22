@@ -31,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface METMethodInvocationCoordinator : NSObject
 
 - (instancetype)initWithClient:(METDDPClient *)client NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
+
 @property (weak, nonatomic, readonly) METDDPClient *client;
 
 - (void)defineStubForMethodWithName:(NSString *)methodName usingBlock:(METMethodStub)stub;

@@ -24,7 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface METDDPMessage : NSObject
 
-- (instancetype)initWithData:(NSData *)data error:(NSError **)error;
+- (instancetype)initWithData:(NSData *)data error:(NSError **)error NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
 
 - (id)objectForKeyedSubscript:(id)key;
 

@@ -65,14 +65,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
   @IBAction func signUp() {
     errorMessageLabel.text = nil
     
-    let email = emailField.text
-    let password = passwordField.text
-    let passwordConfirmation = passwordConfirmationField.text
-    
-    if email.isEmpty || password.isEmpty || passwordConfirmation.isEmpty {
-      errorMessageLabel.text = "Email, password and password confirmation are required"
-      return
-    } else if password != passwordConfirmation {
+    guard let email = emailField.text where !email.isEmpty,
+      let password = passwordField.text where !password.isEmpty,
+      let passwordConfirmation = passwordConfirmationField.text where !passwordConfirmation.isEmpty else {
+        errorMessageLabel.text = "Email, password and password confirmation are required"
+        return
+    }
+
+    if password != passwordConfirmation {
       errorMessageLabel.text = "Password and password confirmation do not match"
       return
     }

@@ -28,6 +28,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface METSubscriptionManager : NSObject
 
 - (instancetype)initWithClient:(METDDPClient *)client NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
+
 @property (weak, nonatomic, readonly) METDDPClient *client;
 
 @property (assign, nonatomic) NSTimeInterval defaultNotInUseTimeout;

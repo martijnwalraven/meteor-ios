@@ -33,7 +33,7 @@
 - (void)setUp {
   [super setUp];
   
-  _methodInvocationContext = [[METMethodInvocationContext alloc] init];
+  _methodInvocationContext = [[METMethodInvocationContext alloc] initWithMethodName:@"method" enclosingMethodInvocationContext:nil];
 }
 
 - (void)testSetsRandomSeedWhenRandomStreamIsAccessed {

@@ -20,7 +20,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import <PocketSocket/PSWebSocket.h>
+@protocol PSWebSocketDelegate;
 
 @protocol METDDPConnectionDelegate;
 
@@ -28,7 +28,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface METDDPConnection : NSObject<PSWebSocketDelegate>
 
-- (instancetype)initWithServerURL:(NSURL *)serverURL NS_DESIGNATED_INITIALIZER;;
+- (instancetype)initWithServerURL:(NSURL *)serverURL NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
+
 @property (strong, nonatomic, readonly) NSURL *serverURL;
 @property (assign, nonatomic, readonly) NSTimeInterval timeoutInterval;
 

@@ -25,7 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface METFetchRequest : NSObject
 
 - (instancetype)initWithCollectionName:(NSString *)collectionName NS_DESIGNATED_INITIALIZER;
-- (instancetype)init __attribute__((unavailable("Use -initWithCollectionName: instead")));
+- (instancetype)init NS_UNAVAILABLE;
+
 @property (copy, nonatomic, readonly) NSString *collectionName;
 
 @end

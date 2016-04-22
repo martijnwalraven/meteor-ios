@@ -36,7 +36,7 @@
 
 - (void)setUp {
   [super setUp];
-  _connection = [[MockMETDDPConnection alloc] init];
+  _connection = [[MockMETDDPConnection alloc] initWithServerURL:[[NSURL alloc] init]];
   _client = [[METDDPClient alloc] initWithConnection:_connection];
 }
 

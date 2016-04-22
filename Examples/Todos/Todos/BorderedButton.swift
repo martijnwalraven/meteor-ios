@@ -31,7 +31,7 @@ class BorderedButton: UIButton {
     self.init(frame: CGRectZero)
   }
   
-  required init(coder: NSCoder) {
+  required init?(coder: NSCoder) {
     super.init(coder: coder)
   }
   

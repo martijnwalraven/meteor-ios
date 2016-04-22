@@ -35,8 +35,11 @@ class FetchedResultsTableViewController: UITableViewController, ContentLoading, 
   
   func saveManagedObjectContext() {
     var error: NSError?
-    if !managedObjectContext!.save(&error) {
-      println("Encountered error saving managed object context: \(error)")
+    do {
+      try managedObjectContext!.save()
+    } catch let error1 as NSError {
+      error = error1
+      print("Encountered error saving managed object context: \(error)")
     }
   }
   
@@ -163,7 +166,7 @@ class FetchedResultsTableViewController: UITableViewController, ContentLoading, 
   var currentUser: User? {
     if let userID = Meteor.userID {
       let userObjectID = Meteor.objectIDForDocumentKey(METDocumentKey(collectionName: "users", documentID: userID))
-      return managedObjectContext.existingObjectWithID(userObjectID, error: nil) as? User
+      return (try? managedObjectContext.existingObjectWithID(userObjectID)) as? User
     }
     return nil;
   }
@@ -203,6 +206,6 @@ class FetchedResultsTableViewController: UITableViewController, ContentLoading, 
   // MARK: - FetchedResultsTableViewDataSourceDelegate
   
   func dataSource(dataSource: FetchedResultsTableViewDataSource, didFailWithError error: NSError) {
-    println("Data source encountered error: \(error)")
+    print("Data source encountered error: \(error)")
   }
 }

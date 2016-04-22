@@ -28,12 +28,7 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-#if TARGET_IPHONE_SIMULATOR
-  NSString *serverURLString = @"ws://localhost:3000/websocket";
-#else
-  NSString *serverURLString = @"ws://cultivate.ngrok.com/websocket";
-#endif
-  _client = [[METCoreDataDDPClient alloc] initWithServerURL:[NSURL URLWithString:serverURLString]];
+  _client = [[METCoreDataDDPClient alloc] initWithServerURL:[NSURL URLWithString:@"wss://meteor-ios-leaderboard.meteor.com/websocket"]];
   [_client connect];
 
   UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;

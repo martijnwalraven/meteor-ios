@@ -24,6 +24,8 @@
 #import "METTimer.h"
 #import "METEJSONSerialization.h"
 
+#import <PocketSocket/PSWebSocket.h>
+
 NS_INLINE BOOL METShouldLogDDPMessages() {
   return [[NSUserDefaults standardUserDefaults] boolForKey:@"METShouldLogDDPMessages"];
 }

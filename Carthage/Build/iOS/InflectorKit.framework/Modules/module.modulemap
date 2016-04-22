@@ -1,6 +1,0 @@
-framework module InflectorKit {
-  umbrella header "InflectorKit.h"
-
-  export *
-  module * { export * }
-}

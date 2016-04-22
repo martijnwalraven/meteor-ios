@@ -7,141 +7,124 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7CBF1A8E1B1902D200967AEE /* InflectorKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A8A1B1902D200967AEE /* InflectorKit.framework */; };
-		7CBF1A8F1B1902D200967AEE /* Meteor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A8B1B1902D200967AEE /* Meteor.framework */; };
-		7CBF1A901B1902D200967AEE /* PocketSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A8C1B1902D200967AEE /* PocketSocket.framework */; };
-		7CBF1A911B1902D200967AEE /* SimpleKeychain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CBF1A8D1B1902D200967AEE /* SimpleKeychain.framework */; };
-		7CBF1A981B19030A00967AEE /* InflectorKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7CBF1A8A1B1902D200967AEE /* InflectorKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7CBF1A991B19030A00967AEE /* Meteor.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7CBF1A8B1B1902D200967AEE /* Meteor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7CBF1A9A1B19030A00967AEE /* PocketSocket.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7CBF1A8C1B1902D200967AEE /* PocketSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7CBF1A9B1B19030A00967AEE /* SimpleKeychain.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7CBF1A8D1B1902D200967AEE /* SimpleKeychain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9FFE6C661A51D4C9008C1B11 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFE6C651A51D4C9008C1B11 /* main.m */; };
-		9FFE6C741A51D4C9008C1B11 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FFE6C731A51D4C9008C1B11 /* Images.xcassets */; };
-		9FFE6C771A51D4C9008C1B11 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFE6C751A51D4C9008C1B11 /* LaunchScreen.xib */; };
-		9FFE6C951A51D550008C1B11 /* Leaderboard.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9FFE6C8C1A51D550008C1B11 /* Leaderboard.xcdatamodeld */; };
-		9FFE6C961A51D550008C1B11 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FFE6C8E1A51D550008C1B11 /* Main.storyboard */; };
-		9FFE6C971A51D550008C1B11 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFE6C901A51D550008C1B11 /* AppDelegate.m */; };
-		9FFE6C981A51D550008C1B11 /* PlayersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFE6C921A51D550008C1B11 /* PlayersTableViewController.m */; };
-		9FFE6C991A51D550008C1B11 /* PlayerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFE6C941A51D550008C1B11 /* PlayerTableViewCell.m */; };
+		9F3739291BA4786900E1FE15 /* Meteor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3739281BA4786900E1FE15 /* Meteor.framework */; };
+		9F37392A1BA4786900E1FE15 /* Meteor.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3739281BA4786900E1FE15 /* Meteor.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9F896B601BA4310A00C9BBA0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896B5F1BA4310A00C9BBA0 /* main.m */; };
+		9F896B631BA4310A00C9BBA0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896B621BA4310A00C9BBA0 /* AppDelegate.m */; };
+		9F896B691BA4310A00C9BBA0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F896B671BA4310A00C9BBA0 /* Main.storyboard */; };
+		9F896B6C1BA4310A00C9BBA0 /* Leaderboard.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9F896B6A1BA4310A00C9BBA0 /* Leaderboard.xcdatamodeld */; };
+		9F896B6E1BA4310A00C9BBA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F896B6D1BA4310A00C9BBA0 /* Assets.xcassets */; };
+		9F896B711BA4310A00C9BBA0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F896B6F1BA4310A00C9BBA0 /* LaunchScreen.storyboard */; };
+		9F896B7C1BA4317600C9BBA0 /* PlayersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896B791BA4317600C9BBA0 /* PlayersTableViewController.m */; settings = {ASSET_TAGS = (); }; };
+		9F896B7D1BA4317600C9BBA0 /* PlayerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896B7B1BA4317600C9BBA0 /* PlayerTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		7CBF1A971B19030200967AEE /* CopyFiles */ = {
+		9F896B851BA43F7F00C9BBA0 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				7CBF1A981B19030A00967AEE /* InflectorKit.framework in CopyFiles */,
-				7CBF1A991B19030A00967AEE /* Meteor.framework in CopyFiles */,
-				7CBF1A9A1B19030A00967AEE /* PocketSocket.framework in CopyFiles */,
-				7CBF1A9B1B19030A00967AEE /* SimpleKeychain.framework in CopyFiles */,
+				9F37392A1BA4786900E1FE15 /* Meteor.framework in Embed Frameworks */,
 			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		7CBF1A8A1B1902D200967AEE /* InflectorKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InflectorKit.framework; path = ../../Carthage/Build/iOS/InflectorKit.framework; sourceTree = "<group>"; };
-		7CBF1A8B1B1902D200967AEE /* Meteor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Meteor.framework; path = ../../Carthage/Build/iOS/Meteor.framework; sourceTree = "<group>"; };
-		7CBF1A8C1B1902D200967AEE /* PocketSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PocketSocket.framework; path = ../../Carthage/Build/iOS/PocketSocket.framework; sourceTree = "<group>"; };
-		7CBF1A8D1B1902D200967AEE /* SimpleKeychain.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimpleKeychain.framework; path = ../../Carthage/Build/iOS/SimpleKeychain.framework; sourceTree = "<group>"; };
-		9FFE6C601A51D4C9008C1B11 /* Leaderboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Leaderboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9FFE6C641A51D4C9008C1B11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9FFE6C651A51D4C9008C1B11 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		9FFE6C731A51D4C9008C1B11 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		9FFE6C761A51D4C9008C1B11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		9FFE6C8D1A51D550008C1B11 /* Leaderboard.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Leaderboard.xcdatamodel; sourceTree = "<group>"; };
-		9FFE6C8E1A51D550008C1B11 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		9FFE6C8F1A51D550008C1B11 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		9FFE6C901A51D550008C1B11 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		9FFE6C911A51D550008C1B11 /* PlayersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayersTableViewController.h; sourceTree = "<group>"; };
-		9FFE6C921A51D550008C1B11 /* PlayersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayersTableViewController.m; sourceTree = "<group>"; };
-		9FFE6C931A51D550008C1B11 /* PlayerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerTableViewCell.h; sourceTree = "<group>"; };
-		9FFE6C941A51D550008C1B11 /* PlayerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerTableViewCell.m; sourceTree = "<group>"; };
+		9F3739281BA4786900E1FE15 /* Meteor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Meteor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F896B5B1BA4310A00C9BBA0 /* Leaderboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Leaderboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F896B5F1BA4310A00C9BBA0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9F896B611BA4310A00C9BBA0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		9F896B621BA4310A00C9BBA0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		9F896B681BA4310A00C9BBA0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9F896B6B1BA4310A00C9BBA0 /* Leaderboard.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Leaderboard.xcdatamodel; sourceTree = "<group>"; };
+		9F896B6D1BA4310A00C9BBA0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9F896B701BA4310A00C9BBA0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9F896B721BA4310A00C9BBA0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9F896B781BA4317600C9BBA0 /* PlayersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayersTableViewController.h; sourceTree = "<group>"; };
+		9F896B791BA4317600C9BBA0 /* PlayersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayersTableViewController.m; sourceTree = "<group>"; };
+		9F896B7A1BA4317600C9BBA0 /* PlayerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerTableViewCell.h; sourceTree = "<group>"; };
+		9F896B7B1BA4317600C9BBA0 /* PlayerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		9FFE6C5D1A51D4C9008C1B11 /* Frameworks */ = {
+		9F896B581BA4310A00C9BBA0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7CBF1A8F1B1902D200967AEE /* Meteor.framework in Frameworks */,
-				7CBF1A901B1902D200967AEE /* PocketSocket.framework in Frameworks */,
-				7CBF1A911B1902D200967AEE /* SimpleKeychain.framework in Frameworks */,
-				7CBF1A8E1B1902D200967AEE /* InflectorKit.framework in Frameworks */,
+				9F3739291BA4786900E1FE15 /* Meteor.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6D78A33710AC34B40BF6342A /* Frameworks */ = {
+		9F896B521BA4310A00C9BBA0 = {
 			isa = PBXGroup;
 			children = (
-				7CBF1A8A1B1902D200967AEE /* InflectorKit.framework */,
-				7CBF1A8B1B1902D200967AEE /* Meteor.framework */,
-				7CBF1A8C1B1902D200967AEE /* PocketSocket.framework */,
-				7CBF1A8D1B1902D200967AEE /* SimpleKeychain.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		9FFE6C571A51D4C9008C1B11 = {
-			isa = PBXGroup;
-			children = (
-				9FFE6C621A51D4C9008C1B11 /* Leaderboard */,
-				9FFE6C611A51D4C9008C1B11 /* Products */,
-				6D78A33710AC34B40BF6342A /* Frameworks */,
+				9F896B5D1BA4310A00C9BBA0 /* Leaderboard */,
+				9F896B801BA431CD00C9BBA0 /* Frameworks */,
+				9F896B5C1BA4310A00C9BBA0 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		9FFE6C611A51D4C9008C1B11 /* Products */ = {
+		9F896B5C1BA4310A00C9BBA0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9FFE6C601A51D4C9008C1B11 /* Leaderboard.app */,
+				9F896B5B1BA4310A00C9BBA0 /* Leaderboard.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9FFE6C621A51D4C9008C1B11 /* Leaderboard */ = {
+		9F896B5D1BA4310A00C9BBA0 /* Leaderboard */ = {
 			isa = PBXGroup;
 			children = (
-				9FFE6C8F1A51D550008C1B11 /* AppDelegate.h */,
-				9FFE6C901A51D550008C1B11 /* AppDelegate.m */,
-				9FFE6C911A51D550008C1B11 /* PlayersTableViewController.h */,
-				9FFE6C921A51D550008C1B11 /* PlayersTableViewController.m */,
-				9FFE6C931A51D550008C1B11 /* PlayerTableViewCell.h */,
-				9FFE6C941A51D550008C1B11 /* PlayerTableViewCell.m */,
-				9FFE6C731A51D4C9008C1B11 /* Images.xcassets */,
-				9FFE6C8E1A51D550008C1B11 /* Main.storyboard */,
-				9FFE6C751A51D4C9008C1B11 /* LaunchScreen.xib */,
-				9FFE6C8C1A51D550008C1B11 /* Leaderboard.xcdatamodeld */,
-				9FFE6C631A51D4C9008C1B11 /* Supporting Files */,
+				9F896B721BA4310A00C9BBA0 /* Info.plist */,
+				9F896B611BA4310A00C9BBA0 /* AppDelegate.h */,
+				9F896B621BA4310A00C9BBA0 /* AppDelegate.m */,
+				9F896B6F1BA4310A00C9BBA0 /* LaunchScreen.storyboard */,
+				9F896B671BA4310A00C9BBA0 /* Main.storyboard */,
+				9F896B6D1BA4310A00C9BBA0 /* Assets.xcassets */,
+				9F896B6A1BA4310A00C9BBA0 /* Leaderboard.xcdatamodeld */,
+				9F896B781BA4317600C9BBA0 /* PlayersTableViewController.h */,
+				9F896B791BA4317600C9BBA0 /* PlayersTableViewController.m */,
+				9F896B7A1BA4317600C9BBA0 /* PlayerTableViewCell.h */,
+				9F896B7B1BA4317600C9BBA0 /* PlayerTableViewCell.m */,
+				9F896B5E1BA4310A00C9BBA0 /* Supporting Files */,
 			);
 			path = Leaderboard;
 			sourceTree = "<group>";
 		};
-		9FFE6C631A51D4C9008C1B11 /* Supporting Files */ = {
+		9F896B5E1BA4310A00C9BBA0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				9FFE6C641A51D4C9008C1B11 /* Info.plist */,
-				9FFE6C651A51D4C9008C1B11 /* main.m */,
+				9F896B5F1BA4310A00C9BBA0 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9F896B801BA431CD00C9BBA0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9F3739281BA4786900E1FE15 /* Meteor.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9FFE6C5F1A51D4C9008C1B11 /* Leaderboard */ = {
+		9F896B5A1BA4310A00C9BBA0 /* Leaderboard */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9FFE6C861A51D4C9008C1B11 /* Build configuration list for PBXNativeTarget "Leaderboard" */;
+			buildConfigurationList = 9F896B751BA4310A00C9BBA0 /* Build configuration list for PBXNativeTarget "Leaderboard" */;
 			buildPhases = (
-				9FFE6C5C1A51D4C9008C1B11 /* Sources */,
-				9FFE6C5D1A51D4C9008C1B11 /* Frameworks */,
-				9FFE6C5E1A51D4C9008C1B11 /* Resources */,
-				7CBF1A971B19030200967AEE /* CopyFiles */,
+				9F896B571BA4310A00C9BBA0 /* Sources */,
+				9F896B581BA4310A00C9BBA0 /* Frameworks */,
+				9F896B591BA4310A00C9BBA0 /* Resources */,
+				9F896B851BA43F7F00C9BBA0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -149,24 +132,24 @@
 			);
 			name = Leaderboard;
 			productName = Leaderboard;
-			productReference = 9FFE6C601A51D4C9008C1B11 /* Leaderboard.app */;
+			productReference = 9F896B5B1BA4310A00C9BBA0 /* Leaderboard.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		9FFE6C581A51D4C9008C1B11 /* Project object */ = {
+		9F896B531BA4310A00C9BBA0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
-				ORGANIZATIONNAME = "Martijn Walraven";
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = Meteor;
 				TargetAttributes = {
-					9FFE6C5F1A51D4C9008C1B11 = {
-						CreatedOnToolsVersion = 6.1.1;
+					9F896B5A1BA4310A00C9BBA0 = {
+						CreatedOnToolsVersion = 7.0;
 					};
 				};
 			};
-			buildConfigurationList = 9FFE6C5B1A51D4C9008C1B11 /* Build configuration list for PBXProject "Leaderboard" */;
+			buildConfigurationList = 9F896B561BA4310A00C9BBA0 /* Build configuration list for PBXProject "Leaderboard" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -174,57 +157,65 @@
 				en,
 				Base,
 			);
-			mainGroup = 9FFE6C571A51D4C9008C1B11;
-			productRefGroup = 9FFE6C611A51D4C9008C1B11 /* Products */;
+			mainGroup = 9F896B521BA4310A00C9BBA0;
+			productRefGroup = 9F896B5C1BA4310A00C9BBA0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9FFE6C5F1A51D4C9008C1B11 /* Leaderboard */,
+				9F896B5A1BA4310A00C9BBA0 /* Leaderboard */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		9FFE6C5E1A51D4C9008C1B11 /* Resources */ = {
+		9F896B591BA4310A00C9BBA0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9FFE6C961A51D550008C1B11 /* Main.storyboard in Resources */,
-				9FFE6C771A51D4C9008C1B11 /* LaunchScreen.xib in Resources */,
-				9FFE6C741A51D4C9008C1B11 /* Images.xcassets in Resources */,
+				9F896B711BA4310A00C9BBA0 /* LaunchScreen.storyboard in Resources */,
+				9F896B6E1BA4310A00C9BBA0 /* Assets.xcassets in Resources */,
+				9F896B691BA4310A00C9BBA0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		9FFE6C5C1A51D4C9008C1B11 /* Sources */ = {
+		9F896B571BA4310A00C9BBA0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9FFE6C661A51D4C9008C1B11 /* main.m in Sources */,
-				9FFE6C951A51D550008C1B11 /* Leaderboard.xcdatamodeld in Sources */,
-				9FFE6C981A51D550008C1B11 /* PlayersTableViewController.m in Sources */,
-				9FFE6C971A51D550008C1B11 /* AppDelegate.m in Sources */,
-				9FFE6C991A51D550008C1B11 /* PlayerTableViewCell.m in Sources */,
+				9F896B6C1BA4310A00C9BBA0 /* Leaderboard.xcdatamodeld in Sources */,
+				9F896B631BA4310A00C9BBA0 /* AppDelegate.m in Sources */,
+				9F896B7C1BA4317600C9BBA0 /* PlayersTableViewController.m in Sources */,
+				9F896B601BA4310A00C9BBA0 /* main.m in Sources */,
+				9F896B7D1BA4317600C9BBA0 /* PlayerTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		9FFE6C751A51D4C9008C1B11 /* LaunchScreen.xib */ = {
+		9F896B671BA4310A00C9BBA0 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				9FFE6C761A51D4C9008C1B11 /* Base */,
+				9F896B681BA4310A00C9BBA0 /* Base */,
 			);
-			name = LaunchScreen.xib;
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		9F896B6F1BA4310A00C9BBA0 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9F896B701BA4310A00C9BBA0 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		9FFE6C841A51D4C9008C1B11 /* Debug */ = {
+		9F896B731BA4310A00C9BBA0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -243,22 +234,24 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -266,7 +259,7 @@
 			};
 			name = Debug;
 		};
-		9FFE6C851A51D4C9008C1B11 /* Release */ = {
+		9F896B741BA4310A00C9BBA0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -284,17 +277,19 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -302,30 +297,26 @@
 			};
 			name = Release;
 		};
-		9FFE6C871A51D4C9008C1B11 /* Debug */ = {
+		9F896B761BA4310A00C9BBA0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/justinmakaila/Workspace/Objc/meteor-ios/Carthage/Build/iOS",
-				);
 				INFOPLIST_FILE = Leaderboard/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.meteor.examples.Leaderboard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		9FFE6C881A51D4C9008C1B11 /* Release */ = {
+		9F896B771BA4310A00C9BBA0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/justinmakaila/Workspace/Objc/meteor-ios/Carthage/Build/iOS",
-				);
 				INFOPLIST_FILE = Leaderboard/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.meteor.examples.Leaderboard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -333,20 +324,20 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9FFE6C5B1A51D4C9008C1B11 /* Build configuration list for PBXProject "Leaderboard" */ = {
+		9F896B561BA4310A00C9BBA0 /* Build configuration list for PBXProject "Leaderboard" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9FFE6C841A51D4C9008C1B11 /* Debug */,
-				9FFE6C851A51D4C9008C1B11 /* Release */,
+				9F896B731BA4310A00C9BBA0 /* Debug */,
+				9F896B741BA4310A00C9BBA0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9FFE6C861A51D4C9008C1B11 /* Build configuration list for PBXNativeTarget "Leaderboard" */ = {
+		9F896B751BA4310A00C9BBA0 /* Build configuration list for PBXNativeTarget "Leaderboard" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9FFE6C871A51D4C9008C1B11 /* Debug */,
-				9FFE6C881A51D4C9008C1B11 /* Release */,
+				9F896B761BA4310A00C9BBA0 /* Debug */,
+				9F896B771BA4310A00C9BBA0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -354,17 +345,17 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		9FFE6C8C1A51D550008C1B11 /* Leaderboard.xcdatamodeld */ = {
+		9F896B6A1BA4310A00C9BBA0 /* Leaderboard.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				9FFE6C8D1A51D550008C1B11 /* Leaderboard.xcdatamodel */,
+				9F896B6B1BA4310A00C9BBA0 /* Leaderboard.xcdatamodel */,
 			);
-			currentVersion = 9FFE6C8D1A51D550008C1B11 /* Leaderboard.xcdatamodel */;
+			currentVersion = 9F896B6B1BA4310A00C9BBA0 /* Leaderboard.xcdatamodel */;
 			path = Leaderboard.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
 /* End XCVersionGroup section */
 	};
-	rootObject = 9FFE6C581A51D4C9008C1B11 /* Project object */;
+	rootObject = 9F896B531BA4310A00C9BBA0 /* Project object */;
 }

@@ -26,7 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface METRandomStream : NSObject
 
-- (instancetype)initWithSeeds:(NSArray *)seeds;
+- (instancetype)initWithSeeds:(NSArray *)seeds NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
 
 - (METRandomValueGenerator *)sequenceWithName:(NSString *)name;
 

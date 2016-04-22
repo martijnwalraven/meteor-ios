@@ -32,7 +32,8 @@ typedef NS_ENUM(NSInteger, METNetworkReachabilityStatus) {
 
 @interface METNetworkReachabilityManager : NSObject
 
-- (instancetype)initWithHostName:(NSString *)hostName;
+- (instancetype)initWithHostName:(NSString *)hostName NS_DESIGNATED_INITIALIZER;
+- (instancetype)init NS_UNAVAILABLE;
 
 @property (nullable, weak, nonatomic) id<METNetworkReachabilityManagerDelegate> delegate;
 @property (nullable, strong, nonatomic) dispatch_queue_t delegateQueue;

@@ -33,7 +33,7 @@ typedef NS_ENUM(NSInteger, METDocumentChangeType) {
 @interface METDocumentChangeDetails : NSObject
 
 - (instancetype)initWithDocumentKey:(METDocumentKey *)documentKey NS_DESIGNATED_INITIALIZER;
-- (instancetype)init __attribute__((unavailable("Use -initWithDocumentKey: instead")));
+- (instancetype)init NS_UNAVAILABLE;
 
 @property (copy, nonatomic, readonly) METDocumentKey *documentKey;
 

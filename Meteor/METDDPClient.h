@@ -57,11 +57,13 @@ typedef void (^METLogOutCompletionHandler)(NSError * __nullable error);
  */
 @interface METDDPClient : NSObject
 
+
 #pragma mark - Initialization
 /// @name Initializing a METDDPClient Object
 
-- (instancetype)initWithConnection:(nullable METDDPConnection *)connection;
+- (instancetype)initWithConnection:(nullable METDDPConnection *)connection NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithServerURL:(NSURL *)serverURL;
+- (instancetype)init NS_UNAVAILABLE;
 
 #pragma mark - Delegate
 /// @name Managing the Delegate
@@ -110,8 +112,9 @@ typedef void (^METLogOutCompletionHandler)(NSError * __nullable error);
 @property (assign, nonatomic, readonly, getter=isLoggingIn) BOOL loggingIn;
 @property (nullable, copy, nonatomic, readonly) NSString *userID;
 
-/// @name Logging Out
+/// @name Logging and Logging Out
 
+- (void)loginWithMethodName:(NSString *)methodName parameters:(nullable NSArray *)parameters completionHandler:(nullable METLogInCompletionHandler)completionHandler;
 - (void)logoutWithCompletionHandler:(nullable METLogOutCompletionHandler)completionHandler;
 
 @end
