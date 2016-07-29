@@ -197,7 +197,8 @@
 }
 
 - (id)removeDocumentWithID:(id)documentID {
-  return [self removeDocumentWithID:documentID completionHandler:nil];
+  //return [self removeDocumentWithID:documentID completionHandler:nil];
+    return nil;
 }
 
 - (id)removeDocumentWithID:(id)documentID completionHandler:(METMethodCompletionHandler)completionHandler {
