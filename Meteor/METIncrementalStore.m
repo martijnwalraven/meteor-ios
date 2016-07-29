@@ -145,10 +145,10 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
 
 - (void)managedObjectContextDidUnregisterObjectsWithIDs:(NSArray *)objectIDs {
   for (NSManagedObjectID *objectID in objectIDs) {
-    [_registeredObjectIDs removeObject:objectID];
+    //[_registeredObjectIDs removeObject:objectID];
     
     if ([_registeredObjectIDs countForObject:objectID] == 0) {
-      [_nodesByObjectID removeObjectForKey:objectID];
+      //[_nodesByObjectID removeObjectForKey:objectID];
     }
   }
 }
