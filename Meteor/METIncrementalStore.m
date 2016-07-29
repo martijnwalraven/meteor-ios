@@ -337,7 +337,7 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
     for (NSManagedObject *object in request.deletedObjects) {
       METCollection *collection = [self collectionForEntity:object.entity];
       id documentID = [self documentKeyForObjectID:object.objectID].documentID;
-      [collection removeDocumentWithID:documentID];
+      //[collection removeDocumentWithID:documentID];
     }
   }];
   
