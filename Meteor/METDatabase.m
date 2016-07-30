@@ -228,7 +228,7 @@ NSString * const METDatabaseChangesKey = @"METDatabaseChangesKey";
 
 - (void)reset {
   [self performUpdatesInLocalCache:^(METDocumentCache *localCache) {
-    //[_bufferedDataUpdates removeAllObjects];
+    [_bufferedDataUpdates removeAllObjects];
     _pendingAfterFlushBlock = nil;
     _removeExistingDocumentsBeforeNextFlush = YES;
   }];
