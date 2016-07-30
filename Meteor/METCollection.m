@@ -101,7 +101,7 @@
     }
   }];
   
-  [_database.client defineStubForMethodWithName:[self methodNameForUpdateType:@"remove"] usingBlock:^id(NSArray *parameters) {
+  /*[_database.client defineStubForMethodWithName:[self methodNameForUpdateType:@"remove"] usingBlock:^id(NSArray *parameters) {
     id selector = parameters[0];
     id documentID = [self documentIDFromSelector:selector];
     
@@ -115,7 +115,7 @@
     } else {
       return @0;
     }
-  }];
+  }];*/
 }
 
 - (id)documentIDFromSelector:(id)selector {
@@ -197,7 +197,8 @@
 }
 
 - (id)removeDocumentWithID:(id)documentID {
-  return [self removeDocumentWithID:documentID completionHandler:nil];
+  //return [self removeDocumentWithID:documentID completionHandler:nil];
+    return nil;
 }
 
 - (id)removeDocumentWithID:(id)documentID completionHandler:(METMethodCompletionHandler)completionHandler {
