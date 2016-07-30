@@ -115,7 +115,7 @@
     } else {
       return @0;
     }
-  }];
+  }];*/
 }
 
 - (id)documentIDFromSelector:(id)selector {
@@ -197,14 +197,16 @@
 }
 
 - (id)removeDocumentWithID:(id)documentID {
-  return [self removeDocumentWithID:documentID completionHandler:nil];
+  //return [self removeDocumentWithID:documentID completionHandler:nil];
+    return nil;
 }
 
 - (id)removeDocumentWithID:(id)documentID completionHandler:(METMethodCompletionHandler)completionHandler {
   NSParameterAssert(documentID);
   
   NSString *methodName = [self methodNameForUpdateType:@"remove"];
-  return [_database.client callMethodWithName:methodName parameters:@[@{@"_id": documentID}] options:METMethodCallOptionsReturnStubValue completionHandler:completionHandler];
+  //return [_database.client callMethodWithName:methodName parameters:@[@{@"_id": documentID}] options:METMethodCallOptionsReturnStubValue completionHandler:completionHandler];
+    return nil;
 }
 
 - (id)generateNewDocumentID {  
