@@ -131,10 +131,10 @@ NSString * const METDatabaseChangesKey = @"METDatabaseChangesKey";
 - (void)flushDataUpdatesOnQueue {
   NSAssert(!_waitingForQuiescence, @"flushDataUpdates invoked while waiting for quiescence");
   
-  [self performUpdatesInLocalCache:^(METDocumentCache *localCache) {
+ /* [self performUpdatesInLocalCache:^(METDocumentCache *localCache) {
     if (_removeExistingDocumentsBeforeNextFlush) {
       [_localCache removeAllDocuments];
-      _removeExistingDocumentsBeforeNextFlush = NO;
+      //_removeExistingDocumentsBeforeNextFlush = NO;
     }
     
     for (METDataUpdate *update in _bufferedDataUpdates) {
@@ -146,7 +146,7 @@ NSString * const METDatabaseChangesKey = @"METDatabaseChangesKey";
   if (_pendingAfterFlushBlock) {
     _pendingAfterFlushBlock();
     _pendingAfterFlushBlock = nil;
-  }
+  }*/
 }
 
 - (void)performAfterBufferedUpdatesAreFlushed:(void (^)())block {

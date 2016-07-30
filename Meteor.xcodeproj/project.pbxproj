@@ -16,13 +16,7 @@
 		9F3738F31BA4724800E1FE15 /* libPocketSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3738C81BA470CD00E1FE15 /* libPocketSocket.a */; };
 		9F3738F51BA4726600E1FE15 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F3738F41BA4726600E1FE15 /* libz.tbd */; };
 		9F37390F1BA473E600E1FE15 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F37390E1BA473E600E1FE15 /* OCMock.framework */; };
-		9F3739131BA4775000E1FE15 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9F3739111BA4775000E1FE15 /* Model.xcdatamodeld */; };
 		9F3739361BA47AC300E1FE15 /* Meteor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F896A2C1BA428D400C9BBA0 /* Meteor.framework */; };
-		9F37394C1BA47B2D00E1FE15 /* METAccountsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3739451BA47B2D00E1FE15 /* METAccountsTests.m */; };
-		9F37394D1BA47B2D00E1FE15 /* METCallingMutationMethodsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3739461BA47B2D00E1FE15 /* METCallingMutationMethodsTests.m */; };
-		9F37394E1BA47B2D00E1FE15 /* METDocumentIDGenerationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3739471BA47B2D00E1FE15 /* METDocumentIDGenerationTests.m */; };
-		9F37394F1BA47B2D00E1FE15 /* METServerIntegrationTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3739491BA47B2D00E1FE15 /* METServerIntegrationTestCase.m */; };
-		9F3739501BA47B2D00E1FE15 /* METSubscriptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F37394A1BA47B2D00E1FE15 /* METSubscriptionsTests.m */; };
 		9F84274F1CAEAF6C00B69666 /* METDDPConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F896A5E1BA42A1400C9BBA0 /* METDDPConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9F896A301BA428D400C9BBA0 /* Meteor.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F896A2F1BA428D400C9BBA0 /* Meteor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9F896A371BA428D400C9BBA0 /* Meteor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F896A2C1BA428D400C9BBA0 /* Meteor.framework */; };
@@ -101,36 +95,6 @@
 		9F896ADB1BA42A1400C9BBA0 /* NSDictionary+METAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896A8F1BA42A1400C9BBA0 /* NSDictionary+METAdditions.m */; };
 		9F896ADC1BA42A1400C9BBA0 /* NSString+METAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F896A901BA42A1400C9BBA0 /* NSString+METAdditions.h */; };
 		9F896ADD1BA42A1400C9BBA0 /* NSString+METAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896A911BA42A1400C9BBA0 /* NSString+METAdditions.m */; };
-		9F896AFA1BA42ABC00C9BBA0 /* METAleaRandomValueGeneratorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896ADF1BA42ABC00C9BBA0 /* METAleaRandomValueGeneratorTests.m */; };
-		9F896AFB1BA42ABC00C9BBA0 /* METCollectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AE01BA42ABC00C9BBA0 /* METCollectionTests.m */; };
-		9F896AFC1BA42ABC00C9BBA0 /* METCoreDataDDPClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AE11BA42ABC00C9BBA0 /* METCoreDataDDPClientTests.m */; };
-		9F896AFD1BA42ABC00C9BBA0 /* METDatabaseChangesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AE21BA42ABC00C9BBA0 /* METDatabaseChangesTests.m */; };
-		9F896AFE1BA42ABC00C9BBA0 /* METDatabaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AE31BA42ABC00C9BBA0 /* METDatabaseTests.m */; };
-		9F896AFF1BA42ABC00C9BBA0 /* METDDPClientAccountsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AE41BA42ABC00C9BBA0 /* METDDPClientAccountsTests.m */; };
-		9F896B001BA42ABC00C9BBA0 /* METDDPClientCallingMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AE51BA42ABC00C9BBA0 /* METDDPClientCallingMethods.m */; };
-		9F896B011BA42ABC00C9BBA0 /* METDDPClientConnectingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AE61BA42ABC00C9BBA0 /* METDDPClientConnectingTests.m */; };
-		9F896B021BA42ABC00C9BBA0 /* METDDPClientLatencyCompensationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AE71BA42ABC00C9BBA0 /* METDDPClientLatencyCompensationTests.m */; };
-		9F896B031BA42ABC00C9BBA0 /* METDDPClientManagingDataTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AE81BA42ABC00C9BBA0 /* METDDPClientManagingDataTests.m */; };
-		9F896B041BA42ABC00C9BBA0 /* METDDPClientReconnectingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AE91BA42ABC00C9BBA0 /* METDDPClientReconnectingTests.m */; };
-		9F896B051BA42ABC00C9BBA0 /* METDDPClientTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AEB1BA42ABC00C9BBA0 /* METDDPClientTestCase.m */; };
-		9F896B061BA42ABC00C9BBA0 /* METDDPHeartbeatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AEC1BA42ABC00C9BBA0 /* METDDPHeartbeatTests.m */; };
-		9F896B071BA42ABC00C9BBA0 /* METDDPMessageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AED1BA42ABC00C9BBA0 /* METDDPMessageTests.m */; };
-		9F896B081BA42ABC00C9BBA0 /* METDocumentCacheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AEE1BA42ABC00C9BBA0 /* METDocumentCacheTests.m */; };
-		9F896B091BA42ABC00C9BBA0 /* METDocumentChangeDetailsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AEF1BA42ABC00C9BBA0 /* METDocumentChangeDetailsTests.m */; };
-		9F896B0A1BA42ABC00C9BBA0 /* METDynamicVariableTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AF01BA42ABC00C9BBA0 /* METDynamicVariableTests.m */; };
-		9F896B0B1BA42ABC00C9BBA0 /* METEJSONSerializationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AF11BA42ABC00C9BBA0 /* METEJSONSerializationTests.m */; };
-		9F896B0C1BA42ABC00C9BBA0 /* METIncrementalStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AF21BA42ABC00C9BBA0 /* METIncrementalStoreTests.m */; };
-		9F896B0D1BA42ABC00C9BBA0 /* METMethodInvocationContextTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AF31BA42ABC00C9BBA0 /* METMethodInvocationContextTests.m */; };
-		9F896B0E1BA42ABC00C9BBA0 /* METMethodInvocationCoordinatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AF41BA42ABC00C9BBA0 /* METMethodInvocationCoordinatorTests.m */; };
-		9F896B0F1BA42ABC00C9BBA0 /* METMethodInvocationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AF51BA42ABC00C9BBA0 /* METMethodInvocationTests.m */; };
-		9F896B101BA42ABC00C9BBA0 /* METRandomStreamTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AF61BA42ABC00C9BBA0 /* METRandomStreamTests.m */; };
-		9F896B111BA42ABC00C9BBA0 /* METRetryStrategyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AF71BA42ABC00C9BBA0 /* METRetryStrategyTests.m */; };
-		9F896B121BA42ABC00C9BBA0 /* METSubscriptionManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AF81BA42ABC00C9BBA0 /* METSubscriptionManagerTests.m */; };
-		9F896B131BA42ABC00C9BBA0 /* METTimerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896AF91BA42ABC00C9BBA0 /* METTimerTests.m */; };
-		9F896B261BA42DD800C9BBA0 /* MockMETDDPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896B1F1BA42DD800C9BBA0 /* MockMETDDPConnection.m */; };
-		9F896B271BA42DD800C9BBA0 /* XCTAsyncTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896B211BA42DD800C9BBA0 /* XCTAsyncTestCase.m */; };
-		9F896B281BA42DD800C9BBA0 /* XCTestCase+Meteor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896B231BA42DD800C9BBA0 /* XCTestCase+Meteor.m */; };
-		9F896B291BA42DD800C9BBA0 /* XCTFailure.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F896B251BA42DD800C9BBA0 /* XCTFailure.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -223,20 +187,11 @@
 		9F3738F41BA4726600E1FE15 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		9F3738F81BA4731500E1FE15 /* OCMock.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OCMock.xcodeproj; path = ocmock/Source/OCMock.xcodeproj; sourceTree = "<group>"; };
 		9F37390E1BA473E600E1FE15 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OCMock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9F3739121BA4775000E1FE15 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		9F3739311BA47AC300E1FE15 /* Server Integration Tests (iOS).xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Server Integration Tests (iOS).xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9F3739441BA47B2D00E1FE15 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9F3739451BA47B2D00E1FE15 /* METAccountsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METAccountsTests.m; sourceTree = "<group>"; };
-		9F3739461BA47B2D00E1FE15 /* METCallingMutationMethodsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METCallingMutationMethodsTests.m; sourceTree = "<group>"; };
-		9F3739471BA47B2D00E1FE15 /* METDocumentIDGenerationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METDocumentIDGenerationTests.m; sourceTree = "<group>"; };
-		9F3739481BA47B2D00E1FE15 /* METServerIntegrationTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = METServerIntegrationTestCase.h; sourceTree = "<group>"; };
-		9F3739491BA47B2D00E1FE15 /* METServerIntegrationTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METServerIntegrationTestCase.m; sourceTree = "<group>"; };
-		9F37394A1BA47B2D00E1FE15 /* METSubscriptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METSubscriptionsTests.m; sourceTree = "<group>"; };
 		9F896A2C1BA428D400C9BBA0 /* Meteor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Meteor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F896A2F1BA428D400C9BBA0 /* Meteor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Meteor.h; sourceTree = "<group>"; };
 		9F896A311BA428D400C9BBA0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9F896A361BA428D400C9BBA0 /* Unit Tests (iOS).xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Unit Tests (iOS).xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9F896A3D1BA428D400C9BBA0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9F896A461BA42A1400C9BBA0 /* METAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = METAccount.h; sourceTree = "<group>"; };
 		9F896A471BA42A1400C9BBA0 /* METAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METAccount.m; sourceTree = "<group>"; };
 		9F896A481BA42A1400C9BBA0 /* METAleaRandomValueGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = METAleaRandomValueGenerator.h; sourceTree = "<group>"; };
@@ -313,41 +268,6 @@
 		9F896A8F1BA42A1400C9BBA0 /* NSDictionary+METAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+METAdditions.m"; sourceTree = "<group>"; };
 		9F896A901BA42A1400C9BBA0 /* NSString+METAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+METAdditions.h"; sourceTree = "<group>"; };
 		9F896A911BA42A1400C9BBA0 /* NSString+METAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+METAdditions.m"; sourceTree = "<group>"; };
-		9F896ADF1BA42ABC00C9BBA0 /* METAleaRandomValueGeneratorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METAleaRandomValueGeneratorTests.m; sourceTree = "<group>"; };
-		9F896AE01BA42ABC00C9BBA0 /* METCollectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METCollectionTests.m; sourceTree = "<group>"; };
-		9F896AE11BA42ABC00C9BBA0 /* METCoreDataDDPClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METCoreDataDDPClientTests.m; sourceTree = "<group>"; };
-		9F896AE21BA42ABC00C9BBA0 /* METDatabaseChangesTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METDatabaseChangesTests.m; sourceTree = "<group>"; };
-		9F896AE31BA42ABC00C9BBA0 /* METDatabaseTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METDatabaseTests.m; sourceTree = "<group>"; };
-		9F896AE41BA42ABC00C9BBA0 /* METDDPClientAccountsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METDDPClientAccountsTests.m; sourceTree = "<group>"; };
-		9F896AE51BA42ABC00C9BBA0 /* METDDPClientCallingMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METDDPClientCallingMethods.m; sourceTree = "<group>"; };
-		9F896AE61BA42ABC00C9BBA0 /* METDDPClientConnectingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METDDPClientConnectingTests.m; sourceTree = "<group>"; };
-		9F896AE71BA42ABC00C9BBA0 /* METDDPClientLatencyCompensationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METDDPClientLatencyCompensationTests.m; sourceTree = "<group>"; };
-		9F896AE81BA42ABC00C9BBA0 /* METDDPClientManagingDataTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METDDPClientManagingDataTests.m; sourceTree = "<group>"; };
-		9F896AE91BA42ABC00C9BBA0 /* METDDPClientReconnectingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METDDPClientReconnectingTests.m; sourceTree = "<group>"; };
-		9F896AEA1BA42ABC00C9BBA0 /* METDDPClientTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = METDDPClientTestCase.h; sourceTree = "<group>"; };
-		9F896AEB1BA42ABC00C9BBA0 /* METDDPClientTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METDDPClientTestCase.m; sourceTree = "<group>"; };
-		9F896AEC1BA42ABC00C9BBA0 /* METDDPHeartbeatTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METDDPHeartbeatTests.m; sourceTree = "<group>"; };
-		9F896AED1BA42ABC00C9BBA0 /* METDDPMessageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METDDPMessageTests.m; sourceTree = "<group>"; };
-		9F896AEE1BA42ABC00C9BBA0 /* METDocumentCacheTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METDocumentCacheTests.m; sourceTree = "<group>"; };
-		9F896AEF1BA42ABC00C9BBA0 /* METDocumentChangeDetailsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METDocumentChangeDetailsTests.m; sourceTree = "<group>"; };
-		9F896AF01BA42ABC00C9BBA0 /* METDynamicVariableTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METDynamicVariableTests.m; sourceTree = "<group>"; };
-		9F896AF11BA42ABC00C9BBA0 /* METEJSONSerializationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METEJSONSerializationTests.m; sourceTree = "<group>"; };
-		9F896AF21BA42ABC00C9BBA0 /* METIncrementalStoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METIncrementalStoreTests.m; sourceTree = "<group>"; };
-		9F896AF31BA42ABC00C9BBA0 /* METMethodInvocationContextTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METMethodInvocationContextTests.m; sourceTree = "<group>"; };
-		9F896AF41BA42ABC00C9BBA0 /* METMethodInvocationCoordinatorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METMethodInvocationCoordinatorTests.m; sourceTree = "<group>"; };
-		9F896AF51BA42ABC00C9BBA0 /* METMethodInvocationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METMethodInvocationTests.m; sourceTree = "<group>"; };
-		9F896AF61BA42ABC00C9BBA0 /* METRandomStreamTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METRandomStreamTests.m; sourceTree = "<group>"; };
-		9F896AF71BA42ABC00C9BBA0 /* METRetryStrategyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METRetryStrategyTests.m; sourceTree = "<group>"; };
-		9F896AF81BA42ABC00C9BBA0 /* METSubscriptionManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METSubscriptionManagerTests.m; sourceTree = "<group>"; };
-		9F896AF91BA42ABC00C9BBA0 /* METTimerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METTimerTests.m; sourceTree = "<group>"; };
-		9F896B1E1BA42DD800C9BBA0 /* MockMETDDPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockMETDDPConnection.h; sourceTree = "<group>"; };
-		9F896B1F1BA42DD800C9BBA0 /* MockMETDDPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockMETDDPConnection.m; sourceTree = "<group>"; };
-		9F896B201BA42DD800C9BBA0 /* XCTAsyncTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCTAsyncTestCase.h; sourceTree = "<group>"; };
-		9F896B211BA42DD800C9BBA0 /* XCTAsyncTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCTAsyncTestCase.m; sourceTree = "<group>"; };
-		9F896B221BA42DD800C9BBA0 /* XCTestCase+Meteor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+Meteor.h"; sourceTree = "<group>"; };
-		9F896B231BA42DD800C9BBA0 /* XCTestCase+Meteor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+Meteor.m"; sourceTree = "<group>"; };
-		9F896B241BA42DD800C9BBA0 /* XCTFailure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCTFailure.h; sourceTree = "<group>"; };
-		9F896B251BA42DD800C9BBA0 /* XCTFailure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCTFailure.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -424,14 +344,6 @@
 			path = InflectorKit/InflectorKit;
 			sourceTree = "<group>";
 		};
-		9F3739101BA4775000E1FE15 /* Fixtures */ = {
-			isa = PBXGroup;
-			children = (
-				9F3739111BA4775000E1FE15 /* Model.xcdatamodeld */,
-			);
-			path = Fixtures;
-			sourceTree = "<group>";
-		};
 		9F3739151BA477F700E1FE15 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -442,20 +354,6 @@
 				9F3739251BA477F700E1FE15 /* OCMock.framework */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		9F3739431BA47B2D00E1FE15 /* Server Integration Tests */ = {
-			isa = PBXGroup;
-			children = (
-				9F3739441BA47B2D00E1FE15 /* Info.plist */,
-				9F3739451BA47B2D00E1FE15 /* METAccountsTests.m */,
-				9F3739461BA47B2D00E1FE15 /* METCallingMutationMethodsTests.m */,
-				9F3739471BA47B2D00E1FE15 /* METDocumentIDGenerationTests.m */,
-				9F3739481BA47B2D00E1FE15 /* METServerIntegrationTestCase.h */,
-				9F3739491BA47B2D00E1FE15 /* METServerIntegrationTestCase.m */,
-				9F37394A1BA47B2D00E1FE15 /* METSubscriptionsTests.m */,
-			);
-			path = "Server Integration Tests";
 			sourceTree = "<group>";
 		};
 		9F3739A81BA53BE000E1FE15 /* Random */ = {
@@ -636,48 +534,9 @@
 			path = Meteor;
 			sourceTree = "<group>";
 		};
-		9F896A3A1BA428D400C9BBA0 /* Unit Tests */ = {
-			isa = PBXGroup;
-			children = (
-				9F896A3D1BA428D400C9BBA0 /* Info.plist */,
-				9F896ADF1BA42ABC00C9BBA0 /* METAleaRandomValueGeneratorTests.m */,
-				9F896AE01BA42ABC00C9BBA0 /* METCollectionTests.m */,
-				9F896AE11BA42ABC00C9BBA0 /* METCoreDataDDPClientTests.m */,
-				9F896AE21BA42ABC00C9BBA0 /* METDatabaseChangesTests.m */,
-				9F896AE31BA42ABC00C9BBA0 /* METDatabaseTests.m */,
-				9F896AE41BA42ABC00C9BBA0 /* METDDPClientAccountsTests.m */,
-				9F896AE51BA42ABC00C9BBA0 /* METDDPClientCallingMethods.m */,
-				9F896AE61BA42ABC00C9BBA0 /* METDDPClientConnectingTests.m */,
-				9F896AE71BA42ABC00C9BBA0 /* METDDPClientLatencyCompensationTests.m */,
-				9F896AE81BA42ABC00C9BBA0 /* METDDPClientManagingDataTests.m */,
-				9F896AE91BA42ABC00C9BBA0 /* METDDPClientReconnectingTests.m */,
-				9F896AEA1BA42ABC00C9BBA0 /* METDDPClientTestCase.h */,
-				9F896AEB1BA42ABC00C9BBA0 /* METDDPClientTestCase.m */,
-				9F896AEC1BA42ABC00C9BBA0 /* METDDPHeartbeatTests.m */,
-				9F896AED1BA42ABC00C9BBA0 /* METDDPMessageTests.m */,
-				9F896AEE1BA42ABC00C9BBA0 /* METDocumentCacheTests.m */,
-				9F896AEF1BA42ABC00C9BBA0 /* METDocumentChangeDetailsTests.m */,
-				9F896AF01BA42ABC00C9BBA0 /* METDynamicVariableTests.m */,
-				9F896AF11BA42ABC00C9BBA0 /* METEJSONSerializationTests.m */,
-				9F896AF21BA42ABC00C9BBA0 /* METIncrementalStoreTests.m */,
-				9F896AF31BA42ABC00C9BBA0 /* METMethodInvocationContextTests.m */,
-				9F896AF41BA42ABC00C9BBA0 /* METMethodInvocationCoordinatorTests.m */,
-				9F896AF51BA42ABC00C9BBA0 /* METMethodInvocationTests.m */,
-				9F896AF61BA42ABC00C9BBA0 /* METRandomStreamTests.m */,
-				9F896AF71BA42ABC00C9BBA0 /* METRetryStrategyTests.m */,
-				9F896AF81BA42ABC00C9BBA0 /* METSubscriptionManagerTests.m */,
-				9F896AF91BA42ABC00C9BBA0 /* METTimerTests.m */,
-			);
-			path = "Unit Tests";
-			sourceTree = "<group>";
-		};
 		9F896ADE1BA42A8500C9BBA0 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				9F896A3A1BA428D400C9BBA0 /* Unit Tests */,
-				9F3739431BA47B2D00E1FE15 /* Server Integration Tests */,
-				9F896B1D1BA42DD800C9BBA0 /* Shared */,
-				9F3739101BA4775000E1FE15 /* Fixtures */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -690,21 +549,6 @@
 				9F3738BE1BA45D9F00E1FE15 /* CoreData.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		9F896B1D1BA42DD800C9BBA0 /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				9F896B1E1BA42DD800C9BBA0 /* MockMETDDPConnection.h */,
-				9F896B1F1BA42DD800C9BBA0 /* MockMETDDPConnection.m */,
-				9F896B201BA42DD800C9BBA0 /* XCTAsyncTestCase.h */,
-				9F896B211BA42DD800C9BBA0 /* XCTAsyncTestCase.m */,
-				9F896B221BA42DD800C9BBA0 /* XCTestCase+Meteor.h */,
-				9F896B231BA42DD800C9BBA0 /* XCTestCase+Meteor.m */,
-				9F896B241BA42DD800C9BBA0 /* XCTFailure.h */,
-				9F896B251BA42DD800C9BBA0 /* XCTFailure.m */,
-			);
-			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -961,11 +805,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F37394D1BA47B2D00E1FE15 /* METCallingMutationMethodsTests.m in Sources */,
-				9F37394E1BA47B2D00E1FE15 /* METDocumentIDGenerationTests.m in Sources */,
-				9F37394F1BA47B2D00E1FE15 /* METServerIntegrationTestCase.m in Sources */,
-				9F37394C1BA47B2D00E1FE15 /* METAccountsTests.m in Sources */,
-				9F3739501BA47B2D00E1FE15 /* METSubscriptionsTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1018,37 +857,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F896B021BA42ABC00C9BBA0 /* METDDPClientLatencyCompensationTests.m in Sources */,
-				9F896B0E1BA42ABC00C9BBA0 /* METMethodInvocationCoordinatorTests.m in Sources */,
-				9F896B011BA42ABC00C9BBA0 /* METDDPClientConnectingTests.m in Sources */,
-				9F896AFF1BA42ABC00C9BBA0 /* METDDPClientAccountsTests.m in Sources */,
-				9F896B041BA42ABC00C9BBA0 /* METDDPClientReconnectingTests.m in Sources */,
-				9F896B0F1BA42ABC00C9BBA0 /* METMethodInvocationTests.m in Sources */,
-				9F896AFE1BA42ABC00C9BBA0 /* METDatabaseTests.m in Sources */,
-				9F896AFB1BA42ABC00C9BBA0 /* METCollectionTests.m in Sources */,
-				9F896B051BA42ABC00C9BBA0 /* METDDPClientTestCase.m in Sources */,
-				9F896B0C1BA42ABC00C9BBA0 /* METIncrementalStoreTests.m in Sources */,
-				9F896B001BA42ABC00C9BBA0 /* METDDPClientCallingMethods.m in Sources */,
-				9F896B121BA42ABC00C9BBA0 /* METSubscriptionManagerTests.m in Sources */,
-				9F896AFA1BA42ABC00C9BBA0 /* METAleaRandomValueGeneratorTests.m in Sources */,
-				9F896AFC1BA42ABC00C9BBA0 /* METCoreDataDDPClientTests.m in Sources */,
-				9F896B061BA42ABC00C9BBA0 /* METDDPHeartbeatTests.m in Sources */,
-				9F896B081BA42ABC00C9BBA0 /* METDocumentCacheTests.m in Sources */,
-				9F896B071BA42ABC00C9BBA0 /* METDDPMessageTests.m in Sources */,
-				9F896B261BA42DD800C9BBA0 /* MockMETDDPConnection.m in Sources */,
-				9F896B101BA42ABC00C9BBA0 /* METRandomStreamTests.m in Sources */,
-				9F896B031BA42ABC00C9BBA0 /* METDDPClientManagingDataTests.m in Sources */,
-				9F3739131BA4775000E1FE15 /* Model.xcdatamodeld in Sources */,
-				9F896B0D1BA42ABC00C9BBA0 /* METMethodInvocationContextTests.m in Sources */,
-				9F896B0A1BA42ABC00C9BBA0 /* METDynamicVariableTests.m in Sources */,
-				9F896B281BA42DD800C9BBA0 /* XCTestCase+Meteor.m in Sources */,
-				9F896B271BA42DD800C9BBA0 /* XCTAsyncTestCase.m in Sources */,
-				9F896B291BA42DD800C9BBA0 /* XCTFailure.m in Sources */,
-				9F896B111BA42ABC00C9BBA0 /* METRetryStrategyTests.m in Sources */,
-				9F896B131BA42ABC00C9BBA0 /* METTimerTests.m in Sources */,
-				9F896B091BA42ABC00C9BBA0 /* METDocumentChangeDetailsTests.m in Sources */,
-				9F896AFD1BA42ABC00C9BBA0 /* METDatabaseChangesTests.m in Sources */,
-				9F896B0B1BA42ABC00C9BBA0 /* METEJSONSerializationTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1290,19 +1098,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		9F3739111BA4775000E1FE15 /* Model.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				9F3739121BA4775000E1FE15 /* Model.xcdatamodel */,
-			);
-			currentVersion = 9F3739121BA4775000E1FE15 /* Model.xcdatamodel */;
-			path = Model.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 9F896A231BA428D400C9BBA0 /* Project object */;
 }

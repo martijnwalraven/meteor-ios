@@ -145,10 +145,10 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
 
 - (void)managedObjectContextDidUnregisterObjectsWithIDs:(NSArray *)objectIDs {
   for (NSManagedObjectID *objectID in objectIDs) {
-    [_registeredObjectIDs removeObject:objectID];
+    //[_registeredObjectIDs removeObject:objectID];
     
     if ([_registeredObjectIDs countForObject:objectID] == 0) {
-      [_nodesByObjectID removeObjectForKey:objectID];
+      //[_nodesByObjectID removeObjectForKey:objectID];
     }
   }
 }
@@ -337,7 +337,7 @@ NSString * const METIncrementalStoreObjectsDidChangeNotification = @"METIncremen
     for (NSManagedObject *object in request.deletedObjects) {
       METCollection *collection = [self collectionForEntity:object.entity];
       id documentID = [self documentKeyForObjectID:object.objectID].documentID;
-      [collection removeDocumentWithID:documentID];
+      //[collection removeDocumentWithID:documentID];
     }
   }];
   
