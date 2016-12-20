@@ -2,13 +2,13 @@
 
 Meteor iOS integrates native iOS apps with the Meteor platform (http://www.meteor.com) through DDP. It offers full support for latency compensation and supports a Core Data programming model. It has been written in Objective-C, but is also perfectly usable from Swift.
 
-*If you're a Meteor web developer…* it's now easy for a native iOS app to participate in Meteor's full stack reactivity.
+*If you're a Meteor web developer…* it's now easy for a native iOS app to participate in Meteor's full stack reactivity.r
 
 *If you're an iOS developer…* Meteor is an amazing backend for your app that will save you tons of time.
 
 ### Differences between Meteor iOS and other DDP clients
 
-Meteor iOS is more than a barebones DDP client. Rather than notifying you of individual data updates and leaving it at that, it has been designed to bring full stack reativity to iOS. Currently, this is most easily done by integrating with Core Data. By only writing a few lines of code, we get reactive updates from the database to the UI.
+Meteor iOS is more than a barebones DDP client. Rather than notifying you of individual data updates and leaving it at that, it has been designed to bring full stack creativity to iOS. Currently, this is most easily done by integrating with Core Data. By only writing a few lines of code, we get reactive updates from the database to the UI.
 
 Among other things, it includes full support for latency compensation and supports writing your own method stubs. It has been implemented with concurrent execution in mind and keeps all processing off the main thread, posting batched and consolidated change notifications that can be observed to update the UI. 
 
